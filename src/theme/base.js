@@ -51,7 +51,7 @@ export const fontsStyles = {
   },
 };
 
-const fonSize = {
+const fontSize = {
   title1: "32px",
   title2: "24px",
   text1: "16px",
@@ -67,5 +67,5 @@ export default {
   radii,
   zIndices,
   fontsStyles,
-  fonSize,
+  fontSize,
 };

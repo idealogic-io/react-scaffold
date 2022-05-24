@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
 
 import { DEFAULT_META, getCustomMeta } from "configs";
-import { Container } from "components";
-import { useLocation } from "react-router-dom";
+import { Container } from "../container";
 
 const StyledPage = styled(Container)`
   min-height: 100vh;

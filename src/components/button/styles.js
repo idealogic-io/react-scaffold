@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { space, typography, layout, opacity, border, shadow, variant } from "styled-system";
 
-import { getFontSize, getFontStyles, getTextColor } from "components/text";
+import { getFontStyles, getTextColor } from "components/text";
 
 export const variants = {
   PRIMARY: "primary",
@@ -56,7 +56,8 @@ const ButtonStyled = styled.button`
   letter-spacing: 0.03em;
   line-height: 1;
   outline: 0;
-  ${getFontSize};
+  font-size: 16px;
+  font-weight: 600;
   ${getFontStyles};
   ${getTextColor};
   ${variant({

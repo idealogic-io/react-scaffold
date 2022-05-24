@@ -1,4 +1,6 @@
 import React from "react";
+import { createPortal } from "react-dom";
+
 import { ModalStyled, ModalContainer } from "./styles";
 
 const modalRoot = document.getElementById("modal");

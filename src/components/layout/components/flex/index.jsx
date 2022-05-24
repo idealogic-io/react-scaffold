@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { flexbox } from "styled-system";
 
-import { Box } from "components";
+import { Box } from "../container";
 
 export const Flex = styled(Box)`
   display: flex;

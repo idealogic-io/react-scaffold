@@ -27,7 +27,11 @@ const ThemeContextProvider = ({ children }) => {
 };
 
 export const useThemeContext = () => {
-  return useContext(ThemeContext);
+  const themeContext = useContext(ThemeContext);
+  if (themeContext === null) {
+    throw new Error("Theme context is not found");
+  }
+  return themeContext;
 };
 
 export default ThemeContextProvider;

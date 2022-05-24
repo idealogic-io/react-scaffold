@@ -11,6 +11,7 @@ export const ModalStyled = styled.div`
   justify-content: center;
   align-items: center;
   z-index: ${({ theme }) => theme.zIndices.modal};
+  cursor: pointer;
 `;
 
 export const ModalContainer = styled.div`

@@ -2,21 +2,17 @@ import React from "react";
 
 import { NotFoundPageStyled } from "./styles";
 
-import { fontsStyles } from "theme/base";
+import { Text, InternalLink } from "components";
 
-import { Text, Button } from "components";
+import { ROUTES } from "navigation/routes";
 
 const NotFoundPage = () => {
-  const redirect = () => {
-    window.location.replace("/home");
-  };
-
   return (
     <NotFoundPageStyled>
-      <Text fSize="title2" fStyle={fontsStyles.mv.bold} mb="15px">
+      <Text fontSize="32px" fontStyle="bold" mb="15px">
         Not found Page 404
       </Text>
-      <Button onClick={redirect}>Go to home page</Button>
+      <InternalLink to={ROUTES.landing}>Go to landing page</InternalLink>
     </NotFoundPageStyled>
   );
 };

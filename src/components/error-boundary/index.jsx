@@ -2,7 +2,8 @@ import React from "react";
 
 import { ErrorBoundaryStyled } from "./styles";
 
-import { Text, Button } from "components";
+import { Text, InternalLink } from "components";
+import { ROUTES } from "navigation/routes";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -18,19 +19,15 @@ class ErrorBoundary extends React.Component {
     console.error("ErrorBoundary caught error", error, errorInfo);
   }
 
-  redirect() {
-    window.location.replace("/");
-  }
-
   render() {
     if (this.state.hasError) {
       return (
         <ErrorBoundaryStyled>
-          <Text as="h1" fSize="title1">
+          <Text as="h1" fontSize="32px">
             Something went wrong!
           </Text>
           <Text>Please, go to home page</Text>
-          <Button onClick={this.redirect}>Go to home</Button>
+          <InternalLink to={ROUTES.landing}>Go to home</InternalLink>
         </ErrorBoundaryStyled>
       );
     }

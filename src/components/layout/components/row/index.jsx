@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { Box } from "components";
+import { space } from "styled-system";
+
+import { Box } from "../container";
 
 export const Row = styled(Box)`
   width: ${({ width }) => width ?? "100%"};
@@ -9,15 +11,18 @@ export const Row = styled(Box)`
   padding: ${({ padding }) => padding ?? "0"};
   border: ${({ border }) => border};
   border-radius: ${({ borderRadius }) => borderRadius};
+  ${space}
 `;
 
 export const RowBetween = styled(Row)`
   justify-content: space-between;
+  ${space}
 `;
 
 export const RowFlat = styled.div`
   display: flex;
   align-items: flex-end;
+  ${space}
 `;
 
 export const AutoRow = styled(Row)`

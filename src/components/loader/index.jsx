@@ -6,7 +6,7 @@ import { LoaderStyled } from "./styles";
 const Loader = () => {
   return (
     <LoaderStyled>
-      <Text as="h1" fSize="title1">
+      <Text as="h1" fontSize="32px">
         Loading ...
       </Text>
     </LoaderStyled>

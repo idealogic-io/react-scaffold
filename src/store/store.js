@@ -5,7 +5,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 import rootReducer from "./rootReducer";
 
-import { pokemonApi } from "store/reducers/pokemon";
+import { pokemonApi } from "store/reducers";
 
 const store = configureStore({
   reducer: rootReducer,

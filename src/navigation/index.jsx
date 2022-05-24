@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
-import { RequireAuth } from "./components";
+import { RequireAuth, TokenHandler } from "./components";
+import { ROUTES } from "./routes";
 
 const NotFoundPage = React.lazy(() => import("components/not-found-page"));
 const HomePage = React.lazy(() => import("pages/home"));
@@ -12,10 +13,17 @@ const Navigation = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path={"/login"} element={<LoginPage />} />
+        <Route path={ROUTES.landing} element={<LandingPage />} />
         <Route
-          path={"/home"}
+          path={ROUTES.login}
+          element={
+            <TokenHandler>
+              <LoginPage />
+            </TokenHandler>
+          }
+        />
+        <Route
+          path={ROUTES.home}
           element={
             <RequireAuth>
               <HomePage />

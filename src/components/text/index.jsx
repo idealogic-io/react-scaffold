@@ -9,30 +9,22 @@ export const getFontStyles = ({ theme, fStyle }) => {
   return theme.fontsStyles.mv.regular;
 };
 
-export const getFontSize = ({ theme, fSize }) => {
-  if (theme.fonSize[fSize]) {
-    return theme.fonSize[fSize];
-  }
-  return theme.fonSize.text1;
-};
-
 export const getTextColor = ({ theme, color }) => {
-  if (color) {
+  if (theme.colors[color]) {
     return theme.colors[color];
   }
-  return theme.colors.black;
+  return theme.colors.text;
 };
 
 export const getEllipsis = ({ ellipsis }) => {
   if (ellipsis) {
     return `white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;`;
+            overflow: hidden;
+            text-overflow: ellipsis;`;
   }
 };
 
 export const Text = styled.p`
-  font-size: ${getFontSize};
   color: ${getTextColor};
   ${getFontStyles};
   ${getEllipsis};

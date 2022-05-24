@@ -1,24 +1,26 @@
 const baseColors = {
-  failure: "#ED4B9E",
-  primary: "#1FC7D4",
-  primaryBright: "#53DEE9",
-  primaryDark: "#0098A1",
-  secondary: "#7645D9",
-  success: "#31D0AA",
-  warning: "#FFB237",
+  primary: "#7E75C9",
+  secondary: "#F4587E",
+  error: "#DE0000",
+  warning: "#EF9200",
+  success: "#00C898",
   black: "#333333",
+  white: "#ffffff",
 };
 
 const lightColors = {
   ...baseColors,
   background: "#FAF9FA",
+  input: "#D4D9DE",
+  text: "#280D5F",
   // Put light colors here
 };
 
 const darkColors = {
   ...baseColors,
   background: "#08060B",
-
+  input: "#D4D9DE",
+  text: "#ffffff",
   // Put dark colors here
 };
 

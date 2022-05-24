@@ -2,18 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 
-import Providers from "./Providers";
+import ProvidersWithContext from "./Providers";
 
-import { ThemeContextProvider } from "context";
 import Navigation from "navigation";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeContextProvider>
-      <Providers>
-        <Navigation />
-      </Providers>
-    </ThemeContextProvider>
+    <ProvidersWithContext>
+      <Navigation />
+    </ProvidersWithContext>
   </React.StrictMode>,
   document.getElementById("root"),
 );

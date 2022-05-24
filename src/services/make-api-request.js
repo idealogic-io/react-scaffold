@@ -1,14 +1,16 @@
-import axios from "axios";
+import { getInstance, isAxiosError } from "./axios";
+
+const axiosInstance = getInstance();
 
 export const makeApiRequest = async config => {
   try {
-    const result = await axios(config);
+    const result = await axiosInstance(config);
 
-    return result;
+    return { data: result.data };
   } catch (e) {
     // TODO config next lines in real project
     let message = "Error";
-    if (axios.isAxiosError(e)) {
+    if (isAxiosError(e)) {
       message = e.response?.data.message || e.response?.data || e.message;
     } else if (e?.message) {
       message = e.message;

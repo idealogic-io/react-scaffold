@@ -1,10 +1,9 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
-import { hideModal, MODAL_NAMES } from "store/reducers/modal";
-import { useAppSelector } from "store/store";
+import { hideModal, MODAL_NAMES } from "store/reducers";
+import { useAppDispatch, useAppSelector } from "store/store";
 
-import ModalWrapper from "components/modal/components/modal-wrapper";
+import { ModalWrapper } from "components";
 
 const component = {
   [MODAL_NAMES.someModal]: () => <div>Some Modal</div>,
@@ -13,7 +12,7 @@ const component = {
 const Modal = () => {
   const { modalName } = useAppSelector(state => state.modal);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ModalComponent = component[modalName];
 
   const hideModalHandler = () => {

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
@@ -8,17 +7,15 @@ import { loginUser } from "./actions";
 const applyToken = token => {
   if (token) {
     localStorage.setItem(LOCAL_STORAGE_KEYS.token, token);
-    axios.defaults.headers.common["Authorization"] = token;
   } else {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.token);
-    axios.defaults.headers.common["Authorization"] = false;
   }
 
   return token;
 };
 
 const initialState = {
-  token: "",
+  token: null,
   error: "",
 };
 
@@ -38,9 +35,10 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        if (action.payload?.token) {
-          const { token } = action.payload;
-          state.token = applyToken(token);
+        console.log(action.payload);
+        if (action.payload?.data?.auth_token) {
+          const { auth_token } = action.payload.data;
+          state.token = applyToken(auth_token);
           state.error = "";
         }
       })
