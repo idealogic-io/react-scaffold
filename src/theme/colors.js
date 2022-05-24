@@ -13,6 +13,8 @@ const lightColors = {
   background: "#FAF9FA",
   input: "#D4D9DE",
   text: "#280D5F",
+  backgroundDisabled: "#E9EAEB",
+
   // Put light colors here
 };
 
@@ -21,6 +23,7 @@ const darkColors = {
   background: "#08060B",
   input: "#D4D9DE",
   text: "#ffffff",
+  backgroundDisabled: "#3c3742",
   // Put dark colors here
 };
 

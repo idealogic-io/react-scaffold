@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-
-import { breakpointMap } from "styles/Theme";
+import { breakpointMap } from "theme/base";
 
 const useIsomorphicEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 

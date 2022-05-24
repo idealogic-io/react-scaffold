@@ -1,41 +1,38 @@
 import React, { useState } from "react";
 // Components
-import { Box, Button, Input, Page, Text, InputGroup } from "components";
+import { Box, Button, Input, Page, Text, InputGroup, Column } from "components";
 import { AddIcon } from "components/svg";
 // Store
 import { useAppDispatch } from "store/store";
 import { loginUser } from "store/reducers";
 // Context
 import { useTranslation } from "context";
+// Hooks
+import { useForm } from "hooks";
+import { useValidationSchema } from "./hooks";
 
 const LoginPage = () => {
-  const [state, setState] = useState({
-    email: "testadmin1@gmail.com",
-    password: "490223837aiia$A",
-    isPassword: true,
-  });
+  const [isPassword, setIsPassword] = useState(true);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { validationSchema, initialValues } = useValidationSchema();
 
-  const loginHandler = () => {
-    const data = {
-      email: state.email.toLowerCase(),
-      password: state.password,
-    };
-    dispatch(loginUser(data));
-  };
+  const { fieldProps, handleSubmit, errors, isValid } = useForm({
+    initialValues,
+    validationSchema,
+    onSubmit(values) {
+      const data = {
+        email: values.email.toLowerCase(),
+        password: values.password,
+      };
+
+      dispatch(loginUser(data));
+    },
+  });
 
   const togglePasswordVisibleHandler = () => {
-    setState(prev => ({ ...prev, isPassword: !state.isPassword }));
-  };
-
-  const onEmailChangeHandler = ({ target: { value } }) => {
-    setState(prev => ({ ...prev, email: value }));
-  };
-
-  const onPasswordChangeHandler = ({ target: { value } }) => {
-    setState(prev => ({ ...prev, password: value }));
+    setIsPassword(!isPassword);
   };
 
   return (
@@ -44,20 +41,25 @@ const LoginPage = () => {
         {t("Login Page")}
       </Text>
       <Box width="300px" py="16px">
-        <Input value={state.email} mb="16px" onChange={onEmailChangeHandler} />
-        <InputGroup
-          startIcon={<AddIcon width="18px" />}
-          endIcon={<AddIcon width="18px" cursor="pointer" onClick={togglePasswordVisibleHandler} />}
-        >
-          <Input
-            type={state.isPassword ? "password" : "text"}
-            value={state.password}
-            onChange={onPasswordChangeHandler}
-          />
-        </InputGroup>
-      </Box>
+        <form onSubmit={handleSubmit}>
+          <Column>
+            <Input {...fieldProps("email")} />
+            <Text my="4px">{errors.email}</Text>
 
-      <Button onClick={loginHandler}>{t("Login")}</Button>
+            <InputGroup
+              startIcon={<AddIcon width="18px" />}
+              endIcon={<AddIcon width="18px" cursor="pointer" onClick={togglePasswordVisibleHandler} />}
+            >
+              <Input {...fieldProps("password")} type={isPassword ? "password" : "text"} />
+            </InputGroup>
+            <Text my="4px">{errors.password}</Text>
+
+            <Button disabled={!isValid} type="submit">
+              {t("Login")}
+            </Button>
+          </Column>
+        </form>
+      </Box>
     </Page>
   );
 };

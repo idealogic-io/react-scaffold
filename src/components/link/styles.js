@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledInternalLink = styled.a`
+export const StyledInternalLink = styled.p`
   text-decoration: none;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.primary};

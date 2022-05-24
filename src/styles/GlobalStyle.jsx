@@ -136,6 +136,7 @@ html, body, div, span, applet, object, iframe,
     border-color: transparent;
     color: transparent;
   }
+
   * {
     font-family: 'Merriweather';
   }

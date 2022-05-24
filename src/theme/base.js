@@ -1,4 +1,4 @@
-const breakpointMap = {
+export const breakpointMap = {
   xs: 370,
   sm: 576,
   md: 852,

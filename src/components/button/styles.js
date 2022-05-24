@@ -43,6 +43,26 @@ export const styleVariants = {
   },
 };
 
+const getDisabledStyles = ({ $isLoading, theme }) => {
+  if ($isLoading) {
+    return `
+      &:disabled {
+        cursor: not-allowed;
+      }
+    `;
+  }
+
+  return `
+    &:disabled {
+      background-color: ${theme.colors.backgroundDisabled};
+      border-color: ${theme.colors.backgroundDisabled};
+      box-shadow: none;
+      color: ${theme.colors.textDisabled};
+      cursor: not-allowed;
+    }
+  `;
+};
+
 const ButtonStyled = styled.button`
   position: relative;
   align-items: center;
@@ -60,6 +80,7 @@ const ButtonStyled = styled.button`
   font-weight: 600;
   ${getFontStyles};
   ${getTextColor};
+  ${getDisabledStyles};
   ${variant({
     prop: "scale",
     variants: scaleVariants,
@@ -75,10 +96,10 @@ const ButtonStyled = styled.button`
   ${shadow}
   transition: all .2s ease-in-out;
   &:hover {
-    transform: scale(0.95);
+    transform: ${({ disabled }) => !disabled && `scale(0.95)`};
   }
   &:active {
-    transform: scale(0.9);
+    transform: ${({ disabled }) => !disabled && `scale(0.9)`};
   }
 `;
 
