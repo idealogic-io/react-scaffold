@@ -18,11 +18,8 @@ const mediaQueries = {
 };
 
 const shadows = {
-  tooltip: "0px 0px 2px rgba(0, 0, 0, 0.2), 0px 4px 12px -8px rgba(14, 14, 44, 0.1)",
   button: "0px -1px 0px 0px rgba(14, 14, 44, 0.4) inset",
 };
-
-const spacing = [0, 4, 8, 16, 24, 32, 48, 64];
 
 const radii = {
   small: "4px",
@@ -51,21 +48,12 @@ export const fontsStyles = {
   },
 };
 
-const fontSize = {
-  title1: "32px",
-  title2: "24px",
-  text1: "16px",
-  text2: "14px",
-};
-
 export default {
   siteWidth: 1200,
   breakpointMap,
   mediaQueries,
-  spacing,
   shadows,
   radii,
   zIndices,
   fontsStyles,
-  fontSize,
 };

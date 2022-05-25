@@ -44,7 +44,7 @@ const Input = styled.input`
   }
 
   &:focus:not(:disabled) {
-    box-shadow: ${({ theme }) => theme.shadows.tooltip};
+    box-shadow: ${({ theme }) => theme.shadows.button};
   }
   ${space}
 `;
