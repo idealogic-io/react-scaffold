@@ -4,7 +4,7 @@ import { Box, Button, Input, Page, Text, InputGroup, Column } from "components";
 import { AddIcon } from "components/svg";
 // Store
 import { useAppDispatch } from "store/store";
-import { loginUser } from "store/reducers";
+import { loginUser } from "store/reducers/auth/actions";
 // Context
 import { useTranslation } from "context";
 // Hooks

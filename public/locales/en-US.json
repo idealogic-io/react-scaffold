@@ -1,5 +1,4 @@
 {
-  "%num% Replaced": "%num% Replaced",
   "Login Page": "Login Page",
   "Landing Page": "Landing Page",
   "Login": "Login",
@@ -11,5 +10,6 @@
   "Link to Home page": "Link to Home page",
   "Invalid email": "Invalid email",
   "This field is required": "This field is required",
-  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
+  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
+  "Connect %provider%": "Connect %provider%"
 }

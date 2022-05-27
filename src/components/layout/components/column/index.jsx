@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { space } from "styled-system";
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  ${space}
 `;
 export const ColumnCenter = styled(Column)`
   width: 100%;

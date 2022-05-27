@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
-
 import { loginUser } from "./actions";
 
 const applyToken = token => {
@@ -35,7 +34,6 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action.payload);
         if (action.payload?.data?.auth_token) {
           const { auth_token } = action.payload.data;
           state.token = applyToken(auth_token);
@@ -55,4 +53,4 @@ const authSlice = createSlice({
 
 export const { logout } = authSlice.actions;
 
-export default authSlice.reducer;
+export default authSlice;

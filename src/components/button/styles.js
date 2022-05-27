@@ -9,11 +9,17 @@ export const variants = {
 };
 
 export const scales = {
+  XL: "xl",
   MD: "md",
   SM: "sm",
 };
 
 export const scaleVariants = {
+  [scales.XL]: {
+    height: "54px",
+    width: "200px",
+    padding: "0 24px",
+  },
   [scales.MD]: {
     height: "48px",
     width: "150px",

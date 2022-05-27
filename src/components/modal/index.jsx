@@ -1,6 +1,6 @@
 import React from "react";
 
-import { hideModal, MODAL_NAMES } from "store/reducers";
+import { hideModal, MODAL_NAMES } from "store/reducers/modal";
 import { useAppDispatch, useAppSelector } from "store/store";
 
 import { ModalWrapper } from "components";
