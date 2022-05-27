@@ -10,8 +10,10 @@ import { LanguageContext, ThemeContextProvider, useThemeContext, useTranslation 
 import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal } from "components";
+// Types
+import { FCWithChildren } from "types";
 
-const Providers = ({ children }) => {
+const Providers: React.FC<FCWithChildren> = ({ children }) => {
   const { theme } = useThemeContext();
   const { isFetching } = useTranslation();
 
@@ -32,7 +34,7 @@ const Providers = ({ children }) => {
   );
 };
 
-const ProvidersWithContext = ({ children }) => {
+const ProvidersWithContext: React.FC<FCWithChildren> = ({ children }) => {
   return (
     <ThemeContextProvider>
       <LanguageContext>

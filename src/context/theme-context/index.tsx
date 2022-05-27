@@ -1,14 +1,22 @@
 import React, { createContext, useContext, useState } from "react";
+import { DefaultTheme } from "styled-components";
 
 import darkTheme from "theme/dark";
 import lightTheme from "theme/light";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
+import { FCWithChildren } from "types";
 
-const ThemeContext = createContext(null);
+type ContextType = {
+  theme: DefaultTheme;
+  toggleTheme: () => void;
+};
 
-const ThemeContextProvider = ({ children }) => {
-  const defaultValue = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.isDark)) ?? false;
+const ThemeContext = createContext<ContextType | null>(null);
+
+const ThemeContextProvider: React.FC<FCWithChildren> = ({ children }) => {
+  const defaultLSValue = localStorage.getItem(LOCAL_STORAGE_KEYS.isDark) ?? "false";
+  const defaultValue = JSON.parse(defaultLSValue) as boolean;
   const [isDark, setIsDark] = useState(defaultValue);
 
   const theme = isDark ? darkTheme : lightTheme;
@@ -19,7 +27,9 @@ const ThemeContextProvider = ({ children }) => {
   };
 
   function toggleTheme() {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.isDark, !isDark);
+    const lcValue = JSON.stringify(!isDark);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.isDark, lcValue);
+
     setIsDark(!isDark);
   }
 

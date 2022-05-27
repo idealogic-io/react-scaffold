@@ -1,7 +1,8 @@
+import { DefaultTheme } from "styled-components";
 import base from "./base";
 import { darkColors } from "./colors";
 
-const darkTheme = {
+const darkTheme: DefaultTheme = {
   ...base,
   colors: darkColors,
   isDark: true,

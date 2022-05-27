@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "reportWebVitals";
 
 import ProvidersWithContext from "./Providers";
-
 import Navigation from "navigation";
 
 ReactDOM.render(

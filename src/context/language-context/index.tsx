@@ -3,7 +3,10 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { EN, languages, LOCAL_STORAGE_KEYS } from "configs";
 import { fetchLocale, getLanguageCodeFromLS, translatedTextIncludesVariable } from "./helpers";
 
-const initialState = {
+import { ContextApi, ContextData, ContextType, Language, TranslationKey } from "./types";
+import { FCWithChildren } from "types";
+
+const initialState: ContextType = {
   isFetching: true,
   currentLanguage: EN,
 };
@@ -12,15 +15,15 @@ const langKey = LOCAL_STORAGE_KEYS.language;
 
 export const languageMap = new Map();
 
-const LanguageContext = createContext(null);
+const LanguageContext = createContext<ContextApi | null>(null);
 
-const LanguageContextProvider = ({ children }) => {
+const LanguageContextProvider: React.FC<FCWithChildren> = ({ children }) => {
   const [state, setState] = useState(() => {
     const codeFromStorage = getLanguageCodeFromLS();
 
     return {
       ...initialState,
-      currentLanguage: languages[codeFromStorage] || EN,
+      currentLanguage: codeFromStorage in languages ? languages[codeFromStorage as keyof typeof languages] : EN,
     };
   });
 
@@ -47,7 +50,7 @@ const LanguageContextProvider = ({ children }) => {
     fetchInitialLocales();
   }, []);
 
-  const setLanguage = useCallback(async language => {
+  const setLanguage = useCallback(async (language: Language) => {
     if (!languageMap.has(language.locale)) {
       setState(prevState => ({
         ...prevState,
@@ -66,7 +69,7 @@ const LanguageContextProvider = ({ children }) => {
   }, []);
 
   const translate = useCallback(
-    (key, data) => {
+    (key: TranslationKey, data?: ContextData) => {
       const translationSet = languageMap.get(currentLanguage.locale) ?? languageMap.get(EN.locale);
       const translatedText = translationSet[key] || key;
 
