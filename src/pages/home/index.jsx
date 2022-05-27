@@ -6,15 +6,13 @@ import { AddIcon } from "components/svg";
 import { useThemeContext, useTranslation } from "context";
 // Store
 import { useAppDispatch } from "store/store";
-import { logout, MODAL_NAMES, showModal, useGetPokemonByNameQuery } from "store/reducers";
+import { logout } from "store/reducers/auth";
+import { MODAL_NAMES, showModal } from "store/reducers/modal";
 
 const HomePage = () => {
   const { toggleTheme } = useThemeContext();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
-  const { data, error, isLoading } = useGetPokemonByNameQuery("bulbasaur");
-  // console.log(data, error, isLoading);
 
   const logoutHandler = () => {
     dispatch(logout());
