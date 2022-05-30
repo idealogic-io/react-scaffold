@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { LOCAL_STORAGE_KEYS } from "configs";
 
 import { loginUser } from "./actions";
+import { AuthState } from "./types";
 
-const applyToken = token => {
+const applyToken = (token: AuthState["token"]) => {
   if (token) {
     localStorage.setItem(LOCAL_STORAGE_KEYS.token, token);
   } else {
@@ -14,9 +15,9 @@ const applyToken = token => {
   return token;
 };
 
-const initialState = {
+const initialState: AuthState = {
   token: null,
-  error: "",
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -35,15 +36,13 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action.payload);
-        if (action.payload?.data?.auth_token) {
-          const { auth_token } = action.payload.data;
-          state.token = applyToken(auth_token);
-          state.error = "";
-        }
+        const { auth_token } = action.payload;
+
+        state.token = applyToken(auth_token);
+        state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        if (action.payload?.message) {
+        if (action.payload?.isError) {
           const { message } = action.payload;
 
           state.error = message;

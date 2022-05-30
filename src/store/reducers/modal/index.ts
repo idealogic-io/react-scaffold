@@ -1,11 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ModalNames, ModalState } from "./types";
 
-export const MODAL_NAMES = {
-  someModal: "someModal",
-};
-
-const initialState = {
-  modalName: "",
+const initialState: ModalState = {
+  modalName: null,
 };
 
 export const modalSlice = createSlice({
@@ -21,4 +18,5 @@ export const modalSlice = createSlice({
 });
 
 export const { showModal, hideModal } = modalSlice.actions;
+export { ModalNames };
 export default modalSlice;

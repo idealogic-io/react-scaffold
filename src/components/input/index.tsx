@@ -1,13 +1,8 @@
 import styled from "styled-components";
 import { space } from "styled-system";
+import { InputProps, scales, ThemedProps } from "./types";
 
-export const scales = {
-  SM: "sm",
-  MD: "md",
-  LG: "lg",
-};
-
-const getHeight = ({ scale = scales.MD }) => {
+const getHeight = ({ scale = scales.MD }: ThemedProps) => {
   switch (scale) {
     case scales.SM:
       return "32px";
@@ -19,7 +14,7 @@ const getHeight = ({ scale = scales.MD }) => {
   }
 };
 
-const Input = styled.input`
+const Input = styled.input<InputProps>`
   background-color: ${({ theme }) => theme.colors.input};
   border: 0;
   border-radius: 16px;

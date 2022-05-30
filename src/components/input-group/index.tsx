@@ -1,9 +1,11 @@
 import React, { cloneElement } from "react";
 
 import { inputScales } from "components";
-import { InputIcon, StyledInputGroup } from "./styles";
+import { InputIcon, StyledInputGroup } from "./StyledInputGroup";
 
-const InputGroup = ({ scale = inputScales.MD, startIcon, endIcon, children, ...props }) => (
+import { InputGroupProps } from "./types";
+
+const InputGroup: React.FC<InputGroupProps> = ({ scale = inputScales.MD, startIcon, endIcon, children, ...props }) => (
   <StyledInputGroup
     scale={scale}
     width="100%"

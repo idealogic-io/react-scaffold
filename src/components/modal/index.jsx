@@ -1,12 +1,12 @@
 import React from "react";
 
-import { hideModal, MODAL_NAMES } from "store/reducers/modal";
+import { hideModal, ModalNames } from "store/reducers/modal";
 import { useAppDispatch, useAppSelector } from "store/store";
 
 import { ModalWrapper } from "components";
 
 const component = {
-  [MODAL_NAMES.someModal]: () => <div>Some Modal</div>,
+  [ModalNames.someModal]: () => <div>Some Modal</div>,
 };
 
 const Modal = () => {

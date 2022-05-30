@@ -7,7 +7,7 @@ import { useThemeContext, useTranslation } from "context";
 // Store
 import { useAppDispatch } from "store/store";
 import { logout } from "store/reducers/auth";
-import { MODAL_NAMES, showModal } from "store/reducers/modal";
+import { ModalNames, showModal } from "store/reducers/modal";
 
 const HomePage = () => {
   const { toggleTheme } = useThemeContext();
@@ -19,7 +19,7 @@ const HomePage = () => {
   };
 
   const openModalHandler = () => {
-    dispatch(showModal(MODAL_NAMES.someModal));
+    dispatch(showModal(ModalNames.someModal));
   };
 
   return (

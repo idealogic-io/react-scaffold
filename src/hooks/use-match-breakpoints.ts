@@ -1,12 +1,19 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { breakpointMap } from "theme/base";
+import { MediaQueries } from "theme/types";
+
+type State = {
+  [key: string]: boolean;
+};
 
 const useIsomorphicEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
-const mediaQueries = (() => {
+const arrOfKeysOfBreakPoints = Object.keys(breakpointMap) as Array<keyof typeof breakpointMap>;
+
+const mediaQueries: MediaQueries = (() => {
   let prevMinWidth = 0;
 
-  return Object.keys(breakpointMap).reduce((accum, size, index) => {
+  return arrOfKeysOfBreakPoints.reduce((accum, size, index) => {
     // Largest size is just a min-width of second highest max-width
     if (index === Object.keys(breakpointMap).length - 1) {
       return { ...accum, [size]: `(min-width: ${prevMinWidth}px)` };
@@ -19,14 +26,14 @@ const mediaQueries = (() => {
     prevMinWidth = breakpoint + 1;
 
     return { ...accum, [size]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)` };
-  }, {});
+  }, {} as MediaQueries);
 })();
 
 // Returns from breakpoints xs => isXs
-const getKey = size => `is${size.charAt(0).toUpperCase()}${size.slice(1)}`;
+const getKey = (size: keyof typeof breakpointMap) => `is${size.charAt(0).toUpperCase()}${size.slice(1)}`;
 
 const getState = () => {
-  const s = Object.keys(mediaQueries).reduce((accum, size) => {
+  const s = arrOfKeysOfBreakPoints.reduce((accum, size) => {
     const key = getKey(size);
     if (typeof window === "undefined") {
       return {
@@ -43,13 +50,13 @@ const getState = () => {
 };
 
 const useMatchBreakpoints = () => {
-  const [state, setState] = useState(() => getState());
+  const [state, setState] = useState<State>(() => getState());
 
   useIsomorphicEffect(() => {
     // Create listeners for each media query returning a function to unsubscribe
-    const handlers = Object.keys(mediaQueries).map(size => {
-      let mql;
-      let handler;
+    const handlers = arrOfKeysOfBreakPoints.map(size => {
+      let mql: MediaQueryList;
+      let handler: (matchMediaQuery: MediaQueryListEvent) => void;
 
       if (typeof window?.matchMedia === "function") {
         mql = window.matchMedia(mediaQueries[size]);

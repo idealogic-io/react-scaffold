@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import store from "store/store";
 
-export const baseUrl = process.env.REACT_APP_API_URL;
+export const baseUrl = process.env.REACT_APP_API_URL as string;
 
-export const getInstance = (baseURL = baseUrl) => {
+export const getInstance = (baseURL: string = baseUrl) => {
   const instance = axios.create({
     baseURL: baseURL,
     timeout: 10000,
@@ -13,7 +13,7 @@ export const getInstance = (baseURL = baseUrl) => {
   instance.interceptors.request.use(config => {
     const token = store.getState().auth.token;
 
-    if (token) {
+    if (token && config.headers) {
       config.headers.Authorization = `Authorization ${token}`;
     }
 
@@ -23,6 +23,6 @@ export const getInstance = (baseURL = baseUrl) => {
   return instance;
 };
 
-export const isAxiosError = e => {
+export const isAxiosError = (e: unknown): e is AxiosError => {
   return axios.isAxiosError(e);
 };

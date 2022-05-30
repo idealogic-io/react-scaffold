@@ -1,7 +1,11 @@
 import styled from "styled-components";
+
 import { Box, Input, inputScales } from "components";
 
-const getPadding = (scale, hasIcon) => {
+import { InputIconProps, StyledInputGroupProps } from "./types";
+import { Scales } from "components/input/types";
+
+const getPadding = (scale: Scales, hasIcon: boolean) => {
   if (!hasIcon) {
     return "16px";
   }
@@ -17,14 +21,14 @@ const getPadding = (scale, hasIcon) => {
   }
 };
 
-export const StyledInputGroup = styled(Box)`
+export const StyledInputGroup = styled(Box)<StyledInputGroupProps>`
   ${Input} {
     padding-left: ${({ hasStartIcon, scale }) => getPadding(scale, hasStartIcon)};
     padding-right: ${({ hasEndIcon, scale }) => getPadding(scale, hasEndIcon)};
   }
 `;
 
-export const InputIcon = styled.div`
+export const InputIcon = styled.div<InputIconProps>`
   align-items: center;
   display: flex;
   height: 100%;

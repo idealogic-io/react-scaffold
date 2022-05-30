@@ -4,7 +4,9 @@ import { background, border, layout, position, space } from "styled-system";
 
 import { useThemeContext } from "context";
 
-export const Box = styled.div`
+import { BoxProps } from "../types";
+
+export const Box = styled.div<BoxProps>`
   ${background}
   ${border}
   ${layout}
@@ -12,7 +14,7 @@ export const Box = styled.div`
   ${space}
 `;
 
-export const Container = ({ children, ...props }) => {
+export const Container: React.FC<BoxProps> = ({ children, ...props }) => {
   const { theme } = useThemeContext();
 
   return (

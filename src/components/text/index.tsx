@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { space, typography, layout, opacity } from "styled-system";
+import { TextProps, ThemedProps } from "./types";
 
-export const getFontStyles = ({ theme, fStyle }) => {
+export const getFontStyles = ({ theme, fStyle }: ThemedProps) => {
   if (fStyle) {
     return fStyle;
   }
@@ -9,14 +10,14 @@ export const getFontStyles = ({ theme, fStyle }) => {
   return theme.fontsStyles.mv.regular;
 };
 
-export const getTextColor = ({ theme, color }) => {
-  if (theme.colors[color]) {
+export const getTextColor = ({ theme, color }: ThemedProps) => {
+  if (color && theme.colors[color]) {
     return theme.colors[color];
   }
   return theme.colors.text;
 };
 
-export const getEllipsis = ({ ellipsis }) => {
+export const getEllipsis = ({ ellipsis }: ThemedProps) => {
   if (ellipsis) {
     return `white-space: nowrap;
             overflow: hidden;
@@ -24,9 +25,8 @@ export const getEllipsis = ({ ellipsis }) => {
   }
 };
 
-export const Text = styled.p`
+export const Text = styled.p<TextProps>`
   color: ${getTextColor};
-  ${getFontStyles};
   ${getEllipsis};
   ${space}
   ${typography}

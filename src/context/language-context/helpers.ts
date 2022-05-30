@@ -1,5 +1,5 @@
 import memoize from "lodash/memoize";
-import { EN, LOCAL_STORAGE_KEYS, REGEX, languages } from "configs";
+import { EN, LOCAL_STORAGE_KEYS, REGEX } from "configs";
 
 export const fetchLocale = async (locale: string) => {
   const response = await fetch(`/locales/${locale}.json`);

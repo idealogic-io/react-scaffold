@@ -1,12 +1,14 @@
-import React from "react";
+import React, { ErrorInfo } from "react";
 
 import { ErrorBoundaryStyled } from "./styles";
 
 import { Text, InternalLink } from "components";
 import { ROUTES } from "navigation/routes";
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+import { ErrorBoundaryProps, ErrorBoundaryState } from "./types";
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: Readonly<ErrorBoundaryProps> | ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
@@ -15,11 +17,12 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("ErrorBoundary caught error", error, errorInfo);
   }
 
   render() {
+    // TODO translate text
     if (this.state.hasError) {
       return (
         <ErrorBoundaryStyled>
