@@ -14,6 +14,6 @@ export const StyledModalWrapper = styled.div`
   cursor: pointer;
 `;
 
-export const ModalContainer = styled.div`
+export const StyledModalContainer = styled.div`
   background: ${({ theme }) => theme.colors.background};
 `;

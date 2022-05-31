@@ -1,7 +1,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 
-import { StyledModalWrapper, ModalContainer } from "./StyledModalWrapper";
+import { StyledModalWrapper, StyledModalContainer } from "./StyledModalWrapper";
 import { ModalWrapperProps } from "./types";
 
 const modalRoot = document.getElementById("modal");
@@ -14,7 +14,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({ children, hideModalHandler 
   if (modalRoot) {
     return createPortal(
       <StyledModalWrapper onClick={hideModalHandler}>
-        <ModalContainer onClick={onParentContainerClick}>{children}</ModalContainer>
+        <StyledModalContainer onClick={onParentContainerClick}>{children}</StyledModalContainer>
       </StyledModalWrapper>,
       modalRoot,
     );
