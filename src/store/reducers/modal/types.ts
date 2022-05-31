@@ -1,5 +1,5 @@
 export type ModalState = {
-  modalName: null | string;
+  modalName: null | keyof typeof ModalNames;
 };
 
 export enum ModalNames {

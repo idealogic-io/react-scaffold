@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ModalNames, ModalState } from "./types";
 
 const initialState: ModalState = {
@@ -9,7 +9,7 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    showModal: (state, action) => {
+    showModal: (state, action: PayloadAction<keyof typeof ModalNames>) => {
       state.modalName = action.payload;
     },
 

@@ -13,7 +13,7 @@ const Modal: React.FC = () => {
   const { modalName } = useAppSelector(state => state.modal);
 
   const dispatch = useAppDispatch();
-  const ModalComponent = component[modalName as keyof typeof ModalNames] ?? null;
+  const ModalComponent = modalName ? component[modalName] : null;
 
   const hideModalHandler = () => {
     dispatch(hideModal());

@@ -8,12 +8,10 @@ type State = {
 
 const useIsomorphicEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
-const arrOfKeysOfBreakPoints = Object.keys(breakpointMap) as Array<keyof typeof breakpointMap>;
-
 const mediaQueries: MediaQueries = (() => {
   let prevMinWidth = 0;
 
-  return arrOfKeysOfBreakPoints.reduce((accum, size, index) => {
+  return (Object.keys(breakpointMap) as Array<keyof typeof breakpointMap>).reduce((accum, size, index) => {
     // Largest size is just a min-width of second highest max-width
     if (index === Object.keys(breakpointMap).length - 1) {
       return { ...accum, [size]: `(min-width: ${prevMinWidth}px)` };
@@ -30,10 +28,10 @@ const mediaQueries: MediaQueries = (() => {
 })();
 
 // Returns from breakpoints xs => isXs
-const getKey = (size: keyof typeof breakpointMap) => `is${size.charAt(0).toUpperCase()}${size.slice(1)}`;
+const getKey = (size: keyof MediaQueries) => `is${size.charAt(0).toUpperCase()}${size.slice(1)}`;
 
 const getState = () => {
-  const s = arrOfKeysOfBreakPoints.reduce((accum, size) => {
+  const s = (Object.keys(mediaQueries) as Array<keyof MediaQueries>).reduce((accum, size) => {
     const key = getKey(size);
     if (typeof window === "undefined") {
       return {
@@ -54,7 +52,7 @@ const useMatchBreakpoints = () => {
 
   useIsomorphicEffect(() => {
     // Create listeners for each media query returning a function to unsubscribe
-    const handlers = arrOfKeysOfBreakPoints.map(size => {
+    const handlers = (Object.keys(mediaQueries) as Array<keyof MediaQueries>).map(size => {
       let mql: MediaQueryList;
       let handler: (matchMediaQuery: MediaQueryListEvent) => void;
 
@@ -94,7 +92,7 @@ const useMatchBreakpoints = () => {
 
   return {
     ...state,
-    isMobile: state.isXs || state.isSm || state.iphone5,
+    isMobile: state.isXs || state.isSm,
     isTablet: state.isMd || state.isLg,
     isDesktop: state.isXl || state.isXxl,
   };
