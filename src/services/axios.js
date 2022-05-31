@@ -13,7 +13,7 @@ export const getInstance = (baseURL = baseUrl) => {
   instance.interceptors.request.use(config => {
     const token = store.getState().auth.token;
 
-    if (token) {
+    if (token && config.headers) {
       config.headers.Authorization = `Authorization ${token}`;
     }
 

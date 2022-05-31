@@ -5,7 +5,7 @@ export const MODAL_NAMES = {
 };
 
 const initialState = {
-  modalName: "",
+  modalName: null,
 };
 
 export const modalSlice = createSlice({

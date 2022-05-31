@@ -1,7 +1,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 
-import { ModalStyled, ModalContainer } from "./styles";
+import { StyledModalWrapper, StyledModalContainer } from "./StyledModalWrapper";
 
 const modalRoot = document.getElementById("modal");
 
@@ -9,13 +9,16 @@ const ModalWrapper = ({ children, hideModalHandler }) => {
   const onParentContainerClick = e => {
     return e.stopPropagation();
   };
+  if (modalRoot) {
+    return createPortal(
+      <StyledModalWrapper onClick={hideModalHandler}>
+        <StyledModalContainer onClick={onParentContainerClick}>{children}</StyledModalContainer>
+      </StyledModalWrapper>,
+      modalRoot,
+    );
+  }
 
-  return createPortal(
-    <ModalStyled onClick={hideModalHandler}>
-      <ModalContainer onClick={onParentContainerClick}>{children}</ModalContainer>
-    </ModalStyled>,
-    modalRoot,
-  );
+  return null;
 };
 
 export default ModalWrapper;

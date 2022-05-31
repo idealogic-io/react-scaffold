@@ -1,7 +1,12 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import App from "./App";
+import ProvidersWithContext from "./Providers";
 
-test("renders learn react link", () => {
-  render(<App />);
+import Navigation from "navigation";
+
+test("renders App", () => {
+  render(
+    <ProvidersWithContext>
+      <Navigation />
+    </ProvidersWithContext>,
+  );
 });

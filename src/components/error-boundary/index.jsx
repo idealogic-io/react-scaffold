@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ErrorBoundaryStyled } from "./styles";
+import { StyledErrorBoundary } from "./StyledErrorBoundary";
 
 import { Text, InternalLink } from "components";
 import { ROUTES } from "navigation/routes";
@@ -22,13 +22,13 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <ErrorBoundaryStyled>
+        <StyledErrorBoundary>
           <Text as="h1" fontSize="32px">
             Something went wrong!
           </Text>
           <Text>Please, go to home page</Text>
           <InternalLink to={ROUTES.landing}>Go to home</InternalLink>
-        </ErrorBoundaryStyled>
+        </StyledErrorBoundary>
       );
     }
 

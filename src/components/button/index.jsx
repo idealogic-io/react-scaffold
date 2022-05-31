@@ -1,5 +1,6 @@
 import React, { cloneElement, isValidElement } from "react";
-import ButtonStyled, { scales, variants } from "./styles";
+import StyledButton from "./StyledButton";
+import { scales, variants } from "./theme";
 
 const getExternalLinkProps = () => ({
   target: "_blank",
@@ -12,7 +13,7 @@ const Button = props => {
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <ButtonStyled disabled={isDisabled} $isLoading={isLoading} {...internalProps} {...props}>
+    <StyledButton disabled={isDisabled} $isLoading={isLoading} {...internalProps} {...props}>
       <>
         {isValidElement(startIcon) &&
           cloneElement(startIcon, {
@@ -24,7 +25,7 @@ const Button = props => {
             ml: "0.5rem",
           })}
       </>
-    </ButtonStyled>
+    </StyledButton>
   );
 };
 

@@ -1,15 +1,15 @@
 import { Text } from "components";
 import React from "react";
 
-import { LoaderStyled } from "./styles";
+import { StyledLoader } from "./StyledLoader";
 
 const Loader = () => {
   return (
-    <LoaderStyled>
+    <StyledLoader>
       <Text as="h1" fontSize="32px">
         Loading ...
       </Text>
-    </LoaderStyled>
+    </StyledLoader>
   );
 };
 
