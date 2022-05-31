@@ -9,11 +9,11 @@ const component = {
   [ModalNames.someModal]: () => <div>Some Modal</div>,
 };
 
-const Modal = () => {
+const Modal: React.FC = () => {
   const { modalName } = useAppSelector(state => state.modal);
 
   const dispatch = useAppDispatch();
-  const ModalComponent = component[modalName];
+  const ModalComponent = component[modalName as keyof typeof ModalNames] ?? null;
 
   const hideModalHandler = () => {
     dispatch(hideModal());

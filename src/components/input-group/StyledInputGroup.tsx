@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { Box, Input, inputScales } from "components";
+import { Box, Input } from "components";
 
 import { InputIconProps, StyledInputGroupProps } from "./types";
-import { Scales } from "components/input/types";
+import { Scales, scales as inputScales } from "components/input/types";
 
 const getPadding = (scale: Scales, hasIcon: boolean) => {
   if (!hasIcon) {

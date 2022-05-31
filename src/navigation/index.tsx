@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
+
 import { RequireAuth, TokenHandler } from "./components";
 import { ROUTES } from "./routes";
 
@@ -9,7 +10,7 @@ const HomePage = React.lazy(() => import("pages/home"));
 const LoginPage = React.lazy(() => import("pages/login"));
 const LandingPage = React.lazy(() => import("pages/landing"));
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   return (
     <Router>
       <Routes>

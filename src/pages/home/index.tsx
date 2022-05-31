@@ -9,7 +9,7 @@ import { useAppDispatch } from "store/store";
 import { logout } from "store/reducers/auth";
 import { ModalNames, showModal } from "store/reducers/modal";
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const { toggleTheme } = useThemeContext();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();

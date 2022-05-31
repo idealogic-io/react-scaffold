@@ -3,7 +3,9 @@ import { space } from "styled-system";
 
 import { Box } from "../container";
 
-export const Row = styled(Box)`
+import { AutoRowProps, RowProps } from "../types";
+
+export const Row = styled(Box)<RowProps>`
   width: ${({ width }) => width ?? "100%"};
   display: flex;
   align-items: ${({ align }) => align ?? "center"};
@@ -25,7 +27,7 @@ export const RowFlat = styled.div`
   ${space}
 `;
 
-export const AutoRow = styled(Row)`
+export const AutoRow = styled(Row)<AutoRowProps>`
   flex-wrap: wrap;
   margin: ${({ gap }) => gap && `-${gap}`};
   justify-content: ${({ justify }) => justify};
@@ -35,7 +37,7 @@ export const AutoRow = styled(Row)`
   }
 `;
 
-export const RowFixed = styled(Row)`
+export const RowFixed = styled(Row)<AutoRowProps>`
   width: fit-content;
   margin: ${({ gap }) => gap && `-${gap}`};
 `;

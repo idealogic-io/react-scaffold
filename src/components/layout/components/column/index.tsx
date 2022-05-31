@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { AutoColumnProps } from "../types";
 
 export const Column = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ export const gridGap = {
   LG: "lg",
 };
 
-export const AutoColumn = styled.div`
+export const AutoColumn = styled.div<AutoColumnProps>`
   display: grid;
   grid-auto-rows: auto;
   grid-row-gap: ${({ gap }) =>

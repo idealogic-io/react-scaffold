@@ -5,13 +5,14 @@ import { useLocation } from "react-router-dom";
 
 import { DEFAULT_META, getCustomMeta } from "configs";
 import { Container } from "../container";
+import { FCWithChildren } from "types";
 
 const StyledPage = styled(Container)`
   min-height: 100vh;
   padding: 16px;
 `;
 
-export const PageMeta = () => {
+export const PageMeta: React.FC = () => {
   const { pathname } = useLocation();
 
   const pageMeta = getCustomMeta(pathname) || {};
@@ -27,7 +28,7 @@ export const PageMeta = () => {
   );
 };
 
-export const Page = ({ children, ...props }) => {
+export const Page: React.FC<FCWithChildren> = ({ children, ...props }) => {
   return (
     <>
       <PageMeta />

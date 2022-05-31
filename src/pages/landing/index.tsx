@@ -5,7 +5,7 @@ import { Button, Page, Text } from "components";
 // Context
 import { useTranslation } from "context";
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (

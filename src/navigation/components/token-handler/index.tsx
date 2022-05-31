@@ -4,7 +4,9 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ROUTES } from "navigation/routes";
 
-const TokenHandler = ({ children }) => {
+import { FCWithChildren } from "types";
+
+const TokenHandler: React.FC<FCWithChildren> = ({ children }) => {
   const { token } = useAppSelector(state => state.auth);
 
   const location = useLocation();
@@ -13,7 +15,7 @@ const TokenHandler = ({ children }) => {
     return <Navigate to={"/" + ROUTES.home} state={{ from: location }} replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default TokenHandler;

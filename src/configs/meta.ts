@@ -4,7 +4,7 @@ export const DEFAULT_META = {
   image: "https://ru.reactjs.org/logo-og.png",
 };
 
-export const getCustomMeta = path => {
+export const getCustomMeta = (path: string) => {
   let basePath = path;
   if (path.startsWith("/login")) {
     basePath = "/login";

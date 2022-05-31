@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ErrorBoundaryStyled = styled.div`
+export const StyledLoader = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;

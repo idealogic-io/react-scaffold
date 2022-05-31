@@ -4,6 +4,7 @@ import { Box, Button, Input, Page, Text, InputGroup, Column } from "components";
 import { AddIcon } from "components/svg";
 // Store
 import { useAppDispatch } from "store/store";
+
 import { loginUser } from "store/reducers/auth/actions";
 // Context
 import { useTranslation } from "context";
@@ -11,7 +12,7 @@ import { useTranslation } from "context";
 import { useForm } from "hooks";
 import { useValidationSchema } from "./hooks";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const [isPassword, setIsPassword] = useState(true);
 
   const dispatch = useAppDispatch();
@@ -22,14 +23,13 @@ const LoginPage = () => {
     initialValues,
     validationSchema,
     onSubmit(values) {
-      const data = {
-        email: values.email.toLowerCase(),
-        password: values.password,
-      };
-
-      dispatch(loginUser(data));
+      handleLogin(values.email, values.password);
     },
   });
+
+  const handleLogin = async (email: string, password: string) => {
+    dispatch(loginUser({ email: email.toLowerCase(), password: password }));
+  };
 
   const togglePasswordVisibleHandler = () => {
     setIsPassword(!isPassword);

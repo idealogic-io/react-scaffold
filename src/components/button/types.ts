@@ -3,7 +3,7 @@ import { DefaultTheme } from "styled-components";
 import { LayoutProps, SpaceProps } from "styled-system";
 
 import { Colors } from "theme/types";
-import { FCWithChildren } from "types";
+import { FCWithChildren, PolymorphicComponentProps } from "types";
 
 export const variants = {
   PRIMARY: "primary",
@@ -18,11 +18,11 @@ export const scales = {
 export type Scale = typeof scales[keyof typeof scales];
 export type Variant = typeof variants[keyof typeof variants];
 
-export interface ThemedProps extends ButtonProps {
+export interface ThemedProps extends BaseButtonProps {
   theme: DefaultTheme;
 }
 
-export interface ButtonProps extends LayoutProps, SpaceProps, FCWithChildren {
+export interface BaseButtonProps extends LayoutProps, SpaceProps, FCWithChildren {
   as?: "a" | "button" | ElementType;
   external?: boolean;
   isLoading?: boolean;
@@ -33,3 +33,5 @@ export interface ButtonProps extends LayoutProps, SpaceProps, FCWithChildren {
   endIcon?: ReactNode;
   color?: keyof Colors;
 }
+
+export type ButtonProps<P extends ElementType = "button"> = PolymorphicComponentProps<P, BaseButtonProps>;

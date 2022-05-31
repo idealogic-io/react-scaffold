@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement } from "react";
+import React, { cloneElement, ElementType, isValidElement } from "react";
 
 import StyledButton from "./StyledButton";
 import { ButtonProps, scales, variants } from "./types";
@@ -8,12 +8,13 @@ const getExternalLinkProps = () => ({
   rel: "noreferrer noopener",
 });
 
-const Button: React.FC<ButtonProps> = ({ startIcon, endIcon, children, isLoading, disabled, external, ...props }) => {
+const Button = <E extends ElementType = "button">(props: ButtonProps<E>): JSX.Element => {
+  const { startIcon, endIcon, children, isLoading, disabled, external, ...rest } = props;
   const isDisabled = isLoading || disabled;
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <StyledButton disabled={isDisabled} isLoading={isLoading} {...internalProps} {...props}>
+    <StyledButton disabled={isDisabled} isLoading={isLoading} {...internalProps} {...rest}>
       <>
         {isValidElement(startIcon) &&
           cloneElement(startIcon, {

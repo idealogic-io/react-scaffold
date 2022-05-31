@@ -21,10 +21,9 @@ export {
   PageMeta,
   Page,
 } from "./layout";
-
 export { default as NotFoundPage } from "./not-found-page";
 export { default as Modal } from "./modal";
 export { ModalWrapper } from "./modal/components";
-export { default as Input, scales as inputScales } from "./input";
+export { default as Input } from "./input";
 export { default as InputGroup } from "./input-group";
 export { default as InternalLink } from "./link";
