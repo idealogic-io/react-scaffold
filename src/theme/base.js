@@ -14,7 +14,6 @@ const mediaQueries = {
   lg: `@media screen and (min-width: ${breakpointMap.lg}px)`,
   xl: `@media screen and (min-width: ${breakpointMap.xl}px)`,
   xxl: `@media screen and (min-width: ${breakpointMap.xxl}px)`,
-  nav: `@media screen and (min-width: ${breakpointMap.lg}px)`,
 };
 
 const shadows = {
@@ -33,19 +32,21 @@ const zIndices = {
   modal: 100,
 };
 
-export const fontsStyles = {
-  mv: {
-    regular: {
-      "font-family": "MerriWeather",
-      "font-weight": "400",
-      "font-style": "normal",
-    },
-    bold: {
-      "font-family": "MerriWeather",
-      "font-weight": "700",
-      "font-style": "normal",
-    },
+const mvFontStyle = {
+  regular: {
+    "font-family": "MerriWeather",
+    "font-weight": "400",
+    "font-style": "normal",
   },
+  bold: {
+    "font-family": "MerriWeather",
+    "font-weight": "700",
+    "font-style": "normal",
+  },
+};
+
+export const fontsStyles = {
+  mv: mvFontStyle,
 };
 
 export default {

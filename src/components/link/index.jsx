@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { StyledInternalLink } from "./styles";
+import { StyledInternalLink } from "./StyledInternalLink";
 
 const InternalLink = ({ children, ...props }) => {
   return (

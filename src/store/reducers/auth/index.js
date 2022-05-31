@@ -15,7 +15,7 @@ const applyToken = token => {
 
 const initialState = {
   token: null,
-  error: "",
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -34,14 +34,13 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        if (action.payload?.data?.auth_token) {
-          const { auth_token } = action.payload.data;
-          state.token = applyToken(auth_token);
-          state.error = "";
-        }
+        const { auth_token } = action.payload;
+
+        state.token = applyToken(auth_token);
+        state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        if (action.payload?.message) {
+        if (action.payload?.isError) {
           const { message } = action.payload;
 
           state.error = message;

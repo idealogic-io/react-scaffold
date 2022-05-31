@@ -9,13 +9,13 @@ import { pokemonApi } from "./reducers/pokemon";
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => [
-    ...getDefaultMiddleware(),
-    pokemonApi.middleware,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat([
+      pokemonApi.middleware,
 
-    //TODO comment next line in prod
-    createLogger(),
-  ],
+      //TODO comment next line in prod
+      createLogger(),
+    ]),
 });
 
 setupListeners(store.dispatch);

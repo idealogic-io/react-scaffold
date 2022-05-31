@@ -8,7 +8,8 @@ import { LOCAL_STORAGE_KEYS } from "configs";
 const ThemeContext = createContext(null);
 
 const ThemeContextProvider = ({ children }) => {
-  const defaultValue = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.isDark)) ?? false;
+  const defaultLSValue = localStorage.getItem(LOCAL_STORAGE_KEYS.isDark) ?? "false";
+  const defaultValue = JSON.parse(defaultLSValue);
   const [isDark, setIsDark] = useState(defaultValue);
 
   const theme = isDark ? darkTheme : lightTheme;
@@ -19,7 +20,9 @@ const ThemeContextProvider = ({ children }) => {
   };
 
   function toggleTheme() {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.isDark, !isDark);
+    const lcValue = JSON.stringify(!isDark);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.isDark, lcValue);
+
     setIsDark(!isDark);
   }
 

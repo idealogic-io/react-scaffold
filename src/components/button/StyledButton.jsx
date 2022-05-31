@@ -2,52 +2,7 @@ import styled from "styled-components";
 import { space, typography, layout, opacity, border, shadow, variant } from "styled-system";
 
 import { getFontStyles, getTextColor } from "components/text";
-
-export const variants = {
-  PRIMARY: "primary",
-  SECONDARY: "secondary",
-};
-
-export const scales = {
-  XL: "xl",
-  MD: "md",
-  SM: "sm",
-};
-
-export const scaleVariants = {
-  [scales.XL]: {
-    height: "54px",
-    width: "200px",
-    padding: "0 24px",
-  },
-  [scales.MD]: {
-    height: "48px",
-    width: "150px",
-    padding: "0 24px",
-  },
-  [scales.SM]: {
-    height: "32px",
-    width: "100px",
-    padding: "0 16px",
-  },
-};
-
-export const styleVariants = {
-  [variants.PRIMARY]: {
-    backgroundColor: "primary",
-    color: "white",
-  },
-  [variants.SECONDARY]: {
-    backgroundColor: "transparent",
-    border: "2px solid",
-    borderColor: "primary",
-    boxShadow: "none",
-    color: "primary",
-    ":disabled": {
-      backgroundColor: "transparent",
-    },
-  },
-};
+import { scaleVariants, styleVariants } from "./theme";
 
 const getDisabledStyles = ({ $isLoading, theme }) => {
   if ($isLoading) {
@@ -69,7 +24,7 @@ const getDisabledStyles = ({ $isLoading, theme }) => {
   `;
 };
 
-const ButtonStyled = styled.button`
+const StyledButton = styled.button`
   position: relative;
   align-items: center;
   border: 0;
@@ -109,4 +64,4 @@ const ButtonStyled = styled.button`
   }
 `;
 
-export default ButtonStyled;
+export default StyledButton;

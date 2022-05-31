@@ -20,7 +20,7 @@ const LanguageContextProvider = ({ children }) => {
 
     return {
       ...initialState,
-      currentLanguage: languages[codeFromStorage] || EN,
+      currentLanguage: codeFromStorage in languages ? languages[codeFromStorage] : EN,
     };
   });
 

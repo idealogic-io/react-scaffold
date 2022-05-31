@@ -13,7 +13,7 @@ const Modal = () => {
   const { modalName } = useAppSelector(state => state.modal);
 
   const dispatch = useAppDispatch();
-  const ModalComponent = component[modalName];
+  const ModalComponent = modalName ? component[modalName] : null;
 
   const hideModalHandler = () => {
     dispatch(hideModal());
