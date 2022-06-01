@@ -24,8 +24,8 @@ export const CHAIN_ID_TO_NAME = {
 };
 
 export const chainRpc = {
-  [ChainId.Mainnet]: "https://rpc-mainnet.matic.network",
-  [ChainId.Testnet]: "https://rpc-mumbai.matic.today",
+  [ChainId.Mainnet]: "https://rpc-mainnet.matic.network/",
+  [ChainId.Testnet]: "https://matic-mumbai.chainstacklabs.com/",
 };
 
 export const scanUrl = {

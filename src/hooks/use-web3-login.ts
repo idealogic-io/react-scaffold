@@ -10,13 +10,10 @@ import {
 } from "@web3-react/walletconnect-connector";
 // Configs
 import { LOCAL_STORAGE_KEYS } from "configs";
-// Context
-import { useTranslation } from "context";
 // Utils
 import { ConnectorNames, setupNetwork, connectorsByName } from "utils/web3";
 
 const useWeb3Login = () => {
-  const { t } = useTranslation();
   const { chainId, activate, deactivate, setError } = useWeb3React();
 
   const login = useCallback(
@@ -29,8 +26,11 @@ const useWeb3Login = () => {
           if (error instanceof UnsupportedChainIdError) {
             const provider = await connector.getProvider();
             const hasSetup = await setupNetwork(provider);
+
             if (hasSetup) {
               activate(connector);
+            } else {
+              deactivate();
             }
           } else {
             window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
@@ -59,13 +59,12 @@ const useWeb3Login = () => {
         console.error("Unable to find connector");
       }
     },
-    [t, activate, setError],
+    [activate, setError],
   );
 
   const logout = useCallback(() => {
     deactivate();
   }, [deactivate, chainId]);
-
   return { login, logout };
 };
 
