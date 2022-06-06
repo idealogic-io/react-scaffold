@@ -24,7 +24,7 @@ const HomePage = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" fontStyle="bold">
+      <Text fontSize="32px" as="h1" bold>
         {t("Main page")}
       </Text>
       <RowBetween py="12px">

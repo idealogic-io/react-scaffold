@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 // Styles
 import { GlobalStyle } from "styles";
 // Context
-import { LanguageContext, ThemeContextProvider, useThemeContext, useTranslation } from "context";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext, useTranslation } from "context";
 // Store
 import store from "store/store";
 // Components
@@ -35,9 +35,9 @@ const Providers = ({ children }) => {
 const ProvidersWithContext = ({ children }) => {
   return (
     <ThemeContextProvider>
-      <LanguageContext>
+      <LanguageContextProvider>
         <Providers>{children}</Providers>
-      </LanguageContext>
+      </LanguageContextProvider>
     </ThemeContextProvider>
   );
 };

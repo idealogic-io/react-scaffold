@@ -2,20 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 import MerriWeatherRegularWoff from "assets/fonts/Merriweather-Regular.woff";
 import MerriWeatherRegularWoff2 from "assets/fonts/Merriweather-Regular.woff2";
-import MerriWeatherBoldWoff from "assets/fonts/Merriweather-Bold.woff";
-import MerriWeatherBoldWoff2 from "assets/fonts/Merriweather-Bold.woff2";
 
 const GlobalStyle = createGlobalStyle`
-@font-face {
-  font-family: "Merriweather";
-  src: local("Merriweather Bold"),
-  url(${MerriWeatherBoldWoff}) format("woff"),
-  url(${MerriWeatherBoldWoff2}) format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @font-face {
   font-family: "Merriweather";
   src: local("Merriweather Regular"),

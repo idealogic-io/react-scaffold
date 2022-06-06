@@ -32,21 +32,14 @@ const zIndices = {
   modal: 100,
 };
 
-const mvFontStyle = {
-  regular: {
-    "font-family": "MerriWeather",
-    "font-weight": "400",
-    "font-style": "normal",
-  },
-  bold: {
-    "font-family": "MerriWeather",
-    "font-weight": "700",
-    "font-style": "normal",
-  },
+const fontWeight = {
+  bold: 900,
+  medium: 600,
+  regular: 400,
 };
 
-export const fontsStyles = {
-  mv: mvFontStyle,
+const fonts = {
+  mv: "MerriWeather",
 };
 
 export default {
@@ -56,5 +49,6 @@ export default {
   shadows,
   radii,
   zIndices,
-  fontsStyles,
+  fonts,
+  fontWeight,
 };

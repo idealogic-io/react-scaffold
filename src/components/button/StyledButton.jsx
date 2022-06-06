@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { space, typography, layout, opacity, border, shadow, variant } from "styled-system";
 
-import { getFontStyles, getTextColor } from "components/text";
 import { scaleVariants, styleVariants } from "./theme";
 
 const getDisabledStyles = ({ $isLoading, theme }) => {
@@ -39,8 +38,6 @@ const StyledButton = styled.button`
   outline: 0;
   font-size: 16px;
   font-weight: 600;
-  ${getFontStyles};
-  ${getTextColor};
   ${getDisabledStyles};
   ${variant({
     prop: "scale",

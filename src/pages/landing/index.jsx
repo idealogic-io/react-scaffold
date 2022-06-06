@@ -10,7 +10,7 @@ const LandingPage = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" fontStyle="bold">
+      <Text fontSize="32px" as="h1" bold>
         {t("Landing Page")}
       </Text>
 
