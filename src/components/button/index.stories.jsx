@@ -19,10 +19,10 @@ export const Disabled = () => {
 export const Variants = () => {
   return (
     <div>
-      {Object.values(variants).map(variant => {
+      {Object.keys(variants).map(variant => {
         return (
           <Box key={variant} mb="32px">
-            {Object.values(scales).map(scale => {
+            {Object.keys(scales).map(scale => {
               return (
                 <Button key={scale} variant={variant} scale={scale} mr="8px">
                   {`${variant} ${scale.toUpperCase()}`}
