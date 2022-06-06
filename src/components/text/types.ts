@@ -1,7 +1,6 @@
 import { DefaultTheme } from "styled-components";
 import { LayoutProps, SpaceProps, TypographyProps, OpacityProps } from "styled-system";
 
-import { FStyles } from "theme/types";
 import { Colors } from "theme/types";
 
 export interface ThemedProps extends TextProps {
@@ -11,6 +10,7 @@ export interface ThemedProps extends TextProps {
 export interface TextProps extends SpaceProps, TypographyProps, LayoutProps, OpacityProps {
   color?: keyof Colors;
   ellipsis?: boolean;
-  fStyle?: FStyles;
+  bold?: boolean;
+  medium?: boolean;
   textTransform?: "uppercase" | "lowercase" | "capitalize";
 }

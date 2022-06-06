@@ -1,4 +1,4 @@
-import { BreakpointsMap, FStyles, MediaQueries, MVFontStyle, Radii, Shadows, ZIndices } from "./types";
+import { BreakpointsMap, Fonts, FontWeight, MediaQueries, Radii, Shadows, ZIndices } from "./types";
 
 export const breakpointMap: BreakpointsMap = {
   xs: 370,
@@ -34,21 +34,14 @@ const zIndices: ZIndices = {
   modal: 100,
 };
 
-const mvFontStyle: MVFontStyle = {
-  regular: {
-    "font-family": "MerriWeather",
-    "font-weight": "400",
-    "font-style": "normal",
-  },
-  bold: {
-    "font-family": "MerriWeather",
-    "font-weight": "700",
-    "font-style": "normal",
-  },
+const fontWeight: FontWeight = {
+  bold: 900,
+  medium: 600,
+  regular: 400,
 };
 
-export const fontsStyles: FStyles = {
-  mv: mvFontStyle,
+const fonts: Fonts = {
+  mv: "MerriWeather",
 };
 
 export default {
@@ -58,5 +51,6 @@ export default {
   shadows,
   radii,
   zIndices,
-  fontsStyles,
+  fonts,
+  fontWeight,
 };
