@@ -6,7 +6,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 // Styles
 import { GlobalStyle } from "styles";
 // Context
-import { LanguageContext, ThemeContextProvider, useThemeContext, useTranslation } from "context";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext, useTranslation } from "context";
 // Store
 import store from "store/store";
 // Components
@@ -45,9 +45,9 @@ const ProvidersWithContext: React.FC<FCWithChildren> = ({ children }) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeContextProvider>
-        <LanguageContext>
+        <LanguageContextProvider>
           <Providers>{children}</Providers>
-        </LanguageContext>
+        </LanguageContextProvider>
       </ThemeContextProvider>
     </Web3ReactProvider>
   );

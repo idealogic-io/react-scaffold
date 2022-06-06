@@ -5,6 +5,5 @@ import { Colors } from "theme/types";
 
 export interface SvgProps extends SVGAttributes<HTMLOrSVGElement>, SpaceProps {
   theme?: DefaultTheme;
-  spin?: boolean;
   color?: keyof Colors;
 }
