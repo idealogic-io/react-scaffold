@@ -28,13 +28,14 @@ export type SingleFontStyle = {
   [key: string]: string;
 };
 
-export type MVFontStyle = {
-  regular: SingleFontStyle;
-  bold: SingleFontStyle;
+export type FontWeight = {
+  bold: 900;
+  medium: 600;
+  regular: 400;
 };
 
-export type FStyles = {
-  mv: MVFontStyle;
+export type Fonts = {
+  mv: string;
 };
 
 export type ZIndices = {

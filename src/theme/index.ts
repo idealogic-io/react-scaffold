@@ -1,7 +1,7 @@
 export { darkColors, lightColors } from "./colors";
 export { default as dark } from "./dark";
 export { default as light } from "./light";
-import { BreakpointsMap, Colors, FStyles, MediaQueries, Radii, Shadows, ZIndices } from "./types";
+import { BreakpointsMap, Colors, Fonts, FontWeight, MediaQueries, Radii, Shadows, ZIndices } from "./types";
 
 export interface CustomTheme {
   siteWidth: number;
@@ -10,7 +10,8 @@ export interface CustomTheme {
   shadows: Shadows;
   radii: Radii;
   zIndices: ZIndices;
-  fontsStyles: FStyles;
+  fontWeight: FontWeight;
   colors: Colors;
   isDark: boolean;
+  fonts: Fonts;
 }

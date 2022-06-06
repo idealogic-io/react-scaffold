@@ -37,7 +37,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" fontStyle="bold">
+      <Text fontSize="32px" as="h1" bold>
         {t("Login Page")}
       </Text>
       <Box width="300px" py="16px">
