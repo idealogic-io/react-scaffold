@@ -19,7 +19,6 @@
     "redux-logger": "^3.0.6",
     "styled-components": "^5.3.5",
     "styled-system": "^5.1.5",
-    "themeprovider-storybook": "^1.8.0",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
@@ -77,6 +76,7 @@
     "@storybook/react": "^6.5.7",
     "@storybook/testing-library": "^0.0.11",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "themeprovider-storybook": "^1.8.0"
   }
 }
