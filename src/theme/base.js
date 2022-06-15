@@ -3,7 +3,6 @@ export const breakpointMap = {
   sm: 425,
   md: 550,
   lg: 768,
-  xl_modal: 900,
   xl: 1080,
   xxl: 1200,
 };
