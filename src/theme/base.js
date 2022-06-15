@@ -1,8 +1,9 @@
 export const breakpointMap = {
-  xs: 370,
-  sm: 576,
-  md: 852,
-  lg: 968,
+  xs: 320,
+  sm: 425,
+  md: 550,
+  lg: 768,
+  xl_modal: 900,
   xl: 1080,
   xxl: 1200,
 };
