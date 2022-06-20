@@ -17,7 +17,7 @@ module.exports = app => {
   const filesRegex = `^${FILES_PATH}`;
   app.use(
     createProxyMiddleware(FILES_PATH, {
-      target: "http://18.135.218.230:8000",
+      target: process.env.REACT_APP_API_PROXY_URL,
       pathRewrite: { [filesRegex]: "" },
       changeOrigin: true,
       onProxyRes,
