@@ -10,7 +10,7 @@ export const loginUser = createAsyncThunk("user/login", async (data, { rejectWit
   });
 
   if (isErrorResult(result)) {
-    return rejectWithValue({ message: result.error.message });
+    return rejectWithValue(result);
   }
 
   return result;
