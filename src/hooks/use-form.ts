@@ -4,9 +4,9 @@ import { useFormik, FormikConfig } from "formik";
 const useForm = <Values>(config: FormikConfig<Values>) => {
   const formik = useFormik({
     ...config,
-    validateOnBlur: false,
-    // validateOnChange: false,
-    validateOnMount: false,
+    validateOnBlur: true,
+    validateOnChange: true,
+    validateOnMount: true,
   });
 
   return {
@@ -16,6 +16,9 @@ const useForm = <Values>(config: FormikConfig<Values>) => {
         ...formik.getFieldProps(field),
         onChange: (e: ChangeEvent<HTMLInputElement>) => {
           return formik.setFieldValue(field as string, e.target.value);
+        },
+        onBlur: () => {
+          return formik.setFieldTouched(field as string, true, true);
         },
       };
     },

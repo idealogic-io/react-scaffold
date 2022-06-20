@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
   const { t } = useTranslation();
   const { validationSchema, initialValues } = useValidationSchema();
 
-  const { fieldProps, handleSubmit, errors, isValid } = useForm({
+  const { fieldProps, handleSubmit, errors, touched, isValid } = useForm({
     initialValues,
     validationSchema,
     onSubmit(values) {
@@ -44,7 +44,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <Column>
             <Input {...fieldProps("email")} />
-            <Text my="4px">{errors.email}</Text>
+            <Text my="4px">{touched.email && errors.email}</Text>
 
             <InputGroup
               startIcon={<AddIcon width="18px" />}
@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
             >
               <Input {...fieldProps("password")} type={isPassword ? "password" : "text"} />
             </InputGroup>
-            <Text my="4px">{errors.password}</Text>
+            <Text my="4px">{touched.password && errors.password}</Text>
 
             <Button disabled={!isValid} type="submit">
               {t("Login")}
