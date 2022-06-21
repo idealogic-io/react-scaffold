@@ -18,11 +18,9 @@ const Providers = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <BrowserRouter>
-          <GlobalStyle />
-          <Modal />
-          {children}
-        </BrowserRouter>
+        <GlobalStyle />
+        <Modal />
+        {children}
       </Provider>
     </ThemeProvider>
   );
@@ -30,17 +28,19 @@ const Providers = ({ children }) => {
 
 const ProvidersWithContext = ({ children }) => {
   return (
-    <Suspense fallback={<Loader />}>
-      <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
-        <HelmetProvider>
-          <LanguageContextProvider fallback={<Loader />}>
-            <ThemeContextProvider>
-              <Providers>{children}</Providers>
-            </ThemeContextProvider>
-          </LanguageContextProvider>
-        </HelmetProvider>
-      </ErrorBoundary>
-    </Suspense>
+    <BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
+          <HelmetProvider>
+            <LanguageContextProvider fallback={<Loader />}>
+              <ThemeContextProvider>
+                <Providers>{children}</Providers>
+              </ThemeContextProvider>
+            </LanguageContextProvider>
+          </HelmetProvider>
+        </ErrorBoundary>
+      </Suspense>
+    </BrowserRouter>
   );
 };
 

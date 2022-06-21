@@ -13,7 +13,7 @@ const Button = props => {
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <StyledButton disabled={isDisabled} $isLoading={isLoading} {...internalProps} {...props}>
+    <StyledButton {...internalProps} {...props} disabled={isDisabled} $isLoading={isLoading}>
       <>
         {isValidElement(startIcon) &&
           cloneElement(startIcon, {
