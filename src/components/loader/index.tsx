@@ -1,15 +1,10 @@
-import { Text } from "components";
 import React from "react";
-
-import { StyledLoader } from "./StyledLoader";
 
 const Loader: React.FC = () => {
   return (
-    <StyledLoader>
-      <Text as="h1" fontSize="32px">
-        Loading ...
-      </Text>
-    </StyledLoader>
+    <div>
+      <h1>Loading ...</h1>
+    </div>
   );
 };
 

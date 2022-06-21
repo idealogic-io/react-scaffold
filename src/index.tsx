@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 
 import reportWebVitals from "reportWebVitals";
 
@@ -9,11 +8,9 @@ import Navigation from "navigation";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ProvidersWithContext>
-        <Navigation />
-      </ProvidersWithContext>
-    </BrowserRouter>
+    <ProvidersWithContext>
+      <Navigation />
+    </ProvidersWithContext>
   </React.StrictMode>,
   document.getElementById("root"),
 );

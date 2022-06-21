@@ -14,7 +14,7 @@ const Button = <E extends ElementType = "button">(props: ButtonProps<E>): JSX.El
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <StyledButton disabled={isDisabled} isLoading={isLoading} {...internalProps} {...rest}>
+    <StyledButton {...internalProps} {...rest} disabled={isDisabled} isLoading={isLoading}>
       <>
         {isValidElement(startIcon) &&
           cloneElement(startIcon, {

@@ -2,45 +2,47 @@ import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
+import { BrowserRouter } from "react-router-dom";
 // Styles
 import { GlobalStyle } from "styles";
 // Context
-import { LanguageContextProvider, ThemeContextProvider, useThemeContext, useTranslation } from "context";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "context";
 // Store
 import store from "store/store";
 // Components
-import { ErrorBoundary, Loader, Modal } from "components";
+import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
 // Types
 import { FCWithChildren } from "types";
 
 const Providers: React.FC<FCWithChildren> = ({ children }) => {
   const { theme } = useThemeContext();
-  const { isFetching } = useTranslation();
 
   return (
-    <HelmetProvider>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Suspense fallback={<Loader />}>
-            <ErrorBoundary>
-              <GlobalStyle />
-              <Modal />
-              {isFetching ? <Loader /> : children}
-            </ErrorBoundary>
-          </Suspense>
-        </ThemeProvider>
+        <GlobalStyle />
+        <Modal />
+        {children}
       </Provider>
-    </HelmetProvider>
+    </ThemeProvider>
   );
 };
 
 const ProvidersWithContext: React.FC<FCWithChildren> = ({ children }) => {
   return (
-    <ThemeContextProvider>
-      <LanguageContextProvider>
-        <Providers>{children}</Providers>
-      </LanguageContextProvider>
-    </ThemeContextProvider>
+    <BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
+          <HelmetProvider>
+            <LanguageContextProvider fallback={<Loader />}>
+              <ThemeContextProvider>
+                <Providers>{children}</Providers>
+              </ThemeContextProvider>
+            </LanguageContextProvider>
+          </HelmetProvider>
+        </ErrorBoundary>
+      </Suspense>
+    </BrowserRouter>
   );
 };
 

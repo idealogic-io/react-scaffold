@@ -1,4 +1,4 @@
-export { default as ErrorBoundary } from "./error-boundary";
+export { ErrorBoundary, ErrorBoundaryFallback } from "./error-boundary";
 export { default as Loader } from "./loader";
 export { default as Text } from "./text";
 export { default as Button } from "./button/index";
