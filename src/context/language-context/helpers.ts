@@ -4,11 +4,16 @@ import { EN, LOCAL_STORAGE_KEYS, REGEX } from "configs";
 export const fetchLocale = async (locale: string) => {
   const response = await fetch(`/locales/${locale}.json`);
   if (response.ok) {
-    const data = await response.json();
-    return data;
+    try {
+      const data = await response.json();
+      return data;
+    } catch (e) {
+      console.error(`Failed to fetch locale ${locale}`, response.statusText);
+
+      return null;
+    }
   }
 
-  console.error(`Failed to fetch locale ${locale}`, response.statusText);
   return null;
 };
 

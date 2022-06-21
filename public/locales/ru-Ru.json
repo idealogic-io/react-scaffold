@@ -1,0 +1,17 @@
+{
+  "%num% Replaced": "%num% Замещен",
+  "Login Page": "Логин",
+  "Landing Page": "Лендинг",
+  "Login": "Логин",
+  "Main Page": "Главная",
+  "Redirect": "Редирект",
+  "Toggle Theme": "Сменить тему",
+  "Open Modal": "Открыть модалку",
+  "Logout": "Выйти",
+  "Link to Home page": "Ссылка на главную",
+  "Invalid email": "Невалидная почта",
+  "This field is required": "Это поле обязательно",
+  "Change Language": "Сменить язык",
+  "Connect %provider%": "Подключить %provider%",
+  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Должен содержать 8 символов, один верхнего, один нижнего регистров, одно число и один специальный символ"
+}

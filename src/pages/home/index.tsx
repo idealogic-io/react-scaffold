@@ -22,11 +22,13 @@ import {
 import { Connector } from "utils/web3/types";
 import { Course, NormalizedCourse } from "./types";
 
+import { RU, EN } from "configs/languages";
+
 const HomePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastCourse, setLastCourse] = useState<NormalizedCourse | null>(null);
 
-  const { t } = useTranslation();
+  const { t, currentLanguage, changeLanguage } = useTranslation();
   const { chainId, account, active, error, library } = useActiveWeb3();
   const { balance } = useWeb3Balance();
   const { login, logout } = useWeb3Login();
@@ -89,10 +91,16 @@ const HomePage: React.FC = () => {
     }
   };
 
+  const changeLanguageHandler = () => {
+    const newLanguage = currentLanguage.code === "en" ? RU : EN;
+
+    changeLanguage(newLanguage);
+  };
+
   return (
     <Page>
       <Text fontSize="32px" as="h1" bold>
-        {t("Main page")}
+        {t("Main Page")}
       </Text>
       <Column>
         {isActivated && (
@@ -140,8 +148,9 @@ const HomePage: React.FC = () => {
         {isActivated && lastCourse && JSON.stringify(lastCourse)}
 
         <Button scale="md" onClick={logout} my="4px">
-          Logout
+          {t("Logout")}
         </Button>
+        <Button onClick={changeLanguageHandler}>{t("Change Language")}</Button>
       </Column>
     </Page>
   );

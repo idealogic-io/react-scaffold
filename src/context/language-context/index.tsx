@@ -3,8 +3,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { EN, languages, LOCAL_STORAGE_KEYS } from "configs";
 import { fetchLocale, getLanguageCodeFromLS, translatedTextIncludesVariable } from "./helpers";
 
-import { ContextApi, ContextData, ContextType, Language, TranslationKey } from "./types";
-import { FCWithChildren } from "types";
+import { ContextApi, ContextData, ContextType, Language, TranslationKey, LanguageContextProviderProps } from "./types";
 
 const initialState: ContextType = {
   isFetching: true,
@@ -15,11 +14,21 @@ const langKey = LOCAL_STORAGE_KEYS.language;
 
 export const languageMap = new Map();
 
+// function to translate text not in components
+// Usage: const translate = t(language);
+//        translate("Some Text")
+export const t = (currentLanguage: Language) => (key: string) => {
+  const translationSet = languageMap.get(currentLanguage.locale) ?? languageMap.get(EN.locale);
+  const translatedText = translationSet && translationSet[key] ? translationSet[key] : key;
+
+  return translatedText;
+};
+
 const LanguageContext = createContext<ContextApi | null>(null);
 
-const LanguageContextProvider: React.FC<FCWithChildren> = ({ children }) => {
+const LanguageContextProvider: React.FC<LanguageContextProviderProps> = ({ fallback, children }) => {
   const [state, setState] = useState(() => {
-    const codeFromStorage = getLanguageCodeFromLS();
+    let codeFromStorage = getLanguageCodeFromLS();
 
     return {
       ...initialState,
@@ -30,15 +39,18 @@ const LanguageContextProvider: React.FC<FCWithChildren> = ({ children }) => {
   const { currentLanguage } = state;
 
   const fetchInitialLocales = async () => {
-    const codeFromStorage = getLanguageCodeFromLS();
+    let codeFromStorage = getLanguageCodeFromLS();
 
-    const currentLocale = await fetchLocale(codeFromStorage);
-
-    if (currentLocale) {
-      languageMap.set(codeFromStorage, { ...currentLocale });
+    if (!(codeFromStorage in languages)) {
+      codeFromStorage = EN.locale;
     }
 
-    localStorage?.setItem(langKey, codeFromStorage);
+    const initialLocale = await fetchLocale(codeFromStorage);
+
+    if (initialLocale) {
+      languageMap.set(codeFromStorage, { ...initialLocale });
+      localStorage?.setItem(langKey, codeFromStorage);
+    }
 
     setState(prevState => ({
       ...prevState,
@@ -50,14 +62,27 @@ const LanguageContextProvider: React.FC<FCWithChildren> = ({ children }) => {
     fetchInitialLocales();
   }, []);
 
-  const setLanguage = useCallback(async (language: Language) => {
+  const changeLanguage = useCallback(async (language: Language) => {
     if (!languageMap.has(language.locale)) {
       setState(prevState => ({
         ...prevState,
         isFetching: true,
       }));
 
-      fetchInitialLocales();
+      const locale = await fetchLocale(language.locale);
+
+      if (locale) {
+        const enLocale = languageMap.get(EN.locale);
+        languageMap.set(language.locale, { ...enLocale, ...locale });
+      }
+
+      localStorage?.setItem(langKey, language.locale);
+
+      setState(prevState => ({
+        ...prevState,
+        isFetching: false,
+        currentLanguage: language,
+      }));
     } else {
       localStorage?.setItem(langKey, language.locale);
       setState(prevState => ({
@@ -71,7 +96,7 @@ const LanguageContextProvider: React.FC<FCWithChildren> = ({ children }) => {
   const translate = useCallback(
     (key: TranslationKey, data?: ContextData) => {
       const translationSet = languageMap.get(currentLanguage.locale) ?? languageMap.get(EN.locale);
-      const translatedText = translationSet[key] || key;
+      const translatedText = translationSet && translationSet[key] ? translationSet[key] : key;
 
       // Check the existence of at least one combination of %%, separated by 1 or more non space characters
       const includesVariable = translatedTextIncludesVariable(translatedText);
@@ -91,8 +116,12 @@ const LanguageContextProvider: React.FC<FCWithChildren> = ({ children }) => {
     [currentLanguage],
   );
 
+  if (state.isFetching && fallback) {
+    return fallback;
+  }
+
   return (
-    <LanguageContext.Provider value={{ ...state, setLanguage, t: translate }}>{children}</LanguageContext.Provider>
+    <LanguageContext.Provider value={{ ...state, changeLanguage, t: translate }}>{children}</LanguageContext.Provider>
   );
 };
 
