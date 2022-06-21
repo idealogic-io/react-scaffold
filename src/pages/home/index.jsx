@@ -8,10 +8,11 @@ import { useThemeContext, useTranslation } from "context";
 import { useAppDispatch } from "store/store";
 import { logout } from "store/reducers/auth";
 import { MODAL_NAMES, showModal } from "store/reducers/modal";
+import { RU, EN } from "configs/languages";
 
 const HomePage = () => {
   const { toggleTheme } = useThemeContext();
-  const { t } = useTranslation();
+  const { t, currentLanguage, changeLanguage } = useTranslation();
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
@@ -22,10 +23,16 @@ const HomePage = () => {
     dispatch(showModal(MODAL_NAMES.someModal));
   };
 
+  const changeLanguageHandler = () => {
+    const newLanguage = currentLanguage.code === "en" ? RU : EN;
+
+    changeLanguage(newLanguage);
+  };
+
   return (
     <Page>
       <Text fontSize="32px" as="h1" bold>
-        {t("Main page")}
+        {t("Main Page")}
       </Text>
       <RowBetween py="12px">
         <Button as="a" href="https://google.com" external>
@@ -36,6 +43,7 @@ const HomePage = () => {
         </Button>
         <Button onClick={openModalHandler}>{t("Open Modal")}</Button>
         <Button onClick={logoutHandler}>{t("Logout")}</Button>
+        <Button onClick={changeLanguageHandler}>{t("Change Language")}</Button>
       </RowBetween>
       <Row>
         <InternalLink to="/">{t("Link to Home page")}</InternalLink>

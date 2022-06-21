@@ -2,43 +2,45 @@ import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
+import { BrowserRouter } from "react-router-dom";
 // Styles
 import { GlobalStyle } from "styles";
 // Context
-import { LanguageContextProvider, ThemeContextProvider, useThemeContext, useTranslation } from "context";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "context";
 // Store
 import store from "store/store";
 // Components
-import { ErrorBoundary, Loader, Modal } from "components";
+import { ErrorBoundary, ErrorBoundaryFallback, Loader, Modal } from "components";
 
 const Providers = ({ children }) => {
   const { theme } = useThemeContext();
-  const { isFetching } = useTranslation();
 
   return (
-    <HelmetProvider>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Suspense fallback={<Loader />}>
-            <ErrorBoundary>
-              <GlobalStyle />
-              <Modal />
-              {isFetching ? <Loader /> : children}
-            </ErrorBoundary>
-          </Suspense>
-        </ThemeProvider>
+        <BrowserRouter>
+          <GlobalStyle />
+          <Modal />
+          {children}
+        </BrowserRouter>
       </Provider>
-    </HelmetProvider>
+    </ThemeProvider>
   );
 };
 
 const ProvidersWithContext = ({ children }) => {
   return (
-    <ThemeContextProvider>
-      <LanguageContextProvider>
-        <Providers>{children}</Providers>
-      </LanguageContextProvider>
-    </ThemeContextProvider>
+    <Suspense fallback={<Loader />}>
+      <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
+        <HelmetProvider>
+          <LanguageContextProvider fallback={<Loader />}>
+            <ThemeContextProvider>
+              <Providers>{children}</Providers>
+            </ThemeContextProvider>
+          </LanguageContextProvider>
+        </HelmetProvider>
+      </ErrorBoundary>
+    </Suspense>
   );
 };
 

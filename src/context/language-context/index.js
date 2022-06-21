@@ -11,10 +11,20 @@ const initialState = {
 const langKey = LOCAL_STORAGE_KEYS.language;
 
 export const languageMap = new Map();
+// languageMap.set(EN.locale, translations)
 
 const LanguageContext = createContext(null);
+// function to translate text not in components
+// Usage: const translate = t(language);
+//        translate("Some Text")
+export const t = currentLanguage => key => {
+  const translationSet = languageMap.get(currentLanguage.locale) ?? languageMap.get(EN.locale);
+  const translatedText = translationSet && translationSet[key] ? translationSet[key] : key;
 
-const LanguageContextProvider = ({ children }) => {
+  return translatedText;
+};
+
+const LanguageContextProvider = ({ fallback, children }) => {
   const [state, setState] = useState(() => {
     const codeFromStorage = getLanguageCodeFromLS();
 
@@ -47,14 +57,26 @@ const LanguageContextProvider = ({ children }) => {
     fetchInitialLocales();
   }, []);
 
-  const setLanguage = useCallback(async language => {
+  const changeLanguage = useCallback(async language => {
     if (!languageMap.has(language.locale)) {
       setState(prevState => ({
         ...prevState,
         isFetching: true,
       }));
 
-      fetchInitialLocales();
+      const locale = await fetchLocale(language.locale);
+      if (locale) {
+        const enLocale = languageMap.get(EN.locale);
+        languageMap.set(language.locale, { ...enLocale, ...locale });
+      }
+
+      localStorage?.setItem(langKey, language.locale);
+
+      setState(prevState => ({
+        ...prevState,
+        isFetching: false,
+        currentLanguage: language,
+      }));
     } else {
       localStorage?.setItem(langKey, language.locale);
       setState(prevState => ({
@@ -68,7 +90,8 @@ const LanguageContextProvider = ({ children }) => {
   const translate = useCallback(
     (key, data) => {
       const translationSet = languageMap.get(currentLanguage.locale) ?? languageMap.get(EN.locale);
-      const translatedText = translationSet[key] || key;
+
+      const translatedText = translationSet && translationSet[key] ? translationSet[key] : key;
 
       // Check the existence of at least one combination of %%, separated by 1 or more non space characters
       const includesVariable = translatedTextIncludesVariable(translatedText);
@@ -88,8 +111,12 @@ const LanguageContextProvider = ({ children }) => {
     [currentLanguage],
   );
 
+  if (state.isFetching && fallback) {
+    return fallback;
+  }
+
   return (
-    <LanguageContext.Provider value={{ ...state, setLanguage, t: translate }}>{children}</LanguageContext.Provider>
+    <LanguageContext.Provider value={{ ...state, changeLanguage, t: translate }}>{children}</LanguageContext.Provider>
   );
 };
 
