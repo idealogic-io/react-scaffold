@@ -3,14 +3,11 @@ import ReactDOM from "react-dom";
 
 import reportWebVitals from "reportWebVitals";
 
-import ProvidersWithContext from "./Providers";
-import Navigation from "navigation";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProvidersWithContext>
-      <Navigation />
-    </ProvidersWithContext>
+    <App />
   </React.StrictMode>,
   document.getElementById("root"),
 );

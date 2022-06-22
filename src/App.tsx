@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
@@ -11,8 +11,9 @@ import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "
 import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
+import Navigation from "navigation";
 
-const Providers: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
   return (
@@ -20,28 +21,28 @@ const Providers: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       <Provider store={store}>
         <GlobalStyle />
         <Modal />
-        {children}
+        <Navigation />
       </Provider>
     </ThemeProvider>
   );
 };
 
-const ProvidersWithContext: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loader />}>
-        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
-          <HelmetProvider>
+      <HelmetProvider>
+        <Suspense fallback={<Loader />}>
+          <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
             <LanguageContextProvider fallback={<Loader />}>
               <ThemeContextProvider>
-                <Providers>{children}</Providers>
+                <ThemedApp />
               </ThemeContextProvider>
             </LanguageContextProvider>
-          </HelmetProvider>
-        </ErrorBoundary>
-      </Suspense>
+          </ErrorBoundary>
+        </Suspense>
+      </HelmetProvider>
     </BrowserRouter>
   );
 };
 
-export default ProvidersWithContext;
+export default App;
