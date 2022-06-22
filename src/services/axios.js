@@ -11,15 +11,18 @@ export const getInstance = (baseURL = baseUrl) => {
     timeout: 10000,
   });
 
-  instance.interceptors.request.use(config => {
-    const token = store.getState().auth.token;
+  instance.interceptors.request.use(
+    config => {
+      const token = store.getState().auth.token;
 
-    if (token && config.headers) {
-      config.headers.Authorization = `Authorization ${token}`;
-    }
+      if (token && config.headers) {
+        config.headers.Authorization = `Authorization ${token}`;
+      }
 
-    return config;
-  });
+      return config;
+    },
+    error => Promise.reject(error),
+  );
 
   instance.interceptors.response.use(
     success => success,
@@ -27,6 +30,8 @@ export const getInstance = (baseURL = baseUrl) => {
       if (error.response.status === 401) {
         store.dispatch(logout());
       }
+
+      return Promise.reject(error);
     },
   );
 
