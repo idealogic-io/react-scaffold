@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
@@ -12,12 +12,13 @@ import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "
 import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
+import Navigation from "navigation";
 // Utils
 import { getLibrary } from "utils/web3";
 // Hooks
 import { useWeb3AutoConnect } from "hooks";
 
-const Providers: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
   useWeb3AutoConnect();
@@ -27,28 +28,28 @@ const Providers: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       <Provider store={store}>
         <GlobalStyle />
         <Modal />
-        {children}
+        <Navigation />
       </Provider>
     </ThemeProvider>
   );
 };
 
-const ProvidersWithContext: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const ProvidersWithContext: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loader />}>
-        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <HelmetProvider>
+      <HelmetProvider>
+        <Suspense fallback={<Loader />}>
+          <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
+            <Web3ReactProvider getLibrary={getLibrary}>
               <LanguageContextProvider fallback={<Loader />}>
                 <ThemeContextProvider>
-                  <Providers>{children}</Providers>
+                  <ThemedApp />
                 </ThemeContextProvider>
               </LanguageContextProvider>
-            </HelmetProvider>
-          </Web3ReactProvider>
-        </ErrorBoundary>
-      </Suspense>
+            </Web3ReactProvider>
+          </ErrorBoundary>
+        </Suspense>
+      </HelmetProvider>
     </BrowserRouter>
   );
 };
