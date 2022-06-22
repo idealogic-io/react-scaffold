@@ -5,10 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import { light, dark } from "../src/theme";
 import { GlobalStyle } from "../src/styles";
 import { LanguageContextProvider, ThemeContextProvider } from "../src/context";
+import { Loader } from "../src/components";
 
 const globalDecorator = StoryFn => (
   <BrowserRouter>
-    <LanguageContextProvider>
+    <LanguageContextProvider fallback={<Loader />}>
       <ThemeContextProvider>
         <GlobalStyle />
         <StoryFn />
