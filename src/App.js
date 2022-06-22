@@ -11,8 +11,9 @@ import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "
 import store from "store/store";
 // Components
 import { ErrorBoundary, ErrorBoundaryFallback, Loader, Modal } from "components";
+import Navigation from "navigation";
 
-const Providers = ({ children }) => {
+const ThemedApp = () => {
   const { theme } = useThemeContext();
 
   return (
@@ -20,13 +21,13 @@ const Providers = ({ children }) => {
       <Provider store={store}>
         <GlobalStyle />
         <Modal />
-        {children}
+        <Navigation />
       </Provider>
     </ThemeProvider>
   );
 };
 
-const ProvidersWithContext = ({ children }) => {
+const App = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
@@ -34,7 +35,7 @@ const ProvidersWithContext = ({ children }) => {
           <HelmetProvider>
             <LanguageContextProvider fallback={<Loader />}>
               <ThemeContextProvider>
-                <Providers>{children}</Providers>
+                <ThemedApp />
               </ThemeContextProvider>
             </LanguageContextProvider>
           </HelmetProvider>
@@ -44,4 +45,4 @@ const ProvidersWithContext = ({ children }) => {
   );
 };
 
-export default ProvidersWithContext;
+export default App;
