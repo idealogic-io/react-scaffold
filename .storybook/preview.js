@@ -1,15 +1,20 @@
 import React from "react";
 import { withThemesProvider } from "themeprovider-storybook";
+import { BrowserRouter } from "react-router-dom";
 
-import darkTheme from "theme/dark";
-import lightTheme from "theme/light";
-import { GlobalStyle } from "styles";
+import { light, dark } from "../src/theme";
+import { GlobalStyle } from "../src/styles";
+import { LanguageContextProvider, ThemeContextProvider } from "../src/context";
 
 const globalDecorator = StoryFn => (
-  <>
-    <GlobalStyle />
-    <StoryFn />
-  </>
+  <BrowserRouter>
+    <LanguageContextProvider>
+      <ThemeContextProvider>
+        <GlobalStyle />
+        <StoryFn />
+      </ThemeContextProvider>
+    </LanguageContextProvider>
+  </BrowserRouter>
 );
 
 export const parameters = {
@@ -20,13 +25,13 @@ export const parameters = {
 const themes = [
   {
     name: "Light",
-    backgroundColor: lightTheme.colors.background,
-    ...lightTheme,
+    backgroundColor: light.colors.background,
+    ...light,
   },
   {
     name: "Dark",
-    backgroundColor: darkTheme.colors.background,
-    ...darkTheme,
+    backgroundColor: dark.colors.background,
+    ...dark,
   },
 ];
 
