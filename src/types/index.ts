@@ -1,9 +1,5 @@
-import React, { ComponentProps, ElementType } from "react";
+import { ComponentProps, ElementType } from "react";
 import { DefaultTheme } from "styled-components";
-
-export type FCWithChildren = {
-  children: React.ReactNode;
-};
 
 export interface ThemedProps {
   theme: DefaultTheme;

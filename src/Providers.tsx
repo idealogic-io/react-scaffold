@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { PropsWithChildren, Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
@@ -11,10 +11,8 @@ import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "
 import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
-// Types
-import { FCWithChildren } from "types";
 
-const Providers: React.FC<FCWithChildren> = ({ children }) => {
+const Providers: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { theme } = useThemeContext();
 
   return (
@@ -28,7 +26,7 @@ const Providers: React.FC<FCWithChildren> = ({ children }) => {
   );
 };
 
-const ProvidersWithContext: React.FC<FCWithChildren> = ({ children }) => {
+const ProvidersWithContext: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loader />}>

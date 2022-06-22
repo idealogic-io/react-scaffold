@@ -1,11 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, PropsWithChildren, useContext, useState } from "react";
 import { DefaultTheme } from "styled-components";
 
 import darkTheme from "theme/dark";
 import lightTheme from "theme/light";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
-import { FCWithChildren } from "types";
 
 type ContextType = {
   theme: DefaultTheme;
@@ -14,7 +13,7 @@ type ContextType = {
 
 const ThemeContext = createContext<ContextType | null>(null);
 
-const ThemeContextProvider: React.FC<FCWithChildren> = ({ children }) => {
+const ThemeContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const defaultLSValue = localStorage.getItem(LOCAL_STORAGE_KEYS.isDark) ?? "false";
   const defaultValue = JSON.parse(defaultLSValue) as boolean;
   const [isDark, setIsDark] = useState(defaultValue);

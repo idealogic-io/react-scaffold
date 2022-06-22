@@ -9,30 +9,35 @@ export default {
   argTypes: {},
 };
 
-export const Default: React.FC = () => {
-  return <Button>Default</Button>;
-};
-
-export const Disabled: React.FC = () => {
-  return <Button disabled>Default</Button>;
-};
-
-export const Variants: React.FC = () => {
+export const Default = () => {
   return (
-    <div>
-      {Object.keys(styleVariants).map(variant => {
-        return (
-          <Box key={variant} mb="32px">
-            {Object.keys(scaleVariants).map((scale, indx) => {
-              return (
-                <Button key={indx} variant={variant as Variant} scale={scale as Scale} mr="8px">
-                  {`${variant} ${scale.toUpperCase()}`}
-                </Button>
-              );
-            })}
-          </Box>
-        );
-      })}
-    </div>
+    <>
+      <Box mb="32px">
+        <button type="button">Unstyled Button</button>
+      </Box>
+      <Box mb="32px">
+        {Object.keys(styleVariants).map(variant => {
+          return (
+            <Box key={variant} mb="32px">
+              {Object.keys(scaleVariants).map((scale, indx) => {
+                return (
+                  <Button key={indx} variant={variant as Variant} scale={scale as Scale} mr="8px">
+                    {`${variant} ${scale.toUpperCase()}`}
+                  </Button>
+                );
+              })}
+            </Box>
+          );
+        })}
+      </Box>
+      <Box>
+        <Button mr="8px" disabled>
+          Disabled
+        </Button>
+        <Button variant="secondary" mr="8px" disabled>
+          Disabled
+        </Button>
+      </Box>
+    </>
   );
 };

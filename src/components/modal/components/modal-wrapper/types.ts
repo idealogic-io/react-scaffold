@@ -1,5 +1,6 @@
-import { FCWithChildren } from "types";
+import { PropsWithChildren } from "react";
 
-export interface ModalWrapperProps extends FCWithChildren {
-  hideModalHandler: () => void;
-}
+export interface ModalWrapperProps
+  extends PropsWithChildren<{
+    hideModalHandler: () => void;
+  }> {}
