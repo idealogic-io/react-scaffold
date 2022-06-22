@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logout } from "store/reducers/auth";
 
 import store from "store/store";
 
@@ -19,6 +20,15 @@ export const getInstance = (baseURL = baseUrl) => {
 
     return config;
   });
+
+  instance.interceptors.response.use(
+    success => success,
+    error => {
+      if (error.response.status === 401) {
+        store.dispatch(logout());
+      }
+    },
+  );
 
   return instance;
 };
