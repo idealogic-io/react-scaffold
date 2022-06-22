@@ -1,11 +1,10 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
 import { DEFAULT_META, getCustomMeta } from "configs";
 import { Container } from "../container";
-import { FCWithChildren } from "types";
 
 const StyledPage = styled(Container)`
   min-height: 100vh;
@@ -28,7 +27,7 @@ export const PageMeta: React.FC = () => {
   );
 };
 
-export const Page: React.FC<FCWithChildren> = ({ children, ...props }) => {
+export const Page: React.FC<PropsWithChildren<{}>> = ({ children, ...props }) => {
   return (
     <>
       <PageMeta />

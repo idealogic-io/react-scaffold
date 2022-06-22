@@ -1,12 +1,10 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { useAppSelector } from "store/store";
 import { ROUTES } from "navigation/routes";
 
-import { FCWithChildren } from "types";
-
-const TokenHandler: React.FC<FCWithChildren> = ({ children }) => {
+const TokenHandler: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { token } = useAppSelector(state => state.auth);
 
   const location = useLocation();

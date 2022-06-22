@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { PropsWithChildren, Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
@@ -16,10 +16,8 @@ import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components"
 import { getLibrary } from "utils/web3";
 // Hooks
 import { useWeb3AutoConnect } from "hooks";
-// Types
-import { FCWithChildren } from "types";
 
-const Providers: React.FC<FCWithChildren> = ({ children }) => {
+const Providers: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { theme } = useThemeContext();
 
   useWeb3AutoConnect();
@@ -35,7 +33,7 @@ const Providers: React.FC<FCWithChildren> = ({ children }) => {
   );
 };
 
-const ProvidersWithContext: React.FC<FCWithChildren> = ({ children }) => {
+const ProvidersWithContext: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loader />}>

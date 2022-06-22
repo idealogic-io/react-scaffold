@@ -1,9 +1,9 @@
-import { ElementType, ReactNode } from "react";
+import { ElementType, PropsWithChildren, ReactNode } from "react";
 import { DefaultTheme } from "styled-components";
 import { LayoutProps, SpaceProps } from "styled-system";
 
 import { Colors } from "theme/types";
-import { FCWithChildren, PolymorphicComponentProps } from "types";
+import { PolymorphicComponentProps } from "types";
 
 export const variants = {
   PRIMARY: "primary",
@@ -22,16 +22,19 @@ export interface ThemedProps extends BaseButtonProps {
   theme: DefaultTheme;
 }
 
-export interface BaseButtonProps extends LayoutProps, SpaceProps, FCWithChildren {
-  as?: "a" | "button" | ElementType;
-  external?: boolean;
-  isLoading?: boolean;
-  scale?: Scale;
-  variant?: Variant;
-  disabled?: boolean;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  color?: keyof Colors;
-}
+export interface BaseButtonProps
+  extends LayoutProps,
+    SpaceProps,
+    PropsWithChildren<{
+      as?: "a" | "button" | ElementType;
+      external?: boolean;
+      isLoading?: boolean;
+      scale?: Scale;
+      variant?: Variant;
+      disabled?: boolean;
+      startIcon?: ReactNode;
+      endIcon?: ReactNode;
+      color?: keyof Colors;
+    }> {}
 
 export type ButtonProps<P extends ElementType = "button"> = PolymorphicComponentProps<P, BaseButtonProps>;

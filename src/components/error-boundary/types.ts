@@ -1,8 +1,9 @@
-import { FCWithChildren } from "types";
+import { PropsWithChildren } from "react";
 
-export interface ErrorBoundaryProps extends FCWithChildren {
-  fallbackComponent: React.ComponentType<ErrorBoundaryFallbackProps>;
-}
+export interface ErrorBoundaryProps
+  extends PropsWithChildren<{
+    fallbackComponent: React.ComponentType<ErrorBoundaryFallbackProps>;
+  }> {}
 export interface ErrorBoundaryState {
   error: null | Error;
 }
