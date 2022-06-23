@@ -34,7 +34,7 @@ const ThemedApp: React.FC = () => {
   );
 };
 
-const ProvidersWithContext: React.FC = () => {
+const App: React.FC = () => {
   return (
     <BrowserRouter>
       <HelmetProvider>
@@ -54,4 +54,4 @@ const ProvidersWithContext: React.FC = () => {
   );
 };
 
-export default ProvidersWithContext;
+export default App;

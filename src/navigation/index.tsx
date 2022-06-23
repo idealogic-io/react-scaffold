@@ -4,10 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import { RequireAuth, TokenHandler } from "./components";
 import { ROUTES } from "./routes";
 
-const NotFoundPage = React.lazy(() => import("components/not-found-page"));
-const HomePage = React.lazy(() => import("pages/home"));
-const LoginPage = React.lazy(() => import("pages/login"));
-const LandingPage = React.lazy(() => import("pages/landing"));
+import { NotFoundPage } from "components";
+import { HomePage, LandingPage, LoginPage } from "pages";
 
 const Navigation: React.FC = () => {
   return (
@@ -21,14 +19,19 @@ const Navigation: React.FC = () => {
           </TokenHandler>
         }
       />
-      <Route
-        path={ROUTES.home}
-        element={
-          <RequireAuth>
-            <HomePage />
-          </RequireAuth>
-        }
-      />
+      {/* This is test nested navigator */}
+      {/* TODO create custom nested navigator */}
+      <Route path={ROUTES.home}>
+        <Route
+          path=""
+          element={
+            <RequireAuth>
+              <HomePage />
+            </RequireAuth>
+          }
+        />
+        <Route path="app" element={<>App</>} />
+      </Route>
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
