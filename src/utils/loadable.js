@@ -21,5 +21,3 @@ export const lazyLoad = (importFunc, selectorFunc, opts = { fallback: <Loader />
 
   return LazyLoader;
 };
-
-lazyLoad.displayName = "Loadable";
