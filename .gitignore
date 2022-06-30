@@ -4,15 +4,17 @@
 /node_modules
 /.pnp
 .pnp.js
-/*package-lock.json
 /.eslintcache
-/yarn.lock
 
 # testing
 /coverage
 
 # production
 /build
+
+# IDE
+/.idea
+.idea
 
 # misc
 .DS_Store
