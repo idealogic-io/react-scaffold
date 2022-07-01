@@ -2,30 +2,20 @@ import memoize from "lodash/memoize";
 import { EN, LOCAL_STORAGE_KEYS, REGEX } from "configs";
 
 export const fetchLocale = async locale => {
-  const response = await fetch(`/locales/${locale}.json`);
+  try {
+    const response = await fetch(`/locales/${locale}.json`);
 
-  if (response.ok) {
-    try {
-      const data = await response.json();
-      return data;
-    } catch (e) {
-      console.warn(e);
-      return null;
-    }
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.error(`Failed to fetch locale ${locale}`, e);
+
+    return null;
   }
-
-  console.error(`Failed to fetch locale ${locale}`, response.statusText);
-  return null;
 };
 
 export const getLanguageCodeFromLS = () => {
-  try {
-    const codeFromStorage = localStorage.getItem(LOCAL_STORAGE_KEYS.language) ?? EN.locale;
-
-    return codeFromStorage;
-  } catch {
-    return EN.locale;
-  }
+  return localStorage.getItem(LOCAL_STORAGE_KEYS.language) ?? EN.locale;
 };
 
 export const translatedTextIncludesVariable = memoize(translatedText => {
