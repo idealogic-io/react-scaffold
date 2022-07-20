@@ -27,7 +27,7 @@ export const getInstance = (baseURL = baseUrl) => {
   instance.interceptors.response.use(
     success => success,
     error => {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         store.dispatch(logout());
       }
 
