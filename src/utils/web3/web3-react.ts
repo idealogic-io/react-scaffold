@@ -24,13 +24,13 @@ export const CHAIN_ID_TO_NAME = {
 };
 
 export const chainRpc = {
-  [ChainId.Mainnet]: "https://rpc-mainnet.matic.network/",
-  [ChainId.Testnet]: "https://matic-mumbai.chainstacklabs.com/",
+  [ChainId.Mainnet]: "https://rpc-mainnet.matic.network",
+  [ChainId.Testnet]: "https://matic-mumbai.chainstacklabs.com",
 };
 
 export const scanUrl = {
-  [ChainId.Mainnet]: "https://polygonscan.com/",
-  [ChainId.Testnet]: "https://mumbai.polygonscan.com/",
+  [ChainId.Mainnet]: "https://polygonscan.com",
+  [ChainId.Testnet]: "https://mumbai.polygonscan.com",
 };
 
 export const injectedConnector = new InjectedConnector({ supportedChainIds: [chainId] });
