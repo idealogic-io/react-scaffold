@@ -1,18 +1,27 @@
 import React, { createContext, useContext, useState } from "react";
 
-import darkTheme from "theme/dark";
-import lightTheme from "theme/light";
+import dark from "theme/dark";
+import light from "theme/light";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
 
 const ThemeContext = createContext(null);
 
-const ThemeContextProvider = ({ children }) => {
-  const defaultLSValue = localStorage.getItem(LOCAL_STORAGE_KEYS.isDark) ?? "false";
-  const defaultValue = JSON.parse(defaultLSValue);
-  const [isDark, setIsDark] = useState(defaultValue);
+const themeValues = {
+  light,
+  dark,
+};
 
-  const theme = isDark ? darkTheme : lightTheme;
+const LIGHT = "light";
+const DARK = "dark";
+
+const ThemeContextProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    const themeFromStorage = getThemeValueFromLS();
+
+    localStorage.setItem(LOCAL_STORAGE_KEYS.theme, themeFromStorage);
+    return themeValues[themeFromStorage];
+  });
 
   const context = {
     theme,
@@ -20,10 +29,21 @@ const ThemeContextProvider = ({ children }) => {
   };
 
   function toggleTheme() {
-    const lcValue = JSON.stringify(!isDark);
-    localStorage.setItem(LOCAL_STORAGE_KEYS.isDark, lcValue);
+    const themeFromStorage = getThemeValueFromLS();
+    const newValue = themeFromStorage === LIGHT ? DARK : LIGHT;
 
-    setIsDark(!isDark);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.theme, newValue);
+    setTheme(themeValues[newValue]);
+  }
+
+  function getThemeValueFromLS() {
+    let themeFromStorage = localStorage.getItem(LOCAL_STORAGE_KEYS.theme) ?? LIGHT;
+
+    if (!(themeFromStorage in themeValues)) {
+      themeFromStorage = LIGHT;
+    }
+
+    return themeFromStorage;
   }
 
   return <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>;
