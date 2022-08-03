@@ -1,5 +1,15 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { formatUnits } from "@ethersproject/units";
+import { formatUnits, parseUnits } from "@ethersproject/units";
+
+export const toWei = (number: string | number, decimals: number) => {
+  if (typeof number === "string") {
+    return parseUnits(number, decimals).toNumber();
+  } else if (typeof number === "number") {
+    return parseUnits(String(number), decimals).toNumber();
+  } else {
+    return number;
+  }
+};
 
 /**
  * Method to format the display of wei given an BigNumber object
