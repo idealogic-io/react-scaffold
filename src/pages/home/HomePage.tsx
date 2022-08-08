@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import { Button, InternalLink, Page, Row, RowBetween, Text } from "components";
+import { Button, Heading, InternalLink, Page, Row, RowBetween } from "components";
 import { AddIcon } from "components/svg";
 // Context
 import { useThemeContext, useTranslation } from "context";
@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
   };
 
   const openModalHandler = () => {
-    dispatch(showModal(ModalNames.someModal));
+    dispatch(showModal({ modalName: ModalNames.someModal }));
   };
 
   const changeLanguageHandler = () => {
@@ -32,9 +32,7 @@ const HomePage: React.FC = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" bold>
-        {t("Main Page")}
-      </Text>
+      <Heading>{t("Main Page")}</Heading>
       <RowBetween py="12px">
         <Button as="a" href="https://google.com" external>
           {t("Redirect")}

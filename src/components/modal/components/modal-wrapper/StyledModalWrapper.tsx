@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const StyledModalWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: ${({ theme }) => theme.colors.primary};
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.primary}30;
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
+  display: -webkit-box;
+  overflow: auto;
   justify-content: center;
   align-items: center;
   z-index: ${({ theme }) => theme.zIndices.modal};
@@ -15,5 +17,5 @@ export const StyledModalWrapper = styled.div`
 `;
 
 export const StyledModalContainer = styled.div`
-  background: ${({ theme }) => theme.colors.background};
+  margin: 24px;
 `;

@@ -1,17 +1,18 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 import { getInstance, isAxiosError } from "./axios";
 import { ErrorResult } from "./types";
+import { toastError } from "configs";
 
 const axiosInstance = getInstance();
 
-export const makeApiRequest = async <Response>(config: AxiosRequestConfig) => {
+export const makeApiRequest = async <Response>({ isShowError = true, ...config }) => {
   try {
     const result = (await axiosInstance(config)) as AxiosResponse<Response>;
 
     return result.data;
   } catch (error) {
-    // TODO config next lines in real project
     const errorObj: ErrorResult = {
       message: "Error",
       isError: true,
@@ -33,6 +34,10 @@ export const makeApiRequest = async <Response>(config: AxiosRequestConfig) => {
       }
     } else if (error instanceof Error && error.message) {
       errorObj.message = error.message;
+    }
+
+    if (isShowError) {
+      toast.error(`${errorObj.message}`, toastError);
     }
 
     return errorObj;

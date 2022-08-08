@@ -12,9 +12,9 @@ export const Default = () => {
     <div>
       <Text>Default</Text>
 
-      <Text bold>Bold text</Text>
+      <Text $fontWeight="bold">Bold text</Text>
 
-      <Text medium>Medium text</Text>
+      <Text $fontWeight="medium">Medium text</Text>
 
       <Text fontSize="12px">Small text</Text>
 

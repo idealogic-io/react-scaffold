@@ -19,8 +19,7 @@ const Navigation: React.FC = () => {
           </TokenHandler>
         }
       />
-      {/* This is test nested navigator */}
-      {/* TODO create custom nested navigator */}
+
       <Route path={ROUTES.home}>
         <Route
           path=""
@@ -31,6 +30,20 @@ const Navigation: React.FC = () => {
           }
         />
         <Route path="app" element={<>App</>} />
+        {/* Nesting */}
+        <Route path="wallet">
+          <Route index element={<>Wallet</>} />
+
+          <Route path=":network">
+            <Route index element={<>Network</>} />
+
+            <Route path=":token">
+              <Route index element={<>Token</>} />
+
+              <Route path="deposit" element={<>Deposit</>} />
+            </Route>
+          </Route>
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />
