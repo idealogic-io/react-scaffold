@@ -1,6 +1,7 @@
 export { ErrorBoundary, ErrorBoundaryFallback } from "./error-boundary";
 export { default as Loader } from "./loader";
 export { default as Text } from "./text";
+export { default as Heading } from "./heading";
 export { default as Button } from "./button/index";
 export { default as Svg } from "./svg/Svg";
 export {
@@ -27,3 +28,4 @@ export { ModalWrapper } from "./modal/components";
 export { default as Input } from "./input";
 export { default as InputGroup } from "./input-group";
 export { default as InternalLink } from "./link";
+export { default as Skeleton } from "./skeleton";

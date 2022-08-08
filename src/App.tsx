@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { Web3ReactProvider } from "@web3-react/core";
 import { BrowserRouter } from "react-router-dom";
 import { Buffer } from "buffer";
+import { ToastContainer } from "react-toastify";
 // Styles
 import { GlobalStyle } from "styles";
 // Context
@@ -22,7 +23,6 @@ import { useWeb3AutoConnect } from "hooks";
 // in webpack 5 Buffer is undefined so we add it globally
 window.Buffer = Buffer;
 
-
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
@@ -34,6 +34,7 @@ const ThemedApp: React.FC = () => {
         <GlobalStyle />
         <Modal />
         <Navigation />
+        <ToastContainer />
       </Provider>
     </ThemeProvider>
   );

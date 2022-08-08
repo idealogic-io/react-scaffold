@@ -4,7 +4,7 @@ export type AuthState = {
 };
 
 export type LoginUserResponse = {
-  auth_token: AuthState["token"];
+  accessToken: AuthState["token"];
 };
 
 export type LoginUserPayload = {

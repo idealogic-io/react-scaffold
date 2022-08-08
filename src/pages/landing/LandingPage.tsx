@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // Components
-import { Button, Page, Text } from "components";
+import { Button, Heading, Page } from "components";
 // Context
 import { useTranslation } from "context";
 
@@ -10,9 +10,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" bold>
-        {t("Landing Page")}
-      </Text>
+      <Heading>{t("Landing Page")}</Heading>
 
       <Button as={Link} to="/login">
         {t("Login")}

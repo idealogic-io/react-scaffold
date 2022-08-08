@@ -4,15 +4,7 @@ import { space, typography, layout, opacity, border, shadow, variant } from "sty
 import { ButtonProps, ThemedProps } from "./types";
 import { scaleVariants, styleVariants } from "./theme";
 
-const getDisabledStyles = ({ isLoading, theme }: ThemedProps) => {
-  if (isLoading) {
-    return `
-      &:disabled {
-        cursor: not-allowed;
-      }
-    `;
-  }
-
+const getDisabledStyles = ({ theme }: ThemedProps) => {
   return `
     &:disabled {
       background-color: ${theme.colors.backgroundDisabled};

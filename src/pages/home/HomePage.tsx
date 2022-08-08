@@ -3,7 +3,7 @@ import { UnsupportedChainIdError } from "@web3-react/core";
 import { parseUnits } from "@ethersproject/units";
 import random from "lodash/random";
 // Components
-import { Button, Column, Page, Text } from "components";
+import { Button, Heading, Text, Page, Column } from "components";
 // Context
 import { useTranslation } from "context";
 // Hooks
@@ -99,9 +99,7 @@ const HomePage: React.FC = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" bold>
-        {t("Main Page")}
-      </Text>
+      <Heading>{t("Main Page")}</Heading>
       <Column>
         {isActivated && (
           <Column py="16px">

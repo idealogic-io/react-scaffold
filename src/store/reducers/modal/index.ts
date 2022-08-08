@@ -1,16 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ModalNames, ModalState } from "./types";
+import { ModalNames, ModalState, ShowModalProps } from "./types";
 
-const initialState: ModalState = {
+const initialState: ModalState<undefined> = {
   modalName: null,
+  rootId: "modal",
+  props: undefined,
 };
 
 export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    showModal: (state, action: PayloadAction<keyof typeof ModalNames>) => {
-      state.modalName = action.payload;
+    showModal: <T>(state: ModalState<T>, action: PayloadAction<ShowModalProps<T>>) => {
+      state.modalName = action.payload.modalName;
+      state.rootId = action.payload.rootId ? action.payload.rootId : "modal";
+      state.props = action.payload.props;
     },
 
     hideModal: () => initialState,
