@@ -3,12 +3,13 @@ import { createPortal } from "react-dom";
 
 import { StyledModalWrapper, StyledModalContainer } from "./StyledModalWrapper";
 
-const modalRoot = document.getElementById("modal");
+const ModalWrapper = ({ children, hideModalHandler, id }) => {
+  const modalRoot = document.getElementById(id);
 
-const ModalWrapper = ({ children, hideModalHandler }) => {
   const onParentContainerClick = e => {
     return e.stopPropagation();
   };
+
   if (modalRoot) {
     return createPortal(
       <StyledModalWrapper onClick={hideModalHandler}>

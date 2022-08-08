@@ -1,31 +1,37 @@
-export const DEFAULT_META = {
-  title: "Scaffold",
-  description: "The greatest scaffold",
-  image: "https://ru.reactjs.org/logo-og.png",
+const URL = process.env.REACT_APP_URL;
+
+export const getDefaultMeta = t => {
+  return {
+    title: t("Scaffold"),
+    description: t("The greatest scaffold"),
+    image: `${URL}/logo512.png`,
+  };
 };
 
-export const getCustomMeta = path => {
+export const getCustomMeta = (path, t) => {
   let basePath = path;
   if (path.startsWith("/login")) {
-    basePath = "/login";
+    basePath = "login";
   } else if (path.startsWith("/home")) {
-    basePath = "/home";
+    basePath = "home";
   }
 
   switch (basePath) {
-    case "/login": {
+    case "login": {
       return {
-        title: "Login",
+        ...getDefaultMeta(t),
+        title: t("Login"),
       };
     }
-    case "/home": {
+    case "home": {
       return {
-        title: "Home",
+        ...getDefaultMeta(t),
+        title: t("Home"),
       };
     }
     default:
       return {
-        ...DEFAULT_META,
+        ...getDefaultMeta(t),
       };
   }
 };

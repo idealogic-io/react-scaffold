@@ -7,19 +7,18 @@ const getExternalLinkProps = () => ({
   rel: "noreferrer noopener",
 });
 
-const Button = props => {
-  const { startIcon, endIcon, children, isLoading, disabled, external } = props;
+const Button = ({ startIcon, endIcon, children, isLoading, disabled, external, ...props }) => {
   const isDisabled = isLoading || disabled;
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <StyledButton {...internalProps} {...props} disabled={isDisabled} $isLoading={isLoading}>
+    <StyledButton {...internalProps} {...props} disabled={isDisabled}>
       <>
         {isValidElement(startIcon) &&
           cloneElement(startIcon, {
             mr: "0.5rem",
           })}
-        {children}
+        {isLoading ? <>Loading ...</> : children}
         {isValidElement(endIcon) &&
           cloneElement(endIcon, {
             ml: "0.5rem",

@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 // Styles
 import { GlobalStyle } from "styles";
 // Context
@@ -22,6 +23,7 @@ const ThemedApp = () => {
         <GlobalStyle />
         <Modal />
         <Navigation />
+        <ToastContainer />
       </Provider>
     </ThemeProvider>
   );

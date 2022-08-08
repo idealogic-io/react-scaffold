@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
-import { DEFAULT_META, getCustomMeta } from "configs";
+import { getCustomMeta } from "configs";
 import { Container } from "../container";
+import { useTranslation } from "context";
 
 const StyledPage = styled(Container)`
   min-height: 100vh;
@@ -13,9 +14,9 @@ const StyledPage = styled(Container)`
 
 export const PageMeta = () => {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
 
-  const pageMeta = getCustomMeta(pathname) || {};
-  const { title, description, image } = { ...DEFAULT_META, ...pageMeta };
+  const { title, description, image } = getCustomMeta(pathname, t);
 
   return (
     <Helmet>

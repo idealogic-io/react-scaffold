@@ -3,15 +3,7 @@ import { space, typography, layout, opacity, border, shadow, variant } from "sty
 
 import { scaleVariants, styleVariants } from "./theme";
 
-const getDisabledStyles = ({ $isLoading, theme }) => {
-  if ($isLoading) {
-    return `
-      &:disabled {
-        cursor: not-allowed;
-      }
-    `;
-  }
-
+const getDisabledStyles = ({ theme }) => {
   return `
     &:disabled {
       background-color: ${theme.colors.backgroundDisabled};

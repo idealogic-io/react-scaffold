@@ -6,6 +6,8 @@ export const MODAL_NAMES = {
 
 const initialState = {
   modalName: null,
+  rootId: null,
+  props: undefined,
 };
 
 export const modalSlice = createSlice({
@@ -13,7 +15,9 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     showModal: (state, action) => {
-      state.modalName = action.payload;
+      state.modalName = action.payload.modalName;
+      state.rootId = action.payload.rootId ? action.payload.rootId : "modal";
+      state.props = action.payload.props;
     },
 
     hideModal: () => initialState,

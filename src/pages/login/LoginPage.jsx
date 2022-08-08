@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // Components
-import { Box, Button, Input, Page, Text, InputGroup, Column } from "components";
+import { Box, Button, Input, Page, Text, InputGroup, Column, Heading } from "components";
 import { AddIcon } from "components/svg";
 // Store
 import { useAppDispatch } from "store/store";
@@ -37,9 +37,7 @@ const LoginPage = () => {
 
   return (
     <Page>
-      <Text fontSize="32px" as="h1" bold>
-        {t("Login Page")}
-      </Text>
+      <Heading>{t("Login Page")}</Heading>
       <Box width="300px" py="16px">
         <form onSubmit={handleSubmit}>
           <Column>
