@@ -1,6 +1,7 @@
 import { ExternalProvider, JsonRpcFetchFunc, Web3Provider } from "@ethersproject/providers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 
 export enum ChainId {
   Mainnet = 137,
@@ -16,6 +17,7 @@ const chainId = getChainId();
 export enum ConnectorNames {
   Injected = "injected",
   WalletConnect = "walletconnect",
+  WalletLinkConnector = "walletlinkconnector",
 }
 
 export const CHAIN_ID_TO_NAME = {
@@ -40,9 +42,17 @@ const walletConnect = new WalletConnectConnector({
   qrcode: true,
 });
 
+const walletLinkConnector = new WalletLinkConnector({
+  url: getRpcUrl(),
+  appName: "Scaffold",
+  appLogoUrl: `${process.env.REACT_APP_URL}/logo512.png`,
+  supportedChainIds: [chainId],
+});
+
 export const connectorsByName = {
   [ConnectorNames.Injected]: injectedConnector,
   [ConnectorNames.WalletConnect]: walletConnect,
+  [ConnectorNames.WalletLinkConnector]: walletLinkConnector,
 };
 
 export const getLibrary = (provider: ExternalProvider | JsonRpcFetchFunc) => {
