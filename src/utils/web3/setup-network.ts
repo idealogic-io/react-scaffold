@@ -56,7 +56,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider) => {
           console.error("Failed to setup the network in Metamask:", error);
           return false;
         }
-      } else if (switchError?.code === -32002) {
+      } else if ((switchError as { code?: number })?.code === -32002) {
         // TODO add UI
         console.error("Please check metamask, request already pending.");
       } else {
