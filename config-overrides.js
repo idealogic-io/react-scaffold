@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 
 module.exports = function override(webpackConfig) {
   webpackConfig.module.rules.push({
@@ -8,5 +8,10 @@ module.exports = function override(webpackConfig) {
   });
 
   webpackConfig.ignoreWarnings = [/Failed to parse source map/];
+
+  webpackConfig.resolve.plugins = webpackConfig.resolve.plugins.filter(
+    plugin => !(plugin instanceof ModuleScopePlugin),
+  );
+
   return webpackConfig;
 };
