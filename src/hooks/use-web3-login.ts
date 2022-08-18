@@ -47,6 +47,9 @@ const useWeb3Login = () => {
               }
               // TODO add UI error handling
               console.error("Please authorize to access your account");
+            } else if ((error as { code?: number })?.code === -32002) {
+              // TODO add UI error handling
+              console.error("Please check metamask, request already pending.");
             } else {
               // TODO add UI error handling
               console.error(error.message);

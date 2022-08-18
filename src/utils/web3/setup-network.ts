@@ -21,6 +21,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider) => {
   const chainId = getChainId();
 
   if (!NETWORK_CONFIG[chainId]) {
+    // TODO add UI
     console.error("Invalid chain id");
     return false;
   }
@@ -55,6 +56,12 @@ export const setupNetwork = async (externalProvider?: ExternalProvider) => {
           console.error("Failed to setup the network in Metamask:", error);
           return false;
         }
+      } else if (switchError?.code === -32002) {
+        // TODO add UI
+        console.error("Please check metamask, request already pending.");
+      } else {
+        // TODO add UI
+        console.error(`Sorry, can't add ${NETWORK_CONFIG[chainId].name}. Please add it manually.`);
       }
       return false;
     }
