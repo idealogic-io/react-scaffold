@@ -1,5 +1,5 @@
 import { SvgProps } from "components/svg/types";
-import { ChainId, ConnectorNames } from "./web3-react";
+import { ChainId, connectorName } from "./web3-react";
 
 export interface Address {
   [ChainId.Mainnet]: string;
@@ -9,6 +9,6 @@ export interface Address {
 export interface Connector {
   title: string;
   icon: React.FC<SvgProps>;
-  connectorId: ConnectorNames;
+  connectorId: keyof typeof connectorName;
   href?: string;
 }

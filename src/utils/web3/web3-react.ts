@@ -15,11 +15,11 @@ export const CURRENCY_DECIMAL = 18;
 const POLLING_INTERVAL = 12000;
 const chainId = getChainId();
 
-export enum ConnectorNames {
-  Injected = "injected",
-  WalletConnect = "walletconnect",
-  WalletLinkConnector = "walletlinkconnector",
-}
+export const connectorName = {
+  injectedConnector: "injectedConnector",
+  walletConnect: "walletConnect",
+  walletLinkConnector: "walletLinkConnector",
+} as const;
 
 export const CHAIN_ID_TO_NAME = {
   [ChainId.Mainnet]: "Ethereum Mainnet",
@@ -51,9 +51,9 @@ const walletLinkConnector = new WalletLinkConnector({
 });
 
 export const connectorsByName = {
-  [ConnectorNames.Injected]: injectedConnector,
-  [ConnectorNames.WalletConnect]: walletConnect,
-  [ConnectorNames.WalletLinkConnector]: walletLinkConnector,
+  injectedConnector,
+  walletConnect,
+  walletLinkConnector,
 };
 
 export const getLibrary = (provider: ExternalProvider | JsonRpcFetchFunc) => {

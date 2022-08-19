@@ -6,7 +6,7 @@ export {
   CHAIN_ID_TO_NAME,
   connectorsByName,
   ChainId,
-  ConnectorNames,
+  connectorName,
   getChainId,
   getLibrary,
 } from "./web3-react";

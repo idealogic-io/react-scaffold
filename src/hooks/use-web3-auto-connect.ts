@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { isMobile } from "react-device-detect";
 
-import { ConnectorNames, injectedConnector } from "utils/web3";
+import { connectorName, injectedConnector } from "utils/web3";
 import { LOCAL_STORAGE_KEYS } from "configs";
 import { useWeb3Login } from "hooks";
 
@@ -19,25 +19,25 @@ const useWeb3AutoConnect = () => {
   const { login } = useWeb3Login();
 
   useEffect(() => {
-    const tryLogin = (_connectorId: ConnectorNames) => {
+    const tryLogin = (_connectorId: keyof typeof connectorName) => {
       setTimeout(() => login(_connectorId));
     };
 
     const connectorId = getLocalStorageItem();
 
     if (connectorId) {
-      if (connectorId === ConnectorNames.Injected) {
+      if (connectorId === connectorName.injectedConnector) {
         injectedConnector.isAuthorized().then(() => tryLogin(connectorId));
       } else {
-        tryLogin(connectorId as ConnectorNames);
+        tryLogin(connectorId as keyof typeof connectorName);
       }
     } else {
       injectedConnector.isAuthorized().then(isAuthorized => {
         if (isAuthorized) {
-          tryLogin(ConnectorNames.Injected);
+          tryLogin(connectorName.injectedConnector);
         } else {
           if (isMobile && window.ethereum) {
-            tryLogin(ConnectorNames.Injected);
+            tryLogin(connectorName.injectedConnector);
           }
         }
       });

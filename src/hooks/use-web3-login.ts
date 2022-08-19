@@ -13,13 +13,13 @@ import {
 // Configs
 import { LOCAL_STORAGE_KEYS } from "configs";
 // Utils
-import { ConnectorNames, setupNetwork, connectorsByName } from "utils/web3";
+import { connectorName, setupNetwork, connectorsByName } from "utils/web3";
 
 const useWeb3Login = () => {
   const { chainId, activate, deactivate, setError } = useWeb3React();
 
   const login = useCallback(
-    async (connectorId: ConnectorNames) => {
+    async (connectorId: keyof typeof connectorName) => {
       const connector = connectorsByName[connectorId];
       localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
@@ -53,7 +53,7 @@ const useWeb3Login = () => {
               error instanceof UserRejectedRequestErrorWalletConnect
             ) {
               if (connector instanceof WalletConnectConnector) {
-                connectorsByName.walletconnect.close();
+                connectorsByName.walletConnect.close();
               }
               // TODO add UI error handling
               console.error("Please authorize to access your account");
@@ -109,9 +109,14 @@ const useWeb3Login = () => {
 
   const clearUserState = () => {
     const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
+    type Connector = typeof connectorName.walletConnect | typeof connectorName.walletLinkConnector;
 
-    if (lsConnector === ConnectorNames.WalletConnect || lsConnector === ConnectorNames.WalletLinkConnector) {
-      connectorsByName[lsConnector as ConnectorNames.WalletConnect | ConnectorNames.WalletLinkConnector].close();
+    if (
+      lsConnector &&
+      lsConnector in connectorName &&
+      (lsConnector === connectorName.walletConnect || lsConnector === connectorName.walletLinkConnector)
+    ) {
+      connectorsByName[lsConnector as Connector].close();
     }
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
