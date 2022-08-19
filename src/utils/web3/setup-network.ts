@@ -62,7 +62,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider) => {
         console.error("Please check metamask, request already pending.");
       } else {
         // TODO add UI
-        console.error(`Sorry, can't add ${NETWORK_CONFIG[chainId].name}. Please add it manually.`);
+        console.error(switchError?.message);
       }
       return false;
     }
