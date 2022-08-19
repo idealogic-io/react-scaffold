@@ -4,11 +4,12 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 
 export enum ChainId {
-  Mainnet = 137,
+  Mainnet = 1,
   Testnet = 80001,
 }
 
-export const CURRENCY = "MATIC";
+export const CURRENCY = { [ChainId.Mainnet]: "ETH", [ChainId.Testnet]: "MATIC" };
+
 export const CURRENCY_DECIMAL = 18;
 
 const POLLING_INTERVAL = 12000;
@@ -21,17 +22,17 @@ export enum ConnectorNames {
 }
 
 export const CHAIN_ID_TO_NAME = {
-  [ChainId.Mainnet]: "Polygon Mainnet",
+  [ChainId.Mainnet]: "Ethereum Mainnet",
   [ChainId.Testnet]: "Mumbai Testnet",
 };
 
 export const chainRpc = {
-  [ChainId.Mainnet]: "https://rpc-mainnet.matic.network",
-  [ChainId.Testnet]: "https://matic-mumbai.chainstacklabs.com",
+  [ChainId.Mainnet]: "https://mainnet.infura.io/v3/6f669920e249466bbca5d174cdfec213",
+  [ChainId.Testnet]: "https://polygon-mumbai.g.alchemy.com/v2/PNkKA3dIT4VTNGlLE1ShsI2lgNBQq0it",
 };
 
 export const scanUrl = {
-  [ChainId.Mainnet]: "https://polygonscan.com",
+  [ChainId.Mainnet]: "https://etherscan.io",
   [ChainId.Testnet]: "https://mumbai.polygonscan.com",
 };
 

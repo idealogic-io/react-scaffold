@@ -25,6 +25,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider) => {
     console.error("Invalid chain id");
     return false;
   }
+
   if (provider && provider.request) {
     try {
       await provider?.request({
@@ -42,8 +43,8 @@ export const setupNetwork = async (externalProvider?: ExternalProvider) => {
                 chainId: `0x${chainId.toString(16)}`,
                 chainName: NETWORK_CONFIG[chainId].name,
                 nativeCurrency: {
-                  name: CURRENCY,
-                  symbol: CURRENCY,
+                  name: CURRENCY[chainId],
+                  symbol: CURRENCY[chainId],
                   decimals: CURRENCY_DECIMAL,
                 },
                 rpcUrls: [`${getRpcUrl()}/`],

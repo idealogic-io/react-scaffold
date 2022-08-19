@@ -9,7 +9,7 @@ import { useTranslation } from "context";
 // Hooks
 import { useActiveWeb3, useWeb3Balance, useWeb3Login } from "hooks";
 // Configs
-import { connectors, LOCAL_STORAGE_KEYS } from "configs";
+import { connectors } from "configs";
 // Utils
 import {
   ChainId,
@@ -43,7 +43,6 @@ const HomePage: React.FC = () => {
       window.open(href, "_blank", "noopener noreferrer");
     } else {
       login(connectorId);
-      localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
     }
   };
 
