@@ -53,7 +53,7 @@ const useWeb3Login = () => {
               error instanceof UserRejectedRequestErrorWalletConnect
             ) {
               if (connector instanceof WalletConnectConnector) {
-                connectorsByName.walletConnect.close();
+                connectorsByName.walletConnect.walletConnectProvider = undefined;
               }
               // TODO add UI error handling
               console.error("Please authorize to access your account");
