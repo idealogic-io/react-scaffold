@@ -27,7 +27,7 @@ export const CHAIN_ID_TO_NAME = {
 };
 
 export const chainRpc = {
-  [ChainId.Mainnet]: "https://mainnet.infura.io/v3/6f669920e249466bbca5d174cdfec213",
+  [ChainId.Mainnet]: "https://rpc.flashbots.net",
   [ChainId.Testnet]: "https://polygon-mumbai.g.alchemy.com/v2/PNkKA3dIT4VTNGlLE1ShsI2lgNBQq0it",
 };
 
