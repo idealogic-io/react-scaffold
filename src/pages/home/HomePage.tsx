@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { UnsupportedChainIdError } from "@web3-react/core";
+import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { parseUnits } from "@ethersproject/units";
 import random from "lodash/random";
 // Components
@@ -7,17 +7,19 @@ import { Button, Heading, Text, Page, Column } from "components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useActiveWeb3, useWeb3Balance, useWeb3Login } from "hooks";
+import { useWeb3Balance, useWeb3Login } from "hooks";
 // Configs
-import { connectors } from "configs";
+import { chainNames, connectors, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
 // Utils
 import {
-  ChainId,
-  CHAIN_ID_TO_NAME,
+  connectorByName,
+  connectorName,
   formatBigNumber,
   formatBigNumberToFixed,
   getCourseMarketplaceContract,
+  setupNetwork,
 } from "utils/web3";
+
 // Types
 import { Connector } from "utils/web3/types";
 import { Course, NormalizedCourse } from "./types";
@@ -29,34 +31,34 @@ const HomePage: React.FC = () => {
   const [lastCourse, setLastCourse] = useState<NormalizedCourse | null>(null);
 
   const { t, currentLanguage, changeLanguage } = useTranslation();
-  const { chainId, account, active, error, library } = useActiveWeb3();
+  const { chainId, account, active, error, library } = useWeb3React();
   const { balance } = useWeb3Balance();
   const { login, logout } = useWeb3Login();
 
-  const isActivated = active && chainId;
-  const currentChainName = chainId && chainId in CHAIN_ID_TO_NAME ? CHAIN_ID_TO_NAME[chainId as ChainId] : null;
+  const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
+  const supportedChains = getChainIds();
 
   const onConnect = (walletConfig: Connector) => {
     const { title, href, connectorId } = walletConfig;
-
+    // Open url in metamask app
     if (!window.ethereum && title === "Metamask" && href) {
       window.open(href, "_blank", "noopener noreferrer");
     } else {
-      login(connectorId);
+      login(connectorId as keyof typeof connectorName);
     }
   };
 
   const purchaseCourseHandler = useCallback(async () => {
-    const courseContract = getCourseMarketplaceContract(library?.getSigner());
-    let courseId = "";
-    for (let i = 0; i < 4; i++) {
-      courseId += random(0, 9);
-    }
-
-    const value = parseUnits(".1", "ether");
+    setIsLoading(true);
 
     try {
-      setIsLoading(true);
+      const courseContract = getCourseMarketplaceContract(library?.getSigner(), chainId);
+      let courseId = "";
+      for (let i = 0; i < 4; i++) {
+        courseId += random(0, 9);
+      }
+
+      const value = parseUnits(".1", "ether");
       const tx = await courseContract.purchaseCourse(+courseId, { value });
       // By tx hash we can redirect user to etherscan to watch his transaction
       console.log(tx, "Transaction");
@@ -64,18 +66,18 @@ const HomePage: React.FC = () => {
       // Then me can see the result of tx execution
       console.log(result, "Finished Transaction");
     } catch (error) {
-      console.error((error as Error).message, "Sorry can't purchase the course");
+      console.error((error as Error).message);
     } finally {
       setIsLoading(false);
     }
   }, [library, account]);
 
   const getLastCourseHandler = async () => {
-    const courseContract = getCourseMarketplaceContract(library?.getSigner());
-
     try {
-      const coursesLenth = await courseContract.getCourseCount();
-      const lastCourseHash = await courseContract.getCourseHashAtIndex(coursesLenth - 1);
+      const courseContract = getCourseMarketplaceContract(library?.getSigner(), chainId);
+
+      const coursesLength = await courseContract.getCourseCount();
+      const lastCourseHash = await courseContract.getCourseHashAtIndex(coursesLength - 1);
       const lastCourse: Course = await courseContract.getCourseByHash(lastCourseHash);
       const course: NormalizedCourse = {
         id: formatBigNumber(lastCourse.id, 0, 0),
@@ -86,7 +88,24 @@ const HomePage: React.FC = () => {
       };
       setLastCourse(course);
     } catch (error) {
-      console.error((error as Error).message, "Sorry can't get the last course");
+      console.error((error as Error).message);
+    }
+  };
+
+  const changeChainHandler = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const {
+      target: { value: chainId },
+    } = event;
+    const connectorId = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
+    const connector = connectorByName[connectorId as keyof typeof connectorByName];
+
+    if (connector) {
+      try {
+        const provider = await connector.getProvider();
+        await setupNetwork(provider, +chainId);
+      } catch (error) {
+        console.error((error as Error).message);
+      }
     }
   };
 
@@ -100,49 +119,61 @@ const HomePage: React.FC = () => {
     <Page>
       <Heading>{t("Main Page")}</Heading>
       <Column>
-        {isActivated && (
+        {active && (
           <Column py="16px">
             <Text>You currently on:</Text>
-            <Text>{currentChainName}</Text>
+            <Text>{chainNames[chainId as keyof typeof chainNames]}</Text>
           </Column>
         )}
 
-        {isActivated && (
+        {active && (
           <Column py="16px">
             <Text>You address:</Text>
             <Text>{account}</Text>
           </Column>
         )}
 
-        {isActivated && (
+        {active && (
           <Column py="16px">
             <Text>You balance is:</Text>
             <Text>{formatBigNumberToFixed(balance, 8)}</Text>
           </Column>
         )}
 
-        {!active && (
+        {!active && !isUnsupportedChainId && (
           <Column>
             {connectors.map(walletConfig => {
               const { title, icon: Icon } = walletConfig;
-              const text =
-                error instanceof UnsupportedChainIdError || (isActivated && currentChainName !== null)
-                  ? "Change chain"
-                  : t("Connect %provider%", { provider: title });
+
               return (
                 <Button scale="md" key={title} startIcon={<Icon />} onClick={() => onConnect(walletConfig)} my="4px">
-                  {text}
+                  {t("Connect %provider%", { provider: title })}
                 </Button>
               );
             })}
           </Column>
         )}
 
-        {isActivated && <Button onClick={purchaseCourseHandler}>{isLoading ? "Loading" : "Purchase Course"}</Button>}
+        {active || isUnsupportedChainId ? (
+          <select name="chain" value={chainId} defaultValue={""} onChange={changeChainHandler}>
+            <option disabled value={""}>
+              -- select a chain --
+            </option>
+            {supportedChains.map(val => (
+              <option key={val} value={val}>
+                {chainNames[val]}
+              </option>
+            ))}
+          </select>
+        ) : null}
 
-        {isActivated && <Button onClick={getLastCourseHandler}>Get last course</Button>}
+        {active && <Text>Interactions with contract can be only on Polygon Mumbai</Text>}
 
-        {isActivated && lastCourse && JSON.stringify(lastCourse)}
+        {active && <Button onClick={purchaseCourseHandler}>{isLoading ? "Loading" : "Purchase Course"}</Button>}
+
+        {active && <Button onClick={getLastCourseHandler}>Get last course</Button>}
+
+        {active && lastCourse && JSON.stringify(lastCourse)}
 
         <Button scale="md" onClick={logout} my="4px">
           {t("Logout")}

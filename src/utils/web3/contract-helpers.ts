@@ -1,26 +1,38 @@
 import { Contract, ContractInterface } from "@ethersproject/contracts";
-import { simpleRpcProvider } from "./simple-rpc";
-import { getChainId } from "./web3-react";
 
 import type { Signer } from "@ethersproject/abstract-signer";
 import type { Provider } from "@ethersproject/providers";
 
 import courseMarketplaceAbi from "configs/abi/CourseMarketplace.json";
 import { contractsAddresses } from "configs";
+import { getChainIds } from "configs/networks";
 
-import { Address } from "./types";
+import { getSimpleRpcProvider } from "./simple-rpc";
 
-export const getContract = (address: string, abi: ContractInterface, signer?: Signer | Provider) => {
-  const signerOrProvider = signer ?? simpleRpcProvider;
+export const getContract = (address: string, abi: ContractInterface, signer?: Signer | Provider, chainId?: number) => {
+  const signerOrProvider = signer ?? getSimpleRpcProvider(chainId);
 
   return new Contract(address, abi, signerOrProvider);
 };
 
-export const getCourseMarketplaceContract = (signer?: Signer | Provider) => {
-  return getContract(getAddress(contractsAddresses.courseMarketplace), courseMarketplaceAbi, signer);
+export const getCourseMarketplaceContract = (signer?: Signer | Provider, chainId?: number) => {
+  return getContract(getAddress(contractsAddresses.courseMarketplace), courseMarketplaceAbi, signer, chainId);
 };
 
-export const getAddress = (address: Address) => {
-  const chainId = getChainId();
+export const getAddress = (address: { [key: number]: string }, chainId?: number) => {
+  const chainIds = getChainIds();
+
+  if (!chainId) {
+    throw new Error("Invalid chain id");
+  }
+
+  if (!chainIds.includes(chainId)) {
+    throw new Error("Unsupported chain id");
+  }
+
+  if (!address[chainId].length) {
+    throw new Error("Contract is not deployed");
+  }
+
   return address[chainId];
 };

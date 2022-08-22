@@ -13,14 +13,19 @@ import {
 // Configs
 import { LOCAL_STORAGE_KEYS } from "configs";
 // Utils
-import { connectorName, setupNetwork, connectorsByName } from "utils/web3";
+import {
+  connectorName,
+  connectorByName,
+  //  setupNetwork,
+} from "utils/web3";
+import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 
 const useWeb3Login = () => {
   const { chainId, activate, deactivate, setError } = useWeb3React();
 
   const login = useCallback(
     async (connectorId: keyof typeof connectorName) => {
-      const connector = connectorsByName[connectorId];
+      const connector = connectorByName[connectorId];
       localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
       try {
@@ -35,14 +40,22 @@ const useWeb3Login = () => {
         activate(connector, async error => {
           // Check if unsupported network prompt metamask to change chainId
           if (error instanceof UnsupportedChainIdError) {
-            const provider = await connector.getProvider();
-            const hasSetup = await setupNetwork(provider);
+            activate(connector);
+            // TODO add UI error handling
+            console.error("Unsupported chain id. Please select network from the list");
 
-            if (hasSetup) {
-              activate(connector);
-            } else {
-              deactivate();
-            }
+            // If you have only one chain and
+            // after activation you want to setup network use next line
+            // const chains = getChainIds();
+
+            // const provider = await connector.getProvider();
+            // const hasSetup = await setupNetwork(provider, chains[0]);
+
+            // if (hasSetup) {
+            //   activate(connector);
+            // } else {
+            //   deactivate();
+            // }
           } else {
             window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
             if (error instanceof NoEthereumProviderError) {
@@ -53,7 +66,7 @@ const useWeb3Login = () => {
               error instanceof UserRejectedRequestErrorWalletConnect
             ) {
               if (connector instanceof WalletConnectConnector) {
-                connectorsByName.walletConnect.walletConnectProvider = undefined;
+                connectorByName.walletConnect.walletConnectProvider = undefined;
               }
               // TODO add UI error handling
               console.error("Please authorize to access your account");
@@ -109,14 +122,14 @@ const useWeb3Login = () => {
 
   const clearUserState = () => {
     const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
-    type Connector = typeof connectorName.walletConnect | typeof connectorName.walletLinkConnector;
 
     if (
       lsConnector &&
       lsConnector in connectorName &&
       (lsConnector === connectorName.walletConnect || lsConnector === connectorName.walletLinkConnector)
     ) {
-      connectorsByName[lsConnector as Connector].close();
+      const connector = connectorByName[lsConnector as keyof typeof connectorByName];
+      (connector as WalletConnectConnector | WalletLinkConnector).close();
     }
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);

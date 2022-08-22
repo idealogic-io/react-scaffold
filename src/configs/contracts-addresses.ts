@@ -1,11 +1,19 @@
-import { ChainId } from "utils/web3";
-import { Address } from "utils/web3/types";
+import { chainIdMainnet, chainIdTestnet } from "configs/networks";
 
-const ContractAddress: { [key: string]: Address } = {
+const contractsAddresses = {
   courseMarketplace: {
-    [ChainId.Mainnet]: "",
-    [ChainId.Testnet]: "0xBC100aE36A319aDCB9bEcF2D51a89ac0C052a384",
+    [chainIdMainnet.mainnet]: "",
+    [chainIdTestnet.ropsten]: "",
+
+    [chainIdMainnet.bsc]: "",
+    [chainIdTestnet.bscTest]: "",
+
+    [chainIdMainnet.polygon]: "",
+    [chainIdTestnet.polygonMumbai]: "0xBC100aE36A319aDCB9bEcF2D51a89ac0C052a384",
+
+    [chainIdMainnet.avax]: "",
+    [chainIdTestnet.fuji]: "",
   },
 };
 
-export default ContractAddress;
+export default contractsAddresses;

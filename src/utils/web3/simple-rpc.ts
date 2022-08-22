@@ -1,6 +1,8 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
-import { getRpcUrl } from "./web3-react";
+import { rpcUrls } from "configs";
 
-const RPC_URL = getRpcUrl();
+export const getSimpleRpcProvider = (chainId?: number) => {
+  const _chainIdd = chainId ?? 1;
 
-export const simpleRpcProvider = new StaticJsonRpcProvider(RPC_URL);
+  return new StaticJsonRpcProvider(rpcUrls[_chainIdd]);
+};

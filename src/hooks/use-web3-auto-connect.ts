@@ -19,8 +19,8 @@ const useWeb3AutoConnect = () => {
   const { login } = useWeb3Login();
 
   useEffect(() => {
-    const tryLogin = (_connectorId: keyof typeof connectorName) => {
-      setTimeout(() => login(_connectorId));
+    const tryLogin = (_connectorId: string) => {
+      setTimeout(() => login(_connectorId as keyof typeof connectorName));
     };
 
     const connectorId = getLocalStorageItem();
