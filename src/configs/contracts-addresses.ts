@@ -3,7 +3,7 @@ import { chainIdMainnet, chainIdTestnet } from "configs/networks";
 const contractsAddresses = {
   courseMarketplace: {
     [chainIdMainnet.mainnet]: "",
-    [chainIdTestnet.ropsten]: "",
+    [chainIdTestnet.goerli]: "",
 
     [chainIdMainnet.bsc]: "",
     [chainIdTestnet.bscTest]: "",

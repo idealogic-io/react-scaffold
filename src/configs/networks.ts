@@ -6,7 +6,7 @@ const chainIdMainnet = {
 };
 
 const chainIdTestnet = {
-  ropsten: 3,
+  goerli: 5,
   bscTest: 97,
   polygonMumbai: 80001,
   fuji: 43113,
@@ -25,7 +25,7 @@ const rpcUrls = {
   [chainIdMainnet.polygon]: "https://polygon-rpc.com",
   [chainIdMainnet.avax]: "https://api.avax.network/ext/bc/C/rpc",
   // Test
-  [chainIdTestnet.ropsten]: "https://rpc.ankr.com/eth_ropsten",
+  [chainIdTestnet.goerli]: "https://rpc.ankr.com/eth_goerli",
   [chainIdTestnet.bscTest]: "https://data-seed-prebsc-1-s1.binance.org:8545",
   [chainIdTestnet.polygonMumbai]: "https://rpc-mumbai.maticvigil.com",
   [chainIdTestnet.fuji]: "https://api.avax-test.network/ext/bc/C/rpc",
@@ -38,7 +38,7 @@ const blockExplorersUrls = {
   [chainIdMainnet.polygon]: "https://polygonscan.com",
   [chainIdMainnet.avax]: "https://snowtrace.io",
   // Test
-  [chainIdTestnet.ropsten]: "https://ropsten.etherscan.io",
+  [chainIdTestnet.goerli]: "https://goerli.etherscan.io",
   [chainIdTestnet.bscTest]: "https://testnet.bscscan.com",
   [chainIdTestnet.polygonMumbai]: "https://mumbai.polygonscan.com",
   [chainIdTestnet.fuji]: "https://testnet.snowtrace.io",
@@ -51,7 +51,7 @@ const chainNames = {
   [chainIdMainnet.polygon]: "Polygon Mainnet",
   [chainIdMainnet.avax]: "Avalanche C-Chain",
   // Test
-  [chainIdTestnet.ropsten]: "Ropsten Testnet",
+  [chainIdTestnet.goerli]: "Ropsten Testnet",
   [chainIdTestnet.bscTest]: "Binance Smart Chain Testnet",
   [chainIdTestnet.polygonMumbai]: "Polygon Mumbai",
   [chainIdTestnet.fuji]: "Avalanche Fuji Testnet",
@@ -76,7 +76,7 @@ const nativeCurrencies = {
     decimals: 18,
   },
   // Test
-  [chainIdTestnet.ropsten]: {
+  [chainIdTestnet.goerli]: {
     name: "Ropsten Ether",
     symbol: "RopstenETH",
     decimals: 18,
@@ -103,12 +103,12 @@ const networks = {
     rpcUrls: [rpcUrls[chainIdMainnet.mainnet]],
     blockExplorerUrls: [blockExplorersUrls[chainIdMainnet.mainnet]],
   },
-  [chainIdTestnet.ropsten]: {
-    chainId: chainIdTestnet.ropsten,
-    chainName: chainNames[chainIdTestnet.ropsten],
-    nativeCurrency: nativeCurrencies[chainIdTestnet.ropsten],
-    rpcUrls: [rpcUrls[chainIdTestnet.ropsten]],
-    blockExplorerUrls: [blockExplorersUrls[chainIdTestnet.ropsten]],
+  [chainIdTestnet.goerli]: {
+    chainId: chainIdTestnet.goerli,
+    chainName: chainNames[chainIdTestnet.goerli],
+    nativeCurrency: nativeCurrencies[chainIdTestnet.goerli],
+    rpcUrls: [rpcUrls[chainIdTestnet.goerli]],
+    blockExplorerUrls: [blockExplorersUrls[chainIdTestnet.goerli]],
   },
   // BSC
   [chainIdMainnet.bsc]: {
