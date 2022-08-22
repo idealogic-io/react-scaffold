@@ -77,8 +77,8 @@ const nativeCurrencies = {
   },
   // Test
   [chainIdTestnet.goerli]: {
-    name: "Ropsten Ether",
-    symbol: "RopstenETH",
+    name: "Goerli Ether",
+    symbol: "GoerliETH",
     decimals: 18,
   },
   [chainIdTestnet.bscTest]: { name: "BNB", symbol: "BNB", decimals: 18 },
