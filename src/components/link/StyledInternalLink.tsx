@@ -1,20 +1,13 @@
 import styled from "styled-components";
+import Text from "components/text";
+import { LinkProps } from "./types";
 
-export const StyledInternalLink = styled.p`
-  text-decoration: none;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.primary};
+export const StyledLink = styled(Text)<LinkProps>`
+  display: flex;
+  align-items: center;
+  width: fit-content;
 
-  :hover {
+  &:hover {
     text-decoration: underline;
-  }
-
-  :focus {
-    outline: none;
-    text-decoration: underline;
-  }
-
-  :active {
-    text-decoration: none;
   }
 `;

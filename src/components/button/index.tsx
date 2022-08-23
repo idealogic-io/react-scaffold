@@ -3,7 +3,7 @@ import React from "react";
 import StyledButton from "./StyledButton";
 import { ButtonProps, scales, variants } from "./types";
 
-const getExternalLinkProps = () => ({
+export const getExternalLinkProps = () => ({
   target: "_blank",
   rel: "noreferrer noopener",
 });

@@ -1,14 +1,16 @@
 import React from "react";
-import { Link, LinkProps } from "react-router-dom";
 
-import { StyledInternalLink } from "./StyledInternalLink";
+import { StyledLink } from "./StyledInternalLink";
+import { LinkProps } from "./types";
+import { getExternalLinkProps } from "components/button";
 
-const InternalLink: React.FC<LinkProps> = ({ children, ...props }) => {
-  return (
-    <Link {...props}>
-      <StyledInternalLink>{children}</StyledInternalLink>
-    </Link>
-  );
+const Link: React.FC<LinkProps> = ({ external, ...props }) => {
+  const internalProps = external ? getExternalLinkProps() : {};
+  return <StyledLink $fontWeight="bold" as="a" {...internalProps} {...props} />;
 };
 
-export default InternalLink;
+Link.defaultProps = {
+  color: "primary",
+};
+
+export default Link;

@@ -1,5 +1,5 @@
 import { ExternalProvider } from "@ethersproject/providers";
-import { chainNames, getChainIds, networks } from "configs";
+import { chainNames, networks } from "configs";
 
 interface SwitchError extends Error {
   code?: number;
@@ -7,17 +7,10 @@ interface SwitchError extends Error {
 
 export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?: number) => {
   const provider = externalProvider || window.ethereum;
-  const chainIds = getChainIds();
 
   if (!chainId) {
     // TODO add UI
     console.error("Invalid chain id");
-    return false;
-  }
-
-  if (!chainIds.includes(chainId)) {
-    // TODO add UI
-    console.error("Unsupported chain id");
     return false;
   }
 
@@ -39,7 +32,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
           });
           return true;
         } catch (error) {
-          console.error("Failed to setup the network in Metamask:", error);
+          console.error("Failed to setup the network in Metamask");
           return false;
         }
       } else if ((switchError as { code?: number })?.code === -32002) {

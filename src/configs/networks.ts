@@ -51,7 +51,7 @@ const chainNames = {
   [chainIdMainnet.polygon]: "Polygon Mainnet",
   [chainIdMainnet.avax]: "Avalanche C-Chain",
   // Test
-  [chainIdTestnet.goerli]: "Ropsten Testnet",
+  [chainIdTestnet.goerli]: "Goerli Testnet",
   [chainIdTestnet.bscTest]: "Binance Smart Chain Testnet",
   [chainIdTestnet.polygonMumbai]: "Polygon Mumbai",
   [chainIdTestnet.fuji]: "Avalanche Fuji Testnet",

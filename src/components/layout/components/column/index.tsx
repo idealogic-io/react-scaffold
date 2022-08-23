@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { space } from "styled-system";
+import { flexbox, space } from "styled-system";
 
 import { AutoColumnProps, ColumnProps } from "../types";
 
@@ -8,6 +8,7 @@ export const Column = styled.div<ColumnProps>`
   flex-direction: column;
   justify-content: flex-start;
   ${space}
+  ${flexbox}
 `;
 export const ColumnCenter = styled(Column)`
   width: 100%;

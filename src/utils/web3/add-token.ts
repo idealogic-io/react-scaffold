@@ -6,20 +6,24 @@ export const registerToken = async (
   tokenLogo?: string,
 ) => {
   if (window.ethereum && window.ethereum.request) {
-    const tokenAdded = await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: tokenAddress,
-          symbol: tokenSymbol,
-          decimals: tokenDecimals,
-          image: tokenLogo,
+    try {
+      const tokenAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: tokenAddress,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+            image: tokenLogo,
+          },
         },
-      },
-    });
-
-    return tokenAdded;
+      });
+      return tokenAdded;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   } else {
     return false;
   }

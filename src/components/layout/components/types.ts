@@ -26,7 +26,7 @@ export type AutoColumnProps = {
   justify?: "stretch" | "center" | "start" | "end" | "flex-start" | "flex-end" | "space-between";
 };
 
-export interface ColumnProps extends SpaceProps {}
+export interface ColumnProps extends SpaceProps, FlexProps {}
 export interface FlexGapProps extends FlexProps {
   gap?: string;
   rowGap?: string;

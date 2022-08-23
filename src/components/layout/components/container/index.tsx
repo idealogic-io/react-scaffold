@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { background, border, layout, position, space } from "styled-system";
+import { background, border, flexbox, layout, position, space } from "styled-system";
 
 import { useThemeContext } from "context";
 

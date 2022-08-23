@@ -10,7 +10,7 @@ const NotFoundPage: React.FC = () => {
   return (
     <StyledNotFoundPage>
       <Heading mb="15px">Not found Page 404</Heading>
-      <InternalLink to={ROUTES.landing}>Go to landing page</InternalLink>
+      <InternalLink href={ROUTES.landing}>Go to landing page</InternalLink>
     </StyledNotFoundPage>
   );
 };

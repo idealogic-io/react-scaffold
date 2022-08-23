@@ -4,6 +4,8 @@ import type { Signer } from "@ethersproject/abstract-signer";
 import type { Provider } from "@ethersproject/providers";
 
 import courseMarketplaceAbi from "configs/abi/CourseMarketplace.json";
+import erc20Abi from "configs/abi/ERC20.json";
+
 import { contractsAddresses } from "configs";
 import { getChainIds } from "configs/networks";
 
@@ -16,7 +18,11 @@ export const getContract = (address: string, abi: ContractInterface, signer?: Si
 };
 
 export const getCourseMarketplaceContract = (signer?: Signer | Provider, chainId?: number) => {
-  return getContract(getAddress(contractsAddresses.courseMarketplace), courseMarketplaceAbi, signer, chainId);
+  return getContract(getAddress(contractsAddresses.courseMarketplace, chainId), courseMarketplaceAbi, signer, chainId);
+};
+
+export const getERC20Contract = (address: string, signer?: Signer | Provider, chainId?: number) => {
+  return getContract(address, erc20Abi, signer, chainId);
 };
 
 export const getAddress = (address: { [key: number]: string }, chainId?: number) => {

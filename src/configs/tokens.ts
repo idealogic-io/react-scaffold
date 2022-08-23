@@ -4,6 +4,7 @@ import { chainIdMainnet, chainIdTestnet } from "./networks";
 // And call async method balanceOf
 // If token address is nullable address (like ETH mainnet)
 // we should check balance with library.getBalance(account);
+// Use name and symbol from native token in networks
 // If token address is empty this means that it's not presented at the current network
 // You can get token name and symbol when call contract method name and symbol
 const tokens = {
@@ -51,6 +52,17 @@ const tokens = {
     [chainIdTestnet.polygonMumbai]: "",
     [chainIdTestnet.fuji]: "",
   },
+  EUROC: {
+    [chainIdMainnet.mainnet]: "0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
+    [chainIdMainnet.bsc]: "",
+    [chainIdMainnet.polygon]: "",
+    [chainIdMainnet.avax]: "",
+    // Test
+    [chainIdTestnet.goerli]: "",
+    [chainIdTestnet.bscTest]: "",
+    [chainIdTestnet.polygonMumbai]: "",
+    [chainIdTestnet.fuji]: "",
+  },
   BTC: {
     [chainIdMainnet.mainnet]: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
     [chainIdMainnet.bsc]: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
@@ -68,7 +80,7 @@ const tokens = {
     [chainIdMainnet.polygon]: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
     [chainIdMainnet.avax]: "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
     // Test
-    [chainIdTestnet.goerli]: "",
+    [chainIdTestnet.goerli]: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     [chainIdTestnet.bscTest]: "",
     [chainIdTestnet.polygonMumbai]: "",
     [chainIdTestnet.fuji]: "",
@@ -80,7 +92,7 @@ const tokens = {
     [chainIdMainnet.avax]: "",
     // Test
     [chainIdTestnet.goerli]: "",
-    [chainIdTestnet.bscTest]: "",
+    [chainIdTestnet.bscTest]: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     [chainIdTestnet.polygonMumbai]: "",
     [chainIdTestnet.fuji]: "",
   },
@@ -93,7 +105,7 @@ const tokens = {
     [chainIdTestnet.goerli]: "",
     [chainIdTestnet.bscTest]: "",
     [chainIdTestnet.polygonMumbai]: "",
-    [chainIdTestnet.fuji]: "",
+    [chainIdTestnet.fuji]: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   },
   USDP: {
     [chainIdMainnet.mainnet]: "0x8E870D67F660D95d5be530380D0eC0bd388289E1",

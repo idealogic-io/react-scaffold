@@ -1,7 +1,7 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { formatUnits, parseUnits } from "@ethersproject/units";
 
-export const toWei = (number: string | number, decimals: number) => {
+export const parseUnitsToDecimals = (number: string | number, decimals: number) => {
   if (typeof number === "string") {
     return parseUnits(number, decimals).toNumber();
   } else if (typeof number === "number") {

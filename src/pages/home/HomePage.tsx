@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { parseUnits } from "@ethersproject/units";
 import random from "lodash/random";
 // Components
-import { Button, Heading, Text, Page, Column } from "components";
+import { Button, Heading, Text, Page, Column, ToastDescriptionWithTx } from "components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Balance, useWeb3Login } from "hooks";
+import { useWaitTransaction, useWeb3Balance, useWeb3Login } from "hooks";
 // Configs
 import { chainNames, connectors, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
 // Utils
@@ -25,18 +25,38 @@ import { Connector } from "utils/web3/types";
 import { Course, NormalizedCourse } from "./types";
 
 import { RU, EN } from "configs/languages";
+import { toast } from "react-toastify";
+import { tokens } from "configs/tokens";
+import { SingleToken } from "./components";
+
+type TokenList = { address: string; key: string }[];
 
 const HomePage: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [lastCourse, setLastCourse] = useState<NormalizedCourse | null>(null);
+  const [tokensList, setTokensList] = useState<TokenList>([]);
 
   const { t, currentLanguage, changeLanguage } = useTranslation();
   const { chainId, account, active, error, library } = useWeb3React();
   const { balance } = useWeb3Balance();
   const { login, logout } = useWeb3Login();
+  const { fetchWithCatchTxError, loading: pendingTx } = useWaitTransaction();
 
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
+
+  useEffect(() => {
+    if (chainId) {
+      const tokensList = Object.entries(tokens)
+        .map(([key, value]) => {
+          if (value[chainId]) {
+            return { address: value[chainId], key };
+          } else return null;
+        })
+        .filter(el => el !== null);
+
+      setTokensList(tokensList as TokenList);
+    }
+  }, [chainId]);
 
   const onConnect = (walletConfig: Connector) => {
     const { title, href, connectorId } = walletConfig;
@@ -48,29 +68,28 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const purchaseCourseHandler = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      const courseContract = getCourseMarketplaceContract(library?.getSigner(), chainId);
-      let courseId = "";
-      for (let i = 0; i < 4; i++) {
-        courseId += random(0, 9);
-      }
-
-      const value = parseUnits(".1", "ether");
-      const tx = await courseContract.purchaseCourse(+courseId, { value });
-      // By tx hash we can redirect user to etherscan to watch his transaction
-      console.log(tx, "Transaction");
-      const result = await tx.wait();
-      // Then me can see the result of tx execution
-      console.log(result, "Finished Transaction");
-    } catch (error) {
-      console.error((error as Error).message);
-    } finally {
-      setIsLoading(false);
+  const onPurchaseCourse = async () => {
+    const receipt = await fetchWithCatchTxError(() => {
+      return purchaseCourseHandler();
+    });
+    if (receipt?.status) {
+      toast.success(
+        <ToastDescriptionWithTx txHash={receipt.transactionHash}>{t("You purchased a course")}</ToastDescriptionWithTx>,
+      );
+      getLastCourseHandler();
     }
-  }, [library, account]);
+  };
+
+  const purchaseCourseHandler = async () => {
+    const courseContract = getCourseMarketplaceContract(library?.getSigner(), chainId);
+    let courseId = "";
+    for (let i = 0; i < 4; i++) {
+      courseId += random(0, 9);
+    }
+
+    const value = parseUnits(".01", "ether");
+    return courseContract.purchaseCourse(+courseId, { value });
+  };
 
   const getLastCourseHandler = async () => {
     try {
@@ -169,11 +188,17 @@ const HomePage: React.FC = () => {
 
         {active && <Text>Interactions with contract can be only on Polygon Mumbai</Text>}
 
-        {active && <Button onClick={purchaseCourseHandler}>{isLoading ? "Loading" : "Purchase Course"}</Button>}
+        {active && (
+          <Button isLoading={pendingTx} onClick={onPurchaseCourse}>
+            Purchase Course
+          </Button>
+        )}
 
         {active && <Button onClick={getLastCourseHandler}>Get last course</Button>}
 
         {active && lastCourse && JSON.stringify(lastCourse)}
+
+        {tokensList.length && tokensList.map(({ key, address }) => <SingleToken key={key} address={address} />)}
 
         <Button scale="md" onClick={logout} my="4px">
           {t("Logout")}

@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import { flexbox } from "styled-system";
+import { flexbox, FlexProps } from "styled-system";
 
 import { Box } from "../container";
 import { FlexGapProps } from "../types";
 
-export const Flex = styled(Box)`
+export const Flex = styled(Box)<FlexProps>`
   display: flex;
   ${flexbox}
 `;
 
-export const FlexLayout = styled.div`
+export const FlexLayout = styled.div<FlexProps>`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
