@@ -38,10 +38,8 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
       } else if ((switchError as { code?: number })?.code === -32002) {
         // TODO add UI
         console.error("Please check metamask, request already pending.");
-      } else {
-        // TODO add UI
-        console.error((switchError as SwitchError)?.message);
       }
+
       return false;
     }
   } else {
