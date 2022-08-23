@@ -74,7 +74,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
       const value = parseUnits(valueToSend.toString(), decimals);
 
       const gasPriceBN = await library.getGasPrice();
-      const gasPrice = formatBigNumber(gasPriceBN, +decimals, +decimals);
+      const gasPrice = formatBigNumber(gasPriceBN);
 
       const gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
 
