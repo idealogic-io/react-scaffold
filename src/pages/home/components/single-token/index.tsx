@@ -73,14 +73,14 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
       const value = parseUnits(valueToSend.toString(), decimals);
 
       const gasPriceBN = await library.getGasPrice();
-      const gasPrice = formatBigNumber(gasPriceBN, +decimals, +decimals);
+      const gasPrice = formatBigNumber(gasPriceBN);
 
       const gasLimitBN = await library.estimateGas({
         to: toAddress,
         value,
         gasPrice: gasPriceBN,
       });
-
+      // TODO txFee is different from Metamask
       const txFee = +gasPrice * +formatFixed(gasLimitBN);
 
       return txFee;
