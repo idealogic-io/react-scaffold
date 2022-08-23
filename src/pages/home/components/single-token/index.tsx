@@ -8,6 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import { getERC20Contract } from "utils/web3/contract-helpers";
 import { isNullableAddress } from "utils/web3/string-helpers";
 import { formatBigNumber } from "utils/web3";
+import { Contract } from "@ethersproject/contracts";
 
 import { nativeCurrencies } from "configs";
 import { useTranslation } from "context";
@@ -40,14 +41,14 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
 
   const getTokenData = async (chainId: number, library: Web3Provider, account: string, address: string) => {
     try {
-      if (!isNullableAddress(address)) {
-        const ERC20Contract = getERC20Contract(address, library.getSigner(), chainId);
+      const ERC20Contract = getERC20Contract(address, library.getSigner(), chainId);
 
+      if (!isNullableAddress(address)) {
         const name = await ERC20Contract.name();
         const symbol = await ERC20Contract.symbol();
         const decimals = await ERC20Contract.decimals();
 
-        const txFee = await estimateTxFee(library, decimals);
+        const txFee = await estimateTxFee(library, decimals, ERC20Contract);
 
         const balanceBN = await ERC20Contract.balanceOf(account);
         const balance = formatBigNumber(balanceBN, +decimals, +decimals);
@@ -58,7 +59,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
         const balanceBN = await library.getBalance(account);
         const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
-        const txFee = await estimateTxFee(library, decimals);
+        const txFee = await estimateTxFee(library, decimals, ERC20Contract);
 
         setTokenData({ name, symbol, balance, decimals, txFee });
       }
@@ -68,18 +69,14 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
     }
   };
 
-  const estimateTxFee = async (library: Web3Provider, decimals: number) => {
+  const estimateTxFee = async (library: Web3Provider, decimals: number, ERC20Contract: Contract) => {
     try {
       const value = parseUnits(valueToSend.toString(), decimals);
 
       const gasPriceBN = await library.getGasPrice();
       const gasPrice = formatBigNumber(gasPriceBN, +decimals, +decimals);
 
-      const gasLimitBN = await library.estimateGas({
-        to: toAddress,
-        value,
-        gasPrice: gasPriceBN,
-      });
+      const gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
 
       const txFee = +gasPrice * +formatFixed(gasLimitBN);
 
