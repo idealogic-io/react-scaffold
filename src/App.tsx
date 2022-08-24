@@ -27,7 +27,6 @@ const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
   useWeb3AutoConnect();
-
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
