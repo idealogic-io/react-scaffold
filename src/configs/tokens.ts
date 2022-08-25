@@ -48,7 +48,7 @@ const tokens = {
     [chainIdMainnet.avax]: "0x19860ccb0a68fd4213ab9d8266f7bbf05a8dde98",
     // Test
     [chainIdTestnet.goerli]: "",
-    [chainIdTestnet.bscTest]: "",
+    [chainIdTestnet.bscTest]: "0x8516Fc284AEEaa0374E66037BD2309349FF728eA",
     [chainIdTestnet.polygonMumbai]: "",
     [chainIdTestnet.fuji]: "",
   },
