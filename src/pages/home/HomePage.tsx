@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
         <Button onClick={changeLanguageHandler}>{t("Change Language")}</Button>
       </RowBetween>
       <Row>
-        <InternalLink to="/">{t("Link to Home page")}</InternalLink>
+        <InternalLink href="/">{t("Link to Home page")}</InternalLink>
       </Row>
     </Page>
   );
