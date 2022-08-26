@@ -17,8 +17,7 @@ import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components"
 import Navigation from "navigation";
 // Utils
 import { getLibrary } from "utils/web3";
-// Hooks
-import { useWeb3AutoConnect } from "hooks";
+
 // @web3-react/walletconnect-connector package uses buffer
 // in webpack 5 Buffer is undefined so we add it globally
 window.Buffer = Buffer;
@@ -26,7 +25,6 @@ window.Buffer = Buffer;
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
-  useWeb3AutoConnect();
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>

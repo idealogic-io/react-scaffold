@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import { parseUnits } from "@ethersproject/units";
-import random from "lodash/random";
+import { useSearchParams } from "react-router-dom";
+
 // Components
-import { Button, Heading, Text, Page, Column, ToastDescriptionWithTx } from "components";
+import { Button, Heading, Text, Page, Column } from "components";
+import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWaitTransaction, useWeb3Balance, useWeb3Login } from "hooks";
+import { useWeb3Balance, useWeb3Login, useWeb3AutoConnect } from "hooks";
+import { useContractData } from "./hooks";
 // Configs
 import { chainNames, connectors, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
+import { RU, EN } from "configs/languages";
+import { tokens } from "configs/tokens";
 // Utils
-import {
-  connectorByName,
-  connectorName,
-  formatBigNumber,
-  formatBigNumberToFixed,
-  getCourseMarketplaceContract,
-  setupNetwork,
-} from "utils/web3";
-
+import { connectorByName, connectorName, formatBigNumberToFixed, setupNetwork } from "utils/web3";
 // Types
 import { Connector } from "utils/web3/types";
-import { Course, NormalizedCourse } from "./types";
-
-import { RU, EN } from "configs/languages";
-import { toast } from "react-toastify";
-import { tokens } from "configs/tokens";
-import { SingleToken } from "./components";
 
 type TokenList = { address: string; key: string }[];
 
 const HomePage: React.FC = () => {
-  const [lastCourse, setLastCourse] = useState<NormalizedCourse | null>(null);
   const [tokensList, setTokensList] = useState<TokenList>([]);
 
   const { t, currentLanguage, changeLanguage } = useTranslation();
-  const { chainId, account, active, error, library } = useWeb3React();
+  const { chainId, account, active, error } = useWeb3React();
   const { balance } = useWeb3Balance();
   const { login, logout } = useWeb3Login();
-  const { fetchWithCatchTxError, loading: pendingTx } = useWaitTransaction();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const networkId = searchParams.get("networkId");
 
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
+
+  const {
+    data: { isApproved, lastCourse, loading },
+    pendingTx,
+    onApprove,
+    onPurchaseCourse,
+    getLastCourseHandler,
+  } = useContractData();
+
+  useWeb3AutoConnect(+(networkId as string));
 
   useEffect(() => {
     if (chainId) {
@@ -68,49 +68,6 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const onPurchaseCourse = async () => {
-    const receipt = await fetchWithCatchTxError(() => {
-      return purchaseCourseHandler();
-    });
-    if (receipt?.status) {
-      toast.success(
-        <ToastDescriptionWithTx txHash={receipt.transactionHash}>{t("You purchased a course")}</ToastDescriptionWithTx>,
-      );
-      getLastCourseHandler();
-    }
-  };
-
-  const purchaseCourseHandler = async () => {
-    const courseContract = getCourseMarketplaceContract(library?.getSigner(), chainId);
-    let courseId = "";
-    for (let i = 0; i < 4; i++) {
-      courseId += random(0, 9);
-    }
-
-    const value = parseUnits(".01", "ether");
-    return courseContract.purchaseCourse(+courseId, { value });
-  };
-
-  const getLastCourseHandler = async () => {
-    try {
-      const courseContract = getCourseMarketplaceContract(library?.getSigner(), chainId);
-
-      const coursesLength = await courseContract.getCourseCount();
-      const lastCourseHash = await courseContract.getCourseHashAtIndex(coursesLength - 1);
-      const lastCourse: Course = await courseContract.getCourseByHash(lastCourseHash);
-      const course: NormalizedCourse = {
-        id: formatBigNumber(lastCourse.id, 0, 0),
-        price: formatBigNumber(lastCourse.price),
-        proof: lastCourse.proof,
-        owner: lastCourse.owner,
-        state: lastCourse.state,
-      };
-      setLastCourse(course);
-    } catch (error) {
-      console.error((error as Error).message);
-    }
-  };
-
   const changeChainHandler = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const {
       target: { value: chainId },
@@ -119,6 +76,7 @@ const HomePage: React.FC = () => {
     const connector = connectorByName[connectorId as keyof typeof connectorByName];
 
     if (connector) {
+      setSearchParams({ networkId: chainId });
       try {
         const provider = await connector.getProvider();
         await setupNetwork(provider, +chainId);
@@ -174,7 +132,7 @@ const HomePage: React.FC = () => {
         )}
 
         {active || isUnsupportedChainId ? (
-          <select name="chain" value={chainId} defaultValue={""} onChange={changeChainHandler}>
+          <select name="chain" value={networkId ?? ""} defaultValue={""} onChange={changeChainHandler}>
             <option disabled value={""}>
               -- select a chain --
             </option>
@@ -189,8 +147,8 @@ const HomePage: React.FC = () => {
         {active && <Text>Interactions with contract can be only on Polygon Mumbai</Text>}
 
         {active && (
-          <Button isLoading={pendingTx} onClick={onPurchaseCourse}>
-            Purchase Course
+          <Button isLoading={pendingTx || loading} onClick={!isApproved ? onApprove : onPurchaseCourse}>
+            {!isApproved ? "Approve" : "Purchase Course"}
           </Button>
         )}
 

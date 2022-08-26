@@ -15,3 +15,4 @@ export {
   networks,
   getChainIds,
 } from "./networks";
+export { tokens } from "./tokens";
