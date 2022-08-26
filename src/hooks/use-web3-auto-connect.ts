@@ -5,25 +5,16 @@ import { connectorName, injectedConnector } from "utils/web3";
 import { LOCAL_STORAGE_KEYS } from "configs";
 import { useWeb3Login } from "hooks";
 
-const getLocalStorageItem = () => {
-  try {
-    return localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
-  } catch (err) {
-    console.error(`Local Storage error: ${(err as Error)?.message}`);
-
-    return null;
-  }
-};
-
-const useWeb3AutoConnect = () => {
+// If you want to setup exact network on mount pass network id
+// Otherwise network id will be first from supported chains at login function
+const useWeb3AutoConnect = (networkId?: number) => {
   const { login } = useWeb3Login();
+  const connectorId = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
 
   useEffect(() => {
     const tryLogin = (_connectorId: string) => {
-      setTimeout(() => login(_connectorId as keyof typeof connectorName));
+      setTimeout(() => login(_connectorId as keyof typeof connectorName, networkId));
     };
-
-    const connectorId = getLocalStorageItem();
 
     if (connectorId) {
       if (connectorId === connectorName.injectedConnector) {
@@ -42,7 +33,7 @@ const useWeb3AutoConnect = () => {
         }
       });
     }
-  }, [login]);
+  }, []);
 };
 
 export default useWeb3AutoConnect;

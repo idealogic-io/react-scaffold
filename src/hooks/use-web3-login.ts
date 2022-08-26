@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { toast } from "react-toastify";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import {
@@ -10,83 +10,68 @@ import {
   UserRejectedRequestError as UserRejectedRequestErrorWalletConnect,
   WalletConnectConnector,
 } from "@web3-react/walletconnect-connector";
-// Configs
-import { LOCAL_STORAGE_KEYS } from "configs";
-// Utils
-import {
-  connectorName,
-  connectorByName,
-  //  setupNetwork,
-} from "utils/web3";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
-
+// Configs
+import { getChainIds, LOCAL_STORAGE_KEYS, toastError } from "configs";
+// Utils
+import { connectorName, connectorByName, setupNetwork } from "utils/web3";
+// TODO translate text here
 const useWeb3Login = () => {
-  const { chainId, activate, deactivate, setError } = useWeb3React();
+  const { activate, deactivate, setError } = useWeb3React();
+  // If you want to setup exact network please pass network id
+  // Otherwise network id will be first from supported chains
+  const login = async (connectorId: keyof typeof connectorName, networkId?: number) => {
+    const connector = connectorByName[connectorId];
+    localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
-  const login = useCallback(
-    async (connectorId: keyof typeof connectorName) => {
-      const connector = connectorByName[connectorId];
-      localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
+    try {
+      await handleProvider(connector);
+    } catch (error) {
+      toast.error(`${(error as Error)?.message}`, toastError);
+      return;
+    }
 
-      try {
-        await handleProvider(connector);
-      } catch (error) {
-        // TODO add ui
-        console.error((error as Error)?.message);
-        return;
-      }
+    if (connector) {
+      const provider = await connector.getProvider();
+      const supportedChainIds = getChainIds();
+      const chain = networkId ?? supportedChainIds[0];
 
-      if (connector) {
-        activate(connector, async error => {
-          // Check if unsupported network prompt metamask to change chainId
-          if (error instanceof UnsupportedChainIdError) {
+      await activate(connector, async error => {
+        // Check if unsupported network prompt metamask to change chainId
+        if (error instanceof UnsupportedChainIdError) {
+          setError(error);
+
+          const hasSetup = await setupNetwork(provider, chain);
+          if (hasSetup) {
             activate(connector);
-            // TODO add UI error handling
-            console.error("Unsupported chain id. Please select network from the list");
-
-            // If you have only one chain and
-            // after activation you want to setup network use next line
-            // const chains = getChainIds();
-
-            // const provider = await connector.getProvider();
-            // const hasSetup = await setupNetwork(provider, chains[0]);
-
-            // if (hasSetup) {
-            //   activate(connector);
-            // } else {
-            //   deactivate();
-            // }
-          } else {
-            window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
-            if (error instanceof NoEthereumProviderError) {
-              // TODO add UI error handling
-              console.error("No provider was found");
-            } else if (
-              error instanceof UserRejectedRequestErrorInjected ||
-              error instanceof UserRejectedRequestErrorWalletConnect
-            ) {
-              if (connector instanceof WalletConnectConnector) {
-                connectorByName.walletConnect.walletConnectProvider = undefined;
-              }
-              // TODO add UI error handling
-              console.error("Please authorize to access your account");
-            } else if ((error as { code?: number })?.code === -32002) {
-              // TODO add UI error handling
-              console.error("Please check metamask, request already pending.");
-            } else {
-              // TODO add UI error handling
-              console.error(error.message);
-            }
           }
-        });
-      } else {
-        window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
-        // TODO add UI error handling
-        console.error("Unable to find connector");
-      }
-    },
-    [activate, setError],
-  );
+        } else {
+          window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
+          if (error instanceof NoEthereumProviderError) {
+            toast.error("No provider was found", toastError);
+          } else if (
+            error instanceof UserRejectedRequestErrorInjected ||
+            error instanceof UserRejectedRequestErrorWalletConnect
+          ) {
+            if (connector instanceof WalletConnectConnector) {
+              connectorByName.walletConnect.walletConnectProvider = undefined;
+            }
+
+            toast.error("Please authorize to access your account", toastError);
+          } else if ((error as { code?: number })?.code === -32002) {
+            toast.error("Please check metamask, request already pending.", toastError);
+          } else {
+            toast.error(error.message, toastError);
+          }
+        }
+      });
+
+      await setupNetwork(provider, chain);
+    } else {
+      window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
+      toast.error("Unable to find connector", toastError);
+    }
+  };
 
   // handleProvider resolves conflict between several chrome extensions.
   // If you have both Metamask and CoinBase Wallet extension installed
@@ -115,10 +100,10 @@ const useWeb3Login = () => {
     }
   };
 
-  const logout = useCallback(() => {
+  const logout = () => {
     deactivate();
     clearUserState();
-  }, [deactivate, chainId]);
+  };
 
   const clearUserState = () => {
     const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);

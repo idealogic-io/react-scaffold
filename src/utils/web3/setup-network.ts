@@ -1,16 +1,18 @@
 import { ExternalProvider } from "@ethersproject/providers";
-import { chainNames, networks } from "configs";
+import { toast } from "react-toastify";
+
+import { chainNames, networks, toastError } from "configs";
 
 interface SwitchError extends Error {
   code?: number;
 }
-
+// TODO translate page here
 export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?: number) => {
   const provider = externalProvider || window.ethereum;
 
   if (!chainId) {
-    // TODO add UI
-    console.error("Invalid chain id");
+    toast.error("Network is not defined", toastError);
+
     return false;
   }
 
@@ -32,18 +34,18 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
           });
           return true;
         } catch (error) {
-          console.error("Failed to setup the network in Metamask");
+          console.error(`Failed to setup the network in Metamask: ${(error as Error).message}`);
           return false;
         }
-      } else if ((switchError as { code?: number })?.code === -32002) {
-        // TODO add UI
-        console.error("Please check metamask, request already pending.");
       }
 
       return false;
     }
   } else {
-    console.error(`Can't setup the ${chainNames[chainId]} network on metamask because window.ethereum is undefined`);
+    toast.error(
+      `Can't setup the ${chainNames[chainId]} network on metamask because window.ethereum is undefined`,
+      toastError,
+    );
     return false;
   }
 };
