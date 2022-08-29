@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AutoColumnProps } from "../types";
+import { AutoColumnProps, ColumnProps } from "../types";
 
 export const Column = styled.div<ColumnProps>`
   display: flex;
