@@ -25,7 +25,7 @@ const walletConnect = new WalletConnectConnector({
 });
 
 const walletLinkConnector = new WalletLinkConnector({
-  url: rpcUrls["1"],
+  url: process.env.DOMAIN as string,
   appName: "Scaffold",
   appLogoUrl: `${process.env.REACT_APP_URL}/logo512.png`,
   supportedChainIds,

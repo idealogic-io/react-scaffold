@@ -10,7 +10,7 @@ export const Column = styled.div<ColumnProps>`
   ${space}
   ${flexbox}
 `;
-export const ColumnCenter = styled(Column)`
+export const ColumnCenter = styled(Column)<ColumnProps>`
   width: 100%;
   align-items: center;
 `;
