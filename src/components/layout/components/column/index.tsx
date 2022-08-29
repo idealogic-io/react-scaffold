@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { AutoColumnProps } from "../types";
 
-export const Column = styled.div`
+export const Column = styled.div<ColumnProps>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 `;
-export const ColumnCenter = styled(Column)`
+export const ColumnCenter = styled(Column)<ColumnProps>`
   width: 100%;
   align-items: center;
 `;

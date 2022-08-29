@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { space } from "styled-system";
+import { space, SpaceProps } from "styled-system";
 
 import { Box } from "../container";
 
@@ -16,12 +16,12 @@ export const Row = styled(Box)<RowProps>`
   ${space}
 `;
 
-export const RowBetween = styled(Row)`
+export const RowBetween = styled(Row)<SpaceProps>`
   justify-content: space-between;
   ${space}
 `;
 
-export const RowFlat = styled.div`
+export const RowFlat = styled.div<SpaceProps>`
   display: flex;
   align-items: flex-end;
   ${space}

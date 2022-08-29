@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { flexbox } from "styled-system";
 
 import { Box } from "../container";
-import { FlexGapProps } from "../types";
+import { FlexGapProps, FlexLayoutProps } from "../types";
 
-export const Flex = styled(Box)`
+export const Flex = styled(Box)<FlexLayoutProps>`
   display: flex;
   ${flexbox}
 `;

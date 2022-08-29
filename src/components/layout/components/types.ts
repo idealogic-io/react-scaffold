@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 import {
   BackgroundProps,
   BorderProps,
@@ -8,6 +8,8 @@ import {
   SpaceProps,
   GridProps as _GridProps,
 } from "styled-system";
+
+export interface PageProps extends PropsWithChildren<BoxProps> {}
 
 export interface BoxProps
   extends BackgroundProps,
@@ -25,6 +27,10 @@ export type AutoColumnProps = {
   gap?: "sm" | "md" | "lg" | string;
   justify?: "stretch" | "center" | "start" | "end" | "flex-start" | "flex-end" | "space-between";
 };
+
+export interface ColumnProps extends SpaceProps, FlexProps {}
+
+export interface FlexLayoutProps extends FlexProps, BoxProps {}
 
 export interface FlexGapProps extends FlexProps {
   gap?: string;
