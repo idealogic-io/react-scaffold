@@ -10,7 +10,7 @@ import {
 } from "@web3-react/walletconnect-connector";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 // Configs
-import { getChainIds, LOCAL_STORAGE_KEYS, toastError } from "configs";
+import { getChainIds, LOCAL_STORAGE_KEYS, toastOptions } from "configs";
 // Utils
 import { connectorName, connectorByName, setupNetwork } from "utils/web3";
 // TODO translate text here
@@ -40,7 +40,7 @@ const useWeb3Login = () => {
         } else {
           window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
           if (error instanceof NoEthereumProviderError) {
-            toast.error("No provider was found", toastError);
+            toast.error("No provider was found", toastOptions);
           } else if (
             error instanceof UserRejectedRequestErrorInjected ||
             error instanceof UserRejectedRequestErrorWalletConnect
@@ -49,11 +49,11 @@ const useWeb3Login = () => {
               connectorByName.walletConnect.walletConnectProvider = undefined;
             }
 
-            toast.error("Please authorize to access your account", toastError);
+            toast.error("Please authorize to access your account", toastOptions);
           } else if ((error as { code?: number })?.code === -32002) {
-            toast.error("Please check metamask, request already pending.", toastError);
+            toast.error("Please check metamask, request already pending.", toastOptions);
           } else {
-            toast.error(error.message, toastError);
+            toast.error(error.message, toastOptions);
           }
         }
       });
@@ -61,7 +61,7 @@ const useWeb3Login = () => {
       await setupNetwork(provider, chain);
     } else {
       window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
-      toast.error("Unable to find connector", toastError);
+      toast.error("Unable to find connector", toastOptions);
     }
   };
 

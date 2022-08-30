@@ -4,7 +4,7 @@ import { TransactionReceipt, TransactionResponse } from "@ethersproject/provider
 import { toast } from "react-toastify";
 
 import { useTranslation } from "context";
-import { toastError } from "configs";
+import { toastOptions } from "configs";
 import { isGasEstimationError, isUserRejected, TxError } from "utils/web3/error-helpers";
 import { ToastDescriptionWithTx } from "components";
 
@@ -43,10 +43,10 @@ const useWaitTransaction = () => {
         <ToastDescriptionWithTx txHash={tx.hash}>
           {t("Please try again. Confirm the transaction and make sure you are paying enough gas!")}
         </ToastDescriptionWithTx>,
-        toastError,
+        toastOptions,
       );
     } else {
-      toast.error(getErrorMessage(error), toastError);
+      toast.error(getErrorMessage(error), toastOptions);
     }
   };
 
