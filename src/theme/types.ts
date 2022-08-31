@@ -51,6 +51,7 @@ export type BaseColors = {
   success: string;
   black: string;
   white: string;
+  transparent: string;
 };
 
 export interface Colors extends BaseColors {

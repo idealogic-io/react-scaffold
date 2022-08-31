@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import {
+  InjectedConnector,
   NoEthereumProviderError,
   UserRejectedRequestError as UserRejectedRequestErrorInjected,
 } from "@web3-react/injected-connector";
@@ -13,7 +14,8 @@ import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import { getChainIds, LOCAL_STORAGE_KEYS, toastOptions } from "configs";
 // Utils
 import { connectorName, connectorByName, setupNetwork } from "utils/web3";
-// TODO translate text here
+
+// TODO check translation
 const useWeb3Login = () => {
   const { activate, deactivate, setError } = useWeb3React();
   // If you want to setup exact network please pass network id
@@ -25,9 +27,12 @@ const useWeb3Login = () => {
     if (connector) {
       const provider = await connector.getProvider();
       const supportedChainIds = getChainIds();
-      const chain = networkId ?? supportedChainIds[0];
+      const chain = networkId && supportedChainIds.includes(networkId) ? networkId : supportedChainIds[0];
+      let isError = false;
+      await handleProvider(connector);
 
       await activate(connector, async error => {
+        isError = true;
         // Check if unsupported network prompt metamask to change chainId
         if (error instanceof UnsupportedChainIdError) {
           setError(error);
@@ -51,17 +56,53 @@ const useWeb3Login = () => {
 
             toast.error("Please authorize to access your account", toastOptions);
           } else if ((error as { code?: number })?.code === -32002) {
-            toast.error("Please check metamask, request already pending.", toastOptions);
+            toast.error("Please check the wallet, request is already pending.", toastOptions);
           } else {
             toast.error(error.message, toastOptions);
           }
         }
       });
 
-      await setupNetwork(provider, chain);
+      if (!isError) {
+        await setupNetwork(provider, chain);
+      }
     } else {
       window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
       toast.error("Unable to find connector", toastOptions);
+    }
+  };
+
+  // handleProvider resolves conflict between several chrome extensions.
+  // If you have both Metamask and CoinBase Wallet extension installed
+  // CoinBase Wallet has priority on Metamask.
+  // In this case when you click on Metamask CoinBase Wallet opens own modal.
+  const handleProvider = async (connector: InjectedConnector | WalletConnectConnector | WalletLinkConnector) => {
+    try {
+      if (connector instanceof InjectedConnector) {
+        const provider = await connector.getProvider();
+
+        if (provider?.isMetaMask && !provider?.overrideIsMetaMask) {
+          return;
+        }
+
+        // If several extensions installed choose metamask as main provider
+        if (
+          provider &&
+          provider?.overrideIsMetaMask &&
+          provider?.providers?.length &&
+          !provider?.selectedProvider?.isMetaMask
+        ) {
+          const metamaskProvider = (provider.providers as { isMetaMask?: boolean }[]).find(
+            ({ isMetaMask }) => isMetaMask,
+          );
+
+          if (metamaskProvider) {
+            await provider.setSelectedProvider(metamaskProvider);
+          }
+        }
+      }
+    } catch (error) {
+      console.error((error as Error)?.message);
     }
   };
 

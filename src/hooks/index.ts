@@ -4,3 +4,4 @@ export { default as useWeb3Login } from "./use-web3-login";
 export { default as useWeb3AutoConnect } from "./use-web3-auto-connect";
 export { default as useWeb3Balance } from "./use-web3-balance";
 export { default as useWaitTransaction } from "./use-wait-transaction";
+export { default as useProviders } from "./use-providers";

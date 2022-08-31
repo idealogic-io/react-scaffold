@@ -1,4 +1,4 @@
-import Metamask from "components/svg/icons/Metamask";
+import Web3 from "components/svg/icons/Web3";
 import WalletConnect from "components/svg/icons/WalletConnect";
 import CoinBase from "components/svg/icons/CoinBase";
 
@@ -7,10 +7,9 @@ import { Connector } from "utils/web3/types";
 
 const connectors: Connector[] = [
   {
-    title: "Metamask",
-    icon: Metamask,
+    title: "Web3",
+    icon: Web3,
     connectorId: connectorName.injectedConnector,
-    href: "https://metamask.app.link/dapp/pancakeswap.finance/",
   },
   {
     title: "WalletConnect",

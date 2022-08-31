@@ -8,6 +8,7 @@ const baseColors: BaseColors = {
   success: "#00C898",
   black: "#333333",
   white: "#ffffff",
+  transparent: "transparent",
 };
 
 const lightColors: Colors = {

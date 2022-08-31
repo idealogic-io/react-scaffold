@@ -8,10 +8,10 @@ import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Balance, useWeb3Login, useWeb3AutoConnect } from "hooks";
+import { useWeb3Balance, useWeb3Login, useWeb3AutoConnect, useProviders } from "hooks";
 import { useContractData } from "./hooks";
 // Configs
-import { chainNames, connectors, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
+import { chainNames, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
 import { RU, EN } from "configs/languages";
 import { tokens } from "configs/tokens";
 // Utils
@@ -29,8 +29,9 @@ const HomePage: React.FC = () => {
   const { balance } = useWeb3Balance();
   const { login, logout } = useWeb3Login();
   const [searchParams, setSearchParams] = useSearchParams();
-  const networkId = searchParams.get("networkId");
+  const { providers } = useProviders();
 
+  const networkId = searchParams.get("networkId");
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
 
@@ -117,17 +118,21 @@ const HomePage: React.FC = () => {
           </Column>
         )}
 
-        {!active && !isUnsupportedChainId && (
+        {!active && (
           <Column>
-            {connectors.map(walletConfig => {
-              const { title, icon: Icon } = walletConfig;
+            {providers.length ? (
+              providers.map(walletConfig => {
+                const { title, icon: Icon } = walletConfig;
 
-              return (
-                <Button scale="md" key={title} startIcon={<Icon />} onClick={() => onConnect(walletConfig)} my="4px">
-                  {t("Connect %provider%", { provider: title })}
-                </Button>
-              );
-            })}
+                return (
+                  <Button scale="md" key={title} startIcon={<Icon />} onClick={() => onConnect(walletConfig)} my="4px">
+                    {t("Connect %provider%", { provider: title })}
+                  </Button>
+                );
+              })
+            ) : (
+              <Text>Loading...</Text>
+            )}
           </Column>
         )}
 
@@ -156,7 +161,9 @@ const HomePage: React.FC = () => {
 
         {active && lastCourse && JSON.stringify(lastCourse)}
 
-        {tokensList.length && tokensList.map(({ key, address }) => <SingleToken key={key} address={address} />)}
+        {tokensList.length && active
+          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} />)
+          : null}
 
         <Button scale="md" onClick={logout} my="4px">
           {t("Logout")}
