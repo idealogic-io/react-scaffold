@@ -15,7 +15,6 @@ import { useTranslation } from "context";
 
 import { Box, Button, Column, Text, ToastDescriptionWithTx } from "components";
 import { useWaitTransaction } from "hooks";
-// import { registerToken } from "utils/web3/add-token";
 
 type SingleTokenProps = {
   address: string;
@@ -48,7 +47,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
         const symbol = await ERC20Contract.symbol();
         const decimals = await ERC20Contract.decimals();
 
-        const txFee = await estimateTxFee(library, decimals, ERC20Contract);
+        const txFee = await estimateTxFee(library, decimals, ERC20Contract, isNullableAddress(address));
 
         const balanceBN = await ERC20Contract.balanceOf(account);
         const balance = formatBigNumber(balanceBN, +decimals, +decimals);
@@ -59,7 +58,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
         const balanceBN = await library.getBalance(account);
         const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
-        const txFee = await estimateTxFee(library, decimals, ERC20Contract);
+        const txFee = await estimateTxFee(library, decimals, ERC20Contract, isNullableAddress(address));
 
         setTokenData({ name, symbol, balance, decimals, txFee });
       }
@@ -69,21 +68,28 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
     }
   };
 
-  const estimateTxFee = async (library: Web3Provider, decimals: number, ERC20Contract: Contract) => {
+  const estimateTxFee = async (
+    library: Web3Provider,
+    decimals: number,
+    ERC20Contract: Contract,
+    isNullableAddress: boolean,
+  ) => {
     try {
       const value = parseUnits(valueToSend.toString(), decimals);
 
       const gasPriceBN = await library.getGasPrice();
-      const nativeGasLimit = await library.estimateGas({ to: toAddress, value });
+
+      let gasLimitBN = parseUnits("0");
+      if (isNullableAddress) {
+        gasLimitBN = await library.estimateGas({ to: toAddress, value });
+      } else {
+        gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
+      }
 
       const gasPrice = formatBigNumber(gasPriceBN);
+      const gasLimit = formatFixed(gasLimitBN);
 
-      const gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
-      console.log("====================================");
-      console.log(formatFixed(nativeGasLimit), formatFixed(gasLimitBN));
-      console.log("====================================");
-
-      const txFee = +gasPrice * +formatFixed(gasLimitBN);
+      const txFee = +gasPrice * +gasLimit;
 
       return txFee;
     } catch (error) {
@@ -127,12 +133,6 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
   };
 
   const sendERC20Token = async (symbol: string, decimals: number) => {
-    // Uncomment this method to see it's functionality
-    // if (library?.provider?.isMetaMask) {
-    //   const added = await registerToken(address, symbol, decimals);
-    //   console.log(added, "ADD");
-    // }
-
     const value = parseUnits(valueToSend.toString(), decimals);
 
     const ERC20Contract = getERC20Contract(address, library?.getSigner(), chainId);
