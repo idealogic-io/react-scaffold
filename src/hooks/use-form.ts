@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
-import { useFormik, FormikConfig } from "formik";
+import { useFormik, FormikConfig, FormikValues } from "formik";
 
-const useForm = <Values>(config: FormikConfig<Values>) => {
+const useForm = <Values>(config: FormikConfig<Values & FormikValues>) => {
   const formik = useFormik({
     ...config,
     validateOnBlur: true,
