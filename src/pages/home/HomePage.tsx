@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import { Button, Heading, InternalLink, Page, Row, RowBetween } from "components";
+import { Box, Button, Heading, InternalLink, Page, Row, RowBetween, Text } from "components";
 import { AddIcon } from "components/svg";
 // Context
 import { useThemeContext, useTranslation } from "context";
@@ -8,12 +8,21 @@ import { useThemeContext, useTranslation } from "context";
 import { useAppDispatch } from "store/store";
 import { logout } from "store/reducers/auth";
 import { ModalNames, showModal } from "store/reducers/modal";
+// Hook
+import { useTooltip } from "hooks";
 
 import { RU, EN } from "configs/languages";
 
 const HomePage: React.FC = () => {
   const { toggleTheme } = useThemeContext();
   const { t, currentLanguage, changeLanguage } = useTranslation();
+  const { targetRef, tooltip } = useTooltip(undefined, {
+    placement: "top",
+  });
+  const { targetRef: targetRefClick, tooltip: tooltipClick } = useTooltip(undefined, {
+    placement: "top",
+    trigger: "click",
+  });
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
@@ -40,12 +49,23 @@ const HomePage: React.FC = () => {
         <Button onClick={toggleTheme} startIcon={<AddIcon />} endIcon={<AddIcon />}>
           {t("Toggle Theme")}
         </Button>
+
         <Button onClick={openModalHandler}>{t("Open Modal")}</Button>
         <Button onClick={logoutHandler}>{t("Logout")}</Button>
         <Button onClick={changeLanguageHandler}>{t("Change Language")}</Button>
       </RowBetween>
       <Row>
         <InternalLink href="/">{t("Link to Home page")}</InternalLink>
+      </Row>
+      <Row my="24px">
+        <Box mr="24px">
+          <Text ref={targetRef}>Hover me</Text>
+          {tooltip}
+        </Box>
+        <Box>
+          <Text ref={targetRefClick}>Click me</Text>
+          {tooltipClick}
+        </Box>
       </Row>
     </Page>
   );

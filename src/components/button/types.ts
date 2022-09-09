@@ -1,3 +1,4 @@
+import { SvgProps } from "components/svg/types";
 import { ElementType, PropsWithChildren, ReactNode } from "react";
 import { DefaultTheme } from "styled-components";
 import { LayoutProps, SpaceProps } from "styled-system";
@@ -32,8 +33,8 @@ export interface BaseButtonProps
       scale?: Scale;
       variant?: Variant;
       disabled?: boolean;
-      startIcon?: ReactNode;
-      endIcon?: ReactNode;
+      startIcon?: ReactNode & SvgProps;
+      endIcon?: ReactNode & SvgProps;
       color?: keyof Colors;
     }> {}
 
