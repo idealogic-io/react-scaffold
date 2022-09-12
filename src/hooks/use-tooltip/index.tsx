@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { Arrow, StyledTooltip, animationMap, animationVariants } from "./StyledTooltip";
 import { TooltipOptions, TooltipRefs } from "./types";
 import { useSubscriptionEventsHandlers } from "./use-subscription-events-handlers";
+import { checkIsEllipsis } from "utils/helpers";
 
 const useTooltip = (content: React.ReactNode, options?: TooltipOptions): TooltipRefs => {
   const {
@@ -13,6 +14,7 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
     arrowPadding = 16,
     tooltipPadding = { left: 16, right: 16 },
     tooltipOffset = [0, 10],
+    isEllipsis = false,
   } = options ?? {};
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [tooltipElement, setTooltipElement] = useState<HTMLElement | null>(null);
@@ -46,7 +48,11 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
     </StyledTooltip>
   );
 
-  const AnimatedTooltip = <AnimatePresence>{visible && tooltip}</AnimatePresence>;
+  const AnimatedTooltip = (
+    <AnimatePresence>
+      {isEllipsis ? checkIsEllipsis(targetElement) && visible && tooltip : visible && tooltip}
+    </AnimatePresence>
+  );
 
   return {
     targetRef: setTargetElement,

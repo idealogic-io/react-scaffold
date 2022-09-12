@@ -8,21 +8,13 @@ import { useThemeContext, useTranslation } from "context";
 import { useAppDispatch } from "store/store";
 import { logout } from "store/reducers/auth";
 import { ModalNames, showModal } from "store/reducers/modal";
-// Hook
-import { useTooltip } from "hooks";
 
 import { RU, EN } from "configs/languages";
 
 const HomePage: React.FC = () => {
   const { toggleTheme } = useThemeContext();
   const { t, currentLanguage, changeLanguage } = useTranslation();
-  const { targetRef, tooltip } = useTooltip(undefined, {
-    placement: "top",
-  });
-  const { targetRef: targetRefClick, tooltip: tooltipClick } = useTooltip(undefined, {
-    placement: "top",
-    trigger: "click",
-  });
+
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
@@ -56,16 +48,6 @@ const HomePage: React.FC = () => {
       </RowBetween>
       <Row>
         <InternalLink href="/">{t("Link to Home page")}</InternalLink>
-      </Row>
-      <Row my="24px">
-        <Box mr="24px">
-          <Text ref={targetRef}>Hover me</Text>
-          {tooltip}
-        </Box>
-        <Box>
-          <Text ref={targetRefClick}>Click me</Text>
-          {tooltipClick}
-        </Box>
       </Row>
     </Page>
   );
