@@ -35,7 +35,7 @@ export const StyledTooltip = styled(motion.div)`
   font-size: 16px;
   line-height: 130%;
   border-radius: 16px;
-  max-width: 320px;
+  max-width: calc(320px - (16px * 2));
   z-index: 101;
   background: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.text};
