@@ -22,6 +22,7 @@ export type Radii = {
 
 export type Shadows = {
   button: string;
+  tooltip: string;
 };
 
 export type SingleFontStyle = {

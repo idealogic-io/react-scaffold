@@ -5,3 +5,4 @@ export { default as useWeb3AutoConnect } from "./use-web3-auto-connect";
 export { default as useWeb3Balance } from "./use-web3-balance";
 export { default as useWaitTransaction } from "./use-wait-transaction";
 export { default as useProviders } from "./use-providers";
+export { default as useTooltip } from "./use-tooltip";
