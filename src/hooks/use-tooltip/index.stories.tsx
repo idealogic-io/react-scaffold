@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Box, Column, Flex } from "components";
+import { AutoRow, Box, Flex } from "components";
 import { useTooltip } from "hooks";
 
 export default {
-  title: "Hooks/useTooltip",
+  title: "Hooks/UseTooltips",
 };
 
 const StyledBox = styled(Flex)`
@@ -16,6 +16,7 @@ const StyledBox = styled(Flex)`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 const StyledEllipsis = styled(Box)`
@@ -26,9 +27,10 @@ const StyledEllipsis = styled(Box)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  border-radius: 5px;
 `;
 
-export const Default: React.FC = () => {
+export const UseTooltips: React.FC = () => {
   const { targetRef, tooltip } = useTooltip("Custom text");
   const { targetRef: targetText, tooltip: tooltipText } = useTooltip(undefined);
   const { targetRef: targetEllipsis, tooltip: tooltipEllipsis } = useTooltip(undefined);
@@ -36,7 +38,7 @@ export const Default: React.FC = () => {
   const { targetRef: targetTriggerClick, tooltip: tooltipTriggerClick } = useTooltip("Click me", { trigger: "click" });
 
   return (
-    <Column>
+    <AutoRow>
       <>
         <StyledBox ref={targetPosition} />
         {tooltipPosition}
@@ -61,6 +63,6 @@ export const Default: React.FC = () => {
         <StyledEllipsis ref={targetEllipsis}>Hover me Hover me Hover me</StyledEllipsis>
         {tooltipEllipsis}
       </>
-    </Column>
+    </AutoRow>
   );
 };

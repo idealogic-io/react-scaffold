@@ -1,6 +1,9 @@
+import { ErrorResult } from "services/types";
+
 export type AuthState = {
   token: string | null;
-  error: string | null;
+  pending: boolean;
+  error: ErrorResult | null;
 };
 
 export type LoginUserResponse = {

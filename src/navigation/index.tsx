@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { RequireAuth, TokenHandler } from "./components";
-import { ROUTES } from "./routes";
+import { ROUTES, ROUTE_PARAMS } from "./routes";
 
 import { NotFoundPage } from "components";
 import { HomePage, LandingPage, LoginPage } from "pages";
@@ -22,25 +22,25 @@ const Navigation: React.FC = () => {
 
       <Route path={ROUTES.home}>
         <Route
-          path=""
+          index
           element={
             <RequireAuth>
               <HomePage />
             </RequireAuth>
           }
         />
-        <Route path="app" element={<>App</>} />
+        <Route path={ROUTES.app} element={<>App</>} />
         {/* Nesting */}
-        <Route path="wallet">
+        <Route path={ROUTES.wallet}>
           <Route index element={<>Wallet</>} />
 
-          <Route path=":network">
+          <Route path={`:${ROUTE_PARAMS.network}`}>
             <Route index element={<>Network</>} />
 
-            <Route path=":token">
+            <Route path={`:${ROUTE_PARAMS.token}`}>
               <Route index element={<>Token</>} />
 
-              <Route path="deposit" element={<>Deposit</>} />
+              <Route path={ROUTES.deposit} element={<>Deposit</>} />
             </Route>
           </Route>
         </Route>

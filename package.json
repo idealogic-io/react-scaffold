@@ -75,7 +75,6 @@
     "prettier": "^2.6.2",
     "prop-types": "^15.8.1",
     "react-app-rewired": "^2.2.1",
-    "themeprovider-storybook": "^1.8.0",
     "webpack": "^5.73.0"
   }
 }

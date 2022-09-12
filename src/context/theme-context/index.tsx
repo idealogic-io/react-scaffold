@@ -8,6 +8,7 @@ import { LOCAL_STORAGE_KEYS } from "configs";
 
 type ContextType = {
   theme: DefaultTheme;
+  key: "light" | "dark";
   toggleTheme: () => void;
 };
 
@@ -26,11 +27,12 @@ const ThemeContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => 
     const themeFromStorage = getThemeValueFromLS();
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.theme, themeFromStorage);
-    return themeValues[themeFromStorage];
+    return { theme: themeValues[themeFromStorage], key: themeFromStorage };
   });
 
   const context = {
-    theme,
+    theme: theme.theme,
+    key: theme.key,
     toggleTheme,
   };
 
@@ -39,7 +41,7 @@ const ThemeContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => 
     const newValue = themeFromStorage === LIGHT ? DARK : LIGHT;
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.theme, newValue);
-    setTheme(themeValues[newValue]);
+    setTheme({ theme: themeValues[newValue], key: newValue });
   }
 
   function getThemeValueFromLS() {

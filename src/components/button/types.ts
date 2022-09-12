@@ -1,6 +1,5 @@
 import { SvgProps } from "components/svg/types";
 import { ElementType, PropsWithChildren, ReactNode } from "react";
-import { DefaultTheme } from "styled-components";
 import { LayoutProps, SpaceProps } from "styled-system";
 
 import { Colors } from "theme/types";
@@ -18,10 +17,6 @@ export const scales = {
 
 export type Scale = typeof scales[keyof typeof scales];
 export type Variant = typeof variants[keyof typeof variants];
-
-export interface ThemedProps extends BaseButtonProps {
-  theme: DefaultTheme;
-}
 
 export interface BaseButtonProps
   extends LayoutProps,

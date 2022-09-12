@@ -20,7 +20,9 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
           React.cloneElement(startIcon, {
             mr: "0.5rem",
           })}
+
         {isLoading ? <>Loading ...</> : children}
+
         {React.isValidElement(endIcon) &&
           React.cloneElement(endIcon, {
             ml: "0.5rem",

@@ -18,4 +18,5 @@ export const StyledModalWrapper = styled.div`
 
 export const StyledModalContainer = styled.div`
   margin: 24px;
+  background-color: ${({ theme }) => theme.colors.white};
 `;

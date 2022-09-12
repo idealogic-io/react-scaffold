@@ -1,43 +1,45 @@
 import React from "react";
-import { Button, Box } from "components";
-import { scaleVariants, styleVariants } from "./theme";
-import { Variant, Scale } from "./types";
+
+import { Button as StyledButton, Box } from "components";
+import { Variant, Scale, variants, scales } from "./types";
 
 export default {
   title: "Components/Button",
-  component: Button,
-  argTypes: {},
 };
 
-export const Default = () => {
+export const Button: React.FC = () => {
   return (
     <>
       <Box mb="32px">
         <button type="button">Unstyled Button</button>
       </Box>
       <Box mb="32px">
-        {Object.keys(styleVariants).map(variant => {
+        {Object.values(variants).map(variant => {
           return (
             <Box key={variant} mb="32px">
-              {Object.keys(scaleVariants).map((scale, indx) => {
+              {Object.values(scales).map((scale, indx) => {
                 return (
-                  <Button key={indx} variant={variant as Variant} scale={scale as Scale} mr="8px">
+                  <StyledButton key={indx} variant={variant as Variant} scale={scale as Scale} mr="8px">
                     {`${variant} ${scale.toUpperCase()}`}
-                  </Button>
+                  </StyledButton>
                 );
               })}
             </Box>
           );
         })}
       </Box>
-      <Box>
-        <Button mr="8px" disabled>
+      <Box mb="32px">
+        <StyledButton mr="8px" disabled>
           Disabled
-        </Button>
-        <Button variant="secondary" mr="8px" disabled>
+        </StyledButton>
+        <StyledButton variant="secondary" mr="8px" disabled>
           Disabled
-        </Button>
+        </StyledButton>
       </Box>
+
+      <StyledButton as="a" href="https://google.com" external>
+        External
+      </StyledButton>
     </>
   );
 };

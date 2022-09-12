@@ -12,5 +12,6 @@
   "Invalid email": "Invalid email",
   "This field is required": "This field is required",
   "Change Language": "Change Language",
-  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
+  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
+  "Current language is": "Current language is"
 }

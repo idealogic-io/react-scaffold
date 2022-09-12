@@ -17,8 +17,6 @@ export const FlexLayout = styled.div`
     min-width: 280px;
     max-width: 31.5%;
     width: 100%;
-    margin: 0 8px;
-    margin-bottom: 32px;
   }
 `;
 

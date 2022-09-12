@@ -1,62 +1,26 @@
-export type Breakpoints = string[];
+import { mediaQueries, breakpointMap, shadows, radii, zIndices, fontWeight, fonts } from "./base";
+import { baseColors, darkColors } from "./colors";
 
-export type MediaQueries = {
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  xxl: string;
-};
+export type MediaQueries = typeof mediaQueries;
 
-export type BreakpointsMap = {
-  [property in keyof MediaQueries]: number;
-};
+export type BreakpointsMap = typeof breakpointMap;
 
-export type Radii = {
-  small: string;
-  medium: string;
-  large: string;
-  circle: string;
-};
+export type Radii = typeof radii;
 
-export type Shadows = {
-  button: string;
-  tooltip: string;
-};
+export type Shadows = typeof shadows;
 
-export type SingleFontStyle = {
-  [key: string]: string;
-};
+export type FontWeight = typeof fontWeight;
 
-export type FontWeight = {
-  bold: 900;
-  medium: 600;
-  regular: 400;
-};
+export type Fonts = typeof fonts;
 
-export type Fonts = {
-  mv: string;
-};
-
-export type ZIndices = {
-  dropdown: number;
-  modal: number;
-};
+export type ZIndices = typeof zIndices;
 
 export type BaseColors = {
-  primary: string;
-  secondary: string;
-  error: string;
-  warning: string;
-  success: string;
-  black: string;
-  white: string;
+  [property in keyof typeof baseColors]: string;
 };
 
-export interface Colors extends BaseColors {
-  background: string;
-  input: string;
-  text: string;
-  backgroundDisabled: string;
-}
+export type CustomColors = {
+  [property in keyof typeof darkColors]: string;
+};
+
+export interface Colors extends BaseColors, CustomColors {}

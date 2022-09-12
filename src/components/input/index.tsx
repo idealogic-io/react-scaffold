@@ -32,7 +32,7 @@ const Input = styled.input<InputProps>`
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.backgroundDisabled};
     box-shadow: none;
     color: ${({ theme }) => theme.colors.primary};
     cursor: not-allowed;

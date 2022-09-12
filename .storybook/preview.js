@@ -1,39 +1,44 @@
 import React from "react";
-import { withThemesProvider } from "themeprovider-storybook";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { ToastContainer } from "react-toastify";
 
-import { light, dark } from "../src/theme";
 import { GlobalStyle } from "../src/styles";
-import { LanguageContextProvider, ThemeContextProvider } from "../src/context";
-import { Loader } from "../src/components";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "../src/context";
+import { Loader, Modal } from "../src/components";
+import store from "../src/store/store";
 
-const globalDecorator = StoryFn => (
-  <BrowserRouter>
-    <LanguageContextProvider fallback={<Loader />}>
-      <ThemeContextProvider>
+const ThemedApp = ({ children }) => {
+  const { theme } = useThemeContext();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
         <GlobalStyle />
-        <StoryFn />
-      </ThemeContextProvider>
-    </LanguageContextProvider>
-  </BrowserRouter>
-);
-
-export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
-  layout: "fullscreen",
+        <Modal />
+        <ToastContainer />
+        {children}
+      </Provider>
+    </ThemeProvider>
+  );
 };
 
-const themes = [
-  {
-    name: "Light",
-    backgroundColor: light.colors.background,
-    ...light,
-  },
-  {
-    name: "Dark",
-    backgroundColor: dark.colors.background,
-    ...dark,
-  },
-];
+const globalDecorator = StoryFn => {
+  return (
+    <HelmetProvider>
+      <BrowserRouter>
+        <LanguageContextProvider fallback={<Loader />}>
+          <ThemeContextProvider>
+            <ThemedApp>
+              <StoryFn />
+            </ThemedApp>
+          </ThemeContextProvider>
+        </LanguageContextProvider>
+      </BrowserRouter>
+    </HelmetProvider>
+  );
+};
 
-export const decorators = [globalDecorator, withThemesProvider(themes)];
+export const decorators = [globalDecorator];

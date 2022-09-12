@@ -1,6 +1,4 @@
-import { BaseColors, Colors } from "./types";
-
-const baseColors: BaseColors = {
+export const baseColors = {
   primary: "#7E75C9",
   secondary: "#F4587E",
   error: "#DE0000",
@@ -8,25 +6,23 @@ const baseColors: BaseColors = {
   success: "#00C898",
   black: "#333333",
   white: "#ffffff",
-};
+  transparent: "transparent",
+} as const;
 
-const lightColors: Colors = {
+export const lightColors = {
   ...baseColors,
   background: "#FAF9FA",
   input: "#D4D9DE",
   text: "#280D5F",
   backgroundDisabled: "#E9EAEB",
-
   // Put light colors here
-};
+} as const;
 
-const darkColors: Colors = {
+export const darkColors = {
   ...baseColors,
   background: "#08060B",
   input: "#D4D9DE",
   text: "#ffffff",
   backgroundDisabled: "#3c3742",
   // Put dark colors here
-};
-
-export { baseColors, lightColors, darkColors };
+} as const;

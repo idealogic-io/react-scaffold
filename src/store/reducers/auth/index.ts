@@ -17,6 +17,7 @@ const applyToken = (token: AuthState["token"]) => {
 
 const initialState: AuthState = {
   token: null,
+  pending: false,
   error: null,
 };
 
@@ -35,17 +36,21 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      // Login action
+      .addCase(loginUser.pending, state => {
+        state.pending = true;
+      })
       .addCase(loginUser.fulfilled, (state, action) => {
         const { accessToken } = action.payload;
 
         state.token = applyToken(accessToken);
+        state.pending = false;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         if (action.payload?.isError) {
-          const { message } = action.payload;
-
-          state.error = message;
+          state.error = action.payload;
+          state.pending = false;
           state.token = applyToken(null);
         }
       });

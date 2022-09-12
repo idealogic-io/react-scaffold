@@ -1,20 +1,20 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
-import { background, border, layout, position, space } from "styled-system";
+import { border, layout, position, space } from "styled-system";
 
 import { useThemeContext } from "context";
 
 import { BoxProps } from "../types";
 
 export const Box = styled.div<BoxProps>`
-  ${background}
+  background-color: ${({ theme, $backgroundColor }) => $backgroundColor && theme.colors[$backgroundColor]};
   ${border}
   ${layout}
   ${position}
   ${space}
 `;
 
-export const Container: React.FC<BoxProps> = ({ children, ...props }) => {
+export const Container: React.FC<PropsWithChildren<BoxProps>> = ({ children, ...props }) => {
   const { theme } = useThemeContext();
 
   return (
