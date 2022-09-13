@@ -1,30 +1,28 @@
 import React from "react";
-import { Text } from "components";
+import { Text as StyledText } from "components";
 
 export default {
   title: "Components/Text",
-  component: Text,
-  argTypes: {},
 };
 
-export const Default = () => {
+export const Text = () => {
   return (
     <div>
-      <Text>Default</Text>
+      <StyledText>Default</StyledText>
 
-      <Text $fontWeight="bold">Bold text</Text>
+      <StyledText $fontWeight="bold">Bold StyledText</StyledText>
 
-      <Text $fontWeight="medium">Medium text</Text>
+      <StyledText $fontWeight="medium">Medium StyledText</StyledText>
 
-      <Text fontSize="12px">Small text</Text>
+      <StyledText fontSize="12px">Small StyledText</StyledText>
 
-      <Text color="primary">Custom color from theme</Text>
+      <StyledText color="primary">Custom color from theme</StyledText>
 
-      <Text textAlign="center">center</Text>
+      <StyledText StyledTextAlign="center">center</StyledText>
 
-      <Text ellipsis width="100px">
-        Ellipsis: a long text with an ellipsis just for the example
-      </Text>
+      <StyledText ellipsis width="100px">
+        Ellipsis: a long StyledText with an ellipsis just for the example
+      </StyledText>
     </div>
   );
 };

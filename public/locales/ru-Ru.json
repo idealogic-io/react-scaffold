@@ -13,5 +13,6 @@
   "This field is required": "Это поле обязательно",
   "Change Language": "Сменить язык",
   "Connect %provider%": "Подключить %provider%",
-  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Должен содержать 8 символов, один верхнего, один нижнего регистров, одно число и один специальный символ"
+  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Должен содержать 8 символов, один верхнего, один нижнего регистров, одно число и один специальный символ",
+  "Current language is": "Текущий язык"
 }

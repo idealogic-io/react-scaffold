@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyledLink } from "./StyledInternalLink";
+import { StyledLink } from "./StyledLink";
 import { LinkProps } from "./types";
 import { getExternalLinkProps } from "components/button";
 

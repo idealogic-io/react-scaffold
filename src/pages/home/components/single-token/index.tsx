@@ -31,6 +31,10 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
 
   const toAddress = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
   const valueToSend = 0.01;
+  const isNativeToken = isNullableAddress(address);
+  const isExceededBalance = isNativeToken
+    ? +tokenData.balance - tokenData.txFee <= valueToSend
+    : +tokenData.balance <= valueToSend;
 
   useEffect(() => {
     if (chainId && library && account && address) {
@@ -47,7 +51,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
         const symbol = await ERC20Contract.symbol();
         const decimals = await ERC20Contract.decimals();
 
-        const txFee = await estimateTxFee(library, decimals, ERC20Contract, isNullableAddress(address));
+        const txFee = await estimateTxFee(library, decimals, ERC20Contract, isNativeToken);
 
         const balanceBN = await ERC20Contract.balanceOf(account);
         const balance = formatBigNumber(balanceBN, +decimals, +decimals);
@@ -58,7 +62,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
         const balanceBN = await library.getBalance(account);
         const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
-        const txFee = await estimateTxFee(library, decimals, ERC20Contract, isNullableAddress(address));
+        const txFee = await estimateTxFee(library, decimals, ERC20Contract, isNativeToken);
 
         setTokenData({ name, symbol, balance, decimals, txFee });
       }
@@ -99,13 +103,13 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
   };
 
   const onSendHandler = async (data: typeof tokenData) => {
-    const { decimals, symbol } = data;
+    const { decimals } = data;
 
     const receipt = await fetchWithCatchTxError(() => {
-      if (isNullableAddress(address)) {
+      if (isNativeToken) {
         return sendNativeToken(decimals);
       } else {
-        return sendERC20Token(symbol, decimals);
+        return sendERC20Token(decimals);
       }
     });
     if (receipt?.status) {
@@ -132,7 +136,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
     });
   };
 
-  const sendERC20Token = async (symbol: string, decimals: number) => {
+  const sendERC20Token = async (decimals: number) => {
     const value = parseUnits(valueToSend.toString(), decimals);
 
     const ERC20Contract = getERC20Contract(address, library?.getSigner(), chainId);
@@ -146,7 +150,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
         <Text>{tokenData.symbol}</Text>
         <Text>{tokenData.balance}</Text>
 
-        {+tokenData.balance > valueToSend && (
+        {!isExceededBalance && (
           <Button onClick={() => onSendHandler(tokenData)} isLoading={pendingTx}>
             Send
           </Button>

@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import { hideModal, ModalNames } from "store/reducers/modal";
 import { useAppDispatch, useAppSelector } from "store/store";
 
-import { ModalWrapper } from "components";
+import { ModalWrapper, TestModal } from "./components";
 
 const component = {
-  [ModalNames.someModal]: () => <div style={{ height: 300, width: 250, backgroundColor: "violet" }}>Some Modal</div>,
+  [ModalNames.testModal]: () => <TestModal />,
 };
 
 const Modal: React.FC = () => {

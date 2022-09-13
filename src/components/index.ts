@@ -6,9 +6,6 @@ export { default as Button } from "./button/index";
 export { default as Svg } from "./svg/Svg";
 export {
   Column,
-  ColumnCenter,
-  gridGap,
-  AutoColumn,
   Box,
   Container,
   Flex,
@@ -18,7 +15,6 @@ export {
   RowBetween,
   RowFlat,
   AutoRow,
-  RowFixed,
   PageMeta,
   Page,
 } from "./layout";
@@ -27,6 +23,8 @@ export { default as Modal } from "./modal";
 export { ModalWrapper } from "./modal/components";
 export { default as Input } from "./input";
 export { default as InputGroup } from "./input-group";
-export { default as InternalLink } from "./link";
+export { default as InputNumeric } from "./input-numeric";
+export { default as Link } from "./link";
 export { default as Skeleton } from "./skeleton";
+export { default as Image } from "./image";
 export { default as ToastDescriptionWithTx } from "./toast-description-with-tx";

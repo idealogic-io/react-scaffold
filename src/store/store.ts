@@ -5,14 +5,10 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 import rootReducer from "./rootReducer";
 
-import { pokemonApi } from "./reducers/pokemon";
-
 const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat([
-      pokemonApi.middleware,
-
       //TODO comment next line in prod
       createLogger(),
     ]),

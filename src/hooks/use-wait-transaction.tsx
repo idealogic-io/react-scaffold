@@ -59,6 +59,7 @@ const useWaitTransaction = () => {
       setLoading(true);
 
       tx = await callTx();
+      console.log(tx);
 
       toast.success(<ToastDescriptionWithTx txHash={tx.hash}>{t("Transaction submitted")}</ToastDescriptionWithTx>);
 

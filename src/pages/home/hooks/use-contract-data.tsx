@@ -24,15 +24,17 @@ type StateProps = {
 };
 const coursePrice = parseUnits("0.01", "ether");
 
+const defaultData = {
+  isApproved: false,
+  lastCourse: null,
+  contract: null,
+  loading: false,
+  usdtContract: null,
+  courseContractAddress: null,
+};
+
 const useContractData = () => {
-  const [data, setData] = useState<StateProps>({
-    isApproved: false,
-    lastCourse: null,
-    contract: null,
-    loading: false,
-    usdtContract: null,
-    courseContractAddress: null,
-  });
+  const [data, setData] = useState<StateProps>(defaultData);
 
   const { library, chainId, account, active } = useWeb3React();
   const { fetchWithCatchTxError, loading: pendingTx } = useWaitTransaction();
@@ -42,7 +44,7 @@ const useContractData = () => {
     if (active) {
       getContractData();
     }
-  }, [active]);
+  }, [active, chainId]);
 
   const getContractData = async () => {
     setData(prev => ({ ...prev, loading: true }));
@@ -55,11 +57,10 @@ const useContractData = () => {
 
       const isApproved = await checkIsApproved(usdtContract, courseContractAddress);
 
-      setData(prev => ({ ...prev, isApproved, contract, usdtContract, courseContractAddress }));
+      setData(prev => ({ ...prev, isApproved, contract, usdtContract, courseContractAddress, loading: false }));
     } catch (error) {
+      setData(prev => ({ ...prev, ...defaultData, loading: false }));
       console.error("Error while create data for contract", error);
-    } finally {
-      setData(prev => ({ ...prev, loading: false }));
     }
   };
 

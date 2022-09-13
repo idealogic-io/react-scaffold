@@ -36,8 +36,3 @@ export const AutoRow = styled(Row)<AutoRowProps>`
     margin: ${({ gap }) => gap} !important;
   }
 `;
-
-export const RowFixed = styled(Row)<AutoRowProps>`
-  width: fit-content;
-  margin: ${({ gap }) => gap && `-${gap}`};
-`;

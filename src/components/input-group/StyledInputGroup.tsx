@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Box, Input } from "components";
+import { Box, Input, Text } from "components";
 
 import { InputIconProps, StyledInputGroupProps } from "./types";
 import { Scales, scales as inputScales } from "components/input/types";
@@ -43,4 +43,14 @@ export const InputIcon = styled.div<InputIconProps>`
       : `
       left: ${scale === inputScales.SM ? "8px" : "16px"};
     `}
+`;
+
+export const InputLabel = styled(Text)`
+  font-size: 14px;
+  margin-bottom: 8px;
+`;
+
+export const InputError = styled(Text)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.error};
 `;

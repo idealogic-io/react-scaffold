@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 // Components
-import { Box, Button, Input, Page, Text, InputGroup, Column, Heading } from "components";
+import { Box, Button, Input, Page, InputGroup, Column, Heading } from "components";
 import { AddIcon } from "components/svg";
 // Store
-import { useAppDispatch } from "store/store";
-
+import { useAppDispatch, useAppSelector } from "store/store";
 import { loginUser } from "store/reducers/auth/actions";
 // Context
 import { useTranslation } from "context";
@@ -13,10 +12,13 @@ import { useForm } from "hooks";
 import { useValidationSchema } from "./hooks";
 
 const LoginPage: React.FC = () => {
+  const { pending } = useAppSelector(state => state.auth);
+
   const [isPassword, setIsPassword] = useState(true);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
   const { validationSchema, initialValues } = useValidationSchema();
 
   const { fieldProps, handleSubmit, errors, touched, isValid } = useForm({
@@ -41,18 +43,20 @@ const LoginPage: React.FC = () => {
       <Box width="300px" py="16px">
         <form onSubmit={handleSubmit}>
           <Column>
-            <Input {...fieldProps("email")} />
-            <Text my="4px">{touched.email && errors.email}</Text>
+            <InputGroup label={t("Email")} error={errors.email} isTouched={touched.email}>
+              <Input {...fieldProps("email")} placeholder={t("Email")} />
+            </InputGroup>
 
             <InputGroup
-              startIcon={<AddIcon width="18px" />}
               endIcon={<AddIcon width="18px" cursor="pointer" onClick={togglePasswordVisibleHandler} />}
+              label={t("Password")}
+              error={errors.password}
+              isTouched={touched.password}
             >
-              <Input {...fieldProps("password")} type={isPassword ? "password" : "text"} />
+              <Input {...fieldProps("password")} type={isPassword ? "password" : "text"} placeholder={t("Password")} />
             </InputGroup>
-            <Text my="4px">{touched.password && errors.password}</Text>
 
-            <Button disabled={!isValid} type="submit">
+            <Button disabled={!isValid} type="submit" isLoading={pending}>
               {t("Login")}
             </Button>
           </Column>

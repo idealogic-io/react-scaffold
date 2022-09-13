@@ -1,20 +1,8 @@
 import styled from "styled-components";
 import { space, typography, layout, opacity, border, shadow, variant } from "styled-system";
+import { scaleVariants, variantStyles } from "./theme";
 
-import { ButtonProps, ThemedProps } from "./types";
-import { scaleVariants, styleVariants } from "./theme";
-
-const getDisabledStyles = ({ theme }: ThemedProps) => {
-  return `
-    &:disabled {
-      background-color: ${theme.colors.backgroundDisabled};
-      border-color: ${theme.colors.backgroundDisabled};
-      box-shadow: none;
-      color: ${theme.colors.secondary};
-      cursor: not-allowed;
-    }
-  `;
-};
+import { ButtonProps } from "./types";
 
 const StyledButton = styled.button<ButtonProps>`
   position: relative;
@@ -30,13 +18,9 @@ const StyledButton = styled.button<ButtonProps>`
   outline: 0;
   font-size: 16px;
   font-weight: 600;
-  ${getDisabledStyles};
   ${variant({
     prop: "scale",
     variants: scaleVariants,
-  })}
-  ${variant({
-    variants: styleVariants,
   })}
   ${space}
   ${typography}
@@ -51,6 +35,15 @@ const StyledButton = styled.button<ButtonProps>`
   &:active {
     transform: ${({ disabled }) => !disabled && `scale(0.9)`};
   }
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.backgroundDisabled};
+    border-color: ${({ theme }) => theme.colors.backgroundDisabled};
+    box-shadow: none;
+    color: ${({ theme }) => theme.colors.secondary};
+    cursor: not-allowed;
+  }
+
+  ${({ theme, variant }) => variantStyles(theme, variant)};
 `;
 
 export default StyledButton;

@@ -11,5 +11,5 @@ export type ShowModalProps<T> = {
 };
 
 export enum ModalNames {
-  someModal = "someModal",
+  testModal = "testModal",
 }

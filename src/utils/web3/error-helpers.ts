@@ -1,5 +1,5 @@
 type ErrorData = {
-  code: number;
+  code: number | string;
   message: string;
 };
 
@@ -22,5 +22,5 @@ export const isGasEstimationError = (error: TxError | Error | string) => {
 };
 
 export const isUserRejected = (err: ErrorData) => {
-  return typeof err === "object" && "code" in err && err?.code === 4001;
+  return typeof err === "object" && "code" in err && (err.code === 4001 || err.code === "ACTION_REJECTED");
 };

@@ -12,7 +12,6 @@ import { useWeb3Balance, useWeb3Login, useWeb3AutoConnect, useProviders } from "
 import { useContractData } from "./hooks";
 // Configs
 import { chainNames, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
-import { RU, EN } from "configs/languages";
 import { tokens } from "configs/tokens";
 // Utils
 import { connectorByName, connectorName, formatBigNumberToFixed, setupNetwork } from "utils/web3";
@@ -24,7 +23,7 @@ type TokenList = { address: string; key: string }[];
 const HomePage: React.FC = () => {
   const [tokensList, setTokensList] = useState<TokenList>([]);
 
-  const { t, currentLanguage, changeLanguage } = useTranslation();
+  const { t } = useTranslation();
   const { chainId, account, active, error } = useWeb3React();
   const { balance } = useWeb3Balance();
   const { login, logout } = useWeb3Login();
@@ -36,7 +35,7 @@ const HomePage: React.FC = () => {
   const supportedChains = getChainIds();
 
   const {
-    data: { isApproved, lastCourse, loading },
+    data: { isApproved, lastCourse, loading, contract },
     pendingTx,
     onApprove,
     onPurchaseCourse,
@@ -87,12 +86,6 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const changeLanguageHandler = () => {
-    const newLanguage = currentLanguage.code === "en" ? RU : EN;
-
-    changeLanguage(newLanguage);
-  };
-
   return (
     <Page>
       <Heading>{t("Main Page")}</Heading>
@@ -137,7 +130,7 @@ const HomePage: React.FC = () => {
         )}
 
         {active || isUnsupportedChainId ? (
-          <select name="chain" value={networkId ?? ""} defaultValue={""} onChange={changeChainHandler}>
+          <select name="chain" value={chainId} defaultValue={""} onChange={changeChainHandler}>
             <option disabled value={""}>
               -- select a chain --
             </option>
@@ -152,12 +145,20 @@ const HomePage: React.FC = () => {
         {active && <Text>Interactions with contract can be only on Polygon Mumbai</Text>}
 
         {active && (
-          <Button isLoading={pendingTx || loading} onClick={!isApproved ? onApprove : onPurchaseCourse}>
+          <Button
+            isLoading={pendingTx || loading}
+            disabled={!contract}
+            onClick={!isApproved ? onApprove : onPurchaseCourse}
+          >
             {!isApproved ? "Approve" : "Purchase Course"}
           </Button>
         )}
 
-        {active && <Button onClick={getLastCourseHandler}>Get last course</Button>}
+        {active && (
+          <Button disabled={!contract} onClick={getLastCourseHandler}>
+            Get last course
+          </Button>
+        )}
 
         {active && lastCourse && JSON.stringify(lastCourse)}
 
@@ -168,7 +169,6 @@ const HomePage: React.FC = () => {
         <Button scale="md" onClick={logout} my="4px">
           {t("Logout")}
         </Button>
-        <Button onClick={changeLanguageHandler}>{t("Change Language")}</Button>
       </Column>
     </Page>
   );

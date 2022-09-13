@@ -13,9 +13,7 @@ const chainIdTestnet = {
 };
 
 const getChainIds = () => {
-  return process.env.NODE_ENV === "production"
-    ? Object.values(chainIdMainnet)
-    : [...Object.values(chainIdMainnet), ...Object.values(chainIdTestnet)];
+  return process.env.NODE_ENV === "production" ? Object.values(chainIdMainnet) : Object.values(chainIdTestnet);
 };
 
 const rpcUrls = {
