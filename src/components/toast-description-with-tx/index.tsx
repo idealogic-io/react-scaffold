@@ -19,7 +19,7 @@ const ToastDescriptionWithTx: React.FC<PropsWithChildren<ToastDescriptionWithTxP
     <>
       {typeof children === "string" ? <Text as="p">{children}</Text> : children}
       {txHash && chainId && (
-        <InternalLink external href={getScanLink(txHash, "transaction", chainId)}>
+        <InternalLink fontSize={14} external href={getScanLink(txHash, "transaction", chainId)}>
           {t("View on scan")}: {truncateHash(txHash, 8, 0)}
         </InternalLink>
       )}

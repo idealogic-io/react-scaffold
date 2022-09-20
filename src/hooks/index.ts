@@ -6,3 +6,4 @@ export { default as useWeb3Balance } from "./use-web3-balance";
 export { default as useWaitTransaction } from "./use-wait-transaction";
 export { default as useProviders } from "./use-providers";
 export { default as useTooltip } from "./use-tooltip";
+export { default as useWaitTransactionSolana } from "./use-wait-transaction-solana";

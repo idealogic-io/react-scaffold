@@ -5,7 +5,7 @@ import { RequireAuth, TokenHandler } from "./components";
 import { ROUTES, ROUTE_PARAMS } from "./routes";
 
 import { NotFoundPage } from "components";
-import { HomePage, LandingPage, LoginPage } from "pages";
+import { HomePage, LandingPage, LoginPage, SolanaPage } from "pages";
 
 const Navigation: React.FC = () => {
   return (
@@ -29,6 +29,7 @@ const Navigation: React.FC = () => {
             </RequireAuth>
           }
         />
+        <Route path={ROUTES.solana} element={<SolanaPage />} />
         <Route path={ROUTES.app} element={<>App</>} />
         {/* Nesting */}
         <Route path={ROUTES.wallet}>

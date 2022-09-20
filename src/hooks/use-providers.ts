@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { connectorByName } from "utils/web3";
-import { Connector } from "utils/web3/types";
+import { connectorByName, Connector } from "utils/web3";
 
 import { connectors } from "configs";
 

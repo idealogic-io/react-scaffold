@@ -28,3 +28,4 @@ export { default as Link } from "./link";
 export { default as Skeleton } from "./skeleton";
 export { default as Image } from "./image";
 export { default as ToastDescriptionWithTx } from "./toast-description-with-tx";
+export { default as ToastDescriptionWithTxSolana } from "./toast-description-with-tx/ToastDescriptionWithTxSolana";

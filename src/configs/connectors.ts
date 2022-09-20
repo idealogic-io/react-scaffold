@@ -2,8 +2,7 @@ import Web3 from "components/svg/icons/Web3";
 import WalletConnect from "components/svg/icons/WalletConnect";
 import CoinBase from "components/svg/icons/CoinBase";
 
-import { connectorName } from "utils/web3";
-import { Connector } from "utils/web3/types";
+import { connectorName, Connector } from "utils/web3";
 
 const connectors: Connector[] = [
   {

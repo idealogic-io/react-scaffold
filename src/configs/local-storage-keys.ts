@@ -5,6 +5,7 @@ const LOCAL_STORAGE_KEYS = {
   token: `${packages.name}_token`,
   language: `${packages.name}_language`,
   connector: `${packages.name}_connector`,
+  solanaWallet: `${packages.name}_solanaWallet`,
 };
 
 export default LOCAL_STORAGE_KEYS;

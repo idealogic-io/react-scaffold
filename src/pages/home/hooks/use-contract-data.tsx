@@ -7,8 +7,7 @@ import { toast } from "react-toastify";
 import { random } from "lodash";
 
 import { Course, NormalizedCourse } from "../types";
-import { formatBigNumber, getCourseMarketplaceContract } from "utils/web3";
-import { getAddress, getERC20Contract } from "utils/web3/contract-helpers";
+import { getAddress, getERC20Contract, formatBigNumber, getCourseMarketplaceContract } from "utils/web3";
 import { contractsAddresses, tokens } from "configs";
 import { useWaitTransaction } from "hooks";
 import { ToastDescriptionWithTx } from "components";

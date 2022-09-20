@@ -3,6 +3,7 @@ export const ROUTES = {
   home: "home",
   login: "login",
   app: "app",
+  solana: "solana",
   wallet: "wallet",
   deposit: "deposit",
 };

@@ -1,4 +1,6 @@
 import { chainIdMainnet, chainIdTestnet } from "./networks";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+
 // To check amount of token that user has
 // You should call contract with desired address
 // And call async method balanceOf
@@ -131,4 +133,55 @@ const tokens = {
   },
 };
 
-export { tokens };
+const solanaTokens = {
+  USDT: {
+    [WalletAdapterNetwork.Mainnet]: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+    [WalletAdapterNetwork.Devnet]: "EJwZgeZrdC8TXTQbQBoL6bfuAnFUUy1PVCMB4DYPzVaS",
+  },
+  TUSD: {
+    [WalletAdapterNetwork.Mainnet]: "",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  USDC: {
+    [WalletAdapterNetwork.Mainnet]: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    [WalletAdapterNetwork.Devnet]: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  },
+  BUSD: {
+    [WalletAdapterNetwork.Mainnet]: "",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  EUROC: {
+    [WalletAdapterNetwork.Mainnet]: "",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  BTC: {
+    [WalletAdapterNetwork.Mainnet]: "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  ETH: {
+    [WalletAdapterNetwork.Mainnet]: "2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  BNB: {
+    [WalletAdapterNetwork.Mainnet]: "",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  AVAX: {
+    [WalletAdapterNetwork.Mainnet]: "",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  USDP: {
+    [WalletAdapterNetwork.Mainnet]: "",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  XRP: {
+    [WalletAdapterNetwork.Mainnet]: "Ga2AXHpfAF6mv2ekZwcsJFqu7wB4NV331qNH7fW9Nst8",
+    [WalletAdapterNetwork.Devnet]: "",
+  },
+  SOL: {
+    [WalletAdapterNetwork.Mainnet]: "11111111111111111111111111111111",
+    [WalletAdapterNetwork.Devnet]: "11111111111111111111111111111111",
+  },
+};
+
+export { tokens, solanaTokens };

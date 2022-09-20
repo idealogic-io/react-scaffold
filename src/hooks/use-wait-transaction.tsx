@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { useTranslation } from "context";
 import { toastOptions } from "configs";
-import { isGasEstimationError, isUserRejected, TxError } from "utils/web3/error-helpers";
+import { isGasEstimationError, isUserRejected, TxError } from "utils/web3";
 import { ToastDescriptionWithTx } from "components";
 
 export type TxResponse = TransactionResponse | null;
@@ -61,7 +61,10 @@ const useWaitTransaction = () => {
       tx = await callTx();
       console.log(tx);
 
-      toast.success(<ToastDescriptionWithTx txHash={tx.hash}>{t("Transaction submitted")}</ToastDescriptionWithTx>);
+      toast.success(
+        <ToastDescriptionWithTx txHash={tx.hash}>{t("Transaction submitted")}</ToastDescriptionWithTx>,
+        toastOptions,
+      );
 
       const receipt = await tx.wait();
 
@@ -114,6 +117,7 @@ const useWaitTransaction = () => {
                         ? `Transaction failed with error: ${reason}`
                         : "Transaction failed. For detailed error message:"}
                     </ToastDescriptionWithTx>,
+                    toastOptions,
                   );
                 }
               }
