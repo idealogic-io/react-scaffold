@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { formatUnits } from "@ethersproject/units";
+
 // Components
 import { Button, Heading, Text, Page, Column } from "components";
 import { SingleToken } from "./components";
@@ -10,10 +12,10 @@ import { useTranslation } from "context";
 import { useWeb3Balance, useWeb3Login, useProviders, useWeb3AutoConnect } from "hooks";
 import { useContractData } from "./hooks";
 // Configs
-import { chainNames, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
+import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies } from "configs";
 import { tokens } from "configs/tokens";
 // Utils
-import { connectorByName, connectorName, formatBigNumberToFixed, setupNetwork, Connector } from "utils/web3";
+import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
 // Types
 import { ROUTES } from "navigation/routes";
 
@@ -33,8 +35,10 @@ const HomePage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const networkId = searchParams.get("networkId");
+  const _networkId = networkId ? +networkId : undefined;
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
+  const formattedBalance = formatUnits(balance, nativeCurrencies[chainId as keyof typeof chainNames]?.decimals);
 
   const {
     data: { isApproved, lastCourse, loading, contract },
@@ -44,7 +48,7 @@ const HomePage: React.FC = () => {
     getLastCourseHandler,
   } = useContractData();
 
-  useWeb3AutoConnect(+(networkId as string));
+  useWeb3AutoConnect(_networkId);
 
   useEffect(() => {
     if (chainId) {
@@ -109,7 +113,9 @@ const HomePage: React.FC = () => {
         {active && (
           <Column py="16px">
             <Text>You balance is:</Text>
-            <Text>{formatBigNumberToFixed(balance, 8)}</Text>
+            <Text>
+              {formattedBalance} {nativeCurrencies[chainId as keyof typeof chainNames]?.symbol}
+            </Text>
           </Column>
         )}
 
@@ -165,7 +171,7 @@ const HomePage: React.FC = () => {
         {active && lastCourse && JSON.stringify(lastCourse)}
 
         {tokensList.length && active
-          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} />)
+          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} balance={formattedBalance} />)
           : null}
 
         <Button onClick={() => navigate(ROUTES.solana)}>Solana Page</Button>

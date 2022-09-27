@@ -5,8 +5,8 @@ export type ModalState<T> = {
 };
 
 export type ShowModalProps<T> = {
-  modalName: ModalState<undefined>["modalName"];
-  rootId?: ModalState<undefined>["rootId"];
+  modalName: ModalState<unknown>["modalName"];
+  rootId?: ModalState<unknown>["rootId"];
   props?: T;
 };
 

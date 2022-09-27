@@ -8,3 +8,4 @@ export { getOrCreateAssociatedTokenAccount } from "./getOrCreateAssociatedTokenA
 export { isGasEstimationError, isUserRejected } from "./error-helpers";
 export type { TxError } from "./error-helpers";
 export type { Connector } from "./types";
+export { checkExceededBalance } from "./check-exceeded-balance";

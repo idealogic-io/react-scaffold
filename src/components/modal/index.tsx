@@ -10,8 +10,7 @@ const component = {
 };
 
 const Modal: React.FC = () => {
-  const { modalName, rootId, props } = useAppSelector(state => state.modal);
-  const modalProps = props ? props : {};
+  const { modalName, rootId } = useAppSelector(state => state.modal);
 
   const dispatch = useAppDispatch();
   const ModalComponent = modalName ? component[modalName] : null;
@@ -34,7 +33,7 @@ const Modal: React.FC = () => {
 
   return (
     <ModalWrapper hideModalHandler={hideModalHandler} id={rootId}>
-      <ModalComponent {...modalProps} />
+      <ModalComponent />
     </ModalWrapper>
   );
 };

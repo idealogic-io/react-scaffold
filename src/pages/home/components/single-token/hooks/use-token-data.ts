@@ -1,72 +1,72 @@
-import { useEffect, useState } from "react";
 import { Contract } from "@ethersproject/contracts";
 import { Web3Provider } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { formatFixed } from "@ethersproject/bignumber";
+import useSWR from "swr";
 
 import { getERC20Contract, isNullableAddress } from "utils/web3";
 import { formatBigNumber } from "utils/web3";
 import { nativeCurrencies } from "configs";
+import { useOnBlockListener } from "hooks";
 
-const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 18, txFee: 0 };
+const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 18, txFee: 0, isLoading: true };
 
-type useTokenDataArgs = { address: string };
-
-const useTokenData = ({ address }: useTokenDataArgs) => {
+const useTokenData = ({ address }: { address: string }) => {
   const { account, library, chainId } = useWeb3React();
 
-  const [tokenData, setTokenData] = useState(defaultTokenData);
+  const { data = defaultTokenData, mutate } = useSWR<typeof defaultTokenData | void>(
+    () => `useTokenData/${address}`,
+    async () => {
+      if (account && chainId) {
+        return await getTokenData();
+      }
+    },
+  );
 
   const toAddress = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
   const valueToSend = 0.01;
   const isNativeToken = isNullableAddress(address);
 
-  useEffect(() => {
-    if (account && chainId) {
-      getTokenData();
-    }
-  }, [account, chainId]);
+  useOnBlockListener(mutate);
 
   const getTokenData = async () => {
     try {
       const ERC20Contract = getERC20Contract(address, library.getSigner(), chainId);
 
       if (!isNativeToken) {
-        const { name, symbol, balance, decimals, txFee } = await getNativeTokenData(ERC20Contract);
+        const data = await getERC20TokenData(ERC20Contract);
 
-        setTokenData({ name, symbol, balance, decimals, txFee });
+        mutate({ ...data, isLoading: false }, { revalidate: false });
       } else {
-        const { name, symbol, balance, decimals, txFee } = await getCustomTokenData(ERC20Contract);
+        const data = await getNativeTokenData(ERC20Contract);
 
-        setTokenData({ name, symbol, balance, decimals, txFee });
+        mutate({ ...data, isLoading: false }, { revalidate: false });
       }
     } catch (error) {
-      setTokenData(defaultTokenData);
       console.error("Error in getTokenData: ", error, address);
     }
   };
 
-  const getNativeTokenData = async (contract: Contract) => {
+  const getERC20TokenData = async (contract: Contract) => {
     try {
       const name = await contract.name();
       const symbol = await contract.symbol();
       const decimals = await contract.decimals();
-
+      const balanceBN = await contract.balanceOf(account);
       const txFee = await estimateTxFee(library, decimals, contract, isNativeToken);
 
-      const balanceBN = await contract.balanceOf(account);
       const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
       return { name, symbol, balance, decimals, txFee };
     } catch (error) {
-      console.error("Error in getNativeTokenData: ", error, address);
+      console.error("Error in getERC20TokenData: ", error, address);
 
       return defaultTokenData;
     }
   };
 
-  const getCustomTokenData = async (contract: Contract) => {
+  const getNativeTokenData = async (contract: Contract) => {
     try {
       if (!chainId) {
         return defaultTokenData;
@@ -75,13 +75,13 @@ const useTokenData = ({ address }: useTokenDataArgs) => {
       const { decimals, name, symbol } = nativeCurrencies[chainId];
 
       const balanceBN = await library.getBalance(account);
-      const balance = formatBigNumber(balanceBN, +decimals, +decimals);
-
       const txFee = await estimateTxFee(library, decimals, contract, isNativeToken);
+
+      const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
       return { name, symbol, balance, decimals, txFee };
     } catch (error) {
-      console.error("Error in getCustomTokenData: ", error, address);
+      console.error("Error in getNativeTokenData: ", error, address);
 
       return defaultTokenData;
     }
@@ -108,15 +108,13 @@ const useTokenData = ({ address }: useTokenDataArgs) => {
       const gasPrice = formatBigNumber(gasPriceBN);
       const gasLimit = formatFixed(gasLimitBN);
 
-      const txFee = +gasPrice * +gasLimit;
-
-      return txFee;
+      return +gasPrice * +gasLimit;
     } catch (error) {
       return 0;
     }
   };
 
-  return { tokenData, toAddress, valueToSend, isNativeToken, getTokenData };
+  return { data, toAddress, valueToSend, isNativeToken, getTokenData };
 };
 
 export default useTokenData;

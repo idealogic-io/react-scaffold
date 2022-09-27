@@ -5,7 +5,6 @@ import { Flex, Text, Button, Heading } from "components";
 
 import { useAppDispatch, useAppSelector } from "store/store";
 import { hideModal } from "store/reducers/modal";
-import { ModalState } from "store/reducers/modal/types";
 
 const StyledTestModal = styled(Flex)`
   height: 300px;
@@ -21,11 +20,10 @@ export type TestModalProps = {
 };
 
 const TestModal: React.FC = () => {
-  const { props } = useAppSelector(state => state.modal as unknown as ModalState<TestModalProps>);
+  const { props } = useAppSelector(state => state.modal);
+  const _props = props as unknown as TestModalProps;
 
   const dispatch = useAppDispatch();
-
-  const _props = props as TestModalProps;
 
   const closeModalHandler = () => {
     dispatch(hideModal());

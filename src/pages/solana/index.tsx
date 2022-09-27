@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 import { Button, Column, Heading, Page, Text } from "components";
 import { solanaNetwork } from "App";
 import { solanaTokens } from "configs/tokens";
 import { SingleToken } from "./components";
+import { useWeb3BalanceSolana } from "hooks";
 
 type TokenList = { address: string; key: string }[];
 
@@ -14,8 +16,10 @@ const SolanaPage: React.FC = () => {
 
   const { setVisible } = useWalletModal();
   const { publicKey, connected, disconnect } = useWallet();
+  const { balance } = useWeb3BalanceSolana();
 
   const address = publicKey?.toBase58() ?? null;
+  const formattedBalance = balance / LAMPORTS_PER_SOL;
 
   useEffect(() => {
     getTokenList();
@@ -59,8 +63,15 @@ const SolanaPage: React.FC = () => {
           </Column>
         )}
 
+        {connected && (
+          <Column py="16px">
+            <Text>You balance is:</Text>
+            <Text>{formattedBalance} SOL</Text>
+          </Column>
+        )}
+
         {tokensList.length && connected
-          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} />)
+          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} balance={formattedBalance} />)
           : null}
 
         {!connected && <Button onClick={chooseWallet}>Connect</Button>}

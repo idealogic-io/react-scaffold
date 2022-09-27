@@ -1,62 +1,52 @@
 import React from "react";
-import { toast } from "react-toastify";
 
-import { Box, Button, Column, Text, ToastDescriptionWithTxSolana } from "components";
-import { toastOptions } from "configs";
-import { useWaitTransactionSolana } from "hooks";
-import { useTranslation } from "context";
-import { useTokenData } from "./hooks";
+import { Box, Button, Column, Text } from "components";
+
+import { useCheckAssociatedTokenAddress, useEstimateTxFee, useSendToken, useTokenData } from "./hooks";
+import { checkExceededBalance } from "utils/web3";
 
 type SingleTokenProps = {
   address: string;
+  balance: number;
 };
 
-const SingleToken: React.FC<SingleTokenProps> = ({ address }) => {
-  const { t } = useTranslation();
-  const { fetchWithCatchTxErrorSolana, loading: pendingTx } = useWaitTransactionSolana();
-  const { tokenData, valueToSend, isNativeToken, getTokenData, createNativeTransferTx, createCustomTransferTx } =
-    useTokenData({ address });
+const SingleToken: React.FC<SingleTokenProps> = ({ address, balance }) => {
+  const { data, valueToSend, isNativeToken } = useTokenData({ address });
 
-  const isExceededBalance = isNativeToken
-    ? +tokenData.balance - tokenData.txFee <= valueToSend
-    : +tokenData.balance <= valueToSend;
+  const { sendToken, pendingTx } = useSendToken({ address });
+  const {
+    associatedAddress,
+    loading: pendingAssociateToken,
+    createAssociatedTokenAccount,
+  } = useCheckAssociatedTokenAddress({ address });
 
-  const onSendHandler = async () => {
-    let tx;
-    if (isNativeToken) {
-      tx = await createNativeTransferTx();
-    } else {
-      tx = await createCustomTransferTx();
-    }
+  const { txFee } = useEstimateTxFee({ address });
 
-    if (tx) {
-      const confirmed = await fetchWithCatchTxErrorSolana(tx);
-
-      if (confirmed?.signature) {
-        toast.success(
-          <ToastDescriptionWithTxSolana txHash={confirmed.signature}>{t("Token sent")}</ToastDescriptionWithTxSolana>,
-          toastOptions,
-        );
-
-        getTokenData();
-      }
-    }
-  };
+  const isExceededBalance = checkExceededBalance({
+    isNativeToken,
+    balance: +balance,
+    tokenBalance: +data.balance,
+    txFee: txFee,
+    value: valueToSend,
+  });
 
   return (
     <Box p="6px">
       <Column alignItems="center">
-        <Text>{tokenData.name}</Text>
-        <Text>{tokenData.symbol}</Text>
-        <Text>{tokenData.balance}</Text>
-
-        <Text>Estimated tx fee: {tokenData.txFee} SOL</Text>
+        <Text>{data.name}</Text>
+        <Text>{data.symbol}</Text>
+        <Text>{data.balance}</Text>
 
         {!isExceededBalance && (
-          <Button onClick={onSendHandler} isLoading={pendingTx}>
-            Send
+          <Button
+            onClick={associatedAddress || data.isNativeToken ? sendToken : createAssociatedTokenAccount}
+            isLoading={pendingTx || data.isLoading || pendingAssociateToken}
+          >
+            {associatedAddress || data.isNativeToken ? "Send" : "Create Address"}
           </Button>
         )}
+
+        <Text>Estimated tx fee: {txFee} SOL</Text>
       </Column>
     </Box>
   );

@@ -7,3 +7,6 @@ export { default as useWaitTransaction } from "./use-wait-transaction";
 export { default as useProviders } from "./use-providers";
 export { default as useTooltip } from "./use-tooltip";
 export { default as useWaitTransactionSolana } from "./use-wait-transaction-solana";
+export { default as useWeb3BalanceSolana } from "./use-web3-balance-solana";
+export { default as useSlotChangeSolana } from "./use-slot-change-solana";
+export { default as useOnBlockListener } from "./use-on-block-listener";

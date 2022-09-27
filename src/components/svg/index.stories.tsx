@@ -8,7 +8,7 @@ export default {
 
 const context = require.context("components/svg", true, /.tsx$/);
 const components: {
-  [key: string]: typeof import("/Users/admin/Development/Scafolds/basic-scafold/src/components/svg/Svg");
+  [key: string]: typeof import("../../components/svg/Svg");
 } = context.keys().reduce((accum, path) => {
   const file = path.substring(2).replace(".tsx", "");
   return {
