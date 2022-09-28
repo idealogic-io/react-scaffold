@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { useTranslation } from "context";
 import { toastOptions } from "configs";
-import { isGasEstimationError, isUserRejected, TxError } from "utils/web3/error-helpers";
+import { isGasEstimationError, isUserRejected, TxError } from "utils/web3";
 import { ToastDescriptionWithTx } from "components";
 
 export type TxResponse = TransactionResponse | null;
