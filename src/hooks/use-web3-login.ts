@@ -10,6 +10,7 @@ import {
   WalletConnectConnector,
 } from "@web3-react/walletconnect-connector";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
+import { useWallet } from "@solana/wallet-adapter-react";
 // Configs
 import { getChainIds, LOCAL_STORAGE_KEYS, toastOptions } from "configs";
 // Utils
@@ -18,9 +19,14 @@ import { connectorName, connectorByName, setupNetwork } from "utils/web3";
 // TODO check translation
 const useWeb3Login = () => {
   const { activate, deactivate, setError } = useWeb3React();
+  const { disconnect } = useWallet();
+
   // If you want to setup exact network please pass network id
   // Otherwise network id will be first from supported chains
   const login = async (connectorId: keyof typeof connectorName, networkId?: number) => {
+    // Disconnect from solana wallet on login through web3
+    await disconnect();
+
     const connector = connectorByName[connectorId];
     localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
