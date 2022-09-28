@@ -7,8 +7,7 @@ import { toast } from "react-toastify";
 import { random } from "lodash";
 
 import { Course, NormalizedCourse } from "../types";
-import { formatBigNumber, getCourseMarketplaceContract } from "utils/web3";
-import { getAddress, getERC20Contract } from "utils/web3/contract-helpers";
+import { getAddress, getERC20Contract, formatBigNumber, getCourseMarketplaceContract } from "utils/web3";
 import { contractsAddresses, tokens } from "configs";
 import { useWaitTransaction } from "hooks";
 import { ToastDescriptionWithTx } from "components";
@@ -49,10 +48,9 @@ const useContractData = () => {
   const getContractData = async () => {
     setData(prev => ({ ...prev, loading: true }));
     try {
-      const contract = getCourseMarketplaceContract(library?.getSigner(), chainId);
       const usdtAddress = tokens.USDT[chainId as number];
+      const contract = getCourseMarketplaceContract(library?.getSigner(), chainId);
       const usdtContract = getERC20Contract(usdtAddress, library?.getSigner(), chainId);
-
       const courseContractAddress = getAddress(contractsAddresses.courseMarketplace, chainId);
 
       const isApproved = await checkIsApproved(usdtContract, courseContractAddress);
@@ -64,9 +62,9 @@ const useContractData = () => {
     }
   };
 
-  const checkIsApproved = async (usdtContract: Contract, courseContractAddress: string) => {
+  const checkIsApproved = async (contract: Contract, courseContractAddress: string) => {
     try {
-      const allowanceBN = await usdtContract.allowance(account, courseContractAddress);
+      const allowanceBN = await contract.allowance(account, courseContractAddress);
 
       return allowanceBN.gte(coursePrice);
     } catch (error) {

@@ -25,7 +25,7 @@ const TestModal: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const _props = props as TestModalProps;
+  const _props = props!;
 
   const closeModalHandler = () => {
     dispatch(hideModal());

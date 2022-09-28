@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useSearchParams } from "react-router-dom";
-
+import { formatUnits } from "@ethersproject/units";
 // Components
 import { Button, Heading, Text, Page, Column } from "components";
 import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Balance, useWeb3Login, useWeb3AutoConnect, useProviders } from "hooks";
+import { useWeb3Balance, useWeb3Login, useProviders, useWeb3AutoConnect } from "hooks";
 import { useContractData } from "./hooks";
 // Configs
-import { chainNames, getChainIds, LOCAL_STORAGE_KEYS } from "configs";
+import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies } from "configs";
 import { tokens } from "configs/tokens";
 // Utils
-import { connectorByName, connectorName, formatBigNumberToFixed, setupNetwork } from "utils/web3";
-// Types
-import { Connector } from "utils/web3/types";
+import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
 
 type TokenList = { address: string; key: string }[];
 
@@ -24,15 +22,19 @@ const HomePage: React.FC = () => {
   const [tokensList, setTokensList] = useState<TokenList>([]);
 
   const { t } = useTranslation();
+
   const { chainId, account, active, error } = useWeb3React();
   const { balance } = useWeb3Balance();
-  const { login, logout } = useWeb3Login();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { providers } = useProviders();
 
+  const { login, logout } = useWeb3Login();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const networkId = searchParams.get("networkId");
+  const _networkId = networkId ? +networkId : undefined;
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
+  const formattedBalance = formatUnits(balance, nativeCurrencies[chainId as keyof typeof chainNames]?.decimals);
 
   const {
     data: { isApproved, lastCourse, loading, contract },
@@ -42,7 +44,7 @@ const HomePage: React.FC = () => {
     getLastCourseHandler,
   } = useContractData();
 
-  useWeb3AutoConnect(+(networkId as string));
+  useWeb3AutoConnect(_networkId);
 
   useEffect(() => {
     if (chainId) {
@@ -107,7 +109,9 @@ const HomePage: React.FC = () => {
         {active && (
           <Column py="16px">
             <Text>You balance is:</Text>
-            <Text>{formatBigNumberToFixed(balance, 8)}</Text>
+            <Text>
+              {formattedBalance} {nativeCurrencies[chainId as keyof typeof chainNames]?.symbol}
+            </Text>
           </Column>
         )}
 
@@ -163,7 +167,7 @@ const HomePage: React.FC = () => {
         {active && lastCourse && JSON.stringify(lastCourse)}
 
         {tokensList.length && active
-          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} />)
+          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} balance={formattedBalance} />)
           : null}
 
         <Button scale="md" onClick={logout} my="4px">

@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { BigNumber } from "@ethersproject/bignumber";
 import useSWR from "swr";
 import { useWeb3React } from "@web3-react/core";
+import useOnBlockListener from "./use-on-block-listener";
 
 export const useWeb3Balance = () => {
   const { account, library } = useWeb3React();
@@ -15,17 +15,7 @@ export const useWeb3Balance = () => {
     },
   );
 
-  useEffect(() => {
-    if (library) {
-      library.on("block", () => {
-        mutate();
-      });
-
-      return () => {
-        library.removeAllListeners("block");
-      };
-    }
-  }, [library]);
+  useOnBlockListener(mutate);
 
   return { balance };
 };
