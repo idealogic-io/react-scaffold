@@ -1,8 +1,5 @@
 import { Contract } from "@ethersproject/contracts";
-import { Web3Provider } from "@ethersproject/providers";
-import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import { formatFixed } from "@ethersproject/bignumber";
 import useSWR from "swr";
 
 import { getERC20Contract, isNullableAddress } from "utils/web3";
@@ -10,13 +7,22 @@ import { formatBigNumber } from "utils/web3";
 import { nativeCurrencies } from "configs";
 import { useOnBlockListener } from "hooks";
 
-const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 18, txFee: 0, isLoading: true };
+const defaultTokenData = {
+  name: "",
+  symbol: "",
+  balance: "",
+  decimals: 18,
+  isLoading: false,
+  isNative: false,
+};
+
+export type TokenType = typeof defaultTokenData;
 
 const useTokenData = ({ address }: { address: string }) => {
   const { account, library, chainId } = useWeb3React();
 
   const { data = defaultTokenData, mutate } = useSWR<typeof defaultTokenData | void>(
-    () => `useTokenData/${address}`,
+    () => (account ? `${account}/useTokenData/${address}` : `useTokenData/${address}`),
     async () => {
       if (account && chainId) {
         return await getTokenData();
@@ -24,14 +30,13 @@ const useTokenData = ({ address }: { address: string }) => {
     },
   );
 
-  const toAddress = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
-  const valueToSend = 0.01;
   const isNativeToken = isNullableAddress(address);
 
   useOnBlockListener(mutate);
 
   const getTokenData = async () => {
     try {
+      mutate({ ...data, isLoading: true }, { revalidate: false });
       const ERC20Contract = getERC20Contract(address, library.getSigner(), chainId);
 
       if (!isNativeToken) {
@@ -39,7 +44,7 @@ const useTokenData = ({ address }: { address: string }) => {
 
         mutate({ ...data, isLoading: false }, { revalidate: false });
       } else {
-        const data = await getNativeTokenData(ERC20Contract);
+        const data = await getNativeTokenData();
 
         mutate({ ...data, isLoading: false }, { revalidate: false });
       }
@@ -54,11 +59,10 @@ const useTokenData = ({ address }: { address: string }) => {
       const symbol = await contract.symbol();
       const decimals = await contract.decimals();
       const balanceBN = await contract.balanceOf(account);
-      const txFee = await estimateTxFee(library, decimals, contract, isNativeToken);
 
       const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
-      return { name, symbol, balance, decimals, txFee };
+      return { name, symbol, balance, decimals, isNative: false };
     } catch (error) {
       console.error("Error in getERC20TokenData: ", error, address);
 
@@ -66,7 +70,7 @@ const useTokenData = ({ address }: { address: string }) => {
     }
   };
 
-  const getNativeTokenData = async (contract: Contract) => {
+  const getNativeTokenData = async () => {
     try {
       if (!chainId) {
         return defaultTokenData;
@@ -75,11 +79,10 @@ const useTokenData = ({ address }: { address: string }) => {
       const { decimals, name, symbol } = nativeCurrencies[chainId];
 
       const balanceBN = await library.getBalance(account);
-      const txFee = await estimateTxFee(library, decimals, contract, isNativeToken);
 
       const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
-      return { name, symbol, balance, decimals, txFee };
+      return { name, symbol, balance, decimals, isNative: true };
     } catch (error) {
       console.error("Error in getNativeTokenData: ", error, address);
 
@@ -87,34 +90,7 @@ const useTokenData = ({ address }: { address: string }) => {
     }
   };
 
-  const estimateTxFee = async (
-    library: Web3Provider,
-    decimals: number,
-    ERC20Contract: Contract,
-    isNullableAddress: boolean,
-  ) => {
-    try {
-      const value = parseUnits(valueToSend.toString(), decimals);
-
-      const gasPriceBN = await library.getGasPrice();
-
-      let gasLimitBN = parseUnits("0");
-      if (isNullableAddress) {
-        gasLimitBN = await library.estimateGas({ to: toAddress, value });
-      } else {
-        gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
-      }
-
-      const gasPrice = formatBigNumber(gasPriceBN);
-      const gasLimit = formatFixed(gasLimitBN);
-
-      return +gasPrice * +gasLimit;
-    } catch (error) {
-      return 0;
-    }
-  };
-
-  return { data, toAddress, valueToSend, isNativeToken, getTokenData };
+  return { data, isNativeToken, getTokenData };
 };
 
 export default useTokenData;

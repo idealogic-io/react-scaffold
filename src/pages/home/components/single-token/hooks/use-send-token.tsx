@@ -8,22 +8,23 @@ import { useTranslation } from "context";
 import { getERC20Contract } from "utils/web3";
 
 import { useWaitTransaction } from "hooks";
-import useTokenData from "./use-token-data";
 
-const useSendToken = ({ address }: { address: string }) => {
+import { TokenType } from "./use-token-data";
+
+type UseSendTokenArgs = { address: string; toAddress: string; token: TokenType };
+
+const useSendToken = ({ address, token, toAddress }: UseSendTokenArgs) => {
   const { fetchWithCatchTxError, loading: pendingTx } = useWaitTransaction();
-  const { data, toAddress, valueToSend, isNativeToken, getTokenData } = useTokenData({ address });
+
   const { t } = useTranslation();
   const { library, chainId } = useWeb3React();
 
-  const onSendHandler = async () => {
-    const { decimals } = data;
-
+  const sendToken = async (valueToSend: string) => {
     const receipt = await fetchWithCatchTxError(() => {
-      if (isNativeToken) {
-        return sendNativeToken(decimals);
+      if (token.isNative) {
+        return sendNativeToken(valueToSend);
       } else {
-        return sendERC20Token(decimals);
+        return sendERC20Token(valueToSend);
       }
     });
 
@@ -32,13 +33,11 @@ const useSendToken = ({ address }: { address: string }) => {
         <ToastDescriptionWithTx txHash={receipt.transactionHash}>{t("Token sent")}</ToastDescriptionWithTx>,
         toastOptions,
       );
-
-      getTokenData();
     }
   };
 
-  const sendNativeToken = async (decimal: number) => {
-    const value = parseUnits(valueToSend.toString(), decimal);
+  const sendNativeToken = async (valueToSend: string) => {
+    const value = parseUnits(valueToSend.toString(), token.decimals);
     if (!library) {
       return;
     }
@@ -50,14 +49,15 @@ const useSendToken = ({ address }: { address: string }) => {
     });
   };
 
-  const sendERC20Token = async (decimals: number) => {
-    const value = parseUnits(valueToSend.toString(), decimals);
+  const sendERC20Token = async (valueToSend: string) => {
+    const value = parseUnits(valueToSend, token.decimals);
 
     const ERC20Contract = getERC20Contract(address, library?.getSigner(), chainId);
+
     return ERC20Contract.transfer(toAddress, value);
   };
 
-  return { sendToken: onSendHandler, pendingTx };
+  return { sendToken, pendingTx };
 };
 
 export default useSendToken;
