@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { parseUnits } from "@ethersproject/units";
-import { formatFixed } from "@ethersproject/bignumber";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 
-import { formatBigNumber, getERC20Contract } from "utils/web3";
+import { getERC20Contract } from "utils/web3";
 
 import { TokenType } from "./use-token-data";
 
@@ -45,8 +44,8 @@ const useEstimateTxFee = ({ address, token, toAddress, valueToSend }: UseEstimat
         gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
       }
 
-      const gasPrice = formatBigNumber(gasPriceBN);
-      const gasLimit = formatFixed(gasLimitBN);
+      const gasPrice = formatUnits(gasPriceBN);
+      const gasLimit = formatUnits(gasLimitBN, 0);
 
       const txFee = +gasPrice * +gasLimit;
 
