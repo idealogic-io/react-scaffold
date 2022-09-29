@@ -7,16 +7,18 @@ import useSWR from "swr";
 import { solanaNetwork } from "App";
 import { isNullableAddressSolana } from "utils/web3";
 import { useSlotChangeSolana } from "hooks";
+import { SOLANA } from "configs/networks";
 
-const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 6, isLoading: true };
-const NATIVE_CURRENCY = { name: "Solana", symbol: "SOL", decimals: 6 };
+const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 6, isLoading: false, isNative: false };
+
+export type TokenType = typeof defaultTokenData;
 
 const useTokenData = ({ address }: { address: string }) => {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
 
   const { data = defaultTokenData, mutate } = useSWR<typeof defaultTokenData | void>(
-    () => `useTokenData/${address}`,
+    () => (publicKey ? `${publicKey.toBase58()}/useTokenData/${address}` : `useTokenData/${address}`),
     async () => {
       if (publicKey) {
         return await getTokenData();
@@ -24,16 +26,15 @@ const useTokenData = ({ address }: { address: string }) => {
     },
   );
 
-  const toAddress = "HsyCpTgfeBm25wnzxqTn4wzfgviP3WPwc7ofrDtA2qA4";
-  const toPubkey = new PublicKey(toAddress);
   const isNativeToken = isNullableAddressSolana(address);
-  const valueToSend = 0.01;
 
   useSlotChangeSolana(mutate);
 
   const getTokenData = async () => {
     try {
       if (!publicKey) throw new WalletNotConnectedError();
+
+      mutate({ ...data, isLoading: true }, { revalidate: false });
 
       if (isNativeToken) {
         const data = await getNativeTokenData(publicKey);
@@ -54,7 +55,7 @@ const useTokenData = ({ address }: { address: string }) => {
       const balance = await connection.getBalance(pubKey);
       const balanceUI = balance / LAMPORTS_PER_SOL;
 
-      return { ...NATIVE_CURRENCY, balance: balanceUI.toString() };
+      return { ...SOLANA, balance: balanceUI.toString(), isNative: true };
     } catch (error) {
       console.error("Error in getNativeTokenData: ", error, address);
 
@@ -78,6 +79,7 @@ const useTokenData = ({ address }: { address: string }) => {
           symbol,
           decimals,
           balance: data.value[0]?.account?.data?.parsed?.info?.tokenAmount?.uiAmountString ?? "0",
+          isNative: false,
         };
       });
     } catch (error) {
@@ -88,10 +90,7 @@ const useTokenData = ({ address }: { address: string }) => {
   };
 
   return {
-    data: { ...data, isNativeToken },
-    toPubkey,
-    valueToSend,
-    isNativeToken,
+    data,
     getTokenData,
   };
 };

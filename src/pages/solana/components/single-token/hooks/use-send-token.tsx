@@ -11,19 +11,21 @@ import { useTranslation } from "context";
 // import { getOrCreateAssociatedTokenAccount } from "utils/web3";
 
 import { useWaitTransactionSolana } from "hooks";
-import useTokenData from "./use-token-data";
+import { TokenType } from "./use-token-data";
 
-const useSendToken = ({ address }: { address: string }) => {
+type UseSendTokenArgs = {
+  address: string;
+  toPubkey: PublicKey;
+  token: TokenType;
+};
+
+const useSendToken = ({ address, toPubkey, token }: UseSendTokenArgs) => {
   const { connection } = useConnection();
   const { publicKey: fromPubkey } = useWallet();
-
-  const { data, toPubkey, valueToSend, isNativeToken, getTokenData } = useTokenData({
-    address,
-  });
   const { fetchWithCatchTxErrorSolana, loading: pendingTx } = useWaitTransactionSolana();
   const { t } = useTranslation();
 
-  const createCustomTransferTx = async () => {
+  const createCustomTransferTx = async (valueToSend: string) => {
     try {
       if (!fromPubkey) throw new WalletNotConnectedError();
 
@@ -45,7 +47,7 @@ const useSendToken = ({ address }: { address: string }) => {
           fromTokenAccount.address,
           toTokenAccount.address,
           fromPubkey,
-          valueToSend * Math.pow(10, data.decimals),
+          +valueToSend * Math.pow(10, token.decimals),
           [],
           TOKEN_PROGRAM_ID,
         );
@@ -63,12 +65,12 @@ const useSendToken = ({ address }: { address: string }) => {
     }
   };
 
-  const createNativeTransferTx = async () => {
+  const createNativeTransferTx = async (valueToSend: string) => {
     try {
       if (!fromPubkey) throw new WalletNotConnectedError();
 
       const transaction = new Transaction();
-      const lamports = LAMPORTS_PER_SOL * valueToSend;
+      const lamports = LAMPORTS_PER_SOL * +valueToSend;
 
       transaction.add(
         SystemProgram.transfer({
@@ -110,16 +112,16 @@ const useSendToken = ({ address }: { address: string }) => {
   //   }
   // };
 
-  const createTxToSend = async () => {
-    if (isNativeToken) {
-      return await createNativeTransferTx();
+  const createTxToSend = async (valueToSend: string) => {
+    if (token.isNative) {
+      return await createNativeTransferTx(valueToSend);
     } else {
-      return await createCustomTransferTx();
+      return await createCustomTransferTx(valueToSend);
     }
   };
 
-  const onSendHandler = async () => {
-    const tx = await createTxToSend();
+  const sendToken = async (valueToSend: string) => {
+    const tx = await createTxToSend(valueToSend);
 
     if (tx) {
       const confirmed = await fetchWithCatchTxErrorSolana(tx);
@@ -129,15 +131,13 @@ const useSendToken = ({ address }: { address: string }) => {
           <ToastDescriptionWithTxSolana txHash={confirmed.signature}>{t("Token sent")}</ToastDescriptionWithTxSolana>,
           toastOptions,
         );
-
-        getTokenData();
       }
     } else {
       toast.error(t("Couldn't send token"));
     }
   };
 
-  return { pendingTx, sendToken: onSendHandler, createNativeTransferTx, createTxToSend };
+  return { pendingTx, sendToken, createNativeTransferTx, createTxToSend };
 };
 
 export default useSendToken;

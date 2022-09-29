@@ -4,8 +4,8 @@ export { getContract, getCourseMarketplaceContract, getAddress, getERC20Contract
 export { formatBigNumber, formatBigNumberToFixed, formatFixedNumber } from "./number-helpers";
 export { utf8ToHex, truncateHash, isNullableAddress, isNullableAddressSolana } from "./string-helpers";
 export { getScanLink, getScanLinkSolana } from "./get-scan-link";
-export { getOrCreateAssociatedTokenAccount } from "./getOrCreateAssociatedTokenAccount";
 export { isGasEstimationError, isUserRejected } from "./error-helpers";
 export type { TxError } from "./error-helpers";
 export type { Connector } from "./types";
 export { checkExceededBalance } from "./check-exceeded-balance";
+export { getOrCreateAssociatedTokenAccount } from "./getOrCreateAssociatedTokenAccount";

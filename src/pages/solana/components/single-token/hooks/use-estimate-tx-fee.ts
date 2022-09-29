@@ -1,36 +1,56 @@
+import { useEffect, useState } from "react";
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
-import useSWR from "swr";
+import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
+import { TokenType } from "./use-token-data";
+import { Account } from "@solana/spl-token";
 
-import { useCheckAssociatedTokenAddress, useSendToken, useTokenData } from ".";
-import { useSlotChangeSolana } from "hooks";
+const defaultValue = { isLoading: false, txFee: 0 };
 
-const useEstimateTxFee = ({ address }: { address: string }) => {
-  const { data: txFee = 0, mutate } = useSWR<number | void>(
-    () => `estimateTxFee/${address}`,
-    async () => {
-      if (publicKey) {
-        return await estimateTxFee();
-      }
-    },
-  );
+type UseEstimateTxFeeArgs = {
+  address: string;
+  token: TokenType;
+  valueToSend: string;
+  associatedAddress: Account | null;
+  createTxToSend: (value: string) => Promise<Transaction | undefined>;
+  createTxForAssociatedTokenAccount: () => Promise<Transaction | undefined>;
+};
+
+const useEstimateTxFee = ({
+  address,
+  valueToSend,
+  associatedAddress,
+  token,
+  createTxToSend,
+  createTxForAssociatedTokenAccount,
+}: UseEstimateTxFeeArgs) => {
+  const [estimate, setEstimate] = useState(defaultValue);
 
   const { publicKey } = useWallet();
   const { connection } = useConnection();
-  const { createTxToSend } = useSendToken({ address });
-  const { associatedAddress, createTxForAssociatedTokenAccount } = useCheckAssociatedTokenAddress({ address });
-  const { data } = useTokenData({ address });
 
-  useSlotChangeSolana(mutate);
+  useEffect(() => {
+    if (address && valueToSend) {
+      setEstimate(prev => ({ ...prev, isLoading: true }));
+      const time = 1000;
+
+      const timeout = setTimeout(estimateTxFee, time);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      setEstimate(defaultValue);
+    }
+  }, [valueToSend, address, publicKey]);
 
   const estimateTxFee = async () => {
     try {
       if (!publicKey) throw new WalletNotConnectedError();
 
       let tx;
-      if (associatedAddress || data.isNativeToken) {
-        tx = await createTxToSend();
+      if (associatedAddress || token.isNative) {
+        tx = await createTxToSend(valueToSend);
       } else {
         tx = await createTxForAssociatedTokenAccount();
       }
@@ -38,17 +58,17 @@ const useEstimateTxFee = ({ address }: { address: string }) => {
       if (tx) {
         const feeInLamports = await tx.getEstimatedFee(connection);
 
-        const fee = feeInLamports / LAMPORTS_PER_SOL;
-        mutate(fee, { revalidate: false });
+        const txFee = feeInLamports / LAMPORTS_PER_SOL;
+        setEstimate({ txFee, isLoading: false });
       } else {
-        mutate(0, { revalidate: false });
+        setEstimate({ txFee: 0, isLoading: false });
       }
     } catch (error) {
-      mutate(0, { revalidate: false });
+      setEstimate({ txFee: 0, isLoading: false });
     }
   };
 
-  return { txFee, estimateTxFee };
+  return { estimate, estimateTxFee };
 };
 
 export default useEstimateTxFee;

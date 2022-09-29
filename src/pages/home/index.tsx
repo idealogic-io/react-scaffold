@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { formatUnits } from "@ethersproject/units";
-
 // Components
 import { Button, Heading, Text, Page, Column } from "components";
 import { SingleToken } from "./components";
@@ -27,7 +25,7 @@ const HomePage: React.FC = () => {
   const { t } = useTranslation();
 
   const { chainId, account, active, error } = useWeb3React();
-  const { balance } = useWeb3Balance();
+  const { formattedBalance } = useWeb3Balance();
   const { providers } = useProviders();
 
   const { login, logout } = useWeb3Login();
@@ -38,7 +36,6 @@ const HomePage: React.FC = () => {
   const _networkId = networkId ? +networkId : undefined;
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
-  const formattedBalance = formatUnits(balance, nativeCurrencies[chainId as keyof typeof chainNames]?.decimals);
 
   const {
     data: { isApproved, lastCourse, loading, contract },

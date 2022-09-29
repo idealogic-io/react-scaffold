@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from "store/store";
 import { hideModal } from "store/reducers/modal";
 import { ModalState } from "store/reducers/modal/types";
 
-
 const StyledTestModal = styled(Flex)`
   height: 300px;
   width: 250px;

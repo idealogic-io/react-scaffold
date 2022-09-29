@@ -1,3 +1,4 @@
+import { SpinnerIcon } from "components/svg";
 import React from "react";
 
 import StyledButton from "./StyledButton";
@@ -21,7 +22,7 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
             mr: "0.5rem",
           })}
 
-        {isLoading ? <>Loading ...</> : children}
+        {isLoading ? <SpinnerIcon /> : children}
 
         {React.isValidElement(endIcon) &&
           React.cloneElement(endIcon, {

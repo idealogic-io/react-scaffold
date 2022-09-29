@@ -15,10 +15,14 @@ import { ToastDescriptionWithTxSolana } from "components";
 import { toastOptions } from "configs";
 import { useTranslation } from "context";
 
-import useTokenData from "./use-token-data";
 import { useSlotChangeSolana, useWaitTransactionSolana } from "hooks";
 
-const useCheckAssociatedTokenAddress = ({ address }: { address: string }) => {
+type UseCheckAssociatedTokenAddress = {
+  address: string;
+  toPubkey: PublicKey;
+};
+
+const useCheckAssociatedTokenAddress = ({ address, toPubkey }: UseCheckAssociatedTokenAddress) => {
   const { data: associatedAddress = null, mutate } = useSWR<Account | void>(
     () => `checkAssociatedTokenAddress/${address}`,
     async () => {
@@ -32,9 +36,6 @@ const useCheckAssociatedTokenAddress = ({ address }: { address: string }) => {
   const { publicKey } = useWallet();
   const { fetchWithCatchTxErrorSolana, loading: pendingTx } = useWaitTransactionSolana();
   const { t } = useTranslation();
-  const { toPubkey } = useTokenData({
-    address,
-  });
 
   const tokenPublicKey = new PublicKey(address);
 

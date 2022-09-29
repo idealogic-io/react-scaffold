@@ -155,6 +155,8 @@ const networks = {
   },
 };
 
+const SOLANA = { name: "Solana", symbol: "SOL", decimals: 6 };
+
 export {
   chainIdMainnet,
   chainIdTestnet,
@@ -163,5 +165,6 @@ export {
   chainNames,
   nativeCurrencies,
   networks,
+  SOLANA,
   getChainIds,
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 import { Button, Column, Heading, Page, Text } from "components";
 import { solanaNetwork } from "App";
@@ -16,11 +15,10 @@ const SolanaPage: React.FC = () => {
 
   const { setVisible } = useWalletModal();
   const { publicKey, connected, disconnect } = useWallet();
-  const { balance } = useWeb3BalanceSolana();
+  const { formattedBalance } = useWeb3BalanceSolana();
   const { logout: web3Logout } = useWeb3Login();
 
   const address = publicKey?.toBase58() ?? null;
-  const formattedBalance = balance / LAMPORTS_PER_SOL;
 
   useEffect(() => {
     getTokenList();
