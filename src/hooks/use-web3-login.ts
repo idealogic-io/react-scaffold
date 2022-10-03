@@ -115,6 +115,8 @@ const useWeb3Login = () => {
   const logout = () => {
     deactivate();
     clearUserState();
+    // Disconnect from solana wallet
+    disconnect();
   };
 
   const clearUserState = () => {

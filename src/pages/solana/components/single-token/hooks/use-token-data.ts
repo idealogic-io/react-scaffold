@@ -4,9 +4,10 @@ import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { TokenListProvider } from "@solana/spl-token-registry";
 import useSWR from "swr";
 
-import { solanaNetwork } from "App";
 import { isNullableAddressSolana } from "utils/web3";
 import { useSlotChangeSolana } from "hooks";
+
+import { solanaNetwork } from "configs/networks";
 import { SOLANA } from "configs/networks";
 
 const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 6, isLoading: false, isNative: false };
@@ -20,7 +21,7 @@ const useTokenData = ({ address }: { address: string }) => {
   const { data = defaultTokenData, mutate } = useSWR<typeof defaultTokenData | void>(
     () => (publicKey ? `${publicKey.toBase58()}/useTokenData/${address}` : `useTokenData/${address}`),
     async () => {
-      if (publicKey) {
+      if (publicKey && address) {
         return await getTokenData();
       }
     },

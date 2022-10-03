@@ -1,3 +1,5 @@
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+
 const chainIdMainnet = {
   mainnet: 1,
   bsc: 56,
@@ -154,8 +156,12 @@ const networks = {
     blockExplorerUrls: [blockExplorersUrls[chainIdTestnet.fuji]],
   },
 };
-
 const SOLANA = { name: "Solana", symbol: "SOL", decimals: 6 };
+
+// Solana doesn't support change network functionality
+// So in development mode you should manually change network in a wallet
+const solanaNetwork =
+  process.env.NODE_ENV === "development" ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet;
 
 export {
   chainIdMainnet,
@@ -166,5 +172,6 @@ export {
   nativeCurrencies,
   networks,
   SOLANA,
+  solanaNetwork,
   getChainIds,
 };

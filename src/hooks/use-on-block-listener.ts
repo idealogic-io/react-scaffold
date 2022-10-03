@@ -5,7 +5,7 @@ const useOnBlockListener = (callback: () => void) => {
   const { library } = useWeb3React();
 
   useEffect(() => {
-    if (library) {
+    if (library && callback) {
       library.on("block", () => {
         callback();
       });

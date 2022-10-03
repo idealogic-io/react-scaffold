@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Buffer } from "buffer";
 import { toast, ToastContainer } from "react-toastify";
 // Solana
-import { WalletAdapterNetwork, WalletError } from "@solana/wallet-adapter-base";
+import { WalletError } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import {
@@ -34,15 +34,11 @@ import Navigation from "navigation";
 // Utils
 import { getLibrary } from "utils/web3";
 import { LOCAL_STORAGE_KEYS, toastOptions } from "configs";
+import { solanaNetwork } from "configs/networks";
 
 // @web3-react/walletconnect-connector package uses buffer
 // in webpack 5 Buffer is undefined so we add it globally
 window.Buffer = Buffer;
-
-// Solana doesn't support change network functionality
-// So in development mode you should manually change network in a wallet
-export const solanaNetwork =
-  process.env.NODE_ENV === "development" ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet;
 
 const SolanaContext: React.FC = () => {
   const network = solanaNetwork;
@@ -60,7 +56,8 @@ const SolanaContext: React.FC = () => {
   ];
 
   const onError = (error: WalletError) => {
-    toast.error(error.message, toastOptions);
+    const message = error.message ? error.message : "Problems with solana wallet were detected";
+    toast.error(message, toastOptions);
   };
 
   // autoConnect works only if LOCAL_STORAGE_KEYS.solanaWallet is exists

@@ -16,17 +16,19 @@ import { toastOptions } from "configs";
 import { useTranslation } from "context";
 
 import { useSlotChangeSolana, useWaitTransactionSolana } from "hooks";
+import { TokenType } from "./use-token-data";
 
 type UseCheckAssociatedTokenAddress = {
   address: string;
   toPubkey: PublicKey;
+  token: TokenType;
 };
 
-const useCheckAssociatedTokenAddress = ({ address, toPubkey }: UseCheckAssociatedTokenAddress) => {
+const useCheckAssociatedTokenAddress = ({ address, toPubkey, token }: UseCheckAssociatedTokenAddress) => {
   const { data: associatedAddress = null, mutate } = useSWR<Account | void>(
     () => `checkAssociatedTokenAddress/${address}`,
     async () => {
-      if (publicKey) {
+      if (publicKey && address && !token.isNative && token.name) {
         return await checkAssociatedTokenAddress();
       }
     },
@@ -37,12 +39,12 @@ const useCheckAssociatedTokenAddress = ({ address, toPubkey }: UseCheckAssociate
   const { fetchWithCatchTxErrorSolana, loading: pendingTx } = useWaitTransactionSolana();
   const { t } = useTranslation();
 
-  const tokenPublicKey = new PublicKey(address);
-
   useSlotChangeSolana(mutate);
 
   const checkAssociatedTokenAddress = async () => {
     try {
+      const tokenPublicKey = new PublicKey(address);
+
       if (!publicKey) throw new WalletNotConnectedError();
 
       const associatedToken = await getAssociatedTokenAddress(tokenPublicKey, toPubkey);
@@ -56,6 +58,8 @@ const useCheckAssociatedTokenAddress = ({ address, toPubkey }: UseCheckAssociate
 
   const createTxForAssociatedTokenAccount = async () => {
     try {
+      const tokenPublicKey = new PublicKey(address);
+
       if (!publicKey) throw new WalletNotConnectedError();
 
       const associatedToken = await getAssociatedTokenAddress(tokenPublicKey, toPubkey);

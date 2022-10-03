@@ -3,7 +3,7 @@ import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 import { Button, Column, Heading, Page, Text } from "components";
-import { solanaNetwork } from "App";
+import { solanaNetwork } from "configs/networks";
 import { solanaTokens } from "configs/tokens";
 import { SingleToken } from "./components";
 import { useWeb3BalanceSolana, useWeb3Login } from "hooks";
@@ -38,12 +38,11 @@ const SolanaPage: React.FC = () => {
 
   const chooseWallet = () => {
     setVisible(true);
+    // Disconnect from web3 wallet on login through solana
+    web3Logout();
   };
 
   const logout = async () => {
-    // Disconnect from web3 wallet on login through solana
-    web3Logout();
-
     await disconnect();
   };
 

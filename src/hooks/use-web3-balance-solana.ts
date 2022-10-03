@@ -5,12 +5,12 @@ import useSlotChangeSolana from "./use-slot-change-solana";
 
 const useWeb3BalanceSolana = () => {
   const { connection } = useConnection();
-  const { publicKey } = useWallet();
+  const { publicKey, connected } = useWallet();
 
   const { data = { balance: 0, formattedBalance: 0 }, mutate } = useSWR(
     () => (publicKey ? `web3/getBalance/${publicKey.toBase58()}` : null),
     async () => {
-      if (publicKey) {
+      if (publicKey && connected) {
         const balance = await connection.getBalance(publicKey);
         const formattedBalance = balance / LAMPORTS_PER_SOL;
 

@@ -6,7 +6,7 @@ import Text from "components/text";
 import InternalLink from "components/link";
 
 import { getScanLinkSolana, truncateHash } from "utils/web3";
-import { solanaNetwork } from "App";
+import { solanaNetwork } from "configs/networks";
 
 interface ToastDescriptionWithTxSolanaSolanaProps {
   description?: string;

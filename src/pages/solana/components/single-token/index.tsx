@@ -23,7 +23,7 @@ const SingleToken: React.FC<SingleTokenProps> = ({ address, balance }) => {
     loading: pendingAssociateToken,
     createTxForAssociatedTokenAccount,
     createAssociatedTokenAccount,
-  } = useCheckAssociatedTokenAddress({ address, toPubkey });
+  } = useCheckAssociatedTokenAddress({ address, toPubkey, token });
   const { sendToken, pendingTx, createTxToSend } = useSendToken({ address, toPubkey, token });
   const { estimate } = useEstimateTxFee({
     address,
