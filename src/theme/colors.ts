@@ -17,6 +17,7 @@ export const lightColors = {
   input: "#D4D9DE",
   text: "#280D5F",
   backgroundDisabled: "#E9EAEB",
+
   // Put light colors here
 } as const;
 
