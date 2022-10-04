@@ -1,10 +1,12 @@
 export const baseColors = {
   primary: "#7E75C9",
   secondary: "#F4587E",
-  error: "#DE0000",
-  warning: "#EF9200",
-  success: "#00C898",
+  error: "#F3263E",
+  warning: "#FFB119",
+  success: "#0ADB1F",
+  info: "#415FD7",
   black: "#333333",
+  disable: "#8F9DBC",
   white: "#ffffff",
   transparent: "transparent",
 } as const;

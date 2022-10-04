@@ -14,8 +14,8 @@ export const Text = styled.p<TextProps>`
   color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.text)};
   font-family: ${({ theme }) => theme.fonts.mv};
   font-weight: ${({ theme, $fontWeight }) => ($fontWeight ? theme.fontWeight[$fontWeight] : theme.fontWeight.regular)};
-  ${getEllipsis}
   line-height: 1.375;
+  ${getEllipsis}
   ${space}
   ${typography}
   ${layout}

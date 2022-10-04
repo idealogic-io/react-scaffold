@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { getInstance, isAxiosError } from "./axios";
 import { ErrorResult } from "./types";
-import { toastOptions } from "configs";
+import { toastOptionsError } from "components";
 
 const axiosInstance = getInstance();
 
@@ -37,7 +37,7 @@ export const makeApiRequest = async <Response>({ isShowError = true, ...config }
     }
 
     if (isShowError) {
-      toast.error(`${errorObj.message}`, toastOptions);
+      toast.error(errorObj.message, toastOptionsError);
     }
 
     return errorObj;

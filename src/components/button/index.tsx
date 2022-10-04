@@ -1,8 +1,9 @@
-import { SpinnerIcon } from "components/svg";
 import React from "react";
 
 import StyledButton from "./StyledButton";
 import { ButtonProps, scales, variants } from "./types";
+
+import { SpinnerIcon } from "components/svg";
 
 export const getExternalLinkProps = () => ({
   target: "_blank",

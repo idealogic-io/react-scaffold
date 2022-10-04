@@ -3,9 +3,8 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 // Styles
-import { GlobalStyle } from "styles";
+import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
 import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "context";
 // Store
@@ -23,7 +22,7 @@ const ThemedApp: React.FC = () => {
         <GlobalStyle />
         <Modal />
         <Navigation />
-        <ToastContainer />
+        <StyledToastContainer />
       </Provider>
     </ThemeProvider>
   );

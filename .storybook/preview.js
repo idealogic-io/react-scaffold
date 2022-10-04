@@ -3,12 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
-import { ToastContainer } from "react-toastify";
 
-import { GlobalStyle } from "../src/styles";
+import { GlobalStyle, StyledToastContainer } from "../src/styles";
 import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "../src/context";
 import { Loader, Modal } from "../src/components";
 import store from "../src/store/store";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const ThemedApp = ({ children }) => {
   const { theme } = useThemeContext();
@@ -18,7 +19,7 @@ const ThemedApp = ({ children }) => {
       <Provider store={store}>
         <GlobalStyle />
         <Modal />
-        <ToastContainer />
+        <StyledToastContainer />
         {children}
       </Provider>
     </ThemeProvider>
