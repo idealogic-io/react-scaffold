@@ -4,7 +4,8 @@ export const StyledModalWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.primary}30;
+  background-color: ${({ theme }) => theme.colors.transparent};
+  filter: blur(100px);
   position: fixed;
   top: 0;
   left: 0;
@@ -18,5 +19,5 @@ export const StyledModalWrapper = styled.div`
 
 export const StyledModalContainer = styled.div`
   margin: 24px;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.monochrome0};
 `;

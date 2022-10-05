@@ -52,5 +52,5 @@ export const InputLabel = styled(Text)`
 
 export const InputError = styled(Text)`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.error};
+  color: ${({ theme }) => theme.colors.error500};
 `;

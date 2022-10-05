@@ -1,20 +1,18 @@
 import styled from "styled-components";
 
-import { AutoRow, Flex, Button, Heading, Page, Text } from "components";
+import { AutoRow, Button, Heading, Page, Text, Column, Box } from "components";
 import { useThemeContext } from "context";
-import { Colors } from "theme/types";
 
 export default {
   title: "Context/ThemeContext",
 };
 
-const Color = styled(Flex)<{ bgColor: keyof Colors }>`
+const StyledBox = styled(Box)`
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  background-color: ${({ theme, bgColor }) => bgColor && theme.colors[bgColor]};
+  width: 200px;
+  height: 200px;
   margin: 10px;
 `;
 
@@ -26,15 +24,61 @@ export const ThemeContext = () => {
       <Heading>Current theme is: {key}</Heading>
       <Button onClick={toggleTheme}>Toggle theme</Button>
 
-      <Text my="12px">Colors: </Text>
+      <Column my="12px">
+        <Text>Fonts: </Text>
 
-      <AutoRow>
-        {Object.keys(theme.colors).map(color => (
-          <Color key={color} bgColor={color as keyof Colors}>
-            <Text>{color}</Text>
-          </Color>
-        ))}
-      </AutoRow>
+        {Object.values(theme.fonts).map(fontFamily => {
+          return (
+            <Box key={fontFamily}>
+              {Object.values(theme.fontWeight).map(fontWeight => {
+                return (
+                  <Text key={fontWeight} fontFamily={fontFamily} fontWeight={fontWeight}>
+                    {fontFamily} {fontWeight}
+                  </Text>
+                );
+              })}
+            </Box>
+          );
+        })}
+      </Column>
+
+      <Column my="12px">
+        <Text>Shadows: </Text>
+        <AutoRow>
+          {Object.entries(theme.shadows).map(([key, value]) => {
+            return (
+              <StyledBox key={key} style={{ boxShadow: value }}>
+                <Text>{key}</Text>
+              </StyledBox>
+            );
+          })}
+        </AutoRow>
+      </Column>
+
+      <Column my="12px">
+        <Text>Radii: </Text>
+        <AutoRow>
+          {Object.entries(theme.radii).map(([key, value]) => {
+            return (
+              <StyledBox key={key} style={{ borderRadius: value, backgroundColor: "pink" }}>
+                <Text>{key}</Text>
+              </StyledBox>
+            );
+          })}
+        </AutoRow>
+      </Column>
+
+      <Column my="12px">
+        <Text>Colors: </Text>
+
+        <AutoRow>
+          {Object.entries(theme.colors).map(([key, value]) => (
+            <StyledBox key={key} style={{ backgroundColor: value }}>
+              <Text>{key}</Text>
+            </StyledBox>
+          ))}
+        </AutoRow>
+      </Column>
     </Page>
   );
 };

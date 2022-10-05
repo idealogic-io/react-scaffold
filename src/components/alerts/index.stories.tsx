@@ -97,8 +97,8 @@ export const AlertBanners: React.FC = () => {
 
       <Box my="8px" width="25%">
         <AlertBanner
-          text="This is a warning alert"
-          description="This is a description"
+          text="This is an info alert"
+          description="Click on close button"
           variant="info"
           visible={visible}
           onCloseClick={() => setVisible(false)}

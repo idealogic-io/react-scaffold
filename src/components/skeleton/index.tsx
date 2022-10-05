@@ -6,7 +6,7 @@ import { animation, SkeletonProps, variant as VARIANT } from "./types";
 
 const StyledSkelton = styled.div<SkeletonProps>`
   display: block;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.monochrome300};
   border-radius: ${({ variant, theme }) => (variant === VARIANT.CIRCLE ? theme.radii.circle : theme.radii.small)};
   ${({ theme }) => theme.mediaQueries.sm} {
     min-height: 14px;

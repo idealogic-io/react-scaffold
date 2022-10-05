@@ -45,7 +45,10 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
       {...attributes.popper}
     >
       <>{content || targetElement?.innerHTML}</>
-      <Arrow ref={setArrowElement} style={styles.arrow} />
+      <Arrow
+        ref={setArrowElement}
+        style={{ ...styles.arrow, transform: styles.arrow.transform && `${styles.arrow.transform} rotate(45deg)` }}
+      />
     </StyledTooltip>
   );
 

@@ -9,7 +9,6 @@ const StyledButton = styled.button<ButtonProps>`
   align-items: center;
   border: 0;
   border-radius: ${({ theme }) => theme.radii.medium};
-  box-shadow: ${({ theme }) => theme.shadows.button};
   cursor: pointer;
   display: inline-flex;
   font-family: inherit;
@@ -36,10 +35,10 @@ const StyledButton = styled.button<ButtonProps>`
     transform: ${({ disabled }) => !disabled && `scale(0.9)`};
   }
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.backgroundDisabled};
-    border-color: ${({ theme }) => theme.colors.backgroundDisabled};
+    background-color: ${({ theme }) => theme.colors.monochrome400};
+    border-color: ${({ theme }) => theme.colors.monochrome400};
     box-shadow: none;
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.monochrome400};
     cursor: not-allowed;
   }
 

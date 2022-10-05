@@ -96,11 +96,11 @@ html, body, div, span, applet, object, iframe,
     width: 8px;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.background}; 
+    background: ${({ theme }) => theme.colors.monochrome0}; 
     border-radius: 8px;
   }
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.input}; 
+    box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.monochrome300}; 
     border-radius: 10px;
   }
 
@@ -129,7 +129,7 @@ html, body, div, span, applet, object, iframe,
     font-family: 'Merriweather';
   }
   body {
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.monochrome0};
 
     img {
       height: auto;

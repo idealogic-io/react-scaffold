@@ -1,47 +1,44 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const Arrow = styled.div`
-  &,
-  &::before {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    z-index: -1;
-  }
+const PADDING = 16;
 
-  &::before {
-    content: "";
-    transform: rotate(45deg);
-    background: ${({ theme }) => theme.colors.primary};
-  }
+export const Arrow = styled.div`
+  width: 10px;
+  height: 10px;
+  background: ${({ theme }) => theme.colors.monochrome25};
 `;
 
 export const StyledTooltip = styled(motion.div)`
-  padding: 16px;
-  font-size: 16px;
-  line-height: 130%;
-  border-radius: 16px;
-  max-width: calc(320px - (16px * 2));
-  z-index: 101;
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.text};
-  box-shadow: ${({ theme }) => theme.shadows.tooltip};
+  padding: ${PADDING}px;
+  border-radius: ${({ theme }) => theme.radii.semiMedium};
+  max-width: calc(320px - (${PADDING}px * 2));
+  z-index: ${({ theme }) => theme.zIndices.tooltip};
+  background: ${({ theme }) => theme.colors.monochrome25};
+  border: 1px solid ${({ theme }) => theme.colors.monochrome300};
+  color: ${({ theme }) => theme.colors.monochrome900};
 
   &[data-popper-placement^="top"] > ${Arrow} {
-    bottom: -4px;
+    bottom: -5px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.monochrome300};
+    border-right: 1px solid ${({ theme }) => theme.colors.monochrome300};
   }
 
   &[data-popper-placement^="bottom"] > ${Arrow} {
-    top: -4px;
+    top: -5px;
+    border-top: 1px solid ${({ theme }) => theme.colors.monochrome300};
+    border-left: 1px solid ${({ theme }) => theme.colors.monochrome300};
   }
 
   &[data-popper-placement^="left"] > ${Arrow} {
-    right: -4px;
+    right: -5px;
+    border-top: 1px solid ${({ theme }) => theme.colors.monochrome300};
+    border-right: 1px solid ${({ theme }) => theme.colors.monochrome300};
   }
 
   &[data-popper-placement^="right"] > ${Arrow} {
-    left: -4px;
+    left: -5px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.monochrome300};
+    border-left: 1px solid ${({ theme }) => theme.colors.monochrome300};
   }
 `;

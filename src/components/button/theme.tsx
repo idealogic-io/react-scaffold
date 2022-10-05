@@ -4,16 +4,16 @@ import { scales, Variant } from "./types";
 export const variantStyles = (theme: DefaultTheme, variant: Variant = "primary") => {
   return {
     primary: css`
-      background-color: ${theme.colors.primary};
-      color: ${theme.colors.white};
+      background-color: ${theme.colors.monochrome300};
+      color: ${theme.colors.monochrome0};
     `,
 
     secondary: css`
       background-color: "transparent";
       border: "2px solid";
-      border-color: ${theme.colors.primary};
+      border-color: ${theme.colors.monochrome300};
       box-shadow: "none";
-      color: ${theme.colors.primary};
+      color: ${theme.colors.monochrome300};
       &:disabled {
         background-color: "transparent";
       }

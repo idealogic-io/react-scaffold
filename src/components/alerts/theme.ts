@@ -11,13 +11,26 @@ export const toastOptionsInfo: ToastOptions = { icon: InfoIcon };
 export const getThemeColor = ({ theme, variant = "success" }: ThemedAlert) => {
   switch (variant) {
     case variants.ERROR:
-      return theme.colors.error;
+      return theme.colors.error50;
     case variants.WARNING:
-      return theme.colors.warning;
+      return theme.colors.warning50;
     case variants.SUCCESS:
-      return theme.colors.success;
+      return theme.colors.success50;
     case variants.INFO:
-      return theme.colors.info;
+      return theme.colors.link50;
+  }
+};
+
+export const getBorderColor = ({ theme, variant = "success" }: ThemedAlert) => {
+  switch (variant) {
+    case variants.ERROR:
+      return theme.colors.error500;
+    case variants.WARNING:
+      return theme.colors.warning500;
+    case variants.SUCCESS:
+      return theme.colors.success500;
+    case variants.INFO:
+      return theme.colors.link500;
   }
 };
 
