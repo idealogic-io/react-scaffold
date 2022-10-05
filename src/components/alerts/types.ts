@@ -23,5 +23,6 @@ export interface AlertTextWithDescriptionProps
 
 export interface AlertBannerProps extends AlertTextWithDescriptionProps {
   variant?: Variants;
+  visible?: boolean;
   onCloseClick?: () => void;
 }

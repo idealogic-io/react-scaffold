@@ -1,14 +1,15 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 import { Text, Button, Column, Box } from "components";
 import {
   AlertTextWithDescription,
+  AlertBanner,
   toastOptionsSuccess,
   toastOptionsError,
   toastOptionsInfo,
   toastOptionsWarning,
 } from "components";
-import AlertBanner from "./AlertBanner";
 
 export default {
   title: "Components/Alerts",
@@ -76,6 +77,8 @@ export const Alerts: React.FC = () => {
 };
 
 export const AlertBanners: React.FC = () => {
+  const [visible, setVisible] = useState(true);
+
   return (
     <Column>
       <Box>
@@ -93,7 +96,13 @@ export const AlertBanners: React.FC = () => {
       </Box>
 
       <Box my="8px" width="25%">
-        <AlertBanner text="This is a warning alert" description="This is a description" variant="info">
+        <AlertBanner
+          text="This is a warning alert"
+          description="This is a description"
+          variant="info"
+          visible={visible}
+          onCloseClick={() => setVisible(false)}
+        >
           <Text>This is a child</Text>
         </AlertBanner>
       </Box>

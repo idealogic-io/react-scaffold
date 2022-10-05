@@ -1,18 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const animationVariants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-export const animationMap = {
-  initial: "initial",
-  animate: "animate",
-  exit: "exit",
-};
-
 export const Arrow = styled.div`
   &,
   &::before {

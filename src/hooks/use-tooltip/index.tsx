@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { usePopper } from "react-popper";
 import { AnimatePresence } from "framer-motion";
 
-import { Arrow, StyledTooltip, animationMap, animationVariants } from "./StyledTooltip";
+import { Arrow, StyledTooltip } from "./StyledTooltip";
 import { TooltipOptions, TooltipRefs } from "./types";
 import { useSubscriptionEventsHandlers } from "./use-subscription-events-handlers";
 import { checkIsEllipsis } from "utils/helpers";
+import { appearanceAnimationMap, appearanceAnimationVariants } from "theme";
 
 const useTooltip = (content: React.ReactNode, options?: TooltipOptions): TooltipRefs => {
   const {
@@ -36,8 +37,8 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
 
   const tooltip = (
     <StyledTooltip
-      {...animationMap}
-      variants={animationVariants}
+      {...appearanceAnimationMap}
+      variants={appearanceAnimationVariants}
       transition={{ duration: 0.3 }}
       ref={setTooltipElement}
       style={styles.popper}
