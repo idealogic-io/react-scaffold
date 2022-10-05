@@ -1,14 +1,18 @@
+import { Svg } from "components/svg";
 import styled from "styled-components";
 import { space, typography, layout, opacity, border, shadow, variant } from "styled-system";
+import { HSL } from "theme/types";
 import { scaleVariants, variantStyles } from "./theme";
 
 import { ButtonProps } from "./types";
 
 const StyledButton = styled.button<ButtonProps>`
+  border-radius: ${({ theme }) => theme.radii.semiMedium};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.monochrome0};
+
   position: relative;
   align-items: center;
-  border: 0;
-  border-radius: ${({ theme }) => theme.radii.medium};
   cursor: pointer;
   display: inline-flex;
   font-family: inherit;
@@ -16,33 +20,34 @@ const StyledButton = styled.button<ButtonProps>`
   line-height: 1;
   outline: 0;
   font-size: 16px;
-  font-weight: 600;
-  ${variant({
-    prop: "scale",
-    variants: scaleVariants,
-  })}
+  border: 2px solid;
+  transition: all 0.2s ease-in-out;
+  width: fit-content;
+
   ${space}
   ${typography}
   ${layout}
   ${opacity}
   ${border}
   ${shadow}
-  transition: all .2s ease-in-out;
-  &:hover {
-    transform: ${({ disabled }) => !disabled && `scale(0.95)`};
-  }
-  &:active {
-    transform: ${({ disabled }) => !disabled && `scale(0.9)`};
-  }
+
+  ${variant({
+    prop: "scale",
+    variants: scaleVariants,
+  })}
+
   &:disabled {
     background-color: ${({ theme }) => theme.colors.monochrome400};
     border-color: ${({ theme }) => theme.colors.monochrome400};
-    box-shadow: none;
-    color: ${({ theme }) => theme.colors.monochrome400};
     cursor: not-allowed;
   }
 
-  ${({ theme, variant }) => variantStyles(theme, variant)};
+  ${Svg} {
+    transition: all 0.2s ease-in-out;
+    fill: ${({ theme }) => theme.colors.monochrome0};
+  }
+
+  ${({ theme, variant, accentColor, hsl }) => variantStyles(theme, variant, accentColor, hsl as keyof HSL)};
 `;
 
 export default StyledButton;

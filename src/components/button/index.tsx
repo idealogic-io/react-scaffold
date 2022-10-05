@@ -1,7 +1,7 @@
 import React from "react";
 
 import StyledButton from "./StyledButton";
-import { ButtonProps, scales, variants } from "./types";
+import { accentColor, ButtonProps, scales, variants } from "./types";
 
 import { SpinnerIcon } from "components/svg";
 
@@ -17,19 +17,23 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
 
   return (
     <StyledButton {...internalProps} {...rest} disabled={isDisabled}>
-      <>
-        {React.isValidElement(startIcon) &&
-          React.cloneElement(startIcon, {
-            mr: "0.5rem",
-          })}
+      {isLoading ? (
+        <SpinnerIcon />
+      ) : (
+        <>
+          {React.isValidElement(startIcon) &&
+            React.cloneElement(startIcon, {
+              mr: "0.5rem",
+            })}
 
-        {isLoading ? <SpinnerIcon /> : children}
+          {children}
 
-        {React.isValidElement(endIcon) &&
-          React.cloneElement(endIcon, {
-            ml: "0.5rem",
-          })}
-      </>
+          {React.isValidElement(endIcon) &&
+            React.cloneElement(endIcon, {
+              ml: "0.5rem",
+            })}
+        </>
+      )}
     </StyledButton>
   );
 };
@@ -39,6 +43,8 @@ Button.defaultProps = {
   variant: variants.PRIMARY,
   scale: scales.MD,
   disabled: false,
+  accentColor: accentColor.accent,
+  hsl: "500",
 };
 
 export default Button;

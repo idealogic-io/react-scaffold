@@ -46,6 +46,17 @@ export const fonts = {
   mv: "MerriWeather",
 } as const;
 
+export const hsl = {
+  "50": 50,
+  "100": 100,
+  "200": 200,
+  "300": 300,
+  "400": 400,
+  "500": 500,
+  "800": 800,
+  "900": 900,
+} as const;
+
 export default {
   siteWidth: 1200,
   breakpointMap,
@@ -55,4 +66,5 @@ export default {
   zIndices,
   fonts,
   fontWeight,
+  hsl,
 };
