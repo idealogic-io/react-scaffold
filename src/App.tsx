@@ -18,12 +18,18 @@ const ThemedApp: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <GlobalStyle />
-        <Modal />
-        <Navigation />
-        <StyledToastContainer />
-      </Provider>
+      <Suspense fallback={<Loader />}>
+        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
+          <LanguageContextProvider fallback={<Loader />}>
+            <Provider store={store}>
+              <GlobalStyle />
+              <Modal />
+              <Navigation />
+              <StyledToastContainer />
+            </Provider>
+          </LanguageContextProvider>
+        </ErrorBoundary>
+      </Suspense>
     </ThemeProvider>
   );
 };
@@ -32,15 +38,9 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <HelmetProvider>
-        <Suspense fallback={<Loader />}>
-          <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
-            <LanguageContextProvider fallback={<Loader />}>
-              <ThemeContextProvider>
-                <ThemedApp />
-              </ThemeContextProvider>
-            </LanguageContextProvider>
-          </ErrorBoundary>
-        </Suspense>
+        <ThemeContextProvider>
+          <ThemedApp />
+        </ThemeContextProvider>
       </HelmetProvider>
     </BrowserRouter>
   );

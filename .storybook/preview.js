@@ -16,12 +16,14 @@ const ThemedApp = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <GlobalStyle />
-        <Modal />
-        <StyledToastContainer />
-        {children}
-      </Provider>
+      <LanguageContextProvider fallback={<Loader />}>
+        <Provider store={store}>
+          <GlobalStyle />
+          <Modal />
+          <StyledToastContainer />
+          {children}
+        </Provider>
+      </LanguageContextProvider>
     </ThemeProvider>
   );
 };
@@ -30,13 +32,11 @@ const globalDecorator = StoryFn => {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <LanguageContextProvider fallback={<Loader />}>
-          <ThemeContextProvider>
-            <ThemedApp>
-              <StoryFn />
-            </ThemedApp>
-          </ThemeContextProvider>
-        </LanguageContextProvider>
+        <ThemeContextProvider>
+          <ThemedApp>
+            <StoryFn />
+          </ThemedApp>
+        </ThemeContextProvider>
       </BrowserRouter>
     </HelmetProvider>
   );

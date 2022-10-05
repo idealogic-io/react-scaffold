@@ -1,10 +1,13 @@
 import React from "react";
 
+import { Flex } from "components";
+import { SpinnerIcon } from "components/svg";
+
 const Loader: React.FC = () => {
   return (
-    <div>
-      <h1>Loading ...</h1>
-    </div>
+    <Flex justifyContent="center" alignItems="center" height="100vh">
+      <SpinnerIcon width="44px" />
+    </Flex>
   );
 };
 

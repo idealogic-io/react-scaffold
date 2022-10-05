@@ -130,7 +130,6 @@ html, body, div, span, applet, object, iframe,
   }
   body {
     background-color: ${({ theme }) => theme.colors.monochrome0};
-
     img {
       height: auto;
       max-width: 100%;

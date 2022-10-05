@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { ROUTES } from "navigation/routes";
 
+import { Flex, Heading, Text, Button } from "components";
+
 import { ErrorBoundaryFallbackProps } from "./types";
-// TODO style component with scss
+
 const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, resetError }) => {
   const navigate = useNavigate();
 
@@ -14,12 +16,16 @@ const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, re
   };
 
   return (
-    <>
-      <h1>Something went wrong!</h1>
-      <p>{error?.toString()}</p>
-      <h2>Please, go to home page</h2>
-      <button onClick={onPressHandler}>Go to home</button>
-    </>
+    <Flex justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
+      <Heading as="h1">Something went wrong!</Heading>
+      <Text mt="8px">{error?.toString()}</Text>
+      <Heading mt="8px" as="h2" scale="h2">
+        Please, go to home page
+      </Heading>
+      <Button mt="8px" scale="lg" onClick={onPressHandler}>
+        Go to home page
+      </Button>
+    </Flex>
   );
 };
 
