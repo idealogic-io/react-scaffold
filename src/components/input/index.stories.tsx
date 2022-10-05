@@ -10,8 +10,8 @@ export const Input: React.FC = () => {
     <>
       {Object.values(scales).map(scale => (
         <Row key={scale}>
-          <StyledInput scale={scale} placeholder="Placeholder..." />
-          <StyledInput scale={scale} value="Disabled" disabled />
+          <StyledInput scale={scale} m="8px" placeholder="Placeholder..." />
+          <StyledInput scale={scale} m="8px" value="Disabled" disabled />
         </Row>
       ))}
     </>
