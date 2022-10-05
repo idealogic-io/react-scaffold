@@ -39,13 +39,13 @@ export const LanguageContext: React.FC = () => {
 
       <Box my="12px">
         {Object.entries(locale).map(([key, value]) => (
-          <>
-            <Row key={key}>
-              <Text color="black">{key}: </Text>
+          <Box key={key}>
+            <Row>
+              <Text>{key}: </Text>
               <Text ml="10px">{value as string}</Text>
             </Row>
             <hr />
-          </>
+          </Box>
         ))}
       </Box>
     </Page>

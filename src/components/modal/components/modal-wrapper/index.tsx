@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 
 import { StyledModalWrapper, StyledModalContainer } from "./StyledModalWrapper";
 import { ModalWrapperProps } from "./types";
+import { appearanceAnimationMap, appearanceAnimationVariants } from "theme";
 
 const ModalWrapper: React.FC<ModalWrapperProps> = ({ children, id, hideModalHandler }) => {
   const modalRoot = document.getElementById(id);
@@ -13,9 +14,16 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({ children, id, hideModalHand
 
   if (modalRoot) {
     return createPortal(
-      <StyledModalWrapper onClick={hideModalHandler}>
+      <StyledModalWrapper
+        key="modal"
+        {...appearanceAnimationMap}
+        variants={appearanceAnimationVariants}
+        transition={{ duration: 0.5 }}
+        onClick={hideModalHandler}
+      >
         <StyledModalContainer onClick={onParentContainerClick}>{children}</StyledModalContainer>
       </StyledModalWrapper>,
+
       modalRoot,
     );
   }

@@ -37,6 +37,7 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
 
   const tooltip = (
     <StyledTooltip
+      key="tooltip"
       {...appearanceAnimationMap}
       variants={appearanceAnimationVariants}
       transition={{ duration: 0.3 }}

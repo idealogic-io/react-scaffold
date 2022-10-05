@@ -18,6 +18,7 @@ const AlertBanner: React.FC<AlertBannerProps> = ({ children, text, description, 
     <AnimatePresence>
       {visible && (
         <StyledAlertBanner
+          key="alertBanner"
           {...appearanceAnimationMap}
           variants={appearanceAnimationVariants}
           transition={{ duration: 0.5 }}

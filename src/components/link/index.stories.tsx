@@ -13,7 +13,7 @@ export const Link: React.FC = () => {
         <StyledLink href="/">Default</StyledLink>
       </Box>
       <Box>
-        <StyledLink href="/" color="text">
+        <StyledLink href="/" color="accent500">
           Custom color
         </StyledLink>
       </Box>

@@ -1,11 +1,12 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
-export const StyledModalWrapper = styled.div`
+export const StyledModalWrapper = styled(motion.div)`
   width: 100%;
   min-height: 100vh;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.transparent};
-  filter: blur(100px);
+  backdrop-filter: blur(5px);
   position: fixed;
   top: 0;
   left: 0;
@@ -19,5 +20,5 @@ export const StyledModalWrapper = styled.div`
 
 export const StyledModalContainer = styled.div`
   margin: 24px;
-  background-color: ${({ theme }) => theme.colors.monochrome0};
+  background-color: ${({ theme }) => theme.colors.monochrome100};
 `;

@@ -44,7 +44,7 @@ export const Boxes: React.FC = () => {
   return (
     <>
       <Text>Box with custom props</Text>
-      <Box width="200px" $backgroundColor="primary" height="200px" ml="24px" px="50px" py="24px">
+      <Box width="200px" $backgroundColor="monochrome500" height="200px" ml="24px" px="50px" py="24px">
         <Square />
       </Box>
     </>
@@ -55,7 +55,7 @@ export const Containers: React.FC = () => {
   return (
     <>
       <Text textAlign="center">Container for page content</Text>
-      <Container $backgroundColor="primary">
+      <Container $backgroundColor="monochrome500">
         <Square />
       </Container>
     </>
