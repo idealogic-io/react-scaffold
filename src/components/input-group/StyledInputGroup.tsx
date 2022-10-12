@@ -1,67 +1,79 @@
 import styled from "styled-components";
 
-import { Box, Text } from "components";
+import { Text, Flex, Svg } from "components";
 
-import { InputIconProps, StyledInputGroupProps } from "./types";
+import { InputIconProps, StyledInputGroupProps, InputErrorProps } from "./types";
 import { Scales, scales as inputScales } from "components/input/types";
 
-const getPadding = (scale: Scales, hasIcon: boolean) => {
-  if (!hasIcon) {
-    return "12px";
-  }
-
+const getPadding = (scale: Scales) => {
   switch (scale) {
-    // icon width + getPosition()*2
     case inputScales.SM:
-      return "40px";
+      return 8;
     case inputScales.MD:
-      return "48px";
+      return 10;
     case inputScales.LG:
-      return "56px";
+      return 12;
   }
 };
 
-const getPosition = (scale: Scales) => {
-  switch (scale) {
-    case inputScales.SM:
-      return "8px";
-    case inputScales.MD:
-      return "12px";
-    case inputScales.LG:
-      return "16px";
-  }
-};
+export const InputLabel = styled(Text)<{ hasStartIcon: boolean }>`
+  font-size: 12px;
+  margin-top: 6px;
+  line-height: 16px;
+  margin-left: ${({ hasStartIcon }) => (hasStartIcon ? 0 : 12)}px;
+  color: ${({ theme }) => theme.colors.monochrome600};
+`;
 
-export const InputGroupWrapper = styled(Box)<StyledInputGroupProps>`
-  background-color: ${({ theme }) => theme.colors.monochrome25};
+export const InputIcon = styled.div<InputIconProps>`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: ${({ scale }) => getPadding(scale)}px;
+`;
+
+export const InputError = styled(Text)<InputErrorProps>`
+  font-size: 12px;
+  margin-top: 4px;
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.monochrome400 : theme.colors.error500)};
+  margin-left: ${({ scale, iconWidth }) => (iconWidth ? getPadding(scale) * 2 + iconWidth : 12)}px;
+`;
+
+export const InputWrapper = styled(Flex)<StyledInputGroupProps>`
+  background-color: ${({ theme, isError }) => (isError ? theme.colors.error50 : theme.colors.monochrome25)};
   border-top-left-radius: ${({ theme }) => theme.radii.semiMedium};
   border-top-right-radius: ${({ theme }) => theme.radii.semiMedium};
   border-bottom: 1px solid ${({ theme }) => theme.colors.monochrome300};
 
   input {
-    padding-left: ${({ hasStartIcon, scale }) => getPadding(scale, hasStartIcon)};
-    padding-right: ${({ hasEndIcon, scale }) => getPadding(scale, hasEndIcon)};
+    padding-left: ${({ hasStartIcon }) => hasStartIcon && 0};
+    padding-right: ${({ hasEndIcon }) => hasEndIcon && 0};
+    background-color: inherit;
   }
-`;
 
-export const InputIcon = styled.div<InputIconProps>`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  width: 24px;
-  position: absolute;
-  top: 0;
-  margin-right: ${({ scale }) => getPosition(scale)};
+  ${Svg} {
+    fill: ${({ theme }) => theme.colors.monochrome400};
+  }
 
-  ${({ isEndIcon, scale }) => (isEndIcon ? `right: ${getPosition(scale)};` : `left: ${getPosition(scale)};`)};
-`;
+  &:hover {
+    background-color: ${({ theme, disabled }) => !disabled && theme.colors.monochrome50};
+  }
 
-export const InputLabel = styled(Text)`
-  font-size: 14px;
-  margin-bottom: 8px;
-`;
+  &:focus-within {
+    border-bottom: 1px solid ${({ theme }) => theme.colors.accent500};
 
-export const InputError = styled(Text)`
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.error500};
+    ${InputLabel} {
+      color: ${({ theme }) => theme.colors.accent500};
+    }
+  }
+
+  ${({ disabled, theme }) =>
+    disabled &&
+    `
+    background-color: ${theme.colors.monochrome300};
+    color: ${theme.colors.monochrome400};
+    cursor: not-allowed;
+    ${InputLabel} {
+      color: ${theme.colors.monochrome400};
+    }
+    `}
 `;

@@ -1,10 +1,10 @@
 import React, { cloneElement } from "react";
 
-import { InputError, InputIcon, InputLabel, InputGroupWrapper } from "./StyledInputGroup";
+import { InputError, InputIcon, InputLabel, InputWrapper } from "./StyledInputGroup";
 
 import { InputGroupProps } from "./types";
 import { scales as inputScales } from "components/input/types";
-import { Box } from "components/layout";
+import { Box } from "components";
 
 const InputGroup: React.FC<InputGroupProps> = ({
   scale = inputScales.MD,
@@ -14,27 +14,32 @@ const InputGroup: React.FC<InputGroupProps> = ({
   error,
   label,
   isTouched,
+  disabled,
   ...props
-}) => (
-  <Box>
-    <InputGroupWrapper scale={scale} hasStartIcon={!!startIcon} hasEndIcon={!!endIcon} {...props}>
-      {label && <InputLabel>{label}</InputLabel>}
-
-      <Box position="relative">
+}) => {
+  const startIconWidth = startIcon?.props?.width ? parseInt(startIcon?.props?.width) : 20;
+  const iconWidth = startIcon ? startIconWidth : 0;
+  return (
+    <Box {...props}>
+      <InputWrapper hasStartIcon={!!startIcon} hasEndIcon={!!endIcon} disabled={disabled} isError={error && isTouched}>
         {startIcon && <InputIcon scale={scale}>{startIcon}</InputIcon>}
 
-        {cloneElement(children, { scale })}
+        <Box position="relative" width="100%">
+          {label && <InputLabel hasStartIcon={!!startIcon}>{label}</InputLabel>}
 
-        {endIcon && (
-          <InputIcon scale={scale} isEndIcon>
-            {endIcon}
-          </InputIcon>
-        )}
-      </Box>
-    </InputGroupWrapper>
+          {cloneElement(children, { scale, disabled })}
+        </Box>
 
-    {error && isTouched && <InputError>{error}</InputError>}
-  </Box>
-);
+        {endIcon && <InputIcon scale={scale}>{endIcon}</InputIcon>}
+      </InputWrapper>
+
+      {error && isTouched && (
+        <InputError iconWidth={iconWidth} scale={scale} disabled={disabled}>
+          {error}
+        </InputError>
+      )}
+    </Box>
+  );
+};
 
 export default InputGroup;

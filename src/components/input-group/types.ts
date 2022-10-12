@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { SpaceProps } from "styled-system";
 
-import { InputProps, Scales } from "components/input/types";
+import { Scales } from "components/input/types";
 
 export interface InputGroupProps extends SpaceProps {
   scale?: Scales;
@@ -11,8 +11,15 @@ export interface InputGroupProps extends SpaceProps {
   error?: string;
   label?: string;
   isTouched?: boolean;
+  disabled?: boolean;
 }
 
-export type StyledInputGroupProps = { scale: Scales; hasStartIcon: boolean; hasEndIcon: boolean };
+export type StyledInputGroupProps = {
+  hasStartIcon: boolean;
+  hasEndIcon: boolean;
+  disabled?: boolean;
+  isError: boolean;
+};
 
-export type InputIconProps = { scale: Scales; isEndIcon?: boolean };
+export type InputIconProps = { scale: Scales };
+export type InputErrorProps = { scale: Scales; iconWidth: number; disabled?: boolean };

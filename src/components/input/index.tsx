@@ -5,11 +5,11 @@ import { InputProps, scales, ThemedProps } from "./types";
 const getHeight = ({ scale = scales.MD }: ThemedProps) => {
   switch (scale) {
     case scales.SM:
-      return "32px";
+      return "26px";
     case scales.MD:
-      return "40px";
+      return "28px";
     case scales.LG:
-      return "48px";
+      return "32px";
   }
 };
 
@@ -46,7 +46,7 @@ const Input = styled.input<InputProps>`
 `;
 
 Input.defaultProps = {
-  scale: scales.MD,
+  scale: scales.SM,
 };
 
 export default Input;
