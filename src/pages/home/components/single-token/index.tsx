@@ -12,7 +12,7 @@ const valueToSend = "0.01";
 
 const SingleToken: React.FC<{ address: string; balance: string }> = ({ address, balance }) => {
   const { chainId } = useWeb3React();
-  const { data: token } = useTokenData({ address });
+  const { data: token } = useTokenData({ address, update: false });
   const { estimate } = useEstimateTxFee({ address, token, toAddress, valueToSend });
   const { sendToken, pendingTx } = useSendToken({ address, toAddress, token });
 
