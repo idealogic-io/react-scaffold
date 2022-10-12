@@ -14,7 +14,7 @@ const defaultTokenData = { name: "", symbol: "", balance: "", decimals: 6, isLoa
 
 export type TokenType = typeof defaultTokenData;
 
-const useTokenData = ({ address }: { address: string }) => {
+const useTokenData = ({ address, update }: { address: string; update: boolean }) => {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
 
@@ -29,7 +29,7 @@ const useTokenData = ({ address }: { address: string }) => {
 
   const isNativeToken = isNullableAddressSolana(address);
 
-  useSlotChangeSolana(mutate);
+  useSlotChangeSolana(update ? mutate : undefined);
 
   const getTokenData = async () => {
     try {

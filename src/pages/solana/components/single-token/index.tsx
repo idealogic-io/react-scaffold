@@ -17,7 +17,7 @@ const toPubkey = new PublicKey(toAddress);
 const valueToSend = "0.01";
 
 const SingleToken: React.FC<SingleTokenProps> = ({ address, balance }) => {
-  const { data: token } = useTokenData({ address });
+  const { data: token } = useTokenData({ address, update: false });
   const {
     associatedAddress,
     loading: pendingAssociateToken,

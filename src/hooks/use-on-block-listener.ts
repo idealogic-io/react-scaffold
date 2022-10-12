@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 
-const useOnBlockListener = (callback: () => void) => {
+const useOnBlockListener = (callback?: () => void) => {
   const { library } = useWeb3React();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const useOnBlockListener = (callback: () => void) => {
         library.removeAllListeners("block");
       };
     }
-  }, [library]);
+  }, [library, callback]);
 };
 
 export default useOnBlockListener;

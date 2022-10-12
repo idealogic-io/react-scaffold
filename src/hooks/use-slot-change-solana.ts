@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
-const useSlotChangeSolana = (callback: () => void) => {
+const useSlotChangeSolana = (callback?: () => void) => {
   const { connection } = useConnection();
   const { connected } = useWallet();
 

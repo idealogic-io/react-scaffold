@@ -18,7 +18,7 @@ const defaultTokenData = {
 
 export type TokenType = typeof defaultTokenData;
 
-const useTokenData = ({ address }: { address: string }) => {
+const useTokenData = ({ address, update }: { address: string; update: boolean }) => {
   const { account, library, chainId } = useWeb3React();
 
   const { data = defaultTokenData, mutate } = useSWR<typeof defaultTokenData | void>(
@@ -32,7 +32,7 @@ const useTokenData = ({ address }: { address: string }) => {
 
   const isNativeToken = isNullableAddress(address);
 
-  useOnBlockListener(mutate);
+  useOnBlockListener(update ? mutate : undefined);
 
   const getTokenData = async () => {
     try {
