@@ -96,6 +96,17 @@ const tokens = {
     [chainIdTestnet.polygonMumbai]: "",
     [chainIdTestnet.fuji]: "",
   },
+  MATIC: {
+    [chainIdMainnet.mainnet]: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+    [chainIdMainnet.bsc]: "0xCC42724C6683B7E57334c4E856f4c9965ED682bD",
+    [chainIdMainnet.polygon]: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    [chainIdMainnet.avax]: "",
+    // Test
+    [chainIdTestnet.goerli]: "",
+    [chainIdTestnet.bscTest]: "",
+    [chainIdTestnet.polygonMumbai]: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    [chainIdTestnet.fuji]: "",
+  },
   AVAX: {
     [chainIdMainnet.mainnet]: "",
     [chainIdMainnet.bsc]: "",
