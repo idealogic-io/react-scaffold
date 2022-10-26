@@ -36,6 +36,9 @@ const useTokenData = ({ address, update }: { address: string; update: boolean })
 
   const getTokenData = async () => {
     try {
+      if (!chainId) {
+        throw new Error("Chain id is undefined");
+      }
       mutate({ ...data, isLoading: true }, { revalidate: false });
       const ERC20Contract = getERC20Contract(address, library.getSigner(), chainId);
 
@@ -55,7 +58,7 @@ const useTokenData = ({ address, update }: { address: string; update: boolean })
 
   const getERC20TokenData = async (contract: Contract) => {
     try {
-      const name = await contract.name();
+      const name: string = await contract.name();
       const symbol = await contract.symbol();
       const decimals = await contract.decimals();
       const balanceBN = await contract.balanceOf(account);
@@ -82,7 +85,7 @@ const useTokenData = ({ address, update }: { address: string; update: boolean })
 
       const balance = formatBigNumber(balanceBN, +decimals, +decimals);
 
-      return { name, symbol, balance, decimals, isNative: true };
+      return { name: name!, symbol: symbol!, balance, decimals, isNative: true };
     } catch (error) {
       console.error("Error in getNativeTokenData: ", error, address);
 

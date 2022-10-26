@@ -52,6 +52,10 @@ const useSendToken = ({ address, token, toAddress }: UseSendTokenArgs) => {
   const sendERC20Token = async (valueToSend: string) => {
     const value = parseUnits(valueToSend, token.decimals);
 
+    if (!chainId) {
+      throw new Error("Chain id is undefined");
+    }
+
     const ERC20Contract = getERC20Contract(address, library?.getSigner(), chainId);
 
     return ERC20Contract.transfer(toAddress, value);

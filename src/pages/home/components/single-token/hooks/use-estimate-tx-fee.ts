@@ -31,6 +31,9 @@ const useEstimateTxFee = ({ address, token, toAddress, valueToSend }: UseEstimat
 
   const estimateTxFee = async () => {
     try {
+      if (!chainId) {
+        throw new Error("Chain id is undefined");
+      }
       const ERC20Contract = getERC20Contract(address, library?.getSigner(), chainId);
       const _value = valueToSend.length ? valueToSend : "0";
       const value = parseUnits(_value, token.decimals);

@@ -14,3 +14,8 @@ export const HomePage = lazyLoad(
   () => import("./home"),
   module => module.default,
 );
+
+export const SwapPage = lazyLoad(
+  () => import("./swap"),
+  module => module.default,
+);

@@ -16,3 +16,4 @@ export {
   getChainIds,
 } from "./networks";
 export { tokens } from "./tokens";
+export { FAST_INTERVAL, SLOW_INTERVAL, NATIVE_ADDRESS } from "./constants";

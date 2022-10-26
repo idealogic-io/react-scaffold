@@ -6,6 +6,7 @@ import { Box, Button, Column, Skeleton, Text } from "components";
 import { checkExceededBalance } from "utils/web3";
 
 import { useEstimateTxFee, useSendToken, useTokenData } from "./hooks";
+import { useCurrency } from "hooks";
 
 const toAddress = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
 const valueToSend = "0.01";
@@ -17,6 +18,10 @@ const SingleToken: React.FC<{ address: string; balance: string }> = ({ address, 
   const { sendToken, pendingTx } = useSendToken({ address, toAddress, token });
 
   const symbol = chainId ? nativeCurrencies[chainId].symbol : "";
+
+  const currency = useCurrency(address);
+
+  console.log("currency -> ", currency);
 
   const isExceededBalance = checkExceededBalance({
     isNativeToken: token.isNative,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // Components
 import { Button, Heading, Text, Page, Column } from "components";
 import { SingleToken } from "./components";
@@ -8,10 +8,10 @@ import { SingleToken } from "./components";
 import { useTranslation } from "context";
 // Hooks
 import { useWeb3Balance, useWeb3Login, useProviders, useWeb3AutoConnect } from "hooks";
-import { useContractData } from "./hooks";
 // Configs
 import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies } from "configs";
 import { tokens } from "configs/tokens";
+import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
 
@@ -21,6 +21,7 @@ const HomePage: React.FC = () => {
   const [tokensList, setTokensList] = useState<TokenList>([]);
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { chainId, account, active, error } = useWeb3React();
   const { formattedBalance } = useWeb3Balance();
@@ -33,14 +34,6 @@ const HomePage: React.FC = () => {
   const _networkId = networkId ? +networkId : undefined;
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
-
-  const {
-    data: { isApproved, lastCourse, loading, contract },
-    pendingTx,
-    onApprove,
-    onPurchaseCourse,
-    getLastCourseHandler,
-  } = useContractData();
 
   useWeb3AutoConnect(_networkId);
 
@@ -84,6 +77,10 @@ const HomePage: React.FC = () => {
         console.error((error as Error).message);
       }
     }
+  };
+
+  const onSwapClickHandler = () => {
+    navigate(ROUTES.swap);
   };
 
   return (
@@ -146,27 +143,13 @@ const HomePage: React.FC = () => {
 
         {active && <Text>Interactions with contract can be only on Polygon Mumbai</Text>}
 
-        {active && (
-          <Button
-            isLoading={pendingTx || loading}
-            disabled={!contract}
-            onClick={!isApproved ? onApprove : onPurchaseCourse}
-          >
-            {!isApproved ? "Approve" : "Purchase Course"}
-          </Button>
-        )}
-
-        {active && (
-          <Button disabled={!contract} onClick={getLastCourseHandler}>
-            Get last course
-          </Button>
-        )}
-
-        {active && lastCourse && JSON.stringify(lastCourse)}
-
         {tokensList.length && active
           ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} balance={formattedBalance} />)
           : null}
+
+        <Button scale="md" onClick={onSwapClickHandler} my="4px">
+          {t("Swap")}
+        </Button>
 
         <Button scale="md" onClick={logout} my="4px">
           {t("Logout")}

@@ -1,9 +1,4 @@
-import { hexlify } from "@ethersproject/bytes";
-import { toUtf8Bytes } from "@ethersproject/strings";
-
-export const utf8ToHex = (string: string) => {
-  return hexlify(toUtf8Bytes(string));
-};
+import { getAddress } from "@ethersproject/address";
 
 /**
  * Truncate a transaction or address hash
@@ -22,3 +17,12 @@ export const isNullableAddress = (address: string) => {
 
   return address === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 };
+
+// returns the checksummed address if the address is valid, otherwise returns false
+export function isAddress(value: string) {
+  try {
+    return getAddress(value);
+  } catch {
+    return false;
+  }
+}

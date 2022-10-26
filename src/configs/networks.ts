@@ -1,3 +1,6 @@
+import { Currency } from "types/currency";
+import { ChainId } from "types/token";
+
 const chainIdMainnet = {
   mainnet: 1,
   bsc: 56,
@@ -13,7 +16,9 @@ const chainIdTestnet = {
 };
 
 const getChainIds = () => {
-  return process.env.NODE_ENV === "production" ? Object.values(chainIdMainnet) : Object.values(chainIdTestnet);
+  // return process.env.NODE_ENV === "production" ? Object.values(chainIdMainnet) : Object.values(chainIdTestnet);
+  return Object.values(chainIdTestnet);
+  // return Object.values(chainIdMainnet);
 };
 
 const rpcUrls = {
@@ -55,7 +60,7 @@ const chainNames = {
   [chainIdTestnet.fuji]: "Avalanche Fuji Testnet",
 };
 
-const nativeCurrencies = {
+const nativeCurrencies: { [key: ChainId]: Currency } = {
   // Main
   [chainIdMainnet.mainnet]: {
     name: "Ether",

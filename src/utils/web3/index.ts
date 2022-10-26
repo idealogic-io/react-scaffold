@@ -1,10 +1,11 @@
 export { setupNetwork } from "./setup-network";
 export { connectorByName, connectorName, injectedConnector, getLibrary } from "./web3-react";
-export { getContract, getCourseMarketplaceContract, getAddress, getERC20Contract } from "./contract-helpers";
+export { getContract, getAddress, getERC20Contract } from "./contract-helpers";
 export { formatBigNumber, formatBigNumberToFixed, formatFixedNumber } from "./number-helpers";
-export { utf8ToHex, truncateHash, isNullableAddress } from "./string-helpers";
+export { truncateHash, isNullableAddress, isAddress } from "./string-helpers";
 export { getScanLink } from "./get-scan-link";
 export { isGasEstimationError, isUserRejected } from "./error-helpers";
 export type { TxError } from "./error-helpers";
 export type { Connector } from "./types";
 export { checkExceededBalance } from "./check-exceeded-balance";
+export { getSigner, getProviderOrSigner } from "./utils";
