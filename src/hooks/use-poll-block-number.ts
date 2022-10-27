@@ -11,20 +11,18 @@ export const usePollBlockNumber = () => {
   const { cache, mutate } = useSWRConfig();
   const { chainId } = useWeb3React();
 
-  const { data } = useSWR(
-    () => `${chainId}/blockNumber`,
+  const { data = 0 } = useSWR(
+    chainId ? `${chainId}/blockNumber` : null,
     async () => {
-      if (chainId) {
-        const simpleRpcProvider = getSimpleRpcProvider(chainId);
+      const simpleRpcProvider = getSimpleRpcProvider(chainId!);
 
-        const blockNumber = await simpleRpcProvider.getBlockNumber();
+      const blockNumber = await simpleRpcProvider.getBlockNumber();
 
-        if (!cache.get(`${chainId}/initialBlockNumber`)) {
-          mutate(`${chainId}/initialBlockNumber`, blockNumber);
-        }
-
-        return blockNumber;
+      if (!cache.get(`${chainId}/initialBlockNumber`)) {
+        mutate(`${chainId}/initialBlockNumber`, blockNumber);
       }
+
+      return blockNumber;
     },
     {
       refreshInterval: REFRESH_BLOCK_INTERVAL,

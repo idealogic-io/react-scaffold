@@ -1,65 +1,46 @@
-import { useEffect, useState } from "react";
-import { formatUnits, parseUnits } from "@ethersproject/units";
+import { Zero } from "@ethersproject/constants";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "@ethersproject/bignumber";
+import useSWR from "swr";
 
-import { getERC20Contract } from "utils/web3";
+import { useDebounce, useGasPrice, useTokenContract } from "hooks";
+import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
+import { NATIVE_ADDRESS } from "configs";
 
-import { TokenType } from "./use-token-data";
+type UseEstimateTxFeeArgs = { address: string; to: string; value: BigNumber };
 
-const defaultValue = { isLoading: false, txFee: 0 };
+const useEstimateTxFee = ({ address, to, value }: UseEstimateTxFeeArgs) => {
+  const { chainId } = useWeb3React();
+  const contract = useTokenContract(address);
+  const { gasPrice } = useGasPrice();
+  const debouncedValue = useDebounce(value, 1000);
 
-type UseEstimateTxFeeArgs = { address: string; token: TokenType; toAddress: string; valueToSend: string };
-
-const useEstimateTxFee = ({ address, token, toAddress, valueToSend }: UseEstimateTxFeeArgs) => {
-  const { library, chainId, account } = useWeb3React();
-  const [estimate, setEstimate] = useState(defaultValue);
-
-  useEffect(() => {
-    if (address && valueToSend) {
-      setEstimate(prev => ({ ...prev, isLoading: true }));
-      const time = 1000;
-
-      const timeout = setTimeout(estimateTxFee, time);
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    } else {
-      setEstimate(defaultValue);
-    }
-  }, [valueToSend, address, account]);
+  const {
+    data = Zero,
+    isValidating,
+    error,
+  } = useSWR(
+    contract && chainId ? `${chainId}/gasEstimateForTransfer/${debouncedValue}/${address}` : null,
+    async () => {
+      return await estimateTxFee();
+    },
+  );
 
   const estimateTxFee = async () => {
-    try {
-      if (!chainId) {
-        throw new Error("Chain id is undefined");
-      }
-      const ERC20Contract = getERC20Contract(address, library?.getSigner(), chainId);
-      const _value = valueToSend.length ? valueToSend : "0";
-      const value = parseUnits(_value, token.decimals);
+    const simpleRpcProvider = getSimpleRpcProvider(chainId!);
+    const isNative = address.toLowerCase() === NATIVE_ADDRESS;
 
-      const gasPriceBN = await library.getGasPrice();
-
-      let gasLimitBN = parseUnits("0");
-      if (token.isNative) {
-        gasLimitBN = await library.estimateGas({ to: toAddress, value });
-      } else {
-        gasLimitBN = await ERC20Contract.estimateGas.transfer(toAddress, value);
-      }
-
-      const gasPrice = formatUnits(gasPriceBN);
-      const gasLimit = formatUnits(gasLimitBN, 0);
-
-      const txFee = +gasPrice * +gasLimit;
-
-      setEstimate({ txFee, isLoading: false });
-    } catch (error) {
-      console.error(error);
-      setEstimate({ txFee: 0, isLoading: false });
+    let gasLimit = Zero;
+    if (isNative) {
+      gasLimit = await simpleRpcProvider.estimateGas({ to, value: debouncedValue });
+    } else {
+      gasLimit = await contract!.estimateGas["transfer"](to, debouncedValue);
     }
+
+    return gasPrice.mul(gasLimit);
   };
 
-  return { estimate };
+  return { gasEstimation: data, isValidating, error };
 };
 
 export default useEstimateTxFee;

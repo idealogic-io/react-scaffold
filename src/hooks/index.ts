@@ -14,5 +14,6 @@ export { MulticallUpdater } from "./multicall/updater";
 export { useSingleCallResult } from "./multicall";
 export { useTokenContract, useMulticallContract } from "./use-contract";
 export { useTokenBalance, useNativeBalance, useCurrencyBalance } from "./use-token-balance";
-export { useSWRContract } from "./use-swr-contract";
 export { useTokenAllowance } from "./use-token-allowance";
+export { useGasPrice } from "./use-gas-price";
+export { useEstimateNetworkFee } from "./use-estimate-network-fee";
