@@ -3,24 +3,30 @@ import { parseUnits } from "@ethersproject/units";
 
 import { Box, Button, Column, InputNumeric, Skeleton, Text } from "components";
 
-import { useCurrency, useCurrencyBalance, useTokenContract, useEstimateNetworkFee } from "hooks";
+import {
+  useCurrency,
+  useCurrencyBalance,
+  useTokenContract,
+  useEstimateNetworkFee,
+  useDebounce,
+  useSendTransfer,
+} from "hooks";
 import { formatBigNumberToFixed } from "utils/web3";
 
-const toAddress = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
+const to = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
 
 const SingleToken: React.FC<{ address: string }> = ({ address }) => {
   const [input, setInput] = useState("0.01");
 
+  const debouncedValue = useDebounce(input, 1000);
   const contract = useTokenContract(address);
   const currency = useCurrency(address);
   const {
     gasEstimation,
     isValidating: gasEstimationLoading,
     error: gasEstimationError,
-  } = useEstimateNetworkFee(contract, "transfer", [toAddress, parseUnits(input || "0", currency?.decimals)]);
-
-  // const { sendToken, pendingTx } = useSendToken({ address, toAddress, token });
-
+  } = useEstimateNetworkFee(contract, "transfer", [to, parseUnits(debouncedValue || "0", currency?.decimals)]);
+  const { sendToken } = useSendTransfer({ address, to });
   const { balance } = useCurrencyBalance(address);
 
   // const isExceededBalance = checkExceededBalance({
@@ -31,9 +37,9 @@ const SingleToken: React.FC<{ address: string }> = ({ address }) => {
   //   value: +valueToSend,
   // });
 
-  // const onSendClick = () => {
-  //   sendToken(valueToSend);
-  // };
+  const onSendClick = () => {
+    sendToken(parseUnits(input || "0", currency?.decimals));
+  };
 
   return (
     <Box p="6px">
@@ -49,7 +55,7 @@ const SingleToken: React.FC<{ address: string }> = ({ address }) => {
         )}
 
         <Button
-          // onClick={onSendClick}
+          onClick={onSendClick}
           disabled={!input || gasEstimationError}
           isLoading={!currency || gasEstimationLoading}
         >

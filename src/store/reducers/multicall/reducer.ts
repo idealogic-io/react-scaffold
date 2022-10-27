@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { toCallKey } from "hooks/multicall/helpers";
+import { toCallKey } from "hooks/use-multicall/helpers";
 import {
   addMulticallListeners,
   removeMulticallListeners,

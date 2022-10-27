@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { Zero } from "@ethersproject/constants";
 import { BigNumber } from "@ethersproject/bignumber";
 
-import { useSingleCallResult } from "./multicall";
+import { useSingleCallResult } from "./use-multicall";
 import { useTokenContract } from "./use-contract";
 import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
 import { FAST_INTERVAL, NATIVE_ADDRESS } from "configs";

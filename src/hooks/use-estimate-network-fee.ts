@@ -13,11 +13,14 @@ export const useEstimateNetworkFee = (contract: Contract | null | undefined, met
     data = Zero,
     isValidating,
     error,
-  } = useSWR(contract && chainId ? `${chainId}/gasEstimation/${methodName}/${contract.address}` : null, async () => {
-    const gasLimit = await contract!.estimateGas[methodName](...inputs);
+  } = useSWR(
+    contract && chainId ? `${chainId}/gasEstimation/${methodName}/${inputs}/${contract.address}` : null,
+    async () => {
+      const gasLimit = await contract!.estimateGas[methodName](...inputs);
 
-    return gasPrice.mul(gasLimit);
-  });
+      return gasPrice.mul(gasLimit);
+    },
+  );
 
   return { gasEstimation: data, isValidating, error };
 };

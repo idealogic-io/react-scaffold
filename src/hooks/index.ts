@@ -2,7 +2,6 @@ export { default as useMatchBreakpoints } from "./use-match-breakpoints/use-matc
 export { default as useForm } from "./use-form";
 export { default as useWeb3Login } from "./use-web3-login";
 export { default as useWeb3AutoConnect } from "./use-web3-auto-connect";
-export { default as useWeb3Balance } from "./use-web3-balance";
 export { default as useWaitTransaction } from "./use-wait-transaction";
 export { default as useProviders } from "./use-providers";
 export { default as useTooltip } from "./use-tooltip";
@@ -10,10 +9,18 @@ export { default as useOnBlockListener } from "./use-on-block-listener";
 export { usePollBlockNumber, useCurrentBlock, useInitialBlock } from "./use-poll-block-number";
 export { useDebounce } from "./use-debounce";
 export { useAllTokens, useToken, useCurrency } from "./use-token";
-export { MulticallUpdater } from "./multicall/updater";
-export { useSingleCallResult } from "./multicall";
+export { useMulticallUpdater } from "./use-multicall/updater";
+export { useSingleCallResult } from "./use-multicall";
 export { useTokenContract, useMulticallContract } from "./use-contract";
 export { useTokenBalance, useNativeBalance, useCurrencyBalance } from "./use-token-balance";
 export { useTokenAllowance } from "./use-token-allowance";
 export { useGasPrice } from "./use-gas-price";
 export { useEstimateNetworkFee } from "./use-estimate-network-fee";
+export {
+  useTransactionAdder,
+  useAllTransactions,
+  isTransactionRecent,
+  usePendingTransactions,
+} from "./use-transactions";
+export { useTransactionsUpdater } from "./use-transactions/updater";
+export { useSendTransfer } from "./use-send-transfer";

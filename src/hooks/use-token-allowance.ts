@@ -1,5 +1,5 @@
 import { Token, TokenAmount } from "@pancakeswap/sdk";
-import { useSingleCallResult } from "./multicall";
+import { useSingleCallResult } from "./use-multicall";
 import { useTokenContract } from "./use-contract";
 
 export const useTokenAllowance = (token?: Token, owner?: string, spender?: string) => {

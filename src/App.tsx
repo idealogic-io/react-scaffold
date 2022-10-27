@@ -18,8 +18,7 @@ import Navigation from "navigation";
 // Utils
 import { getLibrary } from "utils/web3";
 
-import { usePollBlockNumber } from "hooks";
-import { MulticallUpdater } from "hooks";
+import { usePollBlockNumber, useTransactionsUpdater, useMulticallUpdater } from "hooks";
 
 // @web3-react/walletconnect-connector package uses buffer
 // in webpack 5 Buffer is undefined so we add it globally
@@ -27,8 +26,6 @@ window.Buffer = Buffer;
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
-
-  usePollBlockNumber();
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,11 +41,10 @@ const ThemedApp: React.FC = () => {
 };
 
 const Updaters: React.FC = () => {
-  return (
-    <>
-      <MulticallUpdater />
-    </>
-  );
+  usePollBlockNumber();
+  useMulticallUpdater();
+  useTransactionsUpdater();
+  return null;
 };
 
 const App: React.FC = () => {

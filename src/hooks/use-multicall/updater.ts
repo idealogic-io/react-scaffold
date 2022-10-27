@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "store/store";
 
 import { useDebounce, useMulticallContract, useCurrentBlock } from "hooks";
 
-export const MulticallUpdater = () => {
+export const useMulticallUpdater = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(s => s.multicall);
   // wait for listeners to settle before triggering updates
@@ -23,6 +23,7 @@ export const MulticallUpdater = () => {
   const { chainId } = useWeb3React();
   const multicallContract = useMulticallContract(chainId);
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>();
+
   const listeningKeys: { [callKey: string]: number } = useMemo(() => {
     return activeListeningKeys(debouncedListeners, chainId);
   }, [debouncedListeners, chainId]);
@@ -106,6 +107,4 @@ export const MulticallUpdater = () => {
       }),
     };
   }, [chainId, multicallContract, dispatch, serializedOutdatedCallKeys, currentBlock]);
-
-  return null;
 };

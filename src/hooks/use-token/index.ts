@@ -5,7 +5,7 @@ import { nativeCurrencies, NATIVE_ADDRESS, tokensList } from "configs";
 import { isAddress } from "utils/web3";
 
 import { useSingleCallResult, useTokenContract } from "hooks";
-import { NEVER_RELOAD } from "hooks/multicall/constants";
+import { NEVER_RELOAD } from "hooks/use-multicall/constants";
 import { Currency, Token } from "@pancakeswap/sdk";
 
 export const useAllTokens = (): { [address: string]: Token } => {

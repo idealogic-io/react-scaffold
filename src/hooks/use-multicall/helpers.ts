@@ -121,7 +121,6 @@ export const fetchChunk = async (
   let returnData;
 
   try {
-    console.log(chunk.map(obj => [obj.address, obj.callData]));
     [resultsBlockNumber, returnData] = await multicallContract.callStatic.aggregate(
       chunk.map(obj => [obj.address, obj.callData]),
       {

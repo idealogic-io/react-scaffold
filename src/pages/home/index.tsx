@@ -7,20 +7,21 @@ import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Balance, useWeb3Login, useProviders, useWeb3AutoConnect } from "hooks";
+import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance } from "hooks";
 // Configs
 import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
 
 import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
+import { formatUnits } from "@ethersproject/units";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { chainId, account, active, error } = useWeb3React();
-  const { formattedBalance } = useWeb3Balance();
+  const { balance } = useNativeBalance();
   const { providers } = useProviders();
 
   const { login, logout } = useWeb3Login();
@@ -87,7 +88,7 @@ const HomePage: React.FC = () => {
           <Column py="16px">
             <Text>You balance is:</Text>
             <Text>
-              {formattedBalance} {nativeCurrencies[chainId as keyof typeof chainNames]?.symbol}
+              {formatUnits(balance)} {nativeCurrencies[chainId as keyof typeof chainNames]?.symbol}
             </Text>
           </Column>
         )}
