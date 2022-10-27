@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useNavigate, useSearchParams } from "react-router-dom";
 // Components
@@ -9,17 +9,13 @@ import { useTranslation } from "context";
 // Hooks
 import { useWeb3Balance, useWeb3Login, useProviders, useWeb3AutoConnect } from "hooks";
 // Configs
-import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies } from "configs";
-import { tokens } from "configs/tokens";
+import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
+
 import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
 
-type TokenList = { address: string; key: string }[];
-
 const HomePage: React.FC = () => {
-  const [tokensList, setTokensList] = useState<TokenList>([]);
-
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -36,20 +32,6 @@ const HomePage: React.FC = () => {
   const supportedChains = getChainIds();
 
   useWeb3AutoConnect(_networkId);
-
-  useEffect(() => {
-    if (chainId) {
-      const tokensList = Object.entries(tokens)
-        .map(([key, value]) => {
-          if (value[chainId]) {
-            return { address: value[chainId], key };
-          } else return null;
-        })
-        .filter(el => el !== null);
-
-      setTokensList(tokensList as TokenList);
-    }
-  }, [chainId]);
 
   const onConnect = (walletConfig: Connector) => {
     const { title, href, connectorId } = walletConfig;
@@ -141,10 +123,10 @@ const HomePage: React.FC = () => {
           </select>
         ) : null}
 
-        {active && <Text>Interactions with contract can be only on Polygon Mumbai</Text>}
-
-        {tokensList.length && active
-          ? tokensList.map(({ key, address }) => <SingleToken key={key} address={address} balance={formattedBalance} />)
+        {chainId
+          ? Object.values(tokensList[chainId]).map(token => (
+              <SingleToken key={token.address} address={token?.address} />
+            ))
           : null}
 
         <Button scale="md" onClick={onSwapClickHandler} my="4px">

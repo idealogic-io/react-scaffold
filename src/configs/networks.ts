@@ -1,5 +1,4 @@
-import { Currency } from "types/currency";
-import { ChainId } from "types/token";
+import { Currency } from "@pancakeswap/sdk";
 
 const chainIdMainnet = {
   mainnet: 1,
@@ -17,7 +16,7 @@ const chainIdTestnet = {
 
 const getChainIds = () => {
   // return process.env.NODE_ENV === "production" ? Object.values(chainIdMainnet) : Object.values(chainIdTestnet);
-  return Object.values(chainIdTestnet);
+  return [...Object.values(chainIdTestnet), ...Object.values(chainIdMainnet)];
   // return Object.values(chainIdMainnet);
 };
 
@@ -60,7 +59,7 @@ const chainNames = {
   [chainIdTestnet.fuji]: "Avalanche Fuji Testnet",
 };
 
-const nativeCurrencies: { [key: ChainId]: Currency } = {
+const nativeCurrencies: { [key: number]: Currency } = {
   // Main
   [chainIdMainnet.mainnet]: {
     name: "Ether",

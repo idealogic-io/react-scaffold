@@ -1,17 +1,17 @@
 import { useMemo } from "react";
 import { useWeb3React } from "@web3-react/core";
 
-import { Currency } from "types/currency";
-import { Token } from "types/token";
-
-import { nativeCurrencies, NATIVE_ADDRESS } from "configs";
+import { nativeCurrencies, NATIVE_ADDRESS, tokensList } from "configs";
 import { isAddress } from "utils/web3";
 
 import { useSingleCallResult, useTokenContract } from "hooks";
 import { NEVER_RELOAD } from "hooks/multicall/constants";
+import { Currency, Token } from "@pancakeswap/sdk";
 
 export const useAllTokens = (): { [address: string]: Token } => {
-  return {};
+  const { chainId } = useWeb3React();
+
+  return chainId ? tokensList[chainId] : {};
 };
 
 // undefined if invalid or does not exist
@@ -69,8 +69,8 @@ export const useToken = (tokenAddress?: string): Token | undefined | null => {
 
 export const useCurrency = (currencyId: string | undefined): Currency | Token | null | undefined => {
   const { chainId } = useWeb3React();
-  const _chainId = chainId ?? 1;
+
   const isNative = currencyId?.toLowerCase() === NATIVE_ADDRESS;
   const token = useToken(isNative ? undefined : currencyId);
-  return isNative ? nativeCurrencies[_chainId] : token;
+  return !chainId ? undefined : isNative ? nativeCurrencies[chainId] : token;
 };
