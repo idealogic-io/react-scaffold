@@ -7,5 +7,5 @@ export { getScanLink } from "./get-scan-link";
 export { isGasEstimationError, isUserRejected } from "./error-helpers";
 export type { TxError } from "./error-helpers";
 export type { Connector } from "./types";
-export { checkExceededBalance } from "./check-exceeded-balance";
-export { getSigner, getProviderOrSigner } from "./utils";
+
+export { getSigner, getProviderOrSigner, isExceededBalance } from "./utils";

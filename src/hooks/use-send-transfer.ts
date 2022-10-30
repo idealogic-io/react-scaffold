@@ -9,7 +9,7 @@ import { useTokenContract, useTransactionAdder } from "hooks";
 import { isGasEstimationError, isUserRejected, TxError } from "utils/web3";
 import { Web3Provider } from "@ethersproject/providers";
 
-type UseSendTransferArgs = { address: string; to: string };
+type UseSendTransferArgs = { address: string | undefined; to: string };
 
 export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   const addTransaction = useTransactionAdder();
@@ -19,7 +19,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   const contract = useTokenContract(address);
 
   const sendToken = async (value: BigNumber) => {
-    const isNative = address.toLowerCase() === NATIVE_ADDRESS;
+    const isNative = address?.toLowerCase() === NATIVE_ADDRESS;
     const sendHandler = isNative ? sendNativeToken : sendERC20Token;
 
     try {

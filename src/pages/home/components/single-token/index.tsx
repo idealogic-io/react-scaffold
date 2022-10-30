@@ -1,63 +1,58 @@
 import React, { useState } from "react";
 import { parseUnits } from "@ethersproject/units";
+import { TokenAmount } from "@pancakeswap/sdk";
 
 import { Box, Button, Column, InputNumeric, Skeleton, Text } from "components";
 
-import {
-  useCurrency,
-  useCurrencyBalance,
-  useTokenContract,
-  useEstimateNetworkFee,
-  useDebounce,
-  useSendTransfer,
-} from "hooks";
-import { formatBigNumberToFixed } from "utils/web3";
+import { useEstimateNetworkFee, useDebounce, useSendTransfer } from "hooks";
+import { formatBigNumberToFixed, isExceededBalance } from "utils/web3";
+import { BigNumber } from "@ethersproject/bignumber";
 
 const to = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
 
-const SingleToken: React.FC<{ address: string }> = ({ address }) => {
-  const [input, setInput] = useState("0.01");
-
+const SingleToken: React.FC<{ tokenAmount?: TokenAmount; nativeBalance: BigNumber }> = ({
+  tokenAmount,
+  nativeBalance,
+}) => {
+  const [input, setInput] = useState("");
   const debouncedValue = useDebounce(input, 1000);
-  const contract = useTokenContract(address);
-  const currency = useCurrency(address);
+
+  // TODO token created but we recreate it again
+  // const currency = useCurrency(address);
   const {
     gasEstimation,
     isValidating: gasEstimationLoading,
     error: gasEstimationError,
-  } = useEstimateNetworkFee(contract, "transfer", [to, parseUnits(debouncedValue || "0", currency?.decimals)]);
-  const { sendToken } = useSendTransfer({ address, to });
-  const { balance } = useCurrencyBalance(address);
+  } = useEstimateNetworkFee(tokenAmount?.token.address, "transfer", [
+    to,
+    parseUnits(debouncedValue || "0", tokenAmount?.token?.decimals),
+  ]);
+  const { sendToken } = useSendTransfer({ address: tokenAmount?.token.address, to });
 
-  // const isExceededBalance = checkExceededBalance({
-  //   isNativeToken: token.isNative,
-  //   balance: +balance,
-  //   tokenBalance: +token.balance,
-  //   txFee: estimate.txFee,
-  //   value: +valueToSend,
-  // });
+  const isExceeded = isExceededBalance({
+    tokenAmount,
+    nativeBalance,
+    gasEstimation,
+    value: input,
+  });
 
   const onSendClick = () => {
-    sendToken(parseUnits(input || "0", currency?.decimals));
+    sendToken(parseUnits(input || "0", tokenAmount?.token?.decimals));
   };
 
   return (
     <Box p="6px">
       <InputNumeric value={input} onUserInput={setInput} />
       <Column alignItems="center">
-        <Text>{currency?.name}</Text>
-        <Text>{currency?.symbol}</Text>
-        <Text>{currency?.decimals}</Text>
-        {currency && (
-          <Text>
-            {+formatBigNumberToFixed(balance, 6, currency.decimals)} {currency.symbol}
-          </Text>
-        )}
+        <Text>{tokenAmount?.token?.name}</Text>
+        <Text>{tokenAmount?.token?.symbol}</Text>
+        <Text>{tokenAmount?.token?.decimals}</Text>
+        {tokenAmount?.token && <Text>{tokenAmount?.toSignificant() ?? 0}</Text>}
 
         <Button
           onClick={onSendClick}
-          disabled={!input || gasEstimationError}
-          isLoading={!currency || gasEstimationLoading}
+          disabled={!input || gasEstimationError || isExceeded}
+          isLoading={!tokenAmount?.token || gasEstimationLoading}
         >
           Send
         </Button>
@@ -71,24 +66,10 @@ const SingleToken: React.FC<{ address: string }> = ({ address }) => {
           </>
         ) : (
           <Text fontSize="12px" letterSpacing="0.4px">
-            Network Fee: {+formatBigNumberToFixed(gasEstimation, 8, 18)} {currency?.symbol}
+            Network Fee: {+formatBigNumberToFixed(gasEstimation, 8, 18)} {tokenAmount?.token?.symbol}
           </Text>
         )}
-
-        {/* {isExceededBalance ? (
-          <Text>Insufficient funds</Text>
-        ) : estimate.isLoading ? (
-          <>
-            <Text fontSize="12px" letterSpacing="0.4px">
-              Network Fee:
-            </Text>
-            <Skeleton ml="8px" width="50%" height="14px" />
-          </>
-        ) : (
-          <Text fontSize="12px" letterSpacing="0.4px">
-            Network Fee: {estimate.txFee} {symbol}
-          </Text>
-        )} */}
+        {isExceeded && !!input && <Text>Insufficient funds</Text>}
       </Column>
     </Box>
   );

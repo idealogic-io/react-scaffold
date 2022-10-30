@@ -1,6 +1,8 @@
 import React from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { JSBI, TokenAmount } from "@pancakeswap/sdk";
+import { formatUnits } from "@ethersproject/units";
 // Components
 import { Button, Heading, Text, Page, Column } from "components";
 import { SingleToken } from "./components";
@@ -9,12 +11,11 @@ import { useTranslation } from "context";
 // Hooks
 import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance } from "hooks";
 // Configs
-import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
-
+import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, NATIVE_ADDRESS, tokensList } from "configs";
 import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
-import { formatUnits } from "@ethersproject/units";
+import { useTokenBalances } from "hooks/use-token-balance";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -33,6 +34,8 @@ const HomePage: React.FC = () => {
   const supportedChains = getChainIds();
 
   useWeb3AutoConnect(_networkId);
+
+  const [balances, _] = useTokenBalances(account ?? undefined, chainId ? Object.values(tokensList[chainId]) : []);
 
   const onConnect = (walletConfig: Connector) => {
     const { title, href, connectorId } = walletConfig;
@@ -125,9 +128,15 @@ const HomePage: React.FC = () => {
         ) : null}
 
         {chainId
-          ? Object.values(tokensList[chainId]).map(token => (
-              <SingleToken key={token.address} address={token?.address} />
-            ))
+          ? Object.entries(tokensList[chainId]).map(([key, token]) => {
+              // TODO not perfect solution need to refactor
+              const _balance =
+                token.address.toLowerCase() === NATIVE_ADDRESS
+                  ? new TokenAmount(token, JSBI.BigInt(balance.toString()))
+                  : balances[token.address];
+
+              return <SingleToken key={key} tokenAmount={_balance} nativeBalance={balance} />;
+            })
           : null}
 
         <Button scale="md" onClick={onSwapClickHandler} my="4px">
