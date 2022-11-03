@@ -15,7 +15,7 @@ export const useEstimateNetworkFee = (address: string | undefined, methodName: s
     isValidating,
     error,
   } = useSWR(
-    contract && chainId && address ? `${chainId}/gasEstimation/${methodName}/${inputs}/${contract.address}` : null,
+    contract && chainId && address ? `${chainId}/gasEstimation/${methodName}/${inputs}/${address}` : null,
     async () => {
       const gasLimit = await (contract as Contract).estimateGas[methodName](...inputs);
 

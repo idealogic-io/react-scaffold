@@ -53,7 +53,11 @@ export function useTokenBalances(
   tokens?: (Token | undefined)[],
 ): [{ [tokenAddress: string]: TokenAmount | undefined }, boolean] {
   const validatedTokens: Token[] = useMemo(
-    () => tokens?.filter((t?: Token): t is Token => !!t && isAddress(t?.address) !== false) ?? [],
+    () =>
+      tokens?.filter(
+        (t?: Token): t is Token =>
+          !!t && isAddress(t?.address) !== false && t?.address?.toLowerCase() !== NATIVE_ADDRESS,
+      ) ?? [],
     [tokens],
   );
 
