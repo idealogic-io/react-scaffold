@@ -2,24 +2,37 @@ import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 import useSWR from "swr";
 import { Zero } from "@ethersproject/constants";
-import { BigNumber } from "@ethersproject/bignumber";
 import { Interface } from "@ethersproject/abi";
 import { JSBI, Token, TokenAmount } from "@pancakeswap/sdk";
 
-import { useMultipleContractSingleData, useSingleCallResult } from "./use-multicall";
+import { useMultipleContractSingleData } from "./use-multicall";
 import { useTokenContract } from "./use-contract";
+import { useSWRContract } from "./use-swr-contract";
+
 import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
 import { FAST_INTERVAL, NATIVE_ADDRESS } from "configs";
 import { isAddress } from "utils/web3";
 import ERC20_ABI from "configs/abi/erc20.json";
 
-export const useTokenBalance = (tokenAddress: string): { balance: BigNumber } => {
+export const useTokenBalance = (tokenAddress: string) => {
   const { account } = useWeb3React();
 
-  const tokenContract = useTokenContract(tokenAddress, false);
-  const balance = useSingleCallResult(account ? tokenContract : undefined, "balanceOf", [account!]);
+  const contract = useTokenContract(tokenAddress, false);
 
-  return { balance: balance.result?.[0] || Zero };
+  const { data } = useSWRContract(
+    account
+      ? {
+          contract,
+          methodName: "balanceOf",
+          params: [account],
+        }
+      : null,
+    {
+      refreshInterval: FAST_INTERVAL,
+    },
+  );
+
+  return { balance: data || Zero };
 };
 
 export const useNativeBalance = () => {
@@ -35,14 +48,6 @@ export const useNativeBalance = () => {
   );
 
   return { balance: data || Zero };
-};
-
-export const useCurrencyBalance = (tokenAddress: string) => {
-  const isNative = tokenAddress?.toLowerCase() === NATIVE_ADDRESS;
-
-  const useBalance = isNative ? useNativeBalance : useTokenBalance;
-
-  return useBalance(tokenAddress);
 };
 
 /**

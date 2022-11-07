@@ -12,7 +12,7 @@ export { useAllTokens, useToken, useCurrency } from "./use-token";
 export { useMulticallUpdater } from "./use-multicall/updater";
 export { useSingleCallResult } from "./use-multicall";
 export { useTokenContract, useMulticallContract } from "./use-contract";
-export { useTokenBalance, useNativeBalance, useCurrencyBalance } from "./use-token-balance";
+export { useTokenBalance, useNativeBalance, useTokenBalances } from "./use-token-balance";
 export { useTokenAllowance } from "./use-token-allowance";
 export { useGasPrice } from "./use-gas-price";
 export { useEstimateNetworkFee } from "./use-estimate-network-fee";

@@ -1,8 +1,7 @@
 import { Web3Provider } from "@ethersproject/providers";
-import { BigNumber } from "@ethersproject/bignumber";
-import { TokenAmount } from "@pancakeswap/sdk";
+
+import { Token } from "@pancakeswap/sdk";
 import { NATIVE_ADDRESS } from "configs";
-import { formatUnits } from "@ethersproject/units";
 
 // account is not optional
 export const getSigner = (library: Web3Provider, account: string) => {
@@ -15,29 +14,27 @@ export const getProviderOrSigner = (library: Web3Provider, account?: string | nu
 };
 
 export const isExceededBalance = ({
-  tokenAmount,
+  token,
+  tokenBalance,
   nativeBalance,
   gasEstimation,
   value,
 }: {
-  tokenAmount: TokenAmount | undefined;
-  nativeBalance: BigNumber;
-  gasEstimation: BigNumber;
-  value: string;
+  token: Token | undefined;
+  tokenBalance: number;
+  nativeBalance: number;
+  gasEstimation: number;
+  value: number;
 }) => {
-  if (!tokenAmount) {
+  if (!token) {
     return true;
   }
 
-  const _nativeBalance = +formatUnits(nativeBalance);
-  const _gasEstimation = +formatUnits(gasEstimation);
-  const _value = +value;
-  const _amount = +tokenAmount.toSignificant();
-  const isNative = tokenAmount.token.address.toLowerCase() === NATIVE_ADDRESS;
+  const isNative = token.address.toLowerCase() === NATIVE_ADDRESS;
 
   if (isNative) {
-    return _gasEstimation + _value > _nativeBalance;
+    return gasEstimation + value > nativeBalance;
   } else {
-    return _amount < _value || _nativeBalance < _gasEstimation;
+    return tokenBalance < value || nativeBalance < gasEstimation;
   }
 };

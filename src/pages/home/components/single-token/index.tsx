@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { parseUnits } from "@ethersproject/units";
-import { TokenAmount } from "@pancakeswap/sdk";
+import { formatUnits, parseUnits } from "@ethersproject/units";
+import { Currency, TokenAmount } from "@pancakeswap/sdk";
 
 import { Box, Button, Column, InputNumeric, Skeleton, Text } from "components";
 
@@ -10,9 +10,10 @@ import { BigNumber } from "@ethersproject/bignumber";
 
 const to = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
 
-const SingleToken: React.FC<{ tokenAmount?: TokenAmount; nativeBalance: BigNumber }> = ({
+const SingleToken: React.FC<{ tokenAmount?: TokenAmount; nativeBalance: BigNumber; nativeCurrency?: Currency }> = ({
   tokenAmount,
   nativeBalance,
+  nativeCurrency,
 }) => {
   const [input, setInput] = useState("");
   const debouncedValue = useDebounce(input, 1000);
@@ -30,10 +31,11 @@ const SingleToken: React.FC<{ tokenAmount?: TokenAmount; nativeBalance: BigNumbe
   const { sendToken } = useSendTransfer({ address: tokenAmount?.token.address, to });
 
   const isExceeded = isExceededBalance({
-    tokenAmount,
-    nativeBalance,
-    gasEstimation,
-    value: input,
+    token: tokenAmount?.token,
+    tokenBalance: tokenAmount ? +tokenAmount?.toSignificant() : 0,
+    nativeBalance: +formatUnits(nativeBalance, nativeCurrency?.decimals),
+    gasEstimation: +formatUnits(gasEstimation, nativeCurrency?.decimals),
+    value: +input,
   });
 
   const onSendClick = () => {

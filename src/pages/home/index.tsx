@@ -9,13 +9,12 @@ import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance } from "hooks";
+import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance, useTokenBalances } from "hooks";
 // Configs
 import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, NATIVE_ADDRESS, tokensList } from "configs";
 import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
-import { useTokenBalances } from "hooks/use-token-balance";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -32,6 +31,7 @@ const HomePage: React.FC = () => {
   const _networkId = networkId ? +networkId : undefined;
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
+  const nativeCurrency = nativeCurrencies[chainId as keyof typeof chainNames];
 
   useWeb3AutoConnect(_networkId);
 
@@ -91,7 +91,7 @@ const HomePage: React.FC = () => {
           <Column py="16px">
             <Text>You balance is:</Text>
             <Text>
-              {formatUnits(balance)} {nativeCurrencies[chainId as keyof typeof chainNames]?.symbol}
+              {formatUnits(balance)} {nativeCurrency?.symbol}
             </Text>
           </Column>
         )}
@@ -135,7 +135,9 @@ const HomePage: React.FC = () => {
                   ? new TokenAmount(token, JSBI.BigInt(balance.toString()))
                   : balances[token.address];
 
-              return <SingleToken key={key} tokenAmount={_balance} nativeBalance={balance} />;
+              return (
+                <SingleToken key={key} tokenAmount={_balance} nativeBalance={balance} nativeCurrency={nativeCurrency} />
+              );
             })
           : null}
 
