@@ -5,7 +5,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { useTranslation } from "context";
 
 import { useTokenContract, useTransactionAdder } from "hooks";
-import { isGasEstimationError, isUserRejected, NATIVE_ADDRESS, TxError } from "utils/web3";
+import { isGasEstimationError, isUserRejected, NATIVE_ADDRESS, truncateHash, TxError } from "utils/web3";
 import { Web3Provider } from "@ethersproject/providers";
 
 type UseSendTransferArgs = { address: string | undefined; to: string };
@@ -35,7 +35,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
       const response = await sendHandler(value);
 
       addTransaction(response, {
-        summary: `Send token with ${address} to address ${to}`,
+        summary: `Transfer to ${truncateHash(to)}`,
         type: "send",
       });
     } catch (error: any) {

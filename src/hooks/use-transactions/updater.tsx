@@ -24,9 +24,9 @@ export const useTransactionsUpdater = () => {
   useEffect(() => {
     if (!chainId || !library || !currentBlock) return;
 
-    Object.keys(transactions)
-      .filter(hash => shouldCheck(currentBlock, transactions[hash]))
-      .forEach(hash => {
+    Object.entries(transactions)
+      .filter(([hash, _]) => shouldCheck(currentBlock, transactions[hash]))
+      .forEach(([hash, value]) => {
         (library as Web3Provider)
           .getTransactionReceipt(hash)
           .then(receipt => {
@@ -50,9 +50,7 @@ export const useTransactionsUpdater = () => {
 
               const toastFunc = receipt.status === 1 ? toast.success : toast.error;
               toastFunc(
-                <ToastDescriptionWithTx txHash={receipt.transactionHash}>
-                  {t("Transaction receipt")}
-                </ToastDescriptionWithTx>,
+                <ToastDescriptionWithTx txHash={receipt.transactionHash}>{value.summary}</ToastDescriptionWithTx>,
               );
             } else {
               dispatch(checkedTransaction({ chainId, hash, blockNumber: currentBlock }));
