@@ -11,9 +11,9 @@ const Image: React.FC<ImageProps> = ({ src, width, height, alt, variant, animati
       {isLoading && <Skeleton variant={variant} animation={animation} width={width} height={height} />}
       <StyledImage
         style={{ display: !isLoading ? "block" : "none" }}
-        src={src}
         width={width}
         height={height}
+        src={src}
         variant={variant}
         alt={alt}
         onLoad={() => setLoading(false)}

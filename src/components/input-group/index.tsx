@@ -21,7 +21,12 @@ const InputGroup: React.FC<InputGroupProps> = ({
   const iconWidth = startIcon ? startIconWidth : 0;
   return (
     <Box {...props}>
-      <InputWrapper hasStartIcon={!!startIcon} hasEndIcon={!!endIcon} disabled={disabled} isError={error && isTouched}>
+      <InputWrapper
+        hasStartIcon={!!startIcon}
+        hasEndIcon={!!endIcon}
+        disabled={disabled}
+        isError={!!error && isTouched}
+      >
         {startIcon && <InputIcon scale={scale}>{startIcon}</InputIcon>}
 
         <Box position="relative" width="100%">

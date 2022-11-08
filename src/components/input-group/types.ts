@@ -18,7 +18,7 @@ export type StyledInputGroupProps = {
   hasStartIcon: boolean;
   hasEndIcon: boolean;
   disabled?: boolean;
-  isError: boolean;
+  isError?: boolean;
 };
 
 export type InputIconProps = { scale: Scales };

@@ -22,7 +22,6 @@ const ThemedApp: React.FC = () => {
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
             <Provider store={store}>
-              <GlobalStyle />
               <Modal />
               <Navigation />
               <StyledToastContainer />
@@ -39,6 +38,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <HelmetProvider>
         <ThemeContextProvider>
+          <GlobalStyle />
           <ThemedApp />
         </ThemeContextProvider>
       </HelmetProvider>

@@ -4,16 +4,13 @@ import { Button, Heading, Link, Page, Row } from "components";
 // Context
 import { useTranslation } from "context";
 // Store
-import { useAppDispatch } from "store/store";
-import { logout } from "store/reducers/auth";
+import { resetStore } from "services/axios";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
 
-  const dispatch = useAppDispatch();
-
   const logoutHandler = () => {
-    dispatch(logout());
+    resetStore();
   };
 
   return (

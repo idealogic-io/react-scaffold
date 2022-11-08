@@ -14,7 +14,6 @@ const GlobalStyle = createGlobalStyle`
   font-display: swap;
 }
 
-/* prettier-ignore */
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -76,7 +75,6 @@ html, body, div, span, applet, object, iframe,
     box-sizing: border-box;
   }
   * {
-    font-family: 'Kanit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -96,13 +94,11 @@ html, body, div, span, applet, object, iframe,
     width: 8px;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.monochrome0}; 
-    border-radius: 8px;
+    background-image: linear-gradient(180deg, #D0368A 0%, #708AD4 99%);
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+    border-radius: 100px;
   }
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.monochrome300}; 
-    border-radius: 10px;
-  }
+
 
   /* Slider */ 
   input[type=range] {
@@ -124,17 +120,23 @@ html, body, div, span, applet, object, iframe,
     border-color: transparent;
     color: transparent;
   }
-
-  * {
-    font-family: 'Merriweather';
-  }
   body {
-    background-color: ${({ theme }) => theme.colors.monochrome0};
+    line-height: 1;
+    font-size: 16px;
+    overflow-x: hidden;
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Merriweather';
     img {
       height: auto;
       max-width: 100%;
     }
   }
-  `;
+  #root {
+    height: 100%;
+    min-height: 100vh;
+  }
+`;
 
 export default GlobalStyle;

@@ -1,11 +1,19 @@
 import axios, { AxiosError } from "axios";
-import { logout } from "store/reducers/auth";
 
+import { ErrorResult } from "./types";
+// Store
 import store from "store/store";
+import { setRefreshToken } from "store/reducers/auth/actions";
+import { resetAuth } from "store/reducers/auth";
 
-export const baseUrl = process.env.REACT_APP_API_URL as string;
+export const baseUrl = process.env.REACT_APP_API_URL;
+let isShowError = false;
 
-export const getInstance = (baseURL: string = baseUrl) => {
+export function resetStore() {
+  store.dispatch(resetAuth());
+}
+
+export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
   const instance = axios.create({
     baseURL: baseURL,
     timeout: 10000,
@@ -28,7 +36,20 @@ export const getInstance = (baseURL: string = baseUrl) => {
     success => success,
     error => {
       if (error?.response?.status === 401) {
-        store.dispatch(logout());
+        const refreshToken = store.getState().auth.refreshToken || "";
+
+        if (!isShowError) {
+          isShowError = true;
+
+          store.dispatch(setRefreshToken({ refreshToken })).then(response => {
+            if ((response.payload as ErrorResult).isError) {
+              resetStore();
+            }
+            isShowError = false;
+          });
+        } else {
+          resetStore();
+        }
       }
 
       return Promise.reject(error);
@@ -36,8 +57,8 @@ export const getInstance = (baseURL: string = baseUrl) => {
   );
 
   return instance;
-};
+}
 
-export const isAxiosError = (e: unknown): e is AxiosError => {
+export function isAxiosError(e: unknown): e is AxiosError {
   return axios.isAxiosError(e);
-};
+}
