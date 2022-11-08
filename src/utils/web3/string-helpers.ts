@@ -9,15 +9,6 @@ export const truncateHash = (address: string, startLength = 4, endLength = 4) =>
   return `${address.substring(0, startLength)}...${address.substring(address.length - endLength)}`;
 };
 
-// Check if address is nullable
-export const isNullableAddress = (address: string) => {
-  if (!address) {
-    return false;
-  }
-
-  return address === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
-};
-
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: string) {
   try {

@@ -37,7 +37,9 @@ export const makeApiRequest = async <Response>({ isShowError = true, ...config }
     }
 
     if (isShowError) {
-      toast.error(`${errorObj.message}`, toastOptions);
+      if (errorObj.code !== 401) {
+        toast.error(`${errorObj.message}`, toastOptions);
+      }
     }
 
     return errorObj;

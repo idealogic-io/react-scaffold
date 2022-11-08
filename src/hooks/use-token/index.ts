@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useWeb3React } from "@web3-react/core";
 
-import { nativeCurrencies, NATIVE_ADDRESS, tokensList } from "configs";
-import { isAddress } from "utils/web3";
+import { nativeCurrencies, tokensList } from "configs";
+import { isAddress, NATIVE_ADDRESS } from "utils/web3";
 
 import { useSingleCallResult, useTokenContract } from "hooks";
 import { NEVER_RELOAD } from "hooks/use-multicall/constants";

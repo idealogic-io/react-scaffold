@@ -11,10 +11,10 @@ import { useTranslation } from "context";
 // Hooks
 import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance, useTokenBalances } from "hooks";
 // Configs
-import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, NATIVE_ADDRESS, tokensList } from "configs";
+import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
 import { ROUTES } from "navigation/routes";
 // Utils
-import { connectorByName, connectorName, setupNetwork, Connector } from "utils/web3";
+import { connectorByName, connectorName, setupNetwork, Connector, NATIVE_ADDRESS } from "utils/web3";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -38,9 +38,9 @@ const HomePage: React.FC = () => {
   const [balances, _] = useTokenBalances(account ?? undefined, chainId ? Object.values(tokensList[chainId]) : []);
 
   const onConnect = (walletConfig: Connector) => {
-    const { title, href, connectorId } = walletConfig;
+    const { href, connectorId } = walletConfig;
     // Open url in metamask app
-    if (!window.ethereum && title === "Metamask" && href) {
+    if (!window.ethereum && href) {
       window.open(href, "_blank", "noopener noreferrer");
     } else {
       login(connectorId as keyof typeof connectorName);

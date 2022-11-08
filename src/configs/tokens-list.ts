@@ -1,5 +1,5 @@
 import { Token } from "@pancakeswap/sdk";
-import { NATIVE_ADDRESS } from "./constants";
+import { NATIVE_ADDRESS } from "../utils/web3/constants";
 import { chainIdMainnet, chainIdTestnet } from "./networks";
 
 export const mainnetTokens = {

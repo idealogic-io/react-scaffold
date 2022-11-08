@@ -4,8 +4,6 @@ import type { Signer } from "@ethersproject/abstract-signer";
 import type { Provider } from "@ethersproject/providers";
 import { AddressZero } from "@ethersproject/constants";
 
-import erc20Abi from "configs/abi/erc20.json";
-
 import { getChainIds } from "configs/networks";
 
 import { getSimpleRpcProvider } from "./simple-rpc";
@@ -20,10 +18,6 @@ export const getContract = (
   const signerOrProvider = signer ?? getSimpleRpcProvider(chainId);
 
   return new Contract(address, abi, signerOrProvider);
-};
-
-export const getERC20Contract = (address: string, signer: Signer | Provider | null, chainId: number) => {
-  return getContract(address, erc20Abi, signer, chainId);
 };
 
 export const getAddress = (address: { [key: number]: string }, chainId: number | undefined) => {

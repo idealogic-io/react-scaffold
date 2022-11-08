@@ -1,10 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
 import { ROUTES } from "navigation/routes";
-
+// Components
+import { Text, Button } from "components";
+// Types
 import { ErrorBoundaryFallbackProps } from "./types";
-// TODO style component with scss
+import { StyledFlexWrapper } from "./StyledErrorBoundary";
+
 const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, resetError }) => {
   const navigate = useNavigate();
 
@@ -14,12 +16,20 @@ const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, re
   };
 
   return (
-    <>
-      <h1>Something went wrong!</h1>
-      <p>{error?.toString()}</p>
-      <h2>Please, go to home page</h2>
-      <button onClick={onPressHandler}>Go to home</button>
-    </>
+    <StyledFlexWrapper>
+      <Text as="h1" my="16px" $fontWeight="bold" fontSize="28px">
+        Something went wrong!
+      </Text>
+      {error && <Text mb="30px">{error.toString()}</Text>}
+
+      <Text as="h2" $fontWeight="bold" my="16px" fontSize="20px">
+        Please, go to home page
+      </Text>
+
+      <Button variant="primary" width="100%" onClick={onPressHandler}>
+        Go to home
+      </Button>
+    </StyledFlexWrapper>
   );
 };
 

@@ -10,8 +10,7 @@ import { useTokenContract } from "./use-contract";
 import { useSWRContract } from "./use-swr-contract";
 
 import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
-import { FAST_INTERVAL, NATIVE_ADDRESS } from "configs";
-import { isAddress } from "utils/web3";
+import { isAddress, FAST_INTERVAL, NATIVE_ADDRESS } from "utils/web3";
 import ERC20_ABI from "configs/abi/erc20.json";
 
 export const useTokenBalance = (tokenAddress: string) => {

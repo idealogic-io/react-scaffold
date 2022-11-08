@@ -5,7 +5,6 @@ export { default as useWeb3AutoConnect } from "./use-web3-auto-connect";
 export { default as useWaitTransaction } from "./use-wait-transaction";
 export { default as useProviders } from "./use-providers";
 export { default as useTooltip } from "./use-tooltip";
-export { default as useOnBlockListener } from "./use-on-block-listener";
 export { usePollBlockNumber, useCurrentBlock, useInitialBlock } from "./use-poll-block-number";
 export { useDebounce } from "./use-debounce";
 export { useAllTokens, useToken, useCurrency } from "./use-token";

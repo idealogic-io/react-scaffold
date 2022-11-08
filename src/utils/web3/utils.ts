@@ -1,7 +1,7 @@
 import { Web3Provider } from "@ethersproject/providers";
 
 import { Token } from "@pancakeswap/sdk";
-import { NATIVE_ADDRESS } from "configs";
+import { NATIVE_ADDRESS } from "./constants";
 
 // account is not optional
 export const getSigner = (library: Web3Provider, account: string) => {

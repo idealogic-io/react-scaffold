@@ -1,4 +1,3 @@
-import BigNumber from "bignumber.js";
 import { BigNumber as EthersBigNumber } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 
@@ -29,5 +28,3 @@ export const formatFixedNumber = (number: EthersBigNumber, displayDecimals = 18,
   const [leftSide] = number.toString().split(".");
   return formatBigNumber(EthersBigNumber.from(leftSide), displayDecimals, decimals);
 };
-
-export const BIG_ZERO = new BigNumber(0);

@@ -15,6 +15,4 @@ export {
   networks,
   getChainIds,
 } from "./networks";
-export { tokens } from "./tokens";
-export { FAST_INTERVAL, SLOW_INTERVAL, NATIVE_ADDRESS } from "./constants";
 export { tokensList } from "./tokens-list";

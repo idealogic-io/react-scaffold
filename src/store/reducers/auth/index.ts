@@ -4,11 +4,11 @@ import { LOCAL_STORAGE_KEYS } from "configs";
 import { loginUser } from "./actions";
 import { AuthState } from "./types";
 
-const applyToken = (token: AuthState["token"]) => {
+const applyToken = (key: string, token: AuthState["token"]) => {
   if (token) {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.token, token);
+    localStorage.setItem(key, token);
   } else {
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.token);
+    localStorage.removeItem(key);
   }
 
   return token;
@@ -16,6 +16,7 @@ const applyToken = (token: AuthState["token"]) => {
 
 const initialState: AuthState = {
   token: null,
+  refreshToken: null,
   pending: false,
   error: null,
 };
@@ -27,8 +28,9 @@ const authSlice = createSlice({
     token: localStorage.getItem(LOCAL_STORAGE_KEYS.token),
   },
   reducers: {
-    logout() {
-      applyToken(null);
+    resetAuth() {
+      applyToken(LOCAL_STORAGE_KEYS.token, null);
+      applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
 
       return initialState;
     },
@@ -40,22 +42,24 @@ const authSlice = createSlice({
         state.pending = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        const { accessToken } = action.payload;
+        const { accessToken, refreshToken } = action.payload;
 
-        state.token = applyToken(accessToken);
-        state.pending = false;
+        state.token = applyToken(LOCAL_STORAGE_KEYS.token, accessToken);
+        state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
         state.error = null;
+        state.pending = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         if (action.payload?.isError) {
           state.error = action.payload;
+          state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);
+          state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
           state.pending = false;
-          state.token = applyToken(null);
         }
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { resetAuth } = authSlice.actions;
 
 export default authSlice;

@@ -2,11 +2,10 @@ import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
 
-import { NATIVE_ADDRESS } from "configs";
 import { useTranslation } from "context";
 
 import { useTokenContract, useTransactionAdder } from "hooks";
-import { isGasEstimationError, isUserRejected, TxError } from "utils/web3";
+import { isGasEstimationError, isUserRejected, NATIVE_ADDRESS, TxError } from "utils/web3";
 import { Web3Provider } from "@ethersproject/providers";
 
 type UseSendTransferArgs = { address: string | undefined; to: string };

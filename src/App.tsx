@@ -29,13 +29,18 @@ const ThemedApp: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <GlobalStyle />
-        <Modal />
-        <Navigation />
-        <ToastContainer />
-        <Updaters />
-      </Provider>
+      <Suspense fallback={<Loader />}>
+        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
+          <LanguageContextProvider fallback={<Loader />}>
+            <Provider store={store}>
+              <Modal />
+              <Navigation />
+              <ToastContainer />
+              <Updaters />
+            </Provider>
+          </LanguageContextProvider>
+        </ErrorBoundary>
+      </Suspense>
     </ThemeProvider>
   );
 };
@@ -51,17 +56,12 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <HelmetProvider>
-        <Suspense fallback={<Loader />}>
-          <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
-            <Web3ReactProvider getLibrary={getLibrary}>
-              <LanguageContextProvider fallback={<Loader />}>
-                <ThemeContextProvider>
-                  <ThemedApp />
-                </ThemeContextProvider>
-              </LanguageContextProvider>
-            </Web3ReactProvider>
-          </ErrorBoundary>
-        </Suspense>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <ThemeContextProvider>
+            <GlobalStyle />
+            <ThemedApp />
+          </ThemeContextProvider>
+        </Web3ReactProvider>
       </HelmetProvider>
     </BrowserRouter>
   );
