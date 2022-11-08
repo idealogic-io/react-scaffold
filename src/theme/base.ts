@@ -1,19 +1,19 @@
 export const breakpointMap = {
-  xs: 320,
-  sm: 425,
-  md: 550,
-  lg: 768,
-  xl: 1080,
-  xxl: 1200,
+  mobileS: 320,
+  mobileM: 425,
+  mobileL: 550,
+  tablet: 768,
+  laptop: 1024,
+  laptopL: 1440,
 } as const;
 
 export const mediaQueries = {
-  xs: `@media screen and (min-width: ${breakpointMap.xs}px)`,
-  sm: `@media screen and (min-width: ${breakpointMap.sm}px)`,
-  md: `@media screen and (min-width: ${breakpointMap.md}px)`,
-  lg: `@media screen and (min-width: ${breakpointMap.lg}px)`,
-  xl: `@media screen and (min-width: ${breakpointMap.xl}px)`,
-  xxl: `@media screen and (min-width: ${breakpointMap.xxl}px)`,
+  mobileS: `@media screen and (min-width: ${breakpointMap.mobileS}px)`,
+  mobileM: `@media screen and (min-width: ${breakpointMap.mobileM}px)`,
+  mobileL: `@media screen and (min-width: ${breakpointMap.mobileL}px)`,
+  tablet: `@media screen and (min-width: ${breakpointMap.tablet}px)`,
+  laptop: `@media screen and (min-width: ${breakpointMap.laptop}px)`,
+  laptopL: `@media screen and (min-width: ${breakpointMap.laptopL}px)`,
 } as const;
 
 export const shadows = {

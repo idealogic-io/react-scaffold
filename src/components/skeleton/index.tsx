@@ -8,13 +8,13 @@ const StyledSkelton = styled.div<SkeletonProps>`
   display: block;
   background-color: ${({ theme }) => theme.colors.monochrome300};
   border-radius: ${({ variant, theme }) => (variant === VARIANT.CIRCLE ? theme.radii.circle : theme.radii.small)};
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.mobileS} {
     min-height: 14px;
   }
-  ${({ theme }) => theme.mediaQueries.lg} {
+  ${({ theme }) => theme.mediaQueries.tablet} {
     min-height: 18px;
   }
-  ${({ theme }) => theme.mediaQueries.xxl} {
+  ${({ theme }) => theme.mediaQueries.laptop} {
     min-height: 20px;
   }
   height: 100%;
