@@ -3,12 +3,14 @@ import WalletConnect from "components/svg/icons/WalletConnect";
 import CoinBase from "components/svg/icons/CoinBase";
 
 import { connectorName } from "utils/web3";
-import { Connector } from "utils/web3";
 
-const connectors: Connector[] = [
+const URL = process.env.REACT_APP_URL;
+
+const connectors = [
   {
     title: "Web3",
     icon: Web3,
+    href: `https://metamask.app.link/dapp/${URL}/`,
     connectorId: connectorName.injectedConnector,
   },
   {

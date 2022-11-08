@@ -21,22 +21,20 @@ const useProviders = () => {
       try {
         const provider = await connector.getProvider();
 
-        if (!provider) {
-          injectedProviderData = null;
-        } else if (provider?.isTrustWallet) {
-          // TODO check the translation
+        if (provider?.isTrustWallet) {
           injectedProviderData = {
             ...injectedProviderData,
             title: "Trust Wallet",
             icon: TrustWallet,
           };
-        } else if (provider?.selectedProvider?.isMetaMask || provider?.isMetaMask) {
+        } else if (
+          (provider?.selectedProvider?.isMetaMask && !provider?.selectedProvider?.isDeficonnectProvider) ||
+          (provider?.isMetaMask && !provider?.isDeficonnectProvider)
+        ) {
           injectedProviderData = {
             ...injectedProviderData,
             title: "Metamask",
             icon: Metamask,
-            // TODO replace with our production url
-            href: "https://metamask.app.link/dapp/pancakeswap.finance/",
           };
         } else if (provider?.isCoinbaseWallet) {
           injectedProviderData = {
@@ -48,14 +46,11 @@ const useProviders = () => {
           restProviders = [walletConnect];
         }
       } catch (error) {
-        injectedProviderData = null;
-
-        console.error((error as Error).message);
+        console.error("getProviderData: ", error);
       }
 
       const newProviders = [injectedProviderData, ...restProviders];
-      const filteredProviders = newProviders.filter(data => data !== null) as Connector[];
-      setProviders(filteredProviders);
+      setProviders(newProviders);
     })();
   }, []);
 
