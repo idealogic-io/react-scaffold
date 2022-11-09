@@ -26,7 +26,6 @@ const mediaQueries: MediaQueries = (() => {
     return { ...accum, [size]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)` };
   }, {} as MediaQueries);
 })();
-console.log(mediaQueries);
 
 // Returns from breakpoints xs => isXs
 const getKey = (size: keyof MediaQueries) => `is${size.charAt(0).toUpperCase()}${size.slice(1)}`;
@@ -93,8 +92,8 @@ const useMatchBreakpoints = () => {
 
   return {
     ...state,
-    isMobile: state.mobileS || state.mobileM || state.mobileL,
-    isDesktop: state.laptop || state.laptopL,
+    isMobile: state.isMobileS || state.isMobileM || state.isMobileL,
+    isDesktop: state.isLaptop || state.isLaptopL,
   };
 };
 
