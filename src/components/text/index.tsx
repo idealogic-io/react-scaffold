@@ -11,11 +11,11 @@ export const getEllipsis = ({ ellipsis }: ThemedProps) => {
 };
 
 export const Text = styled.p<TextProps>`
-  color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.text)};
+  color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
   font-family: ${({ theme }) => theme.fonts.mv};
   font-weight: ${({ theme, $fontWeight }) => ($fontWeight ? theme.fontWeight[$fontWeight] : theme.fontWeight.regular)};
-  ${getEllipsis}
   line-height: 1.375;
+  ${getEllipsis}
   ${space}
   ${typography}
   ${layout}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { InputNumeric as StyledInput, Text } from "components";
+import { InputNumeric as StyledInput } from "components";
 
 export default {
   title: "Components/InputNumeric",
@@ -9,10 +9,5 @@ export default {
 export const InputNumeric: React.FC = () => {
   const [value, setValue] = useState("");
 
-  return (
-    <>
-      <Text>Only numbers</Text>
-      <StyledInput value={value} onUserInput={setValue} />
-    </>
-  );
+  return <StyledInput value={value} onUserInput={setValue} placeholder="Only numbers allowed" />;
 };

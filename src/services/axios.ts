@@ -1,6 +1,5 @@
 import axios, { AxiosError } from "axios";
 
-import { LOCAL_STORAGE_KEYS } from "configs";
 import { ErrorResult } from "./types";
 // Store
 import store from "store/store";
@@ -23,13 +22,9 @@ export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
   instance.interceptors.request.use(
     config => {
       const token = store.getState().auth.token;
-      const lang = localStorage.getItem(LOCAL_STORAGE_KEYS.language);
 
       if (token && config.headers) {
         config.headers.Authorization = `Authorization ${token}`;
-        if (lang) {
-          config.headers["x-lang"] = lang;
-        }
       }
 
       return config;

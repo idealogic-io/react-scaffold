@@ -16,7 +16,7 @@ export const Text = () => {
 
       <StyledText fontSize="12px">Small StyledText</StyledText>
 
-      <StyledText color="primary">Custom color from theme</StyledText>
+      <StyledText color="accent100">Custom color from theme</StyledText>
 
       <StyledText StyledTextAlign="center">center</StyledText>
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { InputGroup as StyledInputGroup, Input, Row } from "components";
-import { scales } from "components/input/types";
+import { InputGroup as StyledInputGroup, Input } from "components";
+
 import { AddIcon } from "components/svg";
 
 export default {
@@ -10,20 +10,28 @@ export default {
 export const InputGroup: React.FC = () => {
   return (
     <>
-      {Object.values(scales).map(scale => (
-        <Row key={scale}>
-          <StyledInputGroup
-            scale={scale}
-            label={"Label"}
-            error={"Error here"}
-            isTouched={true}
-            startIcon={<AddIcon />}
-            endIcon={<AddIcon />}
-          >
-            <Input value="Text here" />
-          </StyledInputGroup>
-        </Row>
-      ))}
+      <StyledInputGroup
+        label="Label"
+        error="Error"
+        isTouched={true}
+        my="16px"
+        startIcon={<AddIcon />}
+        endIcon={<AddIcon />}
+        disabled
+      >
+        <Input value="Disabled" />
+      </StyledInputGroup>
+
+      <StyledInputGroup
+        label="Label"
+        error="Error"
+        isTouched={true}
+        my="16px"
+        startIcon={<AddIcon />}
+        endIcon={<AddIcon />}
+      >
+        <Input value="With Error" />
+      </StyledInputGroup>
     </>
   );
 };

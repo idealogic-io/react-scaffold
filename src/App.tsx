@@ -5,9 +5,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { Web3ReactProvider } from "@web3-react/core";
 import { BrowserRouter } from "react-router-dom";
 import { Buffer } from "buffer";
-import { ToastContainer } from "react-toastify";
 // Styles
-import { GlobalStyle } from "styles";
+import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
 import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "context";
 // Store
@@ -35,7 +34,7 @@ const ThemedApp: React.FC = () => {
             <Provider store={store}>
               <Modal />
               <Navigation />
-              <ToastContainer />
+              <StyledToastContainer />
               <Updaters />
             </Provider>
           </LanguageContextProvider>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { AnimatePresence, usePresence } from "framer-motion";
 
 import { hideModal, ModalNames } from "store/reducers/modal";
 import { useAppDispatch, useAppSelector } from "store/store";
@@ -11,6 +12,11 @@ const component = {
 
 const Modal: React.FC = () => {
   const { modalName, rootId } = useAppSelector(state => state.modal);
+  const [isPresent, safeToRemove] = usePresence();
+
+  useEffect(() => {
+    !isPresent && setTimeout(safeToRemove, 1000);
+  }, [isPresent]);
 
   const dispatch = useAppDispatch();
   const ModalComponent = modalName ? component[modalName] : null;
@@ -32,9 +38,13 @@ const Modal: React.FC = () => {
   }
 
   return (
-    <ModalWrapper hideModalHandler={hideModalHandler} id={rootId}>
-      <ModalComponent />
-    </ModalWrapper>
+    <AnimatePresence>
+      {ModalComponent && (
+        <ModalWrapper hideModalHandler={hideModalHandler} id={rootId}>
+          <ModalComponent />
+        </ModalWrapper>
+      )}
+    </AnimatePresence>
   );
 };
 

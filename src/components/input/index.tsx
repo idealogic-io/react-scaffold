@@ -5,47 +5,48 @@ import { InputProps, scales, ThemedProps } from "./types";
 const getHeight = ({ scale = scales.MD }: ThemedProps) => {
   switch (scale) {
     case scales.SM:
-      return "32px";
-    case scales.LG:
-      return "48px";
+      return "26px";
     case scales.MD:
-    default:
-      return "40px";
+      return "28px";
+    case scales.LG:
+      return "32px";
   }
 };
 
 const Input = styled.input<InputProps>`
-  background-color: ${({ theme }) => theme.colors.input};
-  border: 0;
-  border-radius: ${({ theme }) => theme.radii.medium};
-  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme, $backgroundColor }) =>
+    $backgroundColor ? theme.colors[$backgroundColor] : theme.colors.monochrome25};
+  color: ${({ theme }) => theme.colors.monochrome900};
+
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   height: ${getHeight};
   outline: 0;
-  padding: 0 16px;
+  padding: 0 12px;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border: 0;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.monochrome600};
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.backgroundDisabled};
-    box-shadow: none;
-    color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.monochrome300};
+    color: ${({ theme }) => theme.colors.monochrome400};
     cursor: not-allowed;
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.monochrome400};
+    }
   }
 
   &:focus:not(:disabled) {
-    box-shadow: ${({ theme }) => theme.shadows.button};
   }
   ${space}
 `;
 
 Input.defaultProps = {
-  scale: scales.MD,
+  scale: scales.SM,
 };
 
 export default Input;

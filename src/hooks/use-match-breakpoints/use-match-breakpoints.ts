@@ -92,9 +92,8 @@ const useMatchBreakpoints = () => {
 
   return {
     ...state,
-    isMobile: state.isXs || state.isSm,
-    isTablet: state.isMd || state.isLg,
-    isDesktop: state.isXl || state.isXxl,
+    isMobile: state.isMobileS || state.isMobileM || state.isMobileL,
+    isDesktop: state.isLaptop || state.isLaptopL,
   };
 };
 

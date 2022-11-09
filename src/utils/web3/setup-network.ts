@@ -1,7 +1,8 @@
 import { ExternalProvider } from "@ethersproject/providers";
 import { toast } from "react-toastify";
 
-import { chainNames, networks, toastOptions } from "configs";
+import { chainNames, networks } from "configs";
+import { toastOptionsError } from "components";
 
 interface SwitchError extends Error {
   code?: number;
@@ -11,7 +12,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
   const provider = externalProvider || window.ethereum;
 
   if (!chainId) {
-    toast.error("Network is not defined", toastOptions);
+    toast.error("Network is not defined", toastOptionsError);
 
     return false;
   }
@@ -44,7 +45,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
   } else {
     toast.error(
       `Can't setup the ${chainNames[chainId]} network on metamask because window.ethereum is undefined`,
-      toastOptions,
+      toastOptionsError,
     );
     return false;
   }

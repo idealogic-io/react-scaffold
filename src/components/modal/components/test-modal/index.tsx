@@ -25,8 +25,6 @@ const TestModal: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const _props = props!;
-
   const closeModalHandler = () => {
     dispatch(hideModal());
   };
@@ -34,7 +32,7 @@ const TestModal: React.FC = () => {
   return (
     <StyledTestModal>
       <Heading textAlign="center" scale="h5" as="h5">
-        Header with custom prop {_props.title}
+        Header with custom prop {props?.title}
       </Heading>
       <Text>This is a test modal</Text>
       <Button onClick={closeModalHandler}>Close modal</Button>

@@ -26,7 +26,7 @@ const Svg = styled.svg<SvgProps>`
 
 Svg.defaultProps = {
   spin: false,
-  color: "black",
+  color: "monochrome900",
   width: "20px",
   xmlns: "http://www.w3.org/2000/svg",
 };
