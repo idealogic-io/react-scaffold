@@ -1,7 +1,7 @@
 import { Web3Provider } from "@ethersproject/providers";
 
 import { Token } from "@pancakeswap/sdk";
-import { NATIVE_ADDRESS } from "./constants";
+import { isGasEstimationError, isUserRejected, NATIVE_ADDRESS, TxError } from "utils/web3";
 
 // account is not optional
 export const getSigner = (library: Web3Provider, account: string) => {
@@ -37,4 +37,26 @@ export const isExceededBalance = ({
   } else {
     return tokenBalance < value || nativeBalance < gasEstimation;
   }
+};
+
+export const getErrorMessage = (error: Error | TxError | string) => {
+  let message = "Sorry, can't perform a transaction";
+
+  if (isUserRejected(error as Error & { code: number })) {
+    message = "User rejected the request";
+  } else if ((error as TxError)?.data) {
+    if (isGasEstimationError(error)) {
+      message = "Insufficient funds";
+    } else if ((error as TxError)?.data?.message) {
+      message = (error as TxError)?.data?.message;
+    }
+  } else if ((error as Error)?.message) {
+    if (isGasEstimationError(error)) {
+      message = "Insufficient funds";
+    } else {
+      message = (error as Error)?.message;
+    }
+  }
+
+  return message;
 };

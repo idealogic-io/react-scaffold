@@ -1,12 +1,12 @@
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
+import { Web3Provider } from "@ethersproject/providers";
 
 import { useTranslation } from "context";
 
 import { useTokenContract, useTransactionAdder } from "hooks";
-import { isGasEstimationError, isUserRejected, NATIVE_ADDRESS, truncateHash, TxError } from "utils/web3";
-import { Web3Provider } from "@ethersproject/providers";
+import { getErrorMessage, NATIVE_ADDRESS, truncateHash } from "utils/web3";
 
 type UseSendTransferArgs = { address: string | undefined; to: string };
 
@@ -58,26 +58,4 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   };
 
   return { sendToken };
-};
-
-const getErrorMessage = (error: Error | TxError | string) => {
-  let message = "Sorry, can't perform a transaction";
-
-  if (isUserRejected(error as Error & { code: number })) {
-    message = "User rejected the request";
-  } else if ((error as TxError)?.data) {
-    if (isGasEstimationError(error)) {
-      message = "Insufficient funds";
-    } else if ((error as TxError)?.data?.message) {
-      message = (error as TxError)?.data?.message;
-    }
-  } else if ((error as Error)?.message) {
-    if (isGasEstimationError(error)) {
-      message = "Insufficient funds";
-    } else {
-      message = (error as Error)?.message;
-    }
-  }
-
-  return message;
 };

@@ -18,8 +18,10 @@ export { useEstimateNetworkFee } from "./use-estimate-network-fee";
 export {
   useTransactionAdder,
   useAllTransactions,
+  useHasPendingApproval,
   isTransactionRecent,
   usePendingTransactions,
 } from "./use-transactions";
 export { useTransactionsUpdater } from "./use-transactions/updater";
 export { useSendTransfer } from "./use-send-transfer";
+export { useApproveCallback, ApprovalState } from "./use-approve-callback";

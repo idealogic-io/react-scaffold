@@ -9,4 +9,4 @@ export type { TxError } from "./error-helpers";
 export type { Connector } from "./types";
 export { FAST_INTERVAL, SLOW_INTERVAL, NATIVE_ADDRESS } from "./constants";
 
-export { getSigner, getProviderOrSigner, isExceededBalance } from "./utils";
+export { getSigner, getProviderOrSigner, isExceededBalance, getErrorMessage } from "./utils";
