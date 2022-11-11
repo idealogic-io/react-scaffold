@@ -91,7 +91,7 @@ const HomePage: React.FC = () => {
     if (initialBlock > 0) {
       console.time("Events");
       console.timeLog("Events");
-      getEvents();
+      // getEvents();
     }
   }, [initialBlock]);
 

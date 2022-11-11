@@ -10,6 +10,7 @@ import { isValidMethodArgs, parseCallKey, toCallKey, toCallState } from "./helpe
 import { useAppSelector, useAppDispatch } from "store/store";
 import { addMulticallListeners, removeMulticallListeners } from "store/reducers/multicall/action";
 import { INVALID_RESULT } from "./constants";
+import { ContractMethodName } from "hooks/use-swr-contract/types";
 
 // the lowest level call for subscribing to contract data
 function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
@@ -77,12 +78,11 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
   );
 }
 
-export function useSingleCallResult(
-  contract: Contract | null | undefined,
-  methodName: string,
-  inputs?: OptionalMethodInputs,
-  options?: ListenerOptions,
-): CallState {
+export function useSingleCallResult<
+  C extends Contract,
+  M extends ContractMethodName<C>,
+  I extends Parameters<C["callStatic"][M]>,
+>(contract: C | null | undefined, methodName: M, inputs?: I, options?: ListenerOptions): CallState {
   const { chainId } = useWeb3React();
   const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName]);
 
@@ -115,8 +115,8 @@ export function useMultipleContractSingleData(
   options?: ListenerOptions,
 ): CallState[] {
   const { chainId } = useWeb3React();
-
   const fragment = useMemo(() => contractInterface.getFunction(methodName), [contractInterface, methodName]);
+
   const callData: string | undefined = useMemo(
     () =>
       fragment && isValidMethodArgs(callInputs)
