@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { JSBI, TokenAmount } from "@pancakeswap/sdk";
@@ -9,12 +9,21 @@ import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance, useTokenBalances } from "hooks";
+import {
+  useWeb3Login,
+  useProviders,
+  useWeb3AutoConnect,
+  useNativeBalance,
+  useTokenBalances,
+  useTokenContract,
+  useInitialBlock,
+} from "hooks";
 // Configs
 import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
 import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector, NATIVE_ADDRESS } from "utils/web3";
+import { TransferEvent } from "configs/abi/types/Erc20";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -32,6 +41,59 @@ const HomePage: React.FC = () => {
   const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
   const supportedChains = getChainIds();
   const nativeCurrency = nativeCurrencies[chainId as keyof typeof chainNames];
+  const contract = useTokenContract("0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee");
+  const initialBlock = useInitialBlock();
+  //  86_400(sec in a day) / 3(sec in one block) = 28_800 blocks in a day
+  // limit per one queryFilter = 5000
+  // iterations per day = 28_800 / 5000 = 5.76
+  const perDayIterations = 5.76;
+  let tEvents: TransferEvent[] = [];
+  const limit = 5000;
+  const stop = 5000 * perDayIterations * 3;
+
+  let from = initialBlock - limit;
+  let to = initialBlock;
+  let step = 1;
+
+  const getEvents = async () => {
+    console.log(tEvents, "tEvents");
+    console.log(step, "step");
+    console.log(from, "from");
+    console.log(to, "to");
+
+    // TODO
+    // Take the latest block number
+    // minus 5000 blocks
+    // find events
+    // if they are not 10
+    // minus 5000 blocks and find others
+    // return if blocknumber <= block of creation
+
+    const eventFilter = contract!.filters.Transfer("0x0a4C0dc0A60Ba20F9C790fCF6b07e633D7d38B04");
+    const events = await contract!.queryFilter(eventFilter, from, to);
+    console.log(events, "events");
+
+    tEvents = [...tEvents, ...events];
+    from -= limit;
+    to -= limit;
+    step += 1;
+
+    if (from >= initialBlock - stop) {
+      await getEvents();
+    } else {
+      console.timeEnd("Events");
+
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (initialBlock > 0) {
+      console.time("Events");
+      console.timeLog("Events");
+      getEvents();
+    }
+  }, [initialBlock]);
 
   useWeb3AutoConnect(_networkId);
 
