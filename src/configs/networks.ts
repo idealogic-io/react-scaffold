@@ -28,7 +28,7 @@ const rpcUrls = {
   [chainIdMainnet.avax]: "https://api.avax.network/ext/bc/C/rpc",
   // Test
   [chainIdTestnet.goerli]: "https://rpc.ankr.com/eth_goerli",
-  [chainIdTestnet.bscTest]: "https://data-seed-prebsc-1-s3.binance.org:8545",
+  [chainIdTestnet.bscTest]: "https://data-seed-prebsc-1-s1.binance.org:8545",
   [chainIdTestnet.polygonMumbai]: "https://rpc-mumbai.maticvigil.com",
   [chainIdTestnet.fuji]: "https://api.avax-test.network/ext/bc/C/rpc",
 };
