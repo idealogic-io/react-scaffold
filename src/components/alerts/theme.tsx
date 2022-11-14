@@ -3,10 +3,10 @@ import { ToastOptions } from "react-toastify";
 import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from "components/svg";
 import { ThemedAlert, variants, Variants } from "./types";
 
-export const toastOptionsSuccess: ToastOptions = { icon: SuccessIcon };
-export const toastOptionsError: ToastOptions = { icon: ErrorIcon };
-export const toastOptionsWarning: ToastOptions = { icon: WarningIcon };
-export const toastOptionsInfo: ToastOptions = { icon: InfoIcon };
+export const toastOptionsSuccess: ToastOptions = { icon: () => <SuccessIcon /> };
+export const toastOptionsError: ToastOptions = { icon: () => <ErrorIcon /> };
+export const toastOptionsWarning: ToastOptions = { icon: () => <WarningIcon /> };
+export const toastOptionsInfo: ToastOptions = { icon: () => <InfoIcon /> };
 
 export const getThemeColor = ({ theme, variant = "success" }: ThemedAlert) => {
   switch (variant) {
