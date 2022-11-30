@@ -28,6 +28,8 @@ const ThemedApp: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
+
       <Suspense fallback={<Loader />}>
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
@@ -57,7 +59,6 @@ const App: React.FC = () => {
       <HelmetProvider>
         <Web3ReactProvider getLibrary={getLibrary}>
           <ThemeContextProvider>
-            <GlobalStyle />
             <ThemedApp />
           </ThemeContextProvider>
         </Web3ReactProvider>
