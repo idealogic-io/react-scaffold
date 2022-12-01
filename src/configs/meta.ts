@@ -4,7 +4,7 @@ const URL = process.env.REACT_APP_URL;
 
 export const getDefaultMeta = (t: TranslateFunction) => {
   return {
-    title: t("Scaffold"),
+    title: "",
     description: t("The greatest scaffold"),
     image: `${URL}/logo512.png`,
   };
