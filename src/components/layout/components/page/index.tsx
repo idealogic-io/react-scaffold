@@ -9,16 +9,25 @@ import { PageProps } from "../types";
 
 export const PageMeta: React.FC = () => {
   const { pathname } = useLocation();
-  const { t } = useTranslation();
+  const { t, currentLanguage } = useTranslation();
 
   const { title, description, image } = getCustomMeta(pathname, t);
+  const pageTitle = title ? `${title} | ${t("Scaffold")}` : t("Scaffold");
 
   return (
     <Helmet>
-      <title>{title}</title>
-      <meta property="og:title" content={title} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={pageTitle} />
+
+      <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:locale" content={currentLanguage.locale} />
+      <meta property="og:type" content="website" />
+
+      <title>{pageTitle}</title>
     </Helmet>
   );
 };
