@@ -16,16 +16,10 @@ export const PageMeta: React.FC = () => {
 
   return (
     <Helmet>
-      <meta name="twitter:image" content={image} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={pageTitle} />
-
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content={currentLanguage.locale} />
-      <meta property="og:type" content="website" />
 
       <title>{pageTitle}</title>
     </Helmet>
