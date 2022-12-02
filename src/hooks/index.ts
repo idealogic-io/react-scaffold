@@ -24,3 +24,4 @@ export {
 export { useTransactionsUpdater } from "./use-transactions/updater";
 export { useSendTransfer } from "./use-send-transfer";
 export { useApproveCallback, ApprovalState } from "./use-approve-callback";
+export { default as useScrollSpy } from "./use-scroll-spy";
