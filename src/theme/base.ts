@@ -7,13 +7,24 @@ export const breakpointMap = {
   laptopL: 1440,
 } as const;
 
+export const breakpointsArray = ["320px", "375px", "425px", "768px", "1024px", "1440px"];
+
+export const breakpoints = Object.assign(breakpointsArray, {
+  mobileS: breakpointsArray[0],
+  mobileM: breakpointsArray[1],
+  mobileL: breakpointsArray[2],
+  tablet: breakpointsArray[3],
+  laptop: breakpointsArray[4],
+  laptopL: breakpointsArray[5],
+});
+
 export const mediaQueries = {
-  mobileS: `@media screen and (min-width: ${breakpointMap.mobileS}px)`,
-  mobileM: `@media screen and (min-width: ${breakpointMap.mobileM}px)`,
-  mobileL: `@media screen and (min-width: ${breakpointMap.mobileL}px)`,
-  tablet: `@media screen and (min-width: ${breakpointMap.tablet}px)`,
-  laptop: `@media screen and (min-width: ${breakpointMap.laptop}px)`,
-  laptopL: `@media screen and (min-width: ${breakpointMap.laptopL}px)`,
+  mobileS: `@media screen and (min-width: ${breakpointsArray[0]})`,
+  mobileM: `@media screen and (min-width: ${breakpointsArray[1]})`,
+  mobileL: `@media screen and (min-width: ${breakpointsArray[2]})`,
+  tablet: `@media screen and (min-width: ${breakpointsArray[3]})`,
+  laptop: `@media screen and (min-width: ${breakpointsArray[4]})`,
+  laptopL: `@media screen and (min-width: ${breakpointsArray[5]})`,
 } as const;
 
 export const shadows = {
@@ -59,7 +70,7 @@ export const hsl = {
 
 export default {
   siteWidth: 1200,
-  breakpointMap,
+  breakpoints,
   mediaQueries,
   shadows,
   radii,

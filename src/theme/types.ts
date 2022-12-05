@@ -1,9 +1,9 @@
-import { mediaQueries, breakpointMap, shadows, radii, zIndices, fontWeight, fonts, hsl } from "./base";
+import { mediaQueries, shadows, radii, zIndices, fontWeight, fonts, hsl, breakpoints } from "./base";
 import { baseColors, darkColors } from "./colors";
 
 export type MediaQueries = typeof mediaQueries;
 
-export type BreakpointsMap = typeof breakpointMap;
+export type Breakpoints = typeof breakpoints;
 
 export type Radii = typeof radii;
 
