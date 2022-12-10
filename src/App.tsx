@@ -8,7 +8,7 @@ import { Buffer } from "buffer";
 // Styles
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
-import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "context";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext, SocketContextProvider } from "context";
 // Store
 import store from "store/store";
 // Components
@@ -34,10 +34,12 @@ const ThemedApp: React.FC = () => {
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
             <Provider store={store}>
-              <Modal />
-              <Navigation />
-              <StyledToastContainer />
-              <Updaters />
+              <SocketContextProvider>
+                <Modal />
+                <Navigation />
+                <StyledToastContainer />
+                <Updaters />
+              </SocketContextProvider>
             </Provider>
           </LanguageContextProvider>
         </ErrorBoundary>
