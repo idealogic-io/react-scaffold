@@ -12,6 +12,7 @@ import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
 import Navigation from "navigation";
+import SocketContextProvider from "context/socket-context";
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
@@ -22,9 +23,11 @@ const ThemedApp: React.FC = () => {
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
             <Provider store={store}>
-              <Modal />
-              <Navigation />
-              <StyledToastContainer />
+              <SocketContextProvider>
+                <Modal />
+                <Navigation />
+                <StyledToastContainer />
+              </SocketContextProvider>
             </Provider>
           </LanguageContextProvider>
         </ErrorBoundary>
