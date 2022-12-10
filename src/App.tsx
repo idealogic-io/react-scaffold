@@ -6,13 +6,12 @@ import { BrowserRouter } from "react-router-dom";
 // Styles
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
-import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "context";
+import { LanguageContextProvider, ThemeContextProvider, useThemeContext, SocketContextProvider } from "context";
 // Store
 import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
 import Navigation from "navigation";
-import SocketContextProvider from "context/socket-context";
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
