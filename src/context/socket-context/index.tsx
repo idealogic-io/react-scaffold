@@ -11,23 +11,21 @@ type ContextType = {
 
 const SocketContext = createContext<ContextType | null>(null);
 
+const socket = io(`${process.env.REACT_APP_SOCKET_URL}` as string, {
+  transports: ["websocket"],
+  autoConnect: false,
+  reconnection: false,
+});
+
 const SocketContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { token } = useAppSelector(state => state.auth);
 
-  const socket = io(`${process.env.REACT_APP_SOCKET_URL}` as string, {
-    transports: ["websocket"],
-    autoConnect: false,
-    reconnection: false,
-    query: {
-      token: `Bearer ${token}`,
-    },
-  });
-
   useEffect(() => {
     if (token) {
-      socketConnect();
+      socket.io.opts.query = { token };
+      socket.connect();
     } else {
-      socketDisconnect();
+      socket.disconnect();
     }
   }, [token]);
 
