@@ -10,20 +10,33 @@ const useIsomorphicEffect = typeof window === "undefined" ? useEffect : useLayou
 
 const mediaQueries: MediaQueries = (() => {
   let prevMinWidth = 0;
+  let prevSize = Object.keys(breakpointMap)[0];
 
   return (Object.keys(breakpointMap) as Array<keyof typeof breakpointMap>).reduce((accum, size, index) => {
-    // Largest size is just a min-width of second highest max-width
-    if (index === Object.keys(breakpointMap).length - 1) {
-      return { ...accum, [size]: `(min-width: ${prevMinWidth}px)` };
-    }
-
     const minWidth = prevMinWidth;
-    const breakpoint = breakpointMap[size];
+    const sizeToSet = prevSize;
+    const breakpoint = breakpointMap[size] - 1;
 
     // Min width for next iteration
-    prevMinWidth = breakpoint + 1;
+    prevMinWidth = breakpointMap[size];
+    // sizeToSet for next iteration
+    prevSize = size;
 
-    return { ...accum, [size]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)` };
+    // When sizeToSet is the smallest size, min width has to be 0
+    if (sizeToSet === Object.keys(breakpointMap)[0]) {
+      return { ...accum, [sizeToSet]: `(min-width: ${0}px) and (max-width: ${breakpoint}px)` };
+    }
+
+    // Largest size in the last iteration, except setting sizeToSet, also has to set last mediaQuery with only a min-width breakpoint
+    if (index === Object.keys(breakpointMap).length - 1) {
+      return {
+        ...accum,
+        [sizeToSet]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)`,
+        [size]: `(min-width: ${prevMinWidth}px)`,
+      };
+    }
+
+    return { ...accum, [sizeToSet]: `(min-width: ${minWidth}px) and (max-width: ${breakpoint}px)` };
   }, {} as MediaQueries);
 })();
 
