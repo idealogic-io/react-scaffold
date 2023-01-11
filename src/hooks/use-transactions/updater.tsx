@@ -49,9 +49,9 @@ export const useTransactionsUpdater = () => {
               );
 
               const toastFunc = receipt.status === 1 ? toast.success : toast.error;
-              toastFunc(
-                <ToastDescriptionWithTx txHash={receipt.transactionHash}>{value.summary}</ToastDescriptionWithTx>,
-              );
+              const message = receipt.status === 1 ? value.summary : t("Transaction failed");
+
+              toastFunc(<ToastDescriptionWithTx txHash={receipt.transactionHash}>{message}</ToastDescriptionWithTx>);
             } else {
               dispatch(checkedTransaction({ chainId, hash, blockNumber: currentBlock }));
             }
