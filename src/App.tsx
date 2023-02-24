@@ -18,6 +18,8 @@ const ThemedApp: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
+
       <Suspense fallback={<Loader />}>
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
@@ -40,7 +42,6 @@ const App: React.FC = () => {
     <BrowserRouter>
       <HelmetProvider>
         <ThemeContextProvider>
-          <GlobalStyle />
           <ThemedApp />
         </ThemeContextProvider>
       </HelmetProvider>

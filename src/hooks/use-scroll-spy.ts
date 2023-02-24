@@ -40,7 +40,6 @@ const useScrollSpy = (ids: string[], offset: number = 0) => {
       window.removeEventListener("scroll", listener);
     };
   }, [ids, offset]);
-  console.log(activeId);
 
   return activeId;
 };

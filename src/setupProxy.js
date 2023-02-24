@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const FILES_PATH = "/api";
+const API_PATH = "/api";
 
 const onProxyRes = (proxyRes, req) => {
   const {
@@ -9,14 +9,13 @@ const onProxyRes = (proxyRes, req) => {
   } = proxyRes;
   const { method, originalUrl } = req;
 
-  // eslint-disable-next-line no-console
-  console.log(`[${method}] [${statusCode}] ${originalUrl} -> ${protocol}//${host}${path}`);
+  console.warn(`[${method}] [${statusCode}] ${originalUrl} -> ${protocol}//${host}${path}`);
 };
 
 module.exports = app => {
-  const filesRegex = `^${FILES_PATH}`;
+  const filesRegex = `^${API_PATH}`;
   app.use(
-    createProxyMiddleware(FILES_PATH, {
+    createProxyMiddleware(API_PATH, {
       target: process.env.REACT_APP_API_PROXY_URL,
       pathRewrite: { [filesRegex]: "" },
       changeOrigin: true,

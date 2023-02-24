@@ -34,7 +34,8 @@
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "no-console": ["warn", { "allow": ["warn", "error", "debug"] }]
   },
   "settings": {
     "react": {

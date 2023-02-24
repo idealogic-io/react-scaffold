@@ -5,7 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { Arrow, StyledTooltip } from "./StyledTooltip";
 import { TooltipOptions, TooltipRefs } from "./types";
 import { useSubscriptionEventsHandlers } from "./use-subscription-events-handlers";
-import { checkIsEllipsis } from "utils/helpers";
+import { checkIsEllipsis } from "utils";
 import { appearanceAnimationMap, appearanceAnimationVariants } from "theme";
 
 const useTooltip = (content: React.ReactNode, options?: TooltipOptions): TooltipRefs => {
