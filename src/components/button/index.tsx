@@ -1,9 +1,9 @@
 import React from "react";
 
-import StyledButton from "./StyledButton";
-import { accentColor, ButtonProps, scales, variants } from "./types";
-
+import StyledButton from "./styled";
 import { SpinnerIcon } from "components/svg";
+
+import { ButtonProps } from "./types";
 
 export const getExternalLinkProps = () => ({
   target: "_blank",
@@ -16,7 +16,7 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <StyledButton {...internalProps} {...rest} disabled={isDisabled}>
+    <StyledButton {...internalProps} {...rest} type={props.type || "button"} disabled={isDisabled}>
       {isLoading ? (
         <SpinnerIcon />
       ) : (
@@ -40,11 +40,9 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
 
 Button.defaultProps = {
   isLoading: false,
-  variant: variants.PRIMARY,
-  scale: scales.MD,
+  variant: "primary",
+  scale: "md",
   disabled: false,
-  accentColor: accentColor.accent,
-  hsl: "500",
 };
 
 export default Button;

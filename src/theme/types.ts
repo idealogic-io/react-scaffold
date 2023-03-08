@@ -1,4 +1,4 @@
-import { mediaQueries, shadows, radii, zIndices, fontWeight, fonts, hsl, breakpoints } from "./base";
+import { mediaQueries, shadows, radii, zIndices, fontWeight, fonts, breakpoints } from "./base";
 import { baseColors, darkColors } from "./colors";
 
 export type MediaQueries = typeof mediaQueries;
@@ -24,5 +24,3 @@ export type CustomColors = {
 };
 
 export interface Colors extends BaseColors, CustomColors {}
-
-export type HSL = typeof hsl;

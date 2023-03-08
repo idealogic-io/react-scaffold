@@ -1,58 +1,51 @@
-import { Svg } from "components/svg";
 import { css, DefaultTheme } from "styled-components";
-import { Colors, HSL } from "theme/types";
-import { AccentColor, scales, Variant } from "./types";
 
-export const variantStyles = (
-  theme: DefaultTheme,
-  variant: Variant = "primary",
-  accentColor: AccentColor = "accent",
-  hsl: keyof HSL,
-) => {
-  const focusHSL = +hsl + 100 >= 900 ? 900 : +hsl + 100;
-  const color = `${accentColor}${hsl}` as unknown as keyof Colors;
-  const focusColor = `${accentColor}${focusHSL}` as unknown as keyof Colors;
+import { Svg } from "components/svg";
 
-  const baseSecondaryHSL = accentColor === "accent" ? "900" : hsl;
-  const secondaryAccentColor = accentColor === "accent" ? "monochrome" : accentColor;
-  const secondaryColor = `${secondaryAccentColor}${baseSecondaryHSL}` as unknown as keyof Colors;
+import { Colors } from "theme/types";
+import { scales, Variant } from "./types";
 
+export const variantStyles = (theme: DefaultTheme, variant: Variant = "primary", color: keyof Colors | undefined) => {
   return {
     primary: css`
-      background-color: ${theme.colors[color]};
-      border-color: ${theme.colors[color]};
+      background-color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent500)};
 
       &:not([disabled]):hover {
-        background-color: ${theme.colors[focusColor]};
-        border-color: ${theme.colors[focusColor]};
+        background-color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent600)};
+      }
+
+      &:disabled {
+        background-color: ${theme.colors.monochrome400};
+        cursor: not-allowed;
       }
     `,
 
-    secondary: css`
-      background-color: ${theme.colors.transparent};
-      border-color: ${theme.colors[secondaryColor]};
-      color: ${theme.colors[secondaryColor]};
+    outline: css`
+      background-color: ${({ theme }) => theme.colors.transparent};
+      border: 1px solid ${({ theme }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
+      color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
 
       ${Svg} {
-        fill: ${({ theme }) => theme.colors[secondaryColor]};
+        fill: ${({ theme }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
       }
 
-      &:hover {
-        border-color: ${theme.colors[focusColor]};
-        color: ${theme.colors[focusColor]};
+      &:not([disabled]):hover {
+        border: 1px solid ${theme.colors.accent500};
+        color: ${theme.colors.accent500};
 
         ${Svg} {
-          fill: ${({ theme }) => theme.colors[focusColor]};
+          fill: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent500)};
         }
       }
 
       &:disabled {
-        background-color: ${theme.colors.transparent};
-        border-color: ${theme.colors.monochrome400};
-        color: ${theme.colors.monochrome400};
+        border: 1px solid ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent400)};
+        color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent400)};
+        cursor: not-allowed;
+        opacity: 0.33;
 
         ${Svg} {
-          fill: ${({ theme }) => theme.colors.monochrome400};
+          fill: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent400)};
         }
       }
     `,
@@ -63,13 +56,16 @@ export const scaleVariants = {
   [scales.SM]: {
     padding: "4px 24px",
     minWidth: "86px",
+    fontSize: "12px",
   },
   [scales.MD]: {
     padding: "6px 24px",
     minWidth: "110px",
+    fontSize: "16px",
   },
   [scales.LG]: {
     padding: "12px 24px",
     minWidth: "110px",
+    fontSize: "18px",
   },
 };

@@ -1,13 +1,13 @@
-import { SvgProps } from "components/svg/types";
 import { ElementType, PropsWithChildren, ReactNode } from "react";
 import { LayoutProps, SpaceProps } from "styled-system";
-import { HSL } from "theme/types";
 
+import { Colors } from "theme/types";
+import { SvgProps } from "components/svg/types";
 import { PolymorphicComponentProps } from "types";
 
 export const variants = {
   PRIMARY: "primary",
-  SECONDARY: "secondary",
+  OUTLINE: "outline",
 } as const;
 
 export const scales = {
@@ -16,16 +16,8 @@ export const scales = {
   LG: "lg",
 } as const;
 
-export const accentColor = {
-  accent: "accent",
-  success: "success",
-  warning: "warning",
-  error: "error",
-} as const;
-
-export type Scale = typeof scales[keyof typeof scales];
-export type AccentColor = typeof accentColor[keyof typeof accentColor];
-export type Variant = typeof variants[keyof typeof variants];
+export type Scale = (typeof scales)[keyof typeof scales];
+export type Variant = (typeof variants)[keyof typeof variants];
 
 export interface BaseButtonProps
   extends LayoutProps,
@@ -36,11 +28,10 @@ export interface BaseButtonProps
       isLoading?: boolean;
       scale?: Scale;
       variant?: Variant;
-      accentColor?: AccentColor;
+      color?: keyof Colors;
       disabled?: boolean;
       startIcon?: ReactNode & SvgProps;
       endIcon?: ReactNode & SvgProps;
-      hsl?: keyof HSL;
     }> {}
 
 export type ButtonProps<P extends ElementType = "button"> = PolymorphicComponentProps<P, BaseButtonProps>;
