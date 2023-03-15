@@ -15,7 +15,6 @@
     "@web3-react/walletlink-connector": "^6.2.13",
     "axios": "^0.27.2",
     "bignumber.js": "^9.1.0",
-    "buffer": "^6.0.3",
     "ethers": "5.7.0",
     "formik": "^2.2.9",
     "framer-motion": "^6.5.1",
