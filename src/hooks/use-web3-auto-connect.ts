@@ -18,20 +18,24 @@ const useWeb3AutoConnect = (networkId?: number) => {
 
     if (connectorId) {
       if (connectorId === connectorName.injectedConnector) {
-        injectedConnector.isAuthorized().then(() => tryLogin(connectorId));
+        injectedConnector()
+          .isAuthorized()
+          .then(() => tryLogin(connectorId));
       } else {
         tryLogin(connectorId as keyof typeof connectorName);
       }
     } else {
-      injectedConnector.isAuthorized().then(isAuthorized => {
-        if (isAuthorized) {
-          tryLogin(connectorName.injectedConnector);
-        } else {
-          if (isMobile && window.ethereum) {
+      injectedConnector()
+        .isAuthorized()
+        .then(isAuthorized => {
+          if (isAuthorized) {
             tryLogin(connectorName.injectedConnector);
+          } else {
+            if (isMobile && window.ethereum) {
+              tryLogin(connectorName.injectedConnector);
+            }
           }
-        }
-      });
+        });
     }
   }, []);
 };

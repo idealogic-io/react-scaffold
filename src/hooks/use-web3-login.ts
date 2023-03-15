@@ -22,7 +22,7 @@ const useWeb3Login = () => {
   // If you want to setup exact network please pass network id
   // Otherwise network id will be first from supported chains
   const login = async (connectorId: keyof typeof connectorName, networkId?: number) => {
-    const connector = connectorByName[connectorId];
+    const connector = connectorByName[connectorId](networkId);
     localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
     if (connector) {
@@ -52,7 +52,7 @@ const useWeb3Login = () => {
             error instanceof UserRejectedRequestErrorWalletConnect
           ) {
             if (connector instanceof WalletConnectConnector) {
-              connectorByName.walletConnect.walletConnectProvider = undefined;
+              connectorByName.walletConnect().walletConnectProvider = undefined;
             }
 
             toast.error("Please authorize to access your account", toastOptionsError);
@@ -107,12 +107,12 @@ const useWeb3Login = () => {
     }
   };
 
-  const logout = () => {
+  const logout = (networkId?: number) => {
     deactivate();
-    clearUserState();
+    clearUserState(networkId);
   };
 
-  const clearUserState = () => {
+  const clearUserState = (networkId?: number) => {
     const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
 
     if (
@@ -120,8 +120,8 @@ const useWeb3Login = () => {
       lsConnector in connectorName &&
       (lsConnector === connectorName.walletConnect || lsConnector === connectorName.walletLinkConnector)
     ) {
-      const connector = connectorByName[lsConnector as keyof typeof connectorByName];
-      (connector as WalletConnectConnector | WalletLinkConnector).close();
+      const connector = connectorByName[lsConnector](networkId);
+      connector.close();
     }
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);

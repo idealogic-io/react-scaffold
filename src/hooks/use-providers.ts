@@ -16,7 +16,7 @@ const useProviders = () => {
     (async function () {
       let injectedProviderData: Connector | null = connectors[0];
       let restProviders = connectors.slice(1);
-      const connector = connectorByName.injectedConnector;
+      const connector = connectorByName.injectedConnector();
 
       try {
         const provider = await connector.getProvider();
