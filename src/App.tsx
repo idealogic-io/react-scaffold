@@ -4,7 +4,6 @@ import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { Web3ReactProvider } from "@web3-react/core";
 import { BrowserRouter } from "react-router-dom";
-import { Buffer } from "buffer";
 // Styles
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
@@ -18,10 +17,6 @@ import Navigation from "navigation";
 import { getLibrary } from "utils/web3";
 
 import { usePollBlockNumber, useTransactionsUpdater, useMulticallUpdater } from "hooks";
-
-// @web3-react/walletconnect-connector package uses buffer
-// in webpack 5 Buffer is undefined so we add it globally
-window.Buffer = Buffer;
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
