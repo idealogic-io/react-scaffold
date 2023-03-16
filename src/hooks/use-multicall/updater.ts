@@ -9,7 +9,7 @@ import {
   errorFetchingMulticallResults,
   fetchingMulticallResults,
   updateMulticallResults,
-} from "store/reducers/multicall/action";
+} from "store/multicall/action";
 import { useAppDispatch, useAppSelector } from "store/store";
 
 import { useDebounce, useMulticallContract, useCurrentBlock } from "hooks";

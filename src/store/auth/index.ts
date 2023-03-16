@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
-import { loginUser } from "./actions";
+import { loginUser, refreshToken } from "./actions";
 import { AuthState } from "./types";
 
 const applyToken = (key: string, token: AuthState["token"]) => {
@@ -50,6 +50,25 @@ const authSlice = createSlice({
         state.pending = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        if (action.payload?.isError) {
+          state.error = action.payload;
+          state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);
+          state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
+          state.pending = false;
+        }
+      }) // Refresh token
+      .addCase(refreshToken.pending, state => {
+        state.pending = true;
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        const { accessToken, refreshToken } = action.payload;
+
+        state.token = applyToken(LOCAL_STORAGE_KEYS.token, accessToken);
+        state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
+        state.error = null;
+        state.pending = false;
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
         if (action.payload?.isError) {
           state.error = action.payload;
           state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);

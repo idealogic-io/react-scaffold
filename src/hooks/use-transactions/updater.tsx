@@ -4,7 +4,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { toast } from "react-toastify";
 
 import { useTranslation } from "context";
-import { checkedTransaction, finalizeTransaction } from "store/reducers/transactions/actions";
+import { checkedTransaction, finalizeTransaction } from "store/transactions/actions";
 import { useAppDispatch, useAppSelector } from "store/store";
 
 import { ToastDescriptionWithTx } from "components";

@@ -1,7 +1,7 @@
-import { ModalNames, showModal } from "store/reducers/modal";
+import { ModalNames, showModal } from "store/modal";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
-import { ShowModalProps } from "store/reducers/modal/types";
+import { ShowModalProps } from "store/modal/types";
 import { useAppDispatch } from "store/store";
 
 import { Button, Box } from "components";

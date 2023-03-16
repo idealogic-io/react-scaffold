@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Flex, Text, Button, Heading } from "components";
 
 import { useAppDispatch, useAppSelector } from "store/store";
-import { hideModal } from "store/reducers/modal";
-import { ModalState } from "store/reducers/modal/types";
+import { hideModal } from "store/modal";
+import { ModalState } from "store/modal/types";
 
 const StyledTestModal = styled(Flex)`
   height: 300px;

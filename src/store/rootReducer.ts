@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import modal from "store/reducers/modal";
-import auth from "./reducers/auth";
-import multicall from "./reducers/multicall/reducer";
-import transactions from "./reducers/transactions/reducer";
+import modal from "store/modal";
+import auth from "store/auth";
+import multicall from "store/multicall/reducer";
+import transactions from "store/transactions/reducer";
 
 export const rootReducer = combineReducers({
   [modal.name]: modal.reducer,

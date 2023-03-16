@@ -1,4 +1,4 @@
-import { TransactionDetails } from "store/reducers/transactions/reducer";
+import { TransactionDetails } from "store/transactions/reducer";
 
 export const shouldCheck = (
   currentBlock: number,

@@ -22,7 +22,7 @@ export const loginUser = createAsyncThunk<LoginUserResponse, LoginUserPayload, {
   },
 );
 
-export const setRefreshToken = createAsyncThunk<LoginUserResponse, RefreshTokenPayload, { rejectValue: ErrorResult }>(
+export const refreshToken = createAsyncThunk<LoginUserResponse, RefreshTokenPayload, { rejectValue: ErrorResult }>(
   "auth/refresh-tokens",
   async (data, { rejectWithValue }) => {
     const result = await makeApiRequest<LoginUserResponse>({

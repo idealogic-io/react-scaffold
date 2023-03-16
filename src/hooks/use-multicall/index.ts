@@ -8,7 +8,7 @@ import { Call, CallResult, CallState, ListenerOptions, OptionalMethodInputs } fr
 import { isValidMethodArgs, parseCallKey, toCallKey, toCallState } from "./helpers";
 
 import { useAppSelector, useAppDispatch } from "store/store";
-import { addMulticallListeners, removeMulticallListeners } from "store/reducers/multicall/action";
+import { addMulticallListeners, removeMulticallListeners } from "store/multicall/action";
 import { INVALID_RESULT } from "./constants";
 import { ContractMethodName } from "hooks/use-swr-contract/types";
 

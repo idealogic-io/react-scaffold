@@ -1,6 +1,6 @@
 export { default as useMatchBreakpoints } from "./use-match-breakpoints/use-match-breakpoints";
 export { default as useForm } from "./use-form";
-export { default as useWeb3Login } from "./use-web3-login";
+export { useWeb3Login, clearUserState } from "./use-web3-login";
 export { default as useWeb3AutoConnect } from "./use-web3-auto-connect";
 export { default as useProviders } from "./use-providers";
 export { default as useTooltip } from "./use-tooltip";

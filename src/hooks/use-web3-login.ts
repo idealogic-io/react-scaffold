@@ -112,22 +112,22 @@ const useWeb3Login = () => {
     clearUserState(networkId);
   };
 
-  const clearUserState = (networkId?: number) => {
-    const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
-
-    if (
-      lsConnector &&
-      lsConnector in connectorName &&
-      (lsConnector === connectorName.walletConnect || lsConnector === connectorName.walletLinkConnector)
-    ) {
-      const connector = connectorByName[lsConnector](networkId);
-      connector.close();
-    }
-
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
-  };
-
   return { login, logout };
 };
 
-export default useWeb3Login;
+const clearUserState = (networkId?: number) => {
+  const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
+
+  if (
+    lsConnector &&
+    lsConnector in connectorName &&
+    (lsConnector === connectorName.walletConnect || lsConnector === connectorName.walletLinkConnector)
+  ) {
+    const connector = connectorByName[lsConnector](networkId);
+    connector.close();
+  }
+
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
+};
+
+export { useWeb3Login, clearUserState };

@@ -2,9 +2,9 @@ import { TransactionResponse } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { useCallback, useMemo } from "react";
 
-import { addTransaction } from "store/reducers/transactions/actions";
-import { TransactionDetails } from "store/reducers/transactions/reducer";
-import { TransactionType } from "store/reducers/transactions/types";
+import { addTransaction } from "store/transactions/actions";
+import { TransactionDetails } from "store/transactions/reducer";
+import { TransactionType } from "store/transactions/types";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { newTransactionsFirst } from "./helpers";
 
