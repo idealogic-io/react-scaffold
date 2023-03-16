@@ -13,7 +13,7 @@ import { LOCAL_STORAGE_KEYS } from "configs";
 import { LoginUserResponse } from "store/auth/types";
 
 let isRefreshing = false;
-let refreshSubscribers: any[] = [];
+let refreshSubscribers: ((arg: string) => void)[] = [];
 let tokenUpdateTimestamp = 0;
 
 const timeout = 15_000;
