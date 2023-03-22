@@ -15,12 +15,13 @@ import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensLi
 import { ROUTES } from "navigation/routes";
 // Utils
 import { connectorByName, connectorName, setupNetwork, Connector, NATIVE_ADDRESS } from "utils/web3";
+import { ExternalProvider } from "@ethersproject/providers";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { chainId, account, active, error } = useWeb3React();
+  const { chainId, account, active, error, library } = useWeb3React();
   const { balance } = useNativeBalance();
   const { providers } = useProviders();
 
@@ -110,7 +111,8 @@ const HomePage: React.FC = () => {
     if (connector) {
       setSearchParams({ networkId: chainId });
       try {
-        const provider = await connector(+chainId).getProvider();
+        const provider: ExternalProvider = (await connector(+chainId).getProvider()) || library?.provider;
+
         await setupNetwork(t, provider, +chainId);
       } catch (error) {
         console.error((error as Error).message);
