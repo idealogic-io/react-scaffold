@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
       setSearchParams({ networkId: chainId });
       try {
         const provider = await connector(+chainId).getProvider();
-        await setupNetwork(provider, +chainId);
+        await setupNetwork(t, provider, +chainId);
       } catch (error) {
         console.error((error as Error).message);
       }

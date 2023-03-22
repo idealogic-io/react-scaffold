@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { isMobile } from "react-device-detect";
+// import { isMobile } from "react-device-detect";
 
 import { connectorName, injectedConnector } from "utils/web3";
 import { LOCAL_STORAGE_KEYS } from "configs";
@@ -24,18 +24,18 @@ const useWeb3AutoConnect = (networkId?: number) => {
       } else {
         tryLogin(connectorId as keyof typeof connectorName);
       }
-    } else {
-      injectedConnector()
-        .isAuthorized()
-        .then(isAuthorized => {
-          if (isAuthorized) {
-            tryLogin(connectorName.injectedConnector);
-          } else {
-            if (isMobile && window.ethereum) {
-              tryLogin(connectorName.injectedConnector);
-            }
-          }
-        });
+      // } else {
+      //   injectedConnector()
+      //     .isAuthorized()
+      //     .then(isAuthorized => {
+      //       if (isAuthorized) {
+      //         tryLogin(connectorName.injectedConnector);
+      //       } else {
+      //         if (isMobile && window.ethereum) {
+      //           tryLogin(connectorName.injectedConnector);
+      //         }
+      //       }
+      //     });
     }
   }, []);
 };

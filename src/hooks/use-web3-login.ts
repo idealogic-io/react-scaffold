@@ -10,25 +10,27 @@ import {
   WalletConnectConnector,
 } from "@web3-react/walletconnect-connector";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
-// Configs
-import { getChainIds, LOCAL_STORAGE_KEYS } from "configs";
-// Utils
-import { connectorName, connectorByName, setupNetwork } from "utils/web3";
+
+import { LOCAL_STORAGE_KEYS } from "configs";
+import { useTranslation } from "context";
+
+import { connectorName, connectorByName, setupNetwork, getDefaultChainId } from "utils/web3";
 import { toastOptionsError } from "components";
 
-// TODO check translation
 const useWeb3Login = () => {
+  const { t } = useTranslation();
+
   const { activate, deactivate, setError } = useWeb3React();
+
   // If you want to setup exact network please pass network id
   // Otherwise network id will be first from supported chains
   const login = async (connectorId: keyof typeof connectorName, networkId?: number) => {
     const connector = connectorByName[connectorId](networkId);
-    localStorage?.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
     if (connector) {
       const provider = await connector.getProvider();
-      const supportedChainIds = getChainIds();
-      const chain = networkId && supportedChainIds.includes(networkId) ? networkId : supportedChainIds[0];
+      const chain = getDefaultChainId(networkId);
       let isError = false;
       await handleProvider(connector);
 
@@ -37,39 +39,43 @@ const useWeb3Login = () => {
         // Check if unsupported network prompt metamask to change chainId
         if (error instanceof UnsupportedChainIdError) {
           setError(error);
-
-          const hasSetup = await setupNetwork(provider, chain);
+          const hasSetup = await setupNetwork(t, provider, chain);
 
           if (hasSetup) {
-            activate(connector);
+            await activate(connector);
           }
         } else {
-          window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
+          localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
           if (error instanceof NoEthereumProviderError) {
-            toast.error("No provider was found", toastOptionsError);
+            toast.error(t("No provider was found"), toastOptionsError);
           } else if (
             error instanceof UserRejectedRequestErrorInjected ||
             error instanceof UserRejectedRequestErrorWalletConnect
           ) {
             if (connector instanceof WalletConnectConnector) {
-              connectorByName.walletConnect().walletConnectProvider = undefined;
+              connectorByName.walletConnect(networkId).walletConnectProvider = undefined;
             }
 
-            toast.error("Please authorize to access your account", toastOptionsError);
+            toast.error(t("Please authorize to access your wallet"), toastOptionsError);
           } else if ((error as { code?: number })?.code === -32002) {
-            toast.error("Please check the wallet, request is already pending.", toastOptionsError);
+            toast.error(t("Please check your external wallet, request is already pending"), toastOptionsError);
           } else {
             toast.error(error.message, toastOptionsError);
           }
         }
       });
 
+      let providerToSetup = provider;
+      if (connector instanceof WalletConnectConnector) {
+        providerToSetup = connector.walletConnectProvider;
+      }
+
       if (!isError) {
-        await setupNetwork(provider, chain);
+        await setupNetwork(t, providerToSetup, chain);
       }
     } else {
-      window?.localStorage?.removeItem(LOCAL_STORAGE_KEYS.connector);
-      toast.error("Unable to find connector", toastOptionsError);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
+      toast.error(t("Unable to find connector"), toastOptionsError);
     }
   };
 
@@ -103,11 +109,11 @@ const useWeb3Login = () => {
         }
       }
     } catch (error) {
-      console.error((error as Error)?.message);
+      console.error("Error in handleProvider: ", error);
     }
   };
 
-  const logout = (networkId?: number) => {
+  const logout = async (networkId?: number) => {
     deactivate();
     clearUserState(networkId);
   };
@@ -118,16 +124,14 @@ const useWeb3Login = () => {
 const clearUserState = (networkId?: number) => {
   const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
 
-  if (
-    lsConnector &&
-    lsConnector in connectorName &&
-    (lsConnector === connectorName.walletConnect || lsConnector === connectorName.walletLinkConnector)
-  ) {
+  if (lsConnector && lsConnector in connectorName && lsConnector === connectorName.walletConnect) {
     const connector = connectorByName[lsConnector](networkId);
+
     connector.close();
+    connector.walletConnectProvider = undefined;
   }
 
   localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
 };
 
-export { useWeb3Login, clearUserState };
+export { clearUserState, useWeb3Login };

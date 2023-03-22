@@ -3,16 +3,15 @@ import { toast } from "react-toastify";
 
 import { chainNames, networks } from "configs";
 import { toastOptionsError } from "components";
+import { TranslateFunction } from "context/language-context/types";
 
 interface SwitchError extends Error {
   code?: number;
 }
-// TODO translate page here
-export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?: number) => {
-  const provider = externalProvider || window.ethereum;
 
+export const setupNetwork = async (t: TranslateFunction, provider?: ExternalProvider, chainId?: number) => {
   if (!chainId) {
-    toast.error("Network is not defined", toastOptionsError);
+    toast.error(t("Network is not defined"), toastOptionsError);
 
     return false;
   }
@@ -21,7 +20,7 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
 
   if (provider && provider.request) {
     try {
-      await provider?.request({
+      await provider.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: `0x${chainId.toString(16)}` }],
       });
@@ -35,18 +34,14 @@ export const setupNetwork = async (externalProvider?: ExternalProvider, chainId?
           });
           return true;
         } catch (error) {
-          console.error(`Failed to setup the network in Metamask: ${(error as Error).message}`);
+          console.error(`Failed to setup the network in wallet: `, error);
           return false;
         }
       }
-
       return false;
     }
   } else {
-    toast.error(
-      `Can't setup the ${chainNames[chainId]} network on metamask because window.ethereum is undefined`,
-      toastOptionsError,
-    );
+    console.error(t("Couldn't setup the %network% network", { network: chainNames[chainId] }));
     return false;
   }
 };

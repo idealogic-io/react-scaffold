@@ -18,11 +18,12 @@ const supportedChainIds = getChainIds();
 
 export const injectedConnector = (_?: number) => new InjectedConnector({ supportedChainIds });
 
-const walletConnect = (_?: number) =>
+const walletConnect = (chainId?: number) =>
   new WalletConnectConnector({
     rpc: {
       ...rpcUrls,
     },
+    chainId,
     supportedChainIds,
     qrcode: true,
   });

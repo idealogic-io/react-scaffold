@@ -1,5 +1,5 @@
 export { setupNetwork } from "./setup-network";
-export { connectorByName, connectorName, injectedConnector, getLibrary } from "./web3-react";
+export { connectorByName, connectorName, injectedConnector, getLibrary, getDefaultChainId } from "./web3-react";
 export { getContract, getAddress } from "./contract-helpers";
 export { formatBigNumber, formatBigNumberToFixed, formatFixedNumber } from "./number-helpers";
 export { truncateHash, isAddress } from "./string-helpers";
