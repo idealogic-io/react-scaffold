@@ -29,8 +29,8 @@ const useWeb3Login = () => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
 
     if (connector) {
-      const provider = await connector.getProvider();
       const chain = getDefaultChainId(networkId);
+
       let isError = false;
       await handleProvider(connector);
 
@@ -39,6 +39,7 @@ const useWeb3Login = () => {
         // Check if unsupported network prompt metamask to change chainId
         if (error instanceof UnsupportedChainIdError) {
           setError(error);
+          const provider = await connector.getProvider();
           const hasSetup = await setupNetwork(t, provider, chain);
 
           if (hasSetup) {
@@ -65,13 +66,11 @@ const useWeb3Login = () => {
         }
       });
 
-      let providerToSetup = provider;
-      if (connector instanceof WalletConnectConnector) {
-        providerToSetup = connector.walletConnectProvider;
-      }
+      // Need to initiate a new provider because before activate function it's undefined
+      const provider = await connector.getProvider();
 
       if (!isError) {
-        await setupNetwork(t, providerToSetup, chain);
+        await setupNetwork(t, provider, chain);
       }
     } else {
       localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
@@ -113,24 +112,15 @@ const useWeb3Login = () => {
     }
   };
 
-  const logout = async (networkId?: number) => {
+  const logout = async () => {
     deactivate();
-    clearUserState(networkId);
+    clearUserState();
   };
 
   return { login, logout };
 };
 
-const clearUserState = (networkId?: number) => {
-  const lsConnector = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
-
-  if (lsConnector && lsConnector in connectorName && lsConnector === connectorName.walletConnect) {
-    const connector = connectorByName[lsConnector](networkId);
-
-    connector.close();
-    connector.walletConnectProvider = undefined;
-  }
-
+const clearUserState = () => {
   localStorage.removeItem(LOCAL_STORAGE_KEYS.connector);
 };
 

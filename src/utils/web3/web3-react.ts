@@ -16,15 +16,14 @@ export const connectorName = {
 
 const supportedChainIds = getChainIds();
 
-export const injectedConnector = (_?: number) => new InjectedConnector({ supportedChainIds });
+export const injectedConnector = (_?: number) => new InjectedConnector({});
 
-const walletConnect = (chainId?: number) =>
+const walletConnect = (_?: number) =>
   new WalletConnectConnector({
     rpc: {
       ...rpcUrls,
     },
-    chainId,
-    supportedChainIds,
+
     qrcode: true,
   });
 
@@ -33,7 +32,6 @@ const walletLinkConnector = (chainId?: number) =>
     url: rpcUrls[getDefaultChainId(chainId)],
     appName: packages.name,
     appLogoUrl: `${process.env.REACT_APP_URL}/logo512.png`,
-    supportedChainIds,
   });
 
 export const connectorByName = {

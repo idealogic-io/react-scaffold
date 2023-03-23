@@ -1,5 +1,5 @@
 import React from "react";
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
+import { useWeb3React } from "@web3-react/core";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { JSBI, TokenAmount } from "@pancakeswap/sdk";
 import { formatUnits } from "@ethersproject/units";
@@ -14,14 +14,13 @@ import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance, useTo
 import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
 import { ROUTES } from "navigation/routes";
 // Utils
-import { connectorByName, connectorName, setupNetwork, Connector, NATIVE_ADDRESS } from "utils/web3";
-import { ExternalProvider } from "@ethersproject/providers";
+import { connectorName, setupNetwork, Connector, NATIVE_ADDRESS } from "utils/web3";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { chainId, account, active, error, library } = useWeb3React();
+  const { chainId, account, active, library } = useWeb3React();
   const { balance } = useNativeBalance();
   const { providers } = useProviders();
 
@@ -30,9 +29,12 @@ const HomePage: React.FC = () => {
 
   const networkId = searchParams.get("networkId");
   const _networkId = networkId ? +networkId : undefined;
-  const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
+
   const supportedChains = getChainIds();
-  const nativeCurrency = nativeCurrencies[chainId as keyof typeof chainNames];
+  const nativeCurrency = nativeCurrencies[chainId!];
+
+  const isSupportedChain = supportedChains.includes(chainId!);
+
   // const contract = useTokenContract(bscTokens.usdt.address);
   // const initialBlock = useInitialBlock();
   //  86_400(sec in a day) / 3(sec in one block) = 28_800 blocks in a day
@@ -89,7 +91,7 @@ const HomePage: React.FC = () => {
 
   useWeb3AutoConnect(_networkId);
 
-  const [balances, _] = useTokenBalances(account ?? undefined, chainId ? Object.values(tokensList[chainId]) : []);
+  const [balances, _] = useTokenBalances(account ?? undefined, Object.values(tokensList[chainId!] || []));
 
   const onConnect = (walletConfig: Connector) => {
     const { href, connectorId } = walletConfig;
@@ -106,16 +108,12 @@ const HomePage: React.FC = () => {
       target: { value: chainId },
     } = event;
     const connectorId = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
-    const connector = connectorByName[connectorId as keyof typeof connectorByName];
 
-    if (connector) {
-      setSearchParams({ networkId: chainId });
-      try {
-        const provider: ExternalProvider = (await connector(+chainId).getProvider()) || library?.provider;
+    if (connectorId) {
+      const isSetup = await setupNetwork(t, library?.provider, +chainId);
 
-        await setupNetwork(t, provider, +chainId);
-      } catch (error) {
-        console.error((error as Error).message);
+      if (isSetup) {
+        setSearchParams({ networkId: chainId });
       }
     }
   };
@@ -131,7 +129,7 @@ const HomePage: React.FC = () => {
         {active && (
           <Column py="16px">
             <Text>You currently on:</Text>
-            <Text>{chainNames[chainId as keyof typeof chainNames]}</Text>
+            <Text>{chainNames[chainId!] || "Unknown chain"}</Text>
           </Column>
         )}
 
@@ -169,7 +167,7 @@ const HomePage: React.FC = () => {
           </Column>
         )}
 
-        {active || isUnsupportedChainId ? (
+        {active && isSupportedChain ? (
           <select name="chain" value={chainId} defaultValue={""} onChange={changeChainHandler}>
             <option disabled value={""}>
               -- select a chain --
@@ -182,8 +180,8 @@ const HomePage: React.FC = () => {
           </select>
         ) : null}
 
-        {chainId
-          ? Object.entries(tokensList[chainId]).map(([key, token]) => {
+        {isSupportedChain
+          ? Object.entries(tokensList[chainId!] || []).map(([key, token]) => {
               // TODO not perfect solution need to refactor
               const _balance =
                 token.address.toLowerCase() === NATIVE_ADDRESS
@@ -200,7 +198,7 @@ const HomePage: React.FC = () => {
           {t("Swap")}
         </Button>
 
-        <Button scale="md" onClick={() => logout(chainId)} my="4px">
+        <Button scale="md" onClick={logout} my="4px">
           {t("Logout")}
         </Button>
       </Column>
