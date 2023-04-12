@@ -4,11 +4,17 @@ import { toast } from "react-toastify";
 import { getInstance, isAxiosError } from "./axios";
 import { ErrorResult } from "./types";
 import { toastOptionsError } from "components";
+import { parseErrorFromBE } from "utils";
+import { LOCAL_STORAGE_KEYS } from "configs";
+import { t } from "context/language-context";
+
 const axiosInstance = getInstance();
+const locale = localStorage.getItem(LOCAL_STORAGE_KEYS.language);
+const translate = t(locale);
 
 export const makeApiRequest = async <Response>({ isShowError = true, ...config }) => {
   try {
-    const result = (await axiosInstance(config)) as AxiosResponse<Response>;
+    const result = (await axiosInstance({ ...config })) as AxiosResponse<Response>;
 
     return result.data;
   } catch (error) {
@@ -21,18 +27,22 @@ export const makeApiRequest = async <Response>({ isShowError = true, ...config }
       errorObj.code = error.response?.status;
 
       if (error.response?.data) {
-        const data = error.response?.data as { message?: ErrorResult["message"] };
+        const data = error.response?.data as { message?: ErrorResult["message"]; errors?: ErrorResult["errors"] };
 
         if (data.message) {
           errorObj.message = data.message;
+
+          if (data.errors && Array.isArray(data.errors) && data.errors.length) {
+            errorObj.message = parseErrorFromBE(data.errors);
+          }
         } else {
-          errorObj.message = error.message;
+          errorObj.message = replaceWithNewErrorMessages(error);
         }
       } else {
-        errorObj.message = error.message;
+        errorObj.message = replaceWithNewErrorMessages(error);
       }
     } else if (error instanceof Error && error.message) {
-      errorObj.message = error.message;
+      errorObj.message = replaceWithNewErrorMessages(error);
     }
 
     if (isShowError) {
@@ -52,4 +62,14 @@ export const isErrorResult = (result: unknown): result is ErrorResult => {
     "isError" in result &&
     (result as Record<string, unknown>).isError === true
   );
+};
+
+const replaceWithNewErrorMessages = (error: any) => {
+  if (error.code === "ERR_NETWORK") {
+    return `${translate("Server is not responding.")} ${translate("Check the internet connection and try again.")}`;
+  } else if (error.code === "ECONNABORTED") {
+    return `${translate("Your request exceeded the time limit for processing.")} ${translate(
+      "Check the internet connection and try again.",
+    )}`;
+  } else return error.message;
 };

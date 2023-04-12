@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { AnimatePresence, usePresence } from "framer-motion";
 
-import { hideModal, ModalNames } from "store/reducers/modal";
+import { hideModal, ModalNames } from "store/modal";
 import { useAppDispatch, useAppSelector } from "store/store";
 
 import { ModalWrapper, TestModal } from "./components";

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import modal from "store/reducers/modal";
-import auth from "./reducers/auth";
+import modal from "store/modal";
+import auth from "./auth";
 
 export const rootReducer = combineReducers({
   [modal.name]: modal.reducer,

@@ -1,22 +1,31 @@
 import axios, { AxiosError } from "axios";
 
-import { ErrorResult } from "./types";
-// Store
 import store from "store/store";
-import { setRefreshToken } from "store/reducers/auth/actions";
-import { resetAuth } from "store/reducers/auth";
+import { refreshToken } from "store/auth/actions";
+import { resetAuth } from "store/auth";
+import { hideModal } from "store/modal";
+import { LOCAL_STORAGE_KEYS } from "configs";
 
-export const baseUrl = process.env.REACT_APP_API_URL;
-let isShowError = false;
+import { LoginUserResponse } from "store/auth/types";
+import { ErrorResult } from "./types";
+
+import { ENDPOINTS_AUTH } from "./endpoints";
+
+let isRefreshing = false;
+let refreshSubscribers: ((arg: string) => void)[] = [];
+let tokenUpdateTimestamp = 0;
+
+const timeout = 15_000;
 
 export function resetStore() {
   store.dispatch(resetAuth());
+  store.dispatch(hideModal());
 }
 
 export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
   const instance = axios.create({
-    baseURL: baseURL,
-    timeout: 10000,
+    baseURL,
+    timeout,
   });
 
   instance.interceptors.request.use(
@@ -35,20 +44,54 @@ export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
   instance.interceptors.response.use(
     success => success,
     error => {
-      if (error?.response?.status === 401) {
-        const refreshToken = store.getState().auth.refreshToken || "";
+      const {
+        config,
+        response: { status },
+      } = error;
 
-        if (!isShowError) {
-          isShowError = true;
+      if (status === 401) {
+        const nowTimeStamp = new Date().getTime();
 
-          store.dispatch(setRefreshToken({ refreshToken })).then(response => {
-            if ((response.payload as ErrorResult).isError) {
-              resetStore();
-            }
-            isShowError = false;
-          });
+        if (tokenUpdateTimestamp === 0 || nowTimeStamp - tokenUpdateTimestamp > timeout) {
+          const _refreshToken = store.getState().auth.refreshToken || "";
+
+          if (!isRefreshing) {
+            isRefreshing = true;
+
+            store.dispatch(refreshToken({ refreshToken: _refreshToken })).then(response => {
+              if ((response.payload as ErrorResult).isError) {
+                isRefreshing = false;
+                refreshSubscribers = [];
+                resetStore();
+              } else {
+                const { accessToken } = response.payload as LoginUserResponse;
+                tokenUpdateTimestamp = new Date().getTime();
+
+                refreshSubscribers.forEach(cb => {
+                  cb(accessToken);
+                });
+                refreshSubscribers = [];
+                isRefreshing = false;
+              }
+            });
+          }
+
+          if (config.url !== ENDPOINTS_AUTH.refreshToken) {
+            return new Promise(resolve => {
+              refreshSubscribers.push((newToken: string) => {
+                config.headers.Authorization = `Authorization ${newToken}`;
+
+                resolve(axios(config));
+              });
+            });
+          }
         } else {
-          resetStore();
+          return new Promise(resolve => {
+            const token = localStorage.getItem(LOCAL_STORAGE_KEYS.token);
+            config.headers.Authorization = `Authorization ${token}`;
+
+            resolve(axios(config));
+          });
         }
       }
 

@@ -17,8 +17,8 @@ export const languageMap = new Map();
 // function to translate text not in components
 // Usage: const translate = t(language);
 //        translate("Some Text")
-export const t = (currentLanguage: Language) => (key: string) => {
-  const translationSet = languageMap.get(currentLanguage.locale) ?? languageMap.get(EN.locale);
+export const t = (currentLanguage: string | null | undefined) => (key: string) => {
+  const translationSet = languageMap.get(currentLanguage) ?? languageMap.get(EN.locale);
   const translatedText = translationSet && translationSet[key] ? translationSet[key] : key;
 
   return translatedText;
