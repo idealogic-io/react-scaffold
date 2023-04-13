@@ -11,5 +11,6 @@
   "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
   "Logout": "Logout",
   "Password": "Password",
-  "Email": "Email"
+  "Email": "Email",
+  "Go to home page": "Go to home page"
 }

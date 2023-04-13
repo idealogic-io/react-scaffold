@@ -1,25 +1,29 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { StyledNotFoundPage } from "./StyledNotFoundPage";
+import { StyledNotFoundPage } from "./styled";
+
 import { Heading, Button } from "components";
 
 import { ROUTES } from "navigation/routes";
 import { useTranslation } from "context";
 
 const NotFoundPage: React.FC = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const onClickHandler = () => {
-    navigate(`/${ROUTES.home}`);
+    navigate(ROUTES.home);
   };
 
   return (
     <StyledNotFoundPage>
-      <Heading mb="15px">{t("Not found Page")} 404</Heading>
-      <Button mt="8px" scale="lg" onClick={onClickHandler}>
-        Go to home page
+      <Heading as="h1" scale="h1" mb="16px">
+        {t("Not found Page")} 404
+      </Heading>
+
+      <Button mt="8px" onClick={onClickHandler}>
+        {t("Go to home page")}
       </Button>
     </StyledNotFoundPage>
   );
