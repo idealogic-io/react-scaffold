@@ -28,7 +28,7 @@ const ThemedApp = ({ children }) => {
   );
 };
 
-const globalDecorator = StoryFn => {
+const globalDecorator = (StoryFn: React.FC) => {
   return (
     <HelmetProvider>
       <BrowserRouter>
