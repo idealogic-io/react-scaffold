@@ -1,31 +1,48 @@
 import React from "react";
-import { Text as StyledText } from "components";
+import { Text, Box } from "components";
+import { scales } from "./types";
 
 export default {
   title: "Components/Text",
 };
 
-export const Text = () => {
+export const Texts = () => {
   return (
-    <div>
-      <StyledText>Default</StyledText>
+    <>
+      {Object.values(scales).map(scale => {
+        return (
+          <Box key={scale}>
+            <Text textScale={scale}>{scale}</Text>
+            <hr />
+          </Box>
+        );
+      })}
 
-      <StyledText $fontWeight="bold">Bold StyledText</StyledText>
+      <Text scale="body1" $fontWeight="bold">
+        Custom Font weight
+      </Text>
+      <hr />
 
-      <StyledText $fontWeight="medium">Medium StyledText</StyledText>
+      <Text scale="body1" color="accent100">
+        Custom color
+      </Text>
+      <hr />
 
-      <StyledText fontSize="12px">Small StyledText</StyledText>
+      <Text scale="body1" ellipsis width="100px">
+        Ellipsis: a long Text with an ellipsis just for the example
+      </Text>
+      <hr />
 
-      <StyledText color="accent100">Custom color from theme</StyledText>
+      <Text scale="body1" textAlign="center">
+        Align center
+      </Text>
+      <hr />
 
-      <StyledText ellipsis width="100px">
-        Ellipsis: a long StyledText with an ellipsis just for the example
-      </StyledText>
+      <Text fontSize={{ _: "12px", tablet: "16px", laptop: "24px" }}>Size with media queries</Text>
+      <hr />
 
-      <StyledText textAlign="center">center</StyledText>
-
-      <StyledText fontSize={["12px", "16px", "22px"]}>Width media queries in markup as array</StyledText>
-      <StyledText fontSize={{ mobileS: 14, mobileL: 18, tablet: 24 }}>Width media queries in markup as obj</StyledText>
-    </div>
+      <Text direction="rtl">Direction rtl</Text>
+      <hr />
+    </>
   );
 };
