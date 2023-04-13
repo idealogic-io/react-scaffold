@@ -6,7 +6,7 @@ const URL = process.env.REACT_APP_URL;
 export const getDefaultMeta = (t: TranslateFunction) => {
   return {
     title: "",
-    description: t("The greatest scaffold"),
+    description: t("Project scaffold is in build progress"),
     image: `${URL}/logo512.png`,
   };
 };

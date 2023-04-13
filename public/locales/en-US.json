@@ -1,17 +1,15 @@
 {
-  "%num% Replaced": "%num% Replaced",
-  "Login Page": "Login Page",
-  "Landing Page": "Landing Page",
+  "Scaffold": "Scaffold",
+  "Project scaffold is in build progress": "Project scaffold is in build progress",
   "Login": "Login",
-  "Main Page": "Main Page",
-  "Redirect": "Redirect",
-  "Toggle Theme": "Toggle Theme",
-  "Open Modal": "Open Modal",
-  "Logout": "Logout",
-  "Link to Home page": "Link to Home page",
-  "Invalid email": "Invalid email",
+  "Home": "Home",
+  "Not found Page": "Not found Page",
+  "Copied": "Copied",
+  "Fail to copy": "Fail to copy",
   "This field is required": "This field is required",
-  "Change Language": "Change Language",
+  "Invalid email": "Invalid email",
   "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character",
-  "Current language is": "Current language is"
+  "Logout": "Logout",
+  "Password": "Password",
+  "Email": "Email"
 }
