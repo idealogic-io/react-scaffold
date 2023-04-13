@@ -1,33 +1,28 @@
 import React from "react";
-import { Link as StyledLink, Box } from "components";
+import { Link } from "components";
 import { AddIcon } from "components/svg";
 
 export default {
-  title: "Components/Link",
+  title: "Components/Links",
 };
 
-export const Link: React.FC = () => {
+export const Links: React.FC = () => {
   return (
     <>
-      <Box>
-        <StyledLink href="/">Default</StyledLink>
-      </Box>
-      <Box>
-        <StyledLink href="/" color="accent500">
-          Custom color
-        </StyledLink>
-      </Box>
-      <Box>
-        <StyledLink external href="/">
-          External
-        </StyledLink>
-      </Box>
-      <Box>
-        <StyledLink href="/">
-          With icon
-          <AddIcon />
-        </StyledLink>
-      </Box>
+      <Link href="/">Default</Link>
+
+      <Link href="/" color="accent500">
+        Custom color
+      </Link>
+
+      <Link external href="/">
+        External
+      </Link>
+
+      <Link href="/">
+        With icon
+        <AddIcon />
+      </Link>
     </>
   );
 };
