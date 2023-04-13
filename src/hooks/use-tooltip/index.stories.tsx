@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { AutoRow, Box, Flex } from "components";
+import { Row, Box, Flex } from "components";
 import { useTooltip } from "hooks";
 
 export default {
@@ -38,7 +38,7 @@ export const UseTooltips: React.FC = () => {
   const { targetRef: targetTriggerClick, tooltip: tooltipTriggerClick } = useTooltip("Click me", { trigger: "click" });
 
   return (
-    <AutoRow>
+    <Row>
       <>
         <StyledBox ref={targetPosition} />
         {tooltipPosition}
@@ -63,6 +63,6 @@ export const UseTooltips: React.FC = () => {
         <StyledEllipsis ref={targetEllipsis}>Hover me Hover me Hover me Hover me Hover me Hover me</StyledEllipsis>
         {tooltipEllipsis}
       </>
-    </AutoRow>
+    </Row>
   );
 };

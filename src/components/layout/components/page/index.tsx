@@ -30,9 +30,7 @@ export const Page: React.FC<PageProps> = ({ children, ...props }) => {
   return (
     <>
       <PageMeta />
-      <Container minHeight="100vh" {...props}>
-        {children}
-      </Container>
+      <Container {...props}>{children}</Container>
     </>
   );
 };

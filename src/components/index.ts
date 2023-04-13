@@ -4,20 +4,7 @@ export { default as Text } from "./text";
 export { default as Heading } from "./heading";
 export { default as Button } from "./button/index";
 export { default as Svg } from "./svg/Svg";
-export {
-  Column,
-  Box,
-  Container,
-  Flex,
-  FlexLayout,
-  FlexGap,
-  Row,
-  RowBetween,
-  RowFlat,
-  AutoRow,
-  PageMeta,
-  Page,
-} from "./layout";
+export { Column, Box, Container, Flex, FlexGap, Row, RowBetween, PageMeta, Page } from "./layout";
 export { NotFoundPage } from "./not-found-page";
 export { default as Modal } from "./modal";
 export { ModalWrapper } from "./modal/components";
