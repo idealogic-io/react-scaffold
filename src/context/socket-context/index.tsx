@@ -1,8 +1,9 @@
-// Global vars imports
-import React, { createContext, PropsWithChildren, useContext, useEffect, useCallback } from "react";
+import React, { createContext, PropsWithChildren, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
-// Store imports
+
 import { useAppSelector } from "store/store";
+import { useSocketEventHandlers } from "./hooks";
+import { SOCKET_EVENT_NAMES } from "./socket-event-names";
 
 type ContextType = {
   socketConnect: () => void;
@@ -20,6 +21,8 @@ const socket = io(`${process.env.REACT_APP_SOCKET_URL}` as string, {
 const SocketContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { token } = useAppSelector(state => state.auth);
 
+  const { onSocketErrorHandler } = useSocketEventHandlers();
+
   useEffect(() => {
     if (token) {
       socket.io.opts.query = { token };
@@ -29,18 +32,15 @@ const SocketContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) =>
     }
   }, [token]);
 
-  const socketConnect = useCallback(() => {
-    socket.connect();
-  }, [token]);
+  useEffect(() => {
+    socket.on(SOCKET_EVENT_NAMES.exception, onSocketErrorHandler);
 
-  const socketDisconnect = useCallback(() => {
-    socket.disconnect();
-  }, [token]);
+    return () => {
+      socket.off(SOCKET_EVENT_NAMES.exception);
+    };
+  }, []);
 
-  const context = {
-    socketConnect,
-    socketDisconnect,
-  };
+  const context = null;
 
   return <SocketContext.Provider value={context}>{children}</SocketContext.Provider>;
 };
