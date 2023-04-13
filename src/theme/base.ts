@@ -29,6 +29,7 @@ export const mediaQueries = {
 
 export const shadows = {
   card: "0px 0px 30px rgba(202, 199, 226, 0.5)",
+  tooltip: "0px 40px 64px -12px rgba(0, 0, 0, 0.02), 0px 32px 48px -8px rgba(0, 0, 0, 0.08)",
 } as const;
 
 export const radii = {

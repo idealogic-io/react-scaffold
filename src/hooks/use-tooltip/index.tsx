@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { usePopper } from "react-popper";
 import { AnimatePresence } from "framer-motion";
 
-import { Arrow, StyledTooltip } from "./StyledTooltip";
-import { TooltipOptions, TooltipRefs } from "./types";
+import { Arrow, StyledTooltip } from "./styled";
+import { TooltipOptions } from "./types";
 import { useSubscriptionEventsHandlers } from "./use-subscription-events-handlers";
 import { checkIsEllipsis } from "utils";
 import { appearanceAnimationMap, appearanceAnimationVariants } from "theme";
 
-const useTooltip = (content: React.ReactNode, options?: TooltipOptions): TooltipRefs => {
+const useTooltip = (content: React.ReactNode, options?: TooltipOptions) => {
   const {
     placement = "auto",
     trigger = "hover",
@@ -16,12 +16,13 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
     tooltipPadding = { left: 16, right: 16 },
     tooltipOffset = [0, 10],
     isEllipsis = false,
+    customStyles = {},
   } = options ?? {};
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [tooltipElement, setTooltipElement] = useState<HTMLElement | null>(null);
   const [arrowElement, setArrowElement] = useState<HTMLElement | null>(null);
 
-  const { visible } = useSubscriptionEventsHandlers({ targetElement, tooltipElement, trigger });
+  const { visible, setVisible } = useSubscriptionEventsHandlers({ targetElement, tooltipElement, trigger });
 
   const { styles, attributes } = usePopper(targetElement, tooltipElement, {
     placement,
@@ -42,13 +43,17 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
       variants={appearanceAnimationVariants}
       transition={{ duration: 0.3 }}
       ref={setTooltipElement}
-      style={styles.popper}
+      style={{ ...customStyles?.tooltip, ...styles.popper }}
       {...attributes.popper}
     >
       <>{content || targetElement?.innerHTML}</>
       <Arrow
         ref={setArrowElement}
-        style={{ ...styles.arrow, transform: styles.arrow.transform && `${styles.arrow.transform} rotate(45deg)` }}
+        style={{
+          ...customStyles?.arrow,
+          ...styles.arrow,
+          transform: styles.arrow.transform && `${styles.arrow.transform} rotate(45deg)`,
+        }}
       />
     </StyledTooltip>
   );
@@ -63,6 +68,7 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
     targetRef: setTargetElement,
     tooltip: AnimatedTooltip,
     tooltipVisible: visible,
+    setVisible,
   };
 };
 

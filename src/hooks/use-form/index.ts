@@ -1,6 +1,8 @@
 import { ChangeEvent } from "react";
 import { useFormik, FormikConfig, FormikValues } from "formik";
 
+import { FieldProps } from "./types";
+
 const useForm = <Values>(config: FormikConfig<Values & FormikValues>) => {
   const formik = useFormik({
     ...config,
@@ -11,14 +13,17 @@ const useForm = <Values>(config: FormikConfig<Values & FormikValues>) => {
 
   return {
     ...formik,
-    fieldProps(field: keyof Values) {
+    fieldProps(field: keyof Values): FieldProps<Values> {
       return {
         ...formik.getFieldProps(field),
         onChange: (e: ChangeEvent<HTMLInputElement>) => {
           return formik.setFieldValue(field as string, e.target.value);
         },
         onBlur: () => {
-          return formik.setFieldTouched(field as string, true, true);
+          return formik.setFieldTouched(field as string, true);
+        },
+        onFocus: () => {
+          return formik.setFieldTouched(field as string, false);
         },
       };
     },

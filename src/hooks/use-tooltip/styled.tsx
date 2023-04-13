@@ -6,7 +6,7 @@ const PADDING = 16;
 export const Arrow = styled.div`
   width: 10px;
   height: 10px;
-  background: ${({ theme }) => theme.colors.monochrome25};
+  background: ${({ theme }) => theme.colors.monochrome0};
 `;
 
 export const StyledTooltip = styled(motion.div)`
@@ -14,9 +14,12 @@ export const StyledTooltip = styled(motion.div)`
   border-radius: ${({ theme }) => theme.radii.semiMedium};
   max-width: calc(320px - (${PADDING}px * 2));
   z-index: ${({ theme }) => theme.zIndices.tooltip};
-  background: ${({ theme }) => theme.colors.monochrome25};
+  background: ${({ theme }) => theme.colors.monochrome0};
   border: 1px solid ${({ theme }) => theme.colors.monochrome300};
-  color: ${({ theme }) => theme.colors.monochrome900};
+  color: ${({ theme }) => theme.colors.monochrome800};
+  font-size: 14px;
+  word-wrap: break-word;
+  box-shadow: ${({ theme }) => theme.shadows.tooltip};
 
   &[data-popper-placement^="top"] > ${Arrow} {
     bottom: -5px;

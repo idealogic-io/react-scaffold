@@ -33,7 +33,7 @@ const StyledEllipsis = styled(Box)`
 export const UseTooltips: React.FC = () => {
   const { targetRef, tooltip } = useTooltip("Custom text");
   const { targetRef: targetText, tooltip: tooltipText } = useTooltip(undefined);
-  const { targetRef: targetEllipsis, tooltip: tooltipEllipsis } = useTooltip(undefined);
+  const { targetRef: targetEllipsis, tooltip: tooltipEllipsis } = useTooltip(undefined, { trigger: "click" });
   const { targetRef: targetPosition, tooltip: tooltipPosition } = useTooltip("Top position", { placement: "top" });
   const { targetRef: targetTriggerClick, tooltip: tooltipTriggerClick } = useTooltip("Click me", { trigger: "click" });
 
@@ -60,7 +60,7 @@ export const UseTooltips: React.FC = () => {
       </>
 
       <>
-        <StyledEllipsis ref={targetEllipsis}>Hover me Hover me Hover me</StyledEllipsis>
+        <StyledEllipsis ref={targetEllipsis}>Hover me Hover me Hover me Hover me Hover me Hover me</StyledEllipsis>
         {tooltipEllipsis}
       </>
     </AutoRow>

@@ -8,7 +8,7 @@ const RequireAuth: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { token } = useAppSelector(state => state.auth);
 
   if (!token) {
-    return <Navigate to={ROUTES.landing} replace />;
+    return <Navigate to={`/${ROUTES.login}`} replace />;
   }
 
   return <>{children}</>;
