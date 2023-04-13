@@ -3,7 +3,7 @@ import { Text, Box } from "components";
 import { scales } from "./types";
 
 export default {
-  title: "Components/Text",
+  title: "Components/Texts",
 };
 
 export const Texts = () => {

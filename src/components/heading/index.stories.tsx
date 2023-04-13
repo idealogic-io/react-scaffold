@@ -1,5 +1,5 @@
 import { Box, Heading } from "components";
-import { Scales, scales } from "./types";
+import { scales } from "./types";
 
 export default {
   title: "Components/Headings",
@@ -8,15 +8,16 @@ export default {
 export const Headings: React.FC = () => {
   return (
     <>
-      <Box my="16px">
-        {Object.values(scales).map((scale, indx) => {
-          return (
-            <Heading key={indx} scale={scale as Scales} as={scale as Scales}>
-              {`${scale.toUpperCase()}`}
+      {Object.values(scales).map(scale => {
+        return (
+          <Box key={scale}>
+            <Heading scale={scale} as={scale}>
+              {scale}
             </Heading>
-          );
-        })}
-      </Box>
+            <hr />
+          </Box>
+        );
+      })}
     </>
   );
 };
