@@ -1,24 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 
-import { Flex, Text, Button, Heading } from "components";
+import { Text, Heading } from "components";
+import { StyledModalWrapper } from "../styled";
+import CloseModalWrapper from "../close-modal-wrapper";
 
 import { useAppDispatch, useAppSelector } from "store/store";
 import { hideModal } from "store/modal";
+
 import { ModalState } from "store/modal/types";
 
-const StyledTestModal = styled(Flex)`
-  height: 300px;
-  width: 250px;
-  padding: 16px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-export type TestModalProps = {
-  title: string;
-};
+import { TestModalProps } from "./types";
 
 const TestModal: React.FC = () => {
   const { props } = useAppSelector(state => state.modal as unknown as ModalState<TestModalProps>);
@@ -30,13 +21,14 @@ const TestModal: React.FC = () => {
   };
 
   return (
-    <StyledTestModal>
+    <StyledModalWrapper>
+      <CloseModalWrapper closeModalHandler={closeModalHandler} />
+
       <Heading textAlign="center" scale="h5" as="h5">
         Header with custom prop {props?.title}
       </Heading>
       <Text>This is a test modal</Text>
-      <Button onClick={closeModalHandler}>Close modal</Button>
-    </StyledTestModal>
+    </StyledModalWrapper>
   );
 };
 
