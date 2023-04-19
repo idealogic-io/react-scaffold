@@ -57,7 +57,7 @@ export const ThemeContext = () => {
 
       <Column my="12px">
         <Text>Radii: </Text>
-        <Row>
+        <Row flexWrap="wrap">
           {Object.entries(theme.radii).map(([key, value]) => {
             return (
               <StyledBox key={key} style={{ borderRadius: value, backgroundColor: "pink" }}>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Skeleton } from "components";
 import { ImageProps } from "./types";
-import { StyledImage } from "./StyledImage";
+import { StyledImage } from "./styled";
 
 const Image: React.FC<ImageProps> = ({ src, width, height, alt, variant, animation, ...props }) => {
   const [isLoading, setLoading] = useState(true);

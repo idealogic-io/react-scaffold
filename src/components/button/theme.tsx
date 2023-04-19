@@ -1,71 +1,66 @@
 import { css, DefaultTheme } from "styled-components";
-
-import { Svg } from "components/svg";
-
 import { Colors } from "theme/types";
 import { scales, Variant } from "./types";
 
-export const variantStyles = (theme: DefaultTheme, variant: Variant = "primary", color: keyof Colors | undefined) => {
+export const variantStyles = (
+  theme: DefaultTheme,
+  variant: Variant = "primary",
+  color: keyof Colors | undefined,
+  hoverColor: keyof Colors | undefined,
+) => {
   return {
     primary: css`
-      background-color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent500)};
+      background-color: ${color ? theme.colors[color] : theme.colors.accent400};
 
       &:not([disabled]):hover {
-        background-color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent600)};
+        background-color: ${hoverColor
+          ? theme.colors[hoverColor]
+          : color
+          ? theme.colors[color]
+          : theme.colors.accent500};
       }
 
       &:disabled {
-        background-color: ${theme.colors.monochrome400};
+        opacity: 0.33;
         cursor: not-allowed;
       }
     `,
 
     outline: css`
-      background-color: ${({ theme }) => theme.colors.transparent};
-      border: 1px solid ${({ theme }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
-      color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
-
-      ${Svg} {
-        fill: ${({ theme }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
-      }
+      background-color: ${theme.colors.transparent};
+      border: 1px solid ${color ? theme.colors[color] : theme.colors.monochrome900};
+      color: ${color ? theme.colors[color] : theme.colors.monochrome900};
 
       &:not([disabled]):hover {
-        border: 1px solid ${theme.colors.accent500};
-        color: ${theme.colors.accent500};
-
-        ${Svg} {
-          fill: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent500)};
-        }
+        background-color: ${hoverColor
+          ? theme.colors[hoverColor]
+          : color
+          ? theme.colors[color]
+          : theme.colors.accent500};
+        border: 1px solid
+          ${hoverColor ? theme.colors[hoverColor] : color ? theme.colors[color] : theme.colors.accent500};
+        color: ${theme.colors.monochrome0};
       }
 
       &:disabled {
-        border: 1px solid ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent400)};
-        color: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent400)};
-        cursor: not-allowed;
         opacity: 0.33;
-
-        ${Svg} {
-          fill: ${({ theme }) => (color ? theme.colors[color] : theme.colors.accent400)};
-        }
+        cursor: not-allowed;
       }
     `,
   }[variant];
 };
 
 export const scaleVariants = {
-  [scales.SM]: {
-    padding: "4px 24px",
-    minWidth: "86px",
-    fontSize: "12px",
+  [scales.LG]: {
+    padding: "18px 32px",
+    minWidth: 120,
   },
   [scales.MD]: {
-    padding: "6px 24px",
-    minWidth: "110px",
-    fontSize: "16px",
+    padding: "14px 28px",
+    minWidth: 100,
   },
-  [scales.LG]: {
-    padding: "12px 24px",
-    minWidth: "110px",
-    fontSize: "18px",
+  [scales.SM]: {
+    padding: "6px 16px",
+    minWidth: 53,
   },
 };

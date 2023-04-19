@@ -29,6 +29,7 @@ export interface BaseButtonProps
       scale?: Scale;
       variant?: Variant;
       color?: keyof Colors;
+      hoverColor?: keyof Colors;
       disabled?: boolean;
       startIcon?: ReactNode & SvgProps;
       endIcon?: ReactNode & SvgProps;

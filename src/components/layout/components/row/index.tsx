@@ -8,6 +8,7 @@ import { RowProps } from "../types";
 export const Row = styled(Box)<RowProps>`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   border: ${({ border }) => border};
   border-radius: ${({ borderRadius }) => borderRadius};
   ${space}

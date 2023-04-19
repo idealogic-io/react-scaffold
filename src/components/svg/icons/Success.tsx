@@ -1,15 +1,16 @@
 import React from "react";
+import Svg from "../Svg";
+import { SvgProps } from "../types";
 
-const Icon: React.FC = () => {
+const Icon: React.FC<SvgProps> = ({ color = "success500", ...props }) => {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <Svg viewBox="0 0 20 20" color={color} {...props}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10ZM10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0ZM13.6757 8.73716C14.0828 8.36397 14.1103 7.7314 13.7372 7.32428C13.364 6.91716 12.7314 6.88966 12.3243 7.26285L8.64352 10.6369L7.18343 9.26998C6.78025 8.89254 6.14743 8.9134 5.76998 9.31658C5.39254 9.71976 5.4134 10.3526 5.81658 10.73L7.95294 12.73C8.33451 13.0872 8.9268 13.0903 9.31209 12.7372L13.6757 8.73716Z"
-        fill="#0ADB1F"
       />
-    </svg>
+    </Svg>
   );
 };
 
