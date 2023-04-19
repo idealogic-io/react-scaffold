@@ -1,14 +1,14 @@
 import React from "react";
 
-import { Button as StyledButton, Box, Flex } from "components";
+import { Button, Box, Flex } from "components";
 import { variants, scales } from "./types";
 import { AddIcon } from "components/svg";
 
 export default {
-  title: "Components/Button",
+  title: "Components/Buttons",
 };
 
-export const Button: React.FC = () => {
+export const Buttons: React.FC = () => {
   return (
     <>
       <Box mb="32px">
@@ -17,9 +17,9 @@ export const Button: React.FC = () => {
             <Box key={variant} mb="32px">
               {Object.values(scales).map(scale => {
                 return (
-                  <StyledButton key={scale} variant={variant} scale={scale} m="8px">
+                  <Button key={scale} variant={variant} scale={scale} m="8px">
                     {`${variant} ${scale.toUpperCase()}`}
-                  </StyledButton>
+                  </Button>
                 );
               })}
             </Box>
@@ -28,65 +28,65 @@ export const Button: React.FC = () => {
       </Box>
 
       <Flex mb="32px" alignContent="center">
-        <StyledButton mx="8px" isLoading>
+        <Button mx="8px" isLoading>
           Loading
-        </StyledButton>
+        </Button>
 
-        <StyledButton mx="8px" disabled>
+        <Button mx="8px" disabled>
           Disabled
-        </StyledButton>
+        </Button>
 
-        <StyledButton mx="8px" variant="outline" disabled>
+        <Button mx="8px" variant="outline" disabled>
           Disabled
-        </StyledButton>
+        </Button>
 
-        <StyledButton mx="8px" variant="outline" isLoading>
+        <Button mx="8px" variant="outline" isLoading>
           Loading
-        </StyledButton>
+        </Button>
       </Flex>
 
       <Box mb="32px">
-        <StyledButton as="a" href="https://google.com" external mx="8px">
+        <Button as="a" href="https://google.com" external mx="8px">
           External
-        </StyledButton>
+        </Button>
       </Box>
 
       <Box mb="32px">
-        <StyledButton color="error500" hoverColor="error800" mx="8px">
+        <Button color="error500" hoverColor="error800" mx="8px">
           Custom color with hover color
-        </StyledButton>
+        </Button>
 
-        <StyledButton color="success500" hoverColor="success800" variant="outline" mx="8px">
+        <Button color="success500" hoverColor="success800" variant="outline" mx="8px">
           Custom color with hover color
-        </StyledButton>
+        </Button>
 
-        <StyledButton color="error500" mx="8px">
+        <Button color="error500" mx="8px">
           Custom color
-        </StyledButton>
+        </Button>
 
-        <StyledButton color="success500" variant="outline" mx="8px">
+        <Button color="success500" variant="outline" mx="8px">
           Custom color
-        </StyledButton>
+        </Button>
       </Box>
 
       <Box mb="32px">
-        <StyledButton startIcon={<AddIcon />} mx="8px">
+        <Button startIcon={<AddIcon />} mx="8px">
           With Icon
-        </StyledButton>
+        </Button>
 
-        <StyledButton startIcon={<AddIcon />} variant="outline" mx="8px">
+        <Button startIcon={<AddIcon />} variant="outline" mx="8px">
           With Icon
-        </StyledButton>
+        </Button>
       </Box>
 
       <Box mb="32px">
-        <StyledButton disabled startIcon={<AddIcon />} mx="8px">
+        <Button disabled startIcon={<AddIcon />} mx="8px">
           Disabled With Icon
-        </StyledButton>
+        </Button>
 
-        <StyledButton disabled startIcon={<AddIcon />} variant="outline" mx="8px">
+        <Button disabled startIcon={<AddIcon />} variant="outline" mx="8px">
           Disabled With Icon
-        </StyledButton>
+        </Button>
       </Box>
     </>
   );

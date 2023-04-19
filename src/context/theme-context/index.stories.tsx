@@ -14,6 +14,8 @@ const StyledBox = styled(Box)`
   width: 200px;
   height: 200px;
   margin: 10px;
+  border-radius: ${({ theme }) => theme.radii.small};
+  background-color: ${({ theme }) => theme.colors.monochrome100};
 `;
 
 export const ThemeContext = () => {
@@ -60,7 +62,7 @@ export const ThemeContext = () => {
         <Row flexWrap="wrap">
           {Object.entries(theme.radii).map(([key, value]) => {
             return (
-              <StyledBox key={key} style={{ borderRadius: value, backgroundColor: "pink" }}>
+              <StyledBox key={key} style={{ borderRadius: value }}>
                 <Text>{key}</Text>
               </StyledBox>
             );

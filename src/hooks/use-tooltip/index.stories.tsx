@@ -1,41 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Row, Box, Flex } from "components";
+import { Row, Box, Text } from "components";
 import { useTooltip } from "hooks";
 
 export default {
   title: "Hooks/UseTooltips",
 };
 
-const StyledBox = styled(Flex)`
-  width: 100px;
-  height: 100px;
-  background-color: pink;
-  margin: 100px;
-  align-items: center;
+const StyledBox = styled(Box)`
+  display: flex;
   justify-content: center;
-  border-radius: 5px;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  border-radius: ${({ theme }) => theme.radii.small};
+  background-color: ${({ theme }) => theme.colors.monochrome500};
   cursor: pointer;
-`;
-
-const StyledEllipsis = styled(Box)`
-  width: 100px;
-  height: 100px;
-  background-color: pink;
-  margin: 100px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  border-radius: 5px;
 `;
 
 export const UseTooltips: React.FC = () => {
   const { targetRef, tooltip } = useTooltip("Custom text");
   const { targetRef: targetText, tooltip: tooltipText } = useTooltip(undefined);
-  const { targetRef: targetEllipsis, tooltip: tooltipEllipsis } = useTooltip(undefined, { trigger: "click" });
   const { targetRef: targetPosition, tooltip: tooltipPosition } = useTooltip("Top position", { placement: "top" });
   const { targetRef: targetTriggerClick, tooltip: tooltipTriggerClick } = useTooltip("Click me", { trigger: "click" });
+  const { targetRef: targetEllipsis, tooltip: tooltipEllipsis } = useTooltip(undefined, { isEllipsis: true });
 
   return (
     <Row>
@@ -60,7 +50,11 @@ export const UseTooltips: React.FC = () => {
       </>
 
       <>
-        <StyledEllipsis ref={targetEllipsis}>Hover me Hover me Hover me Hover me Hover me Hover me</StyledEllipsis>
+        <StyledBox>
+          <Text ref={targetEllipsis} ellipsis>
+            Show only if element is ellipsis. Make this text shorter and u will see.
+          </Text>
+        </StyledBox>
         {tooltipEllipsis}
       </>
     </Row>

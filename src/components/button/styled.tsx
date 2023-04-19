@@ -8,6 +8,7 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: ${({ theme }) => theme.radii.semiMedium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => (theme.isDark ? theme.colors.monochrome900 : theme.colors.monochrome0)};
+  font-family: ${({ theme }) => theme.fonts.mv};
 
   position: relative;
   align-items: center;

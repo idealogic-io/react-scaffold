@@ -1,4 +1,6 @@
 import React from "react";
+
+import { Box, Text } from "components";
 import useMatchBreakpoints from "./use-match-breakpoints";
 
 export default {
@@ -10,8 +12,8 @@ export const UseMatchBreakpoint: React.FC = () => {
   const state = useMatchBreakpoints();
 
   return (
-    <div style={{ padding: "32px" }}>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-    </div>
+    <Box style={{ padding: "32px" }}>
+      <Text>{JSON.stringify(state, null, 2)}</Text>
+    </Box>
   );
 };
