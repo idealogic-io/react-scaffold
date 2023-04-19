@@ -58,7 +58,7 @@ export const StyledNumericInput = styled(Flex)<StyledNumericInputProps>`
         : !!value || isFocusedValue
         ? theme.colors.monochrome500
         : theme.colors.transparent};
-  background-color: ${({ theme, isError }) => (isError ? theme.colors.error100 : theme.colors.transparent)};
+  background-color: ${({ theme, isError }) => (isError ? theme.colors.error100 : theme.colors.monochrome100)};
   transition: 0.3s all linear;
   ${({ isError }) => isError && shakeAnimation}
 `;

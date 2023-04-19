@@ -1,7 +1,7 @@
 import styled, { DefaultTheme } from "styled-components";
 // Types
 import { Colors } from "theme/types";
-import { StyledRangeInputProps } from "./types";
+import { StyledInputProps } from "./types";
 
 const mainDimension = "24px";
 
@@ -20,7 +20,7 @@ const makeGreyLineAfterThumb = (color: keyof Colors, width: number) => {
   return shadow;
 };
 
-export const StyledRangeInput = styled.input<StyledRangeInputProps>`
+export const StyledRangeInput = styled.input<StyledInputProps>`
   overflow: hidden;
   display: block;
   appearance: none;
