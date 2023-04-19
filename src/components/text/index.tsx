@@ -21,6 +21,7 @@ export const Text = styled.p<TextProps>`
   color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
   font-weight: ${({ theme, $fontWeight }) => ($fontWeight ? theme.fontWeight[$fontWeight] : theme.fontWeight.regular)};
   line-height: 1.375;
+  font-family: ${({ theme }) => theme.fonts.mv};
 
   direction: ${({ direction }) => direction};
 
