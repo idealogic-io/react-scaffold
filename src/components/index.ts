@@ -8,9 +8,7 @@ export { Column, Box, Container, Flex, FlexGap, Row, RowBetween, PageMeta, Page 
 export { NotFoundPage } from "./not-found-page";
 export { default as Modal } from "./modal";
 export { ModalWrapper } from "./modal/components";
-export { default as Input } from "./input";
-export { default as InputGroup } from "./input-group";
-export { default as InputNumeric } from "./input-numeric";
+export { Input, InputGroup, InputNumeric, InputRange, InputCode } from "./inputs";
 export { default as Link } from "./link";
 export { default as Skeleton } from "./skeleton";
 export { default as Image } from "./image";

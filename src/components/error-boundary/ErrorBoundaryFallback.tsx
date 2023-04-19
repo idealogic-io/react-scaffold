@@ -17,7 +17,9 @@ const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, re
 
   return (
     <Flex justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-      <Heading as="h1">Something went wrong!</Heading>
+      <Heading as="h1" scale="h1">
+        Something went wrong!
+      </Heading>
       <Text mt="8px">{error?.toString()}</Text>
       <Heading mt="8px" as="h2" scale="h2">
         Please, go to home page

@@ -1,8 +1,11 @@
 import styled from "styled-components";
-import { Column } from "components/layout";
 
-export const StyledNotFoundPage = styled(Column)`
-  height: 100vh;
+import { Page } from "components/layout";
+
+export const StyledNotFoundPage = styled(Page)`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

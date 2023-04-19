@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { InputNumeric as StyledInput } from "components";
 
 export default {
-  title: "Components/InputNumeric",
+  title: "Components/Inputs/InputNumeric",
 };
 
 export const InputNumeric: React.FC = () => {

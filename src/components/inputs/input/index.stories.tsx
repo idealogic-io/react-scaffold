@@ -2,7 +2,7 @@ import { scales } from "./types";
 import { Input as StyledInput, Row } from "components";
 
 export default {
-  title: "Components/Input",
+  title: "Components/Inputs/Input",
 };
 
 export const Input: React.FC = () => {

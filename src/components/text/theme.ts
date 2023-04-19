@@ -16,4 +16,14 @@ export const style = {
     fontSizeTablet: "14px",
     fontSizeMobileS: "12px",
   },
+  [scales.caption1]: {
+    fontSizeLaptop: "14px",
+    fontSizeTablet: "14px",
+    fontSizeMobileS: "14px",
+  },
+  [scales.caption2]: {
+    fontSizeLaptop: "12px",
+    fontSizeTablet: "12px",
+    fontSizeMobileS: "12px",
+  },
 };
