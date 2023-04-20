@@ -4,7 +4,10 @@ export interface TooltipRefs {
   targetRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
   tooltip: React.ReactNode;
   tooltipVisible: boolean;
+  setVisible: (arg: boolean) => void;
 }
+
+export type TriggerType = "click" | "hover" | "focus";
 
 export interface TooltipOptions {
   placement?: Placement;
@@ -13,9 +16,8 @@ export interface TooltipOptions {
   tooltipPadding?: Padding;
   tooltipOffset?: [number, number];
   isEllipsis?: boolean;
+  customStyles?: { tooltip?: {}; arrow?: {} };
 }
-
-export type TriggerType = "click" | "hover" | "focus";
 
 export type useSubscriptionEventsHandlersProps = {
   targetElement: HTMLElement | null;

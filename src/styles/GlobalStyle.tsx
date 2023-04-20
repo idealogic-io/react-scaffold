@@ -129,7 +129,7 @@ html, body, div, span, applet, object, iframe,
     margin: 0;
     font-family: 'Merriweather';
     background-color: ${({ theme }) => theme.colors.monochrome0};
-    
+
     img {
       height: auto;
       max-width: 100%;

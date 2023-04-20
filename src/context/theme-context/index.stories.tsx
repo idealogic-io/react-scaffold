@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { AutoRow, Button, Heading, Page, Text, Column, Box } from "components";
+import { Button, Heading, Page, Text, Column, Box, Row } from "components";
 import { useThemeContext } from "context";
 
 export default {
@@ -14,6 +14,8 @@ const StyledBox = styled(Box)`
   width: 200px;
   height: 200px;
   margin: 10px;
+  border-radius: ${({ theme }) => theme.radii.small};
+  background-color: ${({ theme }) => theme.colors.monochrome100};
 `;
 
 export const ThemeContext = () => {
@@ -44,7 +46,7 @@ export const ThemeContext = () => {
 
       <Column my="12px">
         <Text>Shadows: </Text>
-        <AutoRow>
+        <Row>
           {Object.entries(theme.shadows).map(([key, value]) => {
             return (
               <StyledBox key={key} style={{ boxShadow: value }}>
@@ -52,32 +54,32 @@ export const ThemeContext = () => {
               </StyledBox>
             );
           })}
-        </AutoRow>
+        </Row>
       </Column>
 
       <Column my="12px">
         <Text>Radii: </Text>
-        <AutoRow>
+        <Row flexWrap="wrap">
           {Object.entries(theme.radii).map(([key, value]) => {
             return (
-              <StyledBox key={key} style={{ borderRadius: value, backgroundColor: "pink" }}>
+              <StyledBox key={key} style={{ borderRadius: value }}>
                 <Text>{key}</Text>
               </StyledBox>
             );
           })}
-        </AutoRow>
+        </Row>
       </Column>
 
       <Column my="12px">
         <Text>Colors: </Text>
 
-        <AutoRow>
+        <Row>
           {Object.entries(theme.colors).map(([key, value]) => (
             <StyledBox key={key} style={{ backgroundColor: value }}>
               <Text>{key}</Text>
             </StyledBox>
           ))}
-        </AutoRow>
+        </Row>
       </Column>
     </Page>
   );

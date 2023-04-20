@@ -1,16 +1,15 @@
 import axios, { AxiosError } from "axios";
 
-import { ErrorResult } from "./types";
-
-// Store
 import store from "store/store";
 import { refreshToken } from "store/auth/actions";
 import { resetAuth } from "store/auth";
-
-import { ENDPOINTS } from "./endpoints";
-import { clearUserState } from "hooks";
+import { hideModal } from "store/modal";
 import { LOCAL_STORAGE_KEYS } from "configs";
+
 import { LoginUserResponse } from "store/auth/types";
+import { ErrorResult } from "./types";
+
+import { ENDPOINTS_AUTH } from "./endpoints";
 
 let isRefreshing = false;
 let refreshSubscribers: ((arg: string) => void)[] = [];
@@ -20,7 +19,7 @@ const timeout = 15_000;
 
 export function resetStore() {
   store.dispatch(resetAuth());
-  clearUserState();
+  store.dispatch(hideModal());
 }
 
 export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
@@ -77,7 +76,7 @@ export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
             });
           }
 
-          if (config.url !== ENDPOINTS.refreshToken) {
+          if (config.url !== ENDPOINTS_AUTH.refreshToken) {
             return new Promise(resolve => {
               refreshSubscribers.push((newToken: string) => {
                 config.headers.Authorization = `Authorization ${newToken}`;

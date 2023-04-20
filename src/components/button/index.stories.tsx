@@ -1,38 +1,25 @@
 import React from "react";
 
-import { Button as StyledButton, Box } from "components";
-import { variants, scales, accentColor } from "./types";
+import { Button, Box, Flex } from "components";
+import { variants, scales } from "./types";
 import { AddIcon } from "components/svg";
 
 export default {
-  title: "Components/Button",
+  title: "Components/Buttons",
 };
 
-export const Button: React.FC = () => {
+export const Buttons: React.FC = () => {
   return (
     <>
       <Box mb="32px">
-        {Object.values(scales).map(scale => {
+        {Object.values(variants).map(variant => {
           return (
-            <Box key={scale} m="8px">
-              {Object.values(variants).map(variant => {
+            <Box key={variant} mb="32px">
+              {Object.values(scales).map(scale => {
                 return (
-                  <Box key={variant} m="8px">
-                    {Object.values(accentColor).map(accentColor => {
-                      return (
-                        <StyledButton
-                          key={accentColor}
-                          startIcon={<AddIcon />}
-                          accentColor={accentColor}
-                          variant={variant}
-                          scale={scale}
-                          m="8px"
-                        >
-                          {accentColor}
-                        </StyledButton>
-                      );
-                    })}
-                  </Box>
+                  <Button key={scale} variant={variant} scale={scale} m="8px">
+                    {`${variant} ${scale.toUpperCase()}`}
+                  </Button>
                 );
               })}
             </Box>
@@ -40,35 +27,67 @@ export const Button: React.FC = () => {
         })}
       </Box>
 
+      <Flex mb="32px" alignContent="center">
+        <Button mx="8px" isLoading>
+          Loading
+        </Button>
+
+        <Button mx="8px" disabled>
+          Disabled
+        </Button>
+
+        <Button mx="8px" variant="outline" disabled>
+          Disabled
+        </Button>
+
+        <Button mx="8px" variant="outline" isLoading>
+          Loading
+        </Button>
+      </Flex>
+
       <Box mb="32px">
-        <StyledButton startIcon={<AddIcon />} mx="8px" isLoading>
-          Loading
-        </StyledButton>
-
-        <StyledButton startIcon={<AddIcon />} mx="8px" disabled>
-          Disabled
-        </StyledButton>
-
-        <StyledButton startIcon={<AddIcon />} variant="secondary" mx="8px" isLoading>
-          Loading
-        </StyledButton>
-
-        <StyledButton startIcon={<AddIcon />} variant="secondary" mx="8px" disabled>
-          Disabled
-        </StyledButton>
+        <Button as="a" href="https://google.com" external mx="8px">
+          External
+        </Button>
       </Box>
 
-      <StyledButton as="a" href="https://google.com" external mx="8px">
-        External
-      </StyledButton>
+      <Box mb="32px">
+        <Button color="error500" hoverColor="error800" mx="8px">
+          Custom color with hover color
+        </Button>
 
-      <StyledButton accentColor="accent" hsl="100" mx="8px">
-        Custom color
-      </StyledButton>
+        <Button color="success500" hoverColor="success800" variant="outline" mx="8px">
+          Custom color with hover color
+        </Button>
 
-      <StyledButton accentColor="error" hsl="800" mx="8px">
-        Custom color
-      </StyledButton>
+        <Button color="error500" mx="8px">
+          Custom color
+        </Button>
+
+        <Button color="success500" variant="outline" mx="8px">
+          Custom color
+        </Button>
+      </Box>
+
+      <Box mb="32px">
+        <Button startIcon={<AddIcon />} mx="8px">
+          With Icon
+        </Button>
+
+        <Button startIcon={<AddIcon />} variant="outline" mx="8px">
+          With Icon
+        </Button>
+      </Box>
+
+      <Box mb="32px">
+        <Button disabled startIcon={<AddIcon />} mx="8px">
+          Disabled With Icon
+        </Button>
+
+        <Button disabled startIcon={<AddIcon />} variant="outline" mx="8px">
+          Disabled With Icon
+        </Button>
+      </Box>
     </>
   );
 };

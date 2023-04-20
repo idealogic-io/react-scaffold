@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton, Box, Column } from "components";
+import { Skeleton, Text } from "components";
 
 export default {
   title: "Components/Skeletons",
@@ -7,20 +7,16 @@ export default {
 
 export const Skeletons: React.FC = () => {
   return (
-    <Column>
+    <>
+      <Text>Pulse</Text>
       <Skeleton my="8px" />
-
       <Skeleton my="8px" width="100px" height="100px" variant="circle" />
-
-      <Skeleton my="8px" width="100px" height="100px" variant="circle" animation="waves" />
-
       <Skeleton my="8px" width="100px" height="100px" />
 
+      <Text>Waves</Text>
+      <Skeleton my="8px" />
+      <Skeleton my="8px" width="100px" height="100px" variant="circle" animation="waves" />
       <Skeleton my="8px" width="100px" height="100px" animation="waves" />
-
-      <Box my="8px" width="200px">
-        <Skeleton />
-      </Box>
-    </Column>
+    </>
   );
 };

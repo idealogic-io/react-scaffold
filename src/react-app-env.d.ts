@@ -1,5 +1,3 @@
-/// <reference types="react-scripts" />
-
 interface Window {
   ethereum?: {
     isMetaMask?: true;
@@ -8,5 +6,3 @@ interface Window {
     request?: (...args: any[]) => Promise<void>;
   };
 }
-
-type SerializedBigNumber = string;

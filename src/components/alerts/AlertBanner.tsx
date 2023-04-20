@@ -2,7 +2,7 @@ import React from "react";
 import { AnimatePresence } from "framer-motion";
 
 import AlertTextWithDescription from "./AlertTextWithDescription";
-import { StyledAlertBanner, StylesCloseIcon } from "./StyledAlertBanner";
+import { StyledAlertBanner, StylesCloseIcon } from "./styled";
 import { Box, Flex } from "components";
 import { CloseIcon } from "components/svg";
 

@@ -40,7 +40,7 @@ const Navigation: React.FC = () => {
         />
 
         <Route path={ROUTES.app} element={<>App</>} />
-        {/* Nesting */}
+        {/* Example of Nesting */}
         <Route path={ROUTES.wallet}>
           <Route index element={<>Wallet</>} />
 

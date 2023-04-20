@@ -7,7 +7,9 @@ const AlertTextWithDescription: React.FC<AlertTextWithDescriptionProps> = ({ tex
   return (
     <Box>
       <Text $fontWeight="bold">{text}</Text>
+
       {description && <Text fontSize="12px">{description}</Text>}
+
       {React.isValidElement(children) && children}
     </Box>
   );

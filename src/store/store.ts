@@ -8,7 +8,9 @@ import rootReducer from "./rootReducer";
 const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat([
       //TODO comment next line in prod
       createLogger(),
     ]),

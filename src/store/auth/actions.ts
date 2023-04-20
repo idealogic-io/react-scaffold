@@ -1,16 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { isErrorResult, makeApiRequest, ENDPOINTS } from "services";
+import { isErrorResult, makeApiRequest, ENDPOINTS_AUTH } from "services";
 import { ErrorResult } from "services/types";
 
 import { LoginUserPayload, LoginUserResponse, RefreshTokenPayload } from "./types";
 
 export const loginUser = createAsyncThunk<LoginUserResponse, LoginUserPayload, { rejectValue: ErrorResult }>(
-  "user/login",
+  "auth/login",
   async (data, { rejectWithValue }) => {
     const result = await makeApiRequest<LoginUserResponse>({
       method: "POST",
-      url: ENDPOINTS.login,
+      url: ENDPOINTS_AUTH.login,
       data,
     });
 
@@ -23,11 +23,11 @@ export const loginUser = createAsyncThunk<LoginUserResponse, LoginUserPayload, {
 );
 
 export const refreshToken = createAsyncThunk<LoginUserResponse, RefreshTokenPayload, { rejectValue: ErrorResult }>(
-  "auth/refresh-tokens",
+  "auth/refresh-token",
   async (data, { rejectWithValue }) => {
     const result = await makeApiRequest<LoginUserResponse>({
       method: "POST",
-      url: ENDPOINTS.refreshToken,
+      url: ENDPOINTS_AUTH.refreshToken,
       isShowError: false,
       data,
     });

@@ -5,6 +5,7 @@ const initialState: ModalState<undefined> = {
   modalName: null,
   rootId: "modal",
   props: undefined,
+  clickOutsideHandler: null,
 };
 
 export const modalSlice = createSlice({
@@ -15,12 +16,17 @@ export const modalSlice = createSlice({
       state.modalName = action.payload.modalName;
       state.rootId = action.payload.rootId ? action.payload.rootId : "modal";
       state.props = action.payload.props;
+      state.clickOutsideHandler = action.payload.clickOutsideHandler;
+    },
+
+    partialUpdateModalProps: <T>(state: ModalState<T>, action: PayloadAction<ShowModalProps<T>["props"]>) => {
+      state.props = action.payload ? { ...state.props, ...action.payload } : state.props;
     },
 
     hideModal: () => initialState,
   },
 });
 
-export const { showModal, hideModal } = modalSlice.actions;
+export const { showModal, hideModal, partialUpdateModalProps } = modalSlice.actions;
 export { ModalNames };
 export default modalSlice;

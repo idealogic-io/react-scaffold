@@ -1,19 +1,5 @@
 import styled from "styled-components";
-import {
-  Box,
-  Column,
-  Container,
-  Flex,
-  Text,
-  FlexLayout,
-  FlexGap,
-  Page,
-  Heading,
-  Row,
-  RowBetween,
-  RowFlat,
-  AutoRow,
-} from "components";
+import { Box, Column, Container, Flex, Text, FlexGap, Page, Heading, Row, RowBetween } from "components";
 
 export default {
   title: "Components/Layout",
@@ -29,34 +15,27 @@ const Square = styled(Box)`
 
 export const Columns: React.FC = () => {
   return (
-    <Box>
-      <Text textAlign="center">Column align center</Text>
-      <Column alignItems="center">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Square key={i} />
-        ))}
-      </Column>
-    </Box>
+    <Column>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Square key={i} />
+      ))}
+    </Column>
   );
 };
 
 export const Boxes: React.FC = () => {
   return (
-    <>
-      <Text>Box with custom props</Text>
-      <Box width="200px" $backgroundColor="monochrome500" height="200px" ml="24px" px="50px" py="24px">
-        <Square />
-      </Box>
-    </>
+    <Box width="200px" height="200px" $backgroundColor="monochrome500" borderRadius="16px" padding="16px">
+      Box with custom props
+    </Box>
   );
 };
 
 export const Containers: React.FC = () => {
   return (
     <>
-      <Text textAlign="center">Container for page content</Text>
-      <Container $backgroundColor="monochrome500">
-        <Square />
+      <Container $backgroundColor="monochrome500" height="100vh">
+        Container for page content
       </Container>
     </>
   );
@@ -66,23 +45,16 @@ export const Flexes: React.FC = () => {
   return (
     <Box>
       <>
-        <Text textAlign="center">Flex</Text>
+        <Text textAlign="center">Flex justify center</Text>
         <Flex flex={1} justifyContent="center">
           <Square />
         </Flex>
       </>
-      <>
-        <Text textAlign="center">Flex layout</Text>
-        <FlexLayout>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Square key={i} />
-          ))}
-        </FlexLayout>
-      </>
+
       <>
         <Text textAlign="center">Flex Gap</Text>
 
-        <FlexGap rowGap="20px" columnGap="4px" flexWrap="wrap" justifyContent="center">
+        <FlexGap rowGap="20px" columnGap="10px" flexWrap="wrap" justifyContent="center">
           {Array.from({ length: 20 }).map((_, i) => (
             <Square m="0px !important" key={i} />
           ))}
@@ -104,40 +76,23 @@ export const Pages: React.FC = () => {
 export const Rows: React.FC = () => {
   return (
     <>
-      <Row>
-        <Square>
-          <Text>Box in a row</Text>
-        </Square>
-        <Square>
-          <Text>Box in a row</Text>
-        </Square>
-      </Row>
+      <>
+        <Text>Row</Text>
+        <Row>
+          <Square />
 
-      <RowBetween>
-        <Square>
-          <Text>Space</Text>
-        </Square>
+          <Square />
+        </Row>
+      </>
 
-        <Square>
-          <Text>Between</Text>
-        </Square>
-      </RowBetween>
+      <>
+        <Text textAlign="center">Row between</Text>
+        <RowBetween>
+          <Square />
 
-      <RowFlat>
-        <Text>Align</Text>
-        <Square>
-          <Text>Box</Text>
-        </Square>
-        <Text>To bottom</Text>
-      </RowFlat>
-
-      <AutoRow gap="12px">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <Square m="0px !important" key={i}>
-            <Text>Auto row</Text>
-          </Square>
-        ))}
-      </AutoRow>
+          <Square />
+        </RowBetween>
+      </>
     </>
   );
 };

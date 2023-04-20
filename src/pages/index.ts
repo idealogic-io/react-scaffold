@@ -1,4 +1,4 @@
-import { lazyLoad } from "utils/loadable";
+import { lazyLoad } from "utils/helpers/loadable";
 
 export const LoginPage = lazyLoad(
   () => import("./login"),

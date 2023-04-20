@@ -5,4 +5,6 @@ import { Colors } from "theme/types";
 export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "color">, TextProps {
   external?: boolean;
   color?: keyof Colors;
+  underline?: boolean;
+  disabled?: boolean;
 }

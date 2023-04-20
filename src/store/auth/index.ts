@@ -26,6 +26,7 @@ const authSlice = createSlice({
   initialState: {
     ...initialState,
     token: localStorage.getItem(LOCAL_STORAGE_KEYS.token),
+    refreshToken: localStorage.getItem(LOCAL_STORAGE_KEYS.refreshToken),
   },
   reducers: {
     resetAuth() {
@@ -37,7 +38,7 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      // Login action
+      // Login user
       .addCase(loginUser.pending, state => {
         state.pending = true;
       })
@@ -56,7 +57,8 @@ const authSlice = createSlice({
           state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
           state.pending = false;
         }
-      }) // Refresh token
+      })
+      // Refresh token
       .addCase(refreshToken.pending, state => {
         state.pending = true;
       })

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { StyledNotFoundPage } from "./StyledNotFoundPage";
+import { StyledNotFoundPage } from "./styled";
 
 import { Heading, Button } from "components";
 
@@ -13,15 +13,16 @@ const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
 
   const onClickHandler = () => {
-    navigate(`/${ROUTES.home}`);
+    navigate(ROUTES.home);
   };
 
   return (
     <StyledNotFoundPage>
-      <Heading as="h1" mb="15px">
+      <Heading as="h1" scale="h1" mb="16px">
         {t("Not found Page")} 404
       </Heading>
-      <Button mt="8px" scale="lg" onClick={onClickHandler}>
+
+      <Button mt="8px" onClick={onClickHandler}>
         {t("Go to home page")}
       </Button>
     </StyledNotFoundPage>

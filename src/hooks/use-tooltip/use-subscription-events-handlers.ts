@@ -92,5 +92,5 @@ export const useSubscriptionEventsHandlers = ({
     };
   }, [trigger, targetElement, showTooltip, hideTooltip]);
 
-  return { visible };
+  return { visible, setVisible };
 };

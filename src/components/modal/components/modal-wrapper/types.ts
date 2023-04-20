@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 
 export interface ModalWrapperProps
   extends PropsWithChildren<{
-    hideModalHandler: () => void;
+    onOutsideClick: () => void;
   }> {
   id: string;
 }

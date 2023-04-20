@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 import { AnimatePresence, usePresence } from "framer-motion";
 
-import { hideModal, ModalNames } from "store/modal";
+import { hideModal } from "store/modal";
 import { useAppDispatch, useAppSelector } from "store/store";
+import { ModalWrapper } from "./components";
+import { components } from "./constants";
 
-import { ModalWrapper, TestModal } from "./components";
-
-const component = {
-  [ModalNames.testModal]: () => <TestModal />,
-};
+import { useHideOverflow } from "./hooks";
 
 const Modal: React.FC = () => {
-  const { modalName, rootId } = useAppSelector(state => state.modal);
+  const { modalName, rootId, clickOutsideHandler } = useAppSelector(state => state.modal);
   const [isPresent, safeToRemove] = usePresence();
 
   useEffect(() => {
@@ -19,19 +17,17 @@ const Modal: React.FC = () => {
   }, [isPresent]);
 
   const dispatch = useAppDispatch();
-  const ModalComponent = modalName ? component[modalName] : null;
+  const ModalComponent = modalName ? components[modalName] : null;
 
-  const hideModalHandler = () => {
-    dispatch(hideModal());
-  };
+  useHideOverflow({ trigger: !!modalName });
 
-  useEffect(() => {
-    if (modalName) {
-      document.body.style.overflowY = "hidden";
-    } else if (!modalName) {
-      document.body.style.overflowY = "auto";
+  const onOutsideClick = () => {
+    if (clickOutsideHandler) {
+      clickOutsideHandler();
+    } else {
+      dispatch(hideModal());
     }
-  }, [modalName]);
+  };
 
   if (!ModalComponent) {
     return null;
@@ -40,7 +36,7 @@ const Modal: React.FC = () => {
   return (
     <AnimatePresence>
       {ModalComponent && (
-        <ModalWrapper hideModalHandler={hideModalHandler} id={rootId}>
+        <ModalWrapper onOutsideClick={onOutsideClick} id={rootId}>
           <ModalComponent />
         </ModalWrapper>
       )}

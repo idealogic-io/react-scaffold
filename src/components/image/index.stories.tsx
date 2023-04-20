@@ -1,4 +1,4 @@
-import { Image, AutoRow, Box } from "components";
+import { Image, Box, Row } from "components";
 
 export default {
   title: "Assets/Images",
@@ -9,7 +9,7 @@ const context = require.context("../../../public/images/", true, /.webp$/);
 
 export const Images = () => {
   return (
-    <AutoRow>
+    <Row>
       {context.keys().map((el, i) => {
         const img = el.replace("./", "");
 
@@ -19,6 +19,6 @@ export const Images = () => {
           </Box>
         );
       })}
-    </AutoRow>
+    </Row>
   );
 };

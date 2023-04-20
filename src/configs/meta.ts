@@ -1,31 +1,25 @@
 import { TranslateFunction } from "context/language-context/types";
+import { ROUTES } from "navigation/routes";
 
 const URL = process.env.REACT_APP_URL;
 
 export const getDefaultMeta = (t: TranslateFunction) => {
   return {
     title: "",
-    description: t("The greatest scaffold"),
+    description: t("Project scaffold is in build progress"),
     image: `${URL}/logo512.png`,
   };
 };
 
 export const getCustomMeta = (path: string, t: TranslateFunction) => {
-  let basePath = path;
-  if (path.startsWith("/login")) {
-    basePath = "login";
-  } else if (path.startsWith("/home")) {
-    basePath = "home";
-  }
-
-  switch (basePath) {
-    case "login": {
+  switch (path) {
+    case ROUTES.login: {
       return {
         ...getDefaultMeta(t),
         title: t("Login"),
       };
     }
-    case "home": {
+    case ROUTES.home: {
       return {
         ...getDefaultMeta(t),
         title: t("Home"),
