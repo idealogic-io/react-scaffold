@@ -21,11 +21,15 @@ export const lazyLoad = <T extends Promise<any>, U extends React.ComponentType<a
   const LazyComponent = lazy(lazyFactory);
 
   const LazyLoader = (props: React.ComponentProps<U>): JSX.Element => {
-    return (
-      <Suspense fallback={opts.fallback}>
-        <LazyComponent {...props} />
-      </Suspense>
-    );
+    if (opts.fallback) {
+      return (
+        <Suspense fallback={opts.fallback}>
+          <LazyComponent {...props} />
+        </Suspense>
+      );
+    } else {
+      return <LazyComponent {...props} />;
+    }
   };
 
   return LazyLoader;
