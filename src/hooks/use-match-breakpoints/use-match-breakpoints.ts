@@ -59,7 +59,9 @@ const getState = () => {
   }, {});
   return s;
 };
-
+/**
+ * Is used to determine whether the screen width matches a given set of breakpoints.
+ */
 const useMatchBreakpoints = () => {
   const [state, setState] = useState<State>(() => getState());
 

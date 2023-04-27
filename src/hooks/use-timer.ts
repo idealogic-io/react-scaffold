@@ -2,7 +2,9 @@ import moment from "moment";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useInterval } from "hooks";
-
+/**
+ * Conducts a logic for timer. Accepts timestamp and returns remaining time every second.
+ */
 export const useTimer = ({ timestamp }: { timestamp: number }) => {
   const initTimeRemaining = useMemo(
     () => (timestamp === 0 ? 0 : +(timestamp - moment().valueOf() / 1000).toFixed()),

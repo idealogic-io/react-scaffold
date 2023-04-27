@@ -10,7 +10,9 @@ const LandingPage: React.FC = () => {
 
   return (
     <Page>
-      <Heading>{t("Landing Page")}</Heading>
+      <Heading as="h2" scale="h2">
+        {t("Landing Page")}
+      </Heading>
 
       <Button as={Link} to="/login">
         {t("Login")}

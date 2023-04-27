@@ -2,7 +2,9 @@ import { ChangeEvent } from "react";
 import { useFormik, FormikConfig, FormikValues } from "formik";
 
 import { FieldProps } from "./types";
-
+/**
+ * Is used to simplify the process of managing form state and handling form submissions in a React component.
+ */
 const useForm = <Values>(config: FormikConfig<Values & FormikValues>) => {
   const formik = useFormik({
     ...config,

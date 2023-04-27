@@ -22,5 +22,6 @@ export interface TooltipOptions {
 export type useSubscriptionEventsHandlersProps = {
   targetElement: HTMLElement | null;
   tooltipElement: HTMLElement | null;
+  insideElement: HTMLElement | null;
   trigger: TriggerType;
 };

@@ -2,10 +2,15 @@ import { useState, useLayoutEffect } from "react";
 
 const clamp = (value: number) => Math.max(0, value);
 
-// Check if number is between two values
+/**
+ * Check if number is between two values
+ */
 const isBetween = (value: number, floor: number, ceil: number) => value >= floor && value <= ceil;
-
-// TODO Maybe need to add ts
+/**
+ * Use to determine which block the user is currently on.
+ * @param ids array of ids of the blocks
+ * @param offset - extra value for the offset
+ */
 const useScrollSpy = (ids: string[], offset: number = 0) => {
   const [activeId, setActiveId] = useState("");
 

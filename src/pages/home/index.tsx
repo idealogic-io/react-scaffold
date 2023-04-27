@@ -15,7 +15,9 @@ const HomePage: React.FC = () => {
 
   return (
     <Page>
-      <Heading>{t("Main Page")}</Heading>
+      <Heading as="h2" scale="h2">
+        {t("Main Page")}
+      </Heading>
       <Row py="12px">
         <Button onClick={logoutHandler}>{t("Logout")}</Button>
       </Row>
