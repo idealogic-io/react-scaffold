@@ -9,14 +9,10 @@ export type TxError = {
 };
 
 /**
- * -32000 is insufficient funds for gas * price + value
+ * Check for insufficient funds for gas * price + value
  */
 export const isGasEstimationError = (error: TxError | Error | string) => {
-  if ((error as TxError)?.data?.code === -32000) {
-    return true;
-  } else if ((error as { code?: number })?.code === -32000) {
-    return true;
-  } else if ((error as Error).message.includes("insufficient funds")) {
+  if ((error as Error).message.includes("insufficient funds")) {
     return true;
   } else {
     return false;

@@ -17,6 +17,16 @@ const themeValues = {
   dark,
 };
 
+export const getThemeValueFromLS = () => {
+  let themeFromStorage = localStorage.getItem(LOCAL_STORAGE_KEYS.theme) ?? LIGHT;
+
+  if (!(themeFromStorage in themeValues)) {
+    themeFromStorage = LIGHT;
+  }
+
+  return themeFromStorage as typeof LIGHT | typeof DARK;
+};
+
 const LIGHT = "light";
 const DARK = "dark";
 
@@ -42,16 +52,6 @@ const ThemeContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => 
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.theme, newValue);
     setTheme({ theme: themeValues[newValue], key: newValue });
-  }
-
-  function getThemeValueFromLS() {
-    let themeFromStorage = localStorage.getItem(LOCAL_STORAGE_KEYS.theme) ?? LIGHT;
-
-    if (!(themeFromStorage in themeValues)) {
-      themeFromStorage = LIGHT;
-    }
-
-    return themeFromStorage as typeof LIGHT | typeof DARK;
   }
 
   return <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>;

@@ -4,6 +4,7 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 
 import { getChainIds, rpcUrls } from "configs/networks";
+import { getThemeValueFromLS } from "context";
 import packages from "../../../package.json";
 
 const POLLING_INTERVAL = 12000;
@@ -19,12 +20,13 @@ const supportedChainIds = getChainIds();
 
 export const injectedConnector = (_?: number) => new InjectedConnector({ supportedChainIds });
 
-const walletConnect = (_?: number) =>
+const walletConnect = (chainId?: number) =>
   new WalletConnectConnector({
     rpc: {
       ...rpcUrls,
     },
     supportedChainIds,
+    chainId,
     qrcode: true,
   });
 
@@ -34,6 +36,7 @@ const walletLinkConnector = (chainId?: number) =>
     appName: packages.name,
     appLogoUrl: `${process.env.REACT_APP_URL}/logo512.png`,
     supportedChainIds,
+    darkMode: getThemeValueFromLS() === "dark",
   });
 
 export const connectorByName = {
