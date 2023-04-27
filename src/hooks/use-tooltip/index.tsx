@@ -23,8 +23,14 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions) => {
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [tooltipElement, setTooltipElement] = useState<HTMLElement | null>(null);
   const [arrowElement, setArrowElement] = useState<HTMLElement | null>(null);
+  const [insideElement, setInsideElement] = useState<HTMLElement | null>(null);
 
-  const { visible, setVisible } = useSubscriptionEventsHandlers({ targetElement, tooltipElement, trigger });
+  const { visible, setVisible } = useSubscriptionEventsHandlers({
+    targetElement,
+    tooltipElement,
+    trigger,
+    insideElement,
+  });
 
   const { styles, attributes } = usePopper(targetElement, tooltipElement, {
     placement,
@@ -71,6 +77,7 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions) => {
     tooltip: AnimatedTooltip,
     tooltipVisible: visible,
     setVisible,
+    setInsideElement,
   };
 };
 

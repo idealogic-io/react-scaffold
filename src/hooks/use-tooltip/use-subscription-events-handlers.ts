@@ -5,6 +5,7 @@ export const useSubscriptionEventsHandlers = ({
   targetElement,
   tooltipElement,
   trigger,
+  insideElement,
 }: useSubscriptionEventsHandlersProps) => {
   const [visible, setVisible] = useState(false);
 
@@ -21,6 +22,10 @@ export const useSubscriptionEventsHandlers = ({
   };
 
   const toggleTooltip = (e: Event) => {
+    if (insideElement?.contains(e.target as Node)) {
+      return;
+    }
+
     e.stopPropagation();
     setVisible(!visible);
   };
@@ -57,7 +62,7 @@ export const useSubscriptionEventsHandlers = ({
     targetElement.addEventListener("click", toggleTooltip);
 
     return () => targetElement.removeEventListener("click", toggleTooltip);
-  }, [trigger, targetElement, visible, toggleTooltip]);
+  }, [trigger, targetElement, insideElement, visible, toggleTooltip]);
 
   // Handle click outside
   useEffect(() => {
