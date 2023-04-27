@@ -1,9 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ChainId } from "@pancakeswap/sdk";
 import { SerializableTransactionReceipt, TransactionType } from "./types";
 
 export const addTransaction = createAction<{
-  chainId: ChainId;
+  chainId: number;
   hash: string;
   from: string;
   approval?: { tokenAddress: string; spender: string };
@@ -12,18 +11,18 @@ export const addTransaction = createAction<{
   type?: TransactionType;
 }>("transactions/addTransaction");
 
-export const clearAllTransactions = createAction<{ chainId: ChainId }>("transactions/clearAllTransactions");
+export const clearAllTransactions = createAction<{ chainId: number }>("transactions/clearAllTransactions");
 
 export const finalizeTransaction = createAction<{
-  chainId: ChainId;
+  chainId: number;
   hash: string;
   receipt: SerializableTransactionReceipt;
 }>("transactions/finalizeTransaction");
 
 export const checkedTransaction = createAction<{
-  chainId: ChainId;
+  chainId: number;
   hash: string;
   blockNumber: number;
 }>("transactions/checkedTransaction");
-// TODO don't forget to add this function on logout action
-export const resetTransactionsState = createAction<{ chainId: ChainId }>("transactions/resetTransactionsState");
+
+export const resetTransactionsState = createAction<{ chainId: number }>("transactions/resetTransactionsState");

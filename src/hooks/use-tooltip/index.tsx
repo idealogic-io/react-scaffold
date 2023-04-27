@@ -7,7 +7,9 @@ import { TooltipOptions } from "./types";
 import { useSubscriptionEventsHandlers } from "./use-subscription-events-handlers";
 import { checkIsEllipsis } from "utils/helpers";
 import { appearanceAnimationMap, appearanceAnimationVariants } from "theme";
-
+/**
+ * Is used to display a tooltip when an element is hovered over.
+ */
 const useTooltip = (content: React.ReactNode, options?: TooltipOptions) => {
   const {
     placement = "auto",

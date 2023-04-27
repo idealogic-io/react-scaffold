@@ -1,95 +1,100 @@
 import React, { useState } from "react";
-import { formatUnits, parseUnits } from "@ethersproject/units";
-import { Currency, JSBI, TokenAmount } from "@pancakeswap/sdk";
 import { useWeb3React } from "@web3-react/core";
+import { parseUnits } from "@ethersproject/units";
+import BigNumber from "bignumber.js";
 
-import { Box, Button, Column, InputNumeric, Skeleton, Text } from "components";
+import { Box, Button, Column, InputGroup, InputNumeric, Skeleton, Text } from "components";
 
-import { useEstimateNetworkFee, useDebounce, useSendTransfer, useApproveCallback, ApprovalState } from "hooks";
-import { formatBigNumberToFixed, isExceededBalance } from "utils/web3";
-import { BigNumber } from "@ethersproject/bignumber";
+import {
+  useEstimateNetworkFee,
+  useDebounce,
+  useSendTransfer,
+  useApproveCallback,
+  ApprovalState,
+  useTokenAmount,
+  useNativeCurrency,
+} from "hooks";
+import { formatValueToBNString, isExceededBalance } from "utils/web3";
 import { contractsAddresses } from "configs";
+
+import { SingleTokenProps } from "./types";
 
 const to = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
 
-const SingleToken: React.FC<{ tokenAmount?: TokenAmount; nativeBalance: BigNumber; nativeCurrency?: Currency }> = ({
-  tokenAmount,
-  nativeBalance,
-  nativeCurrency,
-}) => {
+const SingleToken: React.FC<SingleTokenProps> = ({ token, nativeBalance }) => {
   const [input, setInput] = useState("");
-  const debouncedValue = useDebounce(input, 1000);
 
   const { chainId } = useWeb3React();
+  const debouncedValue = useDebounce(formatValueToBNString(input), 1000);
+  const tokenAmount = useTokenAmount(token);
+  const nativeCurrency = useNativeCurrency();
 
-  // TODO token created but we recreate it again
-  // const currency = useCurrency(address);
   const {
     gasEstimation,
     isValidating: gasEstimationLoading,
     error: gasEstimationError,
-  } = useEstimateNetworkFee(tokenAmount?.token.address, "transfer", [
+  } = useEstimateNetworkFee(token.address, "transfer", [
     to,
-    parseUnits(debouncedValue || "0", tokenAmount?.token?.decimals),
+    parseUnits(debouncedValue || "0", tokenAmount.token.decimals),
   ]);
-  const { sendToken } = useSendTransfer({ address: tokenAmount?.token.address, to });
+  const { sendToken } = useSendTransfer({ address: token.address, to });
   // This is the test approve state only shows how to use it
   const [approvalState, approveCallback] = useApproveCallback(
-    tokenAmount && input
-      ? new TokenAmount(tokenAmount.token, JSBI.BigInt(parseUnits(input, tokenAmount?.token?.decimals)))
-      : undefined,
+    token,
+    +debouncedValue > 0 ? debouncedValue : undefined,
     chainId ? contractsAddresses.multicall[chainId] : undefined,
   );
 
   const isExceeded = isExceededBalance({
-    token: tokenAmount?.token,
-    tokenBalance: tokenAmount ? +tokenAmount?.toSignificant() : 0,
-    nativeBalance: +formatUnits(nativeBalance, nativeCurrency?.decimals),
-    gasEstimation: +formatUnits(gasEstimation, nativeCurrency?.decimals),
-    value: +input,
+    token: tokenAmount.token,
+    tokenBalance: tokenAmount.amount,
+    nativeBalance: nativeBalance,
+    gasEstimation: gasEstimation,
+    value: BigNumber(input),
   });
 
   const onSendClick = () => {
-    sendToken(parseUnits(input || "0", tokenAmount?.token?.decimals));
+    sendToken(parseUnits(formatValueToBNString(input), token.decimals));
   };
 
   return (
     <Box p="6px">
-      <InputNumeric value={input} onUserInput={setInput} />
+      <InputGroup label="Enter amount" error="Insufficient funds" isTouched={isExceeded && !!input}>
+        <InputNumeric value={input} onUserInput={setInput} textAlign="right" placeholder="0" />
+      </InputGroup>
+
       <Column alignItems="center">
-        <Text>{tokenAmount?.token?.name}</Text>
-        <Text>{tokenAmount?.token?.symbol}</Text>
-        <Text>{tokenAmount?.token?.decimals}</Text>
-        {tokenAmount?.token && <Text>{tokenAmount?.toSignificant() ?? 0}</Text>}
-        <Text>Approval state</Text>
-        <Text>{ApprovalState[approvalState]}</Text>
+        <Text textScale="body3">{token.name}</Text>
+        <Text textScale="body3">{token.symbol}</Text>
+        <Text textScale="body3">{token.decimals}</Text>
+
+        <Text textScale="body3">Approval state is:</Text>
+        <Text textScale="body3">{ApprovalState[approvalState]}</Text>
 
         <Button
           onClick={onSendClick}
-          disabled={!input || gasEstimationError || isExceeded}
-          isLoading={!tokenAmount?.token || gasEstimationLoading}
+          disabled={!input || gasEstimationError || isExceeded || approvalState !== ApprovalState["APPROVED"]}
+          isLoading={gasEstimationLoading}
           my="8px"
         >
           Send
         </Button>
 
-        <Button onClick={approveCallback} disabled={approvalState === ApprovalState["APPROVED"] && !!input} my="8px">
+        <Button onClick={approveCallback} disabled={approvalState === ApprovalState["APPROVED"] || !input} my="8px">
           Approve
         </Button>
 
         {gasEstimationLoading ? (
-          <>
-            <Text fontSize="12px" letterSpacing="0.4px">
-              Network Fee:
-            </Text>
-            <Skeleton ml="8px" width="50%" height="14px" />
-          </>
+          <Skeleton ml="8px" width="50%" height="14px" />
         ) : (
-          <Text fontSize="12px" letterSpacing="0.4px">
-            Network Fee: {+formatBigNumberToFixed(gasEstimation, 8, 18)} {tokenAmount?.token?.symbol}
+          <Text textScale="body3">
+            Network Fee: {gasEstimation.toFormat(8)} {nativeCurrency?.symbol}
           </Text>
         )}
-        {isExceeded && !!input && <Text>Insufficient funds</Text>}
+
+        <Text textScale="body3">
+          Current Balance: {tokenAmount.amount.toFormat(8)} {tokenAmount.token.symbol}
+        </Text>
       </Column>
     </Box>
   );

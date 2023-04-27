@@ -5,7 +5,9 @@ import { useWeb3React } from "@web3-react/core";
 import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
 
 const REFRESH_BLOCK_INTERVAL = 6000;
-
+/**
+ * Determines what block number is active right now. Updates every 6000 ms.
+ */
 export const usePollBlockNumber = () => {
   const { cache, mutate } = useSWRConfig();
   const { chainId } = useWeb3React();
@@ -28,14 +30,18 @@ export const usePollBlockNumber = () => {
     },
   );
 };
-
+/**
+ * Returns current block number
+ */
 export const useCurrentBlock = () => {
   const { chainId } = useWeb3React();
 
   const { data: currentBlock = 0 } = useSWRImmutable(`${chainId}/blockNumber`);
   return currentBlock;
 };
-
+/**
+ * Returns initial block number when user started the interaction with platform
+ */
 export const useInitialBlock = () => {
   const { chainId } = useWeb3React();
 

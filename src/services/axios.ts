@@ -4,12 +4,14 @@ import store from "store/store";
 import { refreshToken } from "store/auth/actions";
 import { resetAuth } from "store/auth";
 import { hideModal } from "store/modal";
+
 import { LOCAL_STORAGE_KEYS } from "configs";
 
 import { LoginUserResponse } from "store/auth/types";
 import { ErrorResult } from "./types";
 
 import { ENDPOINTS_AUTH } from "./endpoints";
+import { clearUserState } from "hooks";
 
 let isRefreshing = false;
 let refreshSubscribers: ((arg: string) => void)[] = [];
@@ -20,6 +22,8 @@ const timeout = 15_000;
 export function resetStore() {
   store.dispatch(resetAuth());
   store.dispatch(hideModal());
+
+  clearUserState();
 }
 
 export function getInstance(baseURL = process.env.REACT_APP_API_URL) {

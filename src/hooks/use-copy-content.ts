@@ -2,7 +2,9 @@ import { toast } from "react-toastify";
 
 import { toastOptionsError, toastOptionsSuccess } from "components";
 import { useTranslation } from "context";
-
+/**
+ * Helps to copy content into click board
+ */
 const useCopyContent = () => {
   const { t } = useTranslation();
 

@@ -1,52 +1,67 @@
-import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 import useSWR from "swr";
 import { Zero } from "@ethersproject/constants";
+import { BigNumber as EthersBigNumber } from "ethers";
+import { formatUnits } from "@ethersproject/units";
 import { Interface } from "@ethersproject/abi";
-import { JSBI, Token, TokenAmount } from "@pancakeswap/sdk";
+import { useWeb3React } from "@web3-react/core";
+import BigNumber from "bignumber.js";
 
-import { useMultipleContractSingleData } from "./use-multicall";
-import { useTokenContract } from "./use-contract";
-import { useSWRContract } from "./use-swr-contract";
+import { useMultipleContractSingleData, useTokenContract, useSWRContract, useNativeCurrency } from "hooks";
 
-import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
-import { isAddress, FAST_INTERVAL, NATIVE_ADDRESS } from "utils/web3";
+import { isAddress, FAST_INTERVAL, NATIVE_ADDRESS, getSimpleRpcProvider, isTokenNative } from "utils/web3";
+
 import ERC20_ABI from "configs/abi/erc20.json";
+import { Token, TokenAmount } from "types/token";
 
-export const useTokenBalance = (tokenAddress: string) => {
+/**
+ * Returns balance for selected token
+ * @param token Token
+ */
+export const useTokenBalance = (token: Token) => {
   const { account } = useWeb3React();
 
-  const contract = useTokenContract(tokenAddress, false);
+  const contract = useTokenContract(token.address, false);
 
-  const { data } = useSWRContract(
-    account
-      ? {
-          contract,
-          methodName: "balanceOf",
-          params: [account],
-        }
-      : null,
+  const { data = Zero, isValidating } = useSWRContract(
+    account && contract ? [contract, "balanceOf", [account]] : null,
     {
       refreshInterval: FAST_INTERVAL,
     },
   );
 
-  return { balance: data || Zero };
+  return { balance: BigNumber(formatUnits(data, token.decimals)), isValidating };
 };
-
+/**
+ * Returns native balance for supported chain id
+ */
 export const useNativeBalance = () => {
   const { account, chainId } = useWeb3React();
+  const nativeCurrency = useNativeCurrency();
 
-  const { data } = useSWR(
+  const { data = Zero, isValidating } = useSWR(
     account && chainId ? `${account}/nativeBalance/${chainId}` : null,
     async () => {
       const simpleRpcProvider = getSimpleRpcProvider(chainId!);
-      return simpleRpcProvider.getBalance(account!);
+      return await simpleRpcProvider.getBalance(account!);
     },
     { refreshInterval: FAST_INTERVAL },
   );
 
-  return { balance: data || Zero };
+  return { balance: BigNumber(formatUnits(data, nativeCurrency?.decimals)), isValidating };
+};
+/**
+ * Returns object that consists of token and it's balance. Works for native and not native token.
+ * Note: BigNumber.js
+ * @param token Token
+ */
+export const useTokenAmount = (token: Token) => {
+  const { balance } = useTokenBalance(token);
+  const { balance: nativeBalance } = useNativeBalance();
+
+  const _balance = isTokenNative(token.address) ? nativeBalance : balance;
+
+  return new TokenAmount(token, _balance);
 };
 
 /**
@@ -81,12 +96,9 @@ export function useTokenBalances(
       () =>
         address && validatedTokens.length > 0
           ? validatedTokens.reduce<{ [tokenAddress: string]: TokenAmount | undefined }>((memo, token, i) => {
-              const value = balances?.[i]?.result?.[0];
-              const amount = value ? JSBI.BigInt(value.toString()) : undefined;
+              const amount: EthersBigNumber = balances?.[i]?.result?.[0] || Zero;
 
-              if (amount) {
-                memo[token.address] = new TokenAmount(token, amount);
-              }
+              memo[token.address] = new TokenAmount(token, BigNumber(formatUnits(amount, token.decimals)));
 
               return memo;
             }, {})

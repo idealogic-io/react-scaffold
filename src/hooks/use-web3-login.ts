@@ -13,7 +13,6 @@ import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
 import { useTranslation } from "context";
-
 import { connectorName, connectorByName, setupNetwork, getDefaultChainId } from "utils/web3";
 import { toastOptionsError } from "components";
 
@@ -22,8 +21,6 @@ const useWeb3Login = () => {
 
   const { activate, deactivate, setError } = useWeb3React();
 
-  // If you want to setup exact network please pass network id
-  // Otherwise network id will be first from supported chains
   const login = async (connectorId: keyof typeof connectorName, networkId?: number) => {
     const connector = connectorByName[connectorId](networkId);
     localStorage.setItem(LOCAL_STORAGE_KEYS.connector, connectorId);
@@ -36,7 +33,7 @@ const useWeb3Login = () => {
 
       await activate(connector, async error => {
         isError = true;
-        // Check if unsupported network prompt metamask to change chainId
+
         if (error instanceof UnsupportedChainIdError) {
           setError(error);
           const provider = await connector.getProvider();
@@ -65,6 +62,8 @@ const useWeb3Login = () => {
           }
         }
       });
+      // We try to setup network again in cases when connecting with Wallet connect
+      // By default wallet connect doesn't ask to change network
 
       // Need to initiate a new provider because before activate function it's undefined
       const provider = await connector.getProvider();

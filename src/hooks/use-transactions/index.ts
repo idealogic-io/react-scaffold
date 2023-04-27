@@ -8,7 +8,9 @@ import { TransactionType } from "store/transactions/types";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { newTransactionsFirst } from "./helpers";
 
-// helper that can take a ethers library transaction response and add it to the list of transactions
+/**
+ * helper that can take a ethers library transaction response and add it to the list of transactions
+ */
 export function useTransactionAdder(): (
   response: TransactionResponse,
   customData?: {
@@ -49,8 +51,9 @@ export function useTransactionAdder(): (
     [dispatch, chainId, account],
   );
 }
-
-// returns all the transactions for the current chain
+/**
+ * @returns all the transactions for the current chain
+ */
 export const useAllTransactions = (): { [txHash: string]: TransactionDetails } => {
   const { chainId } = useWeb3React();
 
@@ -77,7 +80,11 @@ export const isTransactionRecent = (tx: TransactionDetails) => {
   return new Date().getTime() - tx.addedTime < 86_400_000;
 };
 
-// returns whether a token has a pending approval transaction
+/**
+ * @param tokenAddress
+ * @param spender
+ * @returns whether a token has a pending approval transaction
+ */
 export const useHasPendingApproval = (tokenAddress: string | undefined, spender: string | undefined) => {
   const allTransactions = useAllTransactions();
   return useMemo(
@@ -102,7 +109,9 @@ export const useHasPendingApproval = (tokenAddress: string | undefined, spender:
   );
 };
 
-// calculate pending transactions
+/**
+ * calculate pending transactions
+ */
 export function usePendingTransactions(): { hasPendingTransactions: boolean; pendingNumber: number } {
   const allTransactions = useAllTransactions();
   const sortedRecentTransactions = useMemo(() => {

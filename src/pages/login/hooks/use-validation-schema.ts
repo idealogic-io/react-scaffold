@@ -3,6 +3,11 @@ import * as yup from "yup";
 import { useTranslation } from "context";
 import { REGEX } from "configs";
 
+export type InitialValues = {
+  email: string;
+  password: string;
+};
+
 const useValidationSchema = () => {
   const { t } = useTranslation();
 

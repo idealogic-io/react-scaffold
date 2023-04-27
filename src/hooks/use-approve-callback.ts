@@ -1,13 +1,14 @@
 import { useCallback, useMemo } from "react";
 import { MaxUint256 } from "@ethersproject/constants";
-import { TokenAmount, CurrencyAmount } from "@pancakeswap/sdk";
 import { useWeb3React } from "@web3-react/core";
 import { toast } from "react-toastify";
+import { parseUnits } from "@ethersproject/units";
 
 import { useTranslation } from "context";
 
 import { useTokenAllowance, useHasPendingApproval, useTransactionAdder, useTokenContract } from "hooks";
-import { getErrorMessage, NATIVE_ADDRESS } from "utils/web3";
+import { getErrorMessage, isTokenNative } from "utils/web3";
+import { Token } from "types/token";
 
 export enum ApprovalState {
   UNKNOWN,
@@ -15,51 +16,47 @@ export enum ApprovalState {
   PENDING,
   APPROVED,
 }
-
-// returns a variable indicating the state of the approval and a function which approves if necessary or early returns
+/**
+ * Is used for approving a specific ERC20 token to be used by a specific contract
+ * @param token
+ * @param amountToApprove
+ * @param spender
+ * @returns ApprovalState and callback for approve
+ */
 export const useApproveCallback = (
-  amountToApprove?: CurrencyAmount,
+  token: Token,
+  amountToApprove?: string,
   spender?: string,
 ): [ApprovalState, () => Promise<void>] => {
   const { account } = useWeb3React();
   const { t } = useTranslation();
-  const token = amountToApprove instanceof TokenAmount ? amountToApprove.token : undefined;
-  const currentAllowance = useTokenAllowance(token, account ?? undefined, spender);
-  const pendingApproval = useHasPendingApproval(token?.address, spender);
 
-  // check the current approval status
+  const currentAllowance = useTokenAllowance(token, account ?? undefined, spender);
+  const pendingApproval = useHasPendingApproval(token.address, spender);
+
   const approvalState: ApprovalState = useMemo(() => {
+    if (isTokenNative(token.address)) {
+      return ApprovalState.APPROVED;
+    }
+
     if (!amountToApprove || !spender) {
       return ApprovalState.UNKNOWN;
     }
-    if (token?.address?.toLowerCase() === NATIVE_ADDRESS) {
-      return ApprovalState.APPROVED;
-    }
-    // we might not have enough data to know whether or not we need to approve
-    if (!currentAllowance) {
-      return ApprovalState.UNKNOWN;
-    }
 
-    // amountToApprove will be defined if currentAllowance is
-    return currentAllowance.lessThan(amountToApprove)
+    return currentAllowance.lt(amountToApprove)
       ? pendingApproval
         ? ApprovalState.PENDING
         : ApprovalState.NOT_APPROVED
       : ApprovalState.APPROVED;
   }, [amountToApprove, currentAllowance, pendingApproval, spender]);
 
-  const tokenContract = useTokenContract(token?.address);
+  const tokenContract = useTokenContract(token.address);
   const addTransaction = useTransactionAdder();
 
   const approve = useCallback(async (): Promise<void> => {
     if (approvalState !== ApprovalState.NOT_APPROVED) {
       toast.error(t("Approve was called unnecessarily"));
       console.error("approve was called unnecessarily");
-      return;
-    }
-    if (!token) {
-      toast.error(t("No token"));
-      console.error("no token");
       return;
     }
 
@@ -91,10 +88,12 @@ export const useApproveCallback = (
     }
 
     try {
-      const amount = useExact ? amountToApprove.raw.toString() : MaxUint256;
+      const amount = useExact ? parseUnits(amountToApprove, token.decimals) : MaxUint256;
+
       const response = await tokenContract.approve(spender, amount);
+
       addTransaction(response, {
-        summary: `Approve ${amountToApprove.currency.symbol}`,
+        summary: `Approve ${token.symbol}`,
         approval: { tokenAddress: token.address, spender },
         type: "approve",
       });

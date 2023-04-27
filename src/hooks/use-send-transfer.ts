@@ -6,10 +6,12 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useTranslation } from "context";
 
 import { useTokenContract, useTransactionAdder } from "hooks";
-import { getErrorMessage, NATIVE_ADDRESS, truncateHash } from "utils/web3";
+import { getErrorMessage, isTokenNative, truncateHash } from "utils/web3";
 
 type UseSendTransferArgs = { address: string | undefined; to: string };
-
+/**
+ * Returns method for send crypto asset to other wallet. Works for native and non native token
+ */
 export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   const addTransaction = useTransactionAdder();
 
@@ -18,7 +20,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   const contract = useTokenContract(address);
 
   const sendToken = async (value: BigNumber) => {
-    const isNative = address?.toLowerCase() === NATIVE_ADDRESS;
+    const isNative = isTokenNative(address);
     const sendHandler = isNative ? sendNativeToken : sendERC20Token;
 
     try {

@@ -9,7 +9,7 @@ import { loginUser } from "store/auth/actions";
 import { useTranslation } from "context";
 // Hooks
 import { useForm } from "hooks";
-import { useValidationSchema } from "./hooks";
+import { InitialValues, useValidationSchema } from "./hooks";
 
 const LoginPage: React.FC = () => {
   const { pending } = useAppSelector(state => state.auth);
@@ -20,26 +20,28 @@ const LoginPage: React.FC = () => {
   const { t } = useTranslation();
 
   const { validationSchema, initialValues } = useValidationSchema();
-
   const { fieldProps, handleSubmit, errors, touched, isValid } = useForm({
     initialValues,
     validationSchema,
     onSubmit(values) {
-      handleLogin(values.email, values.password);
+      handleLogin(values);
     },
   });
 
-  const handleLogin = async (email: string, password: string) => {
-    dispatch(loginUser({ email: email.toLowerCase(), password: password }));
+  const handleLogin = async (formValues: InitialValues) => {
+    const { email, password } = formValues;
+    dispatch(loginUser({ email: email.toLowerCase(), password }));
   };
 
   const togglePasswordVisibleHandler = () => {
-    setIsPassword(!isPassword);
+    setIsPassword(prev => !prev);
   };
 
   return (
     <Page>
-      <Heading>{t("Login Page")}</Heading>
+      <Heading as="h2" scale="h2">
+        {t("Login Page")}
+      </Heading>
       <Box width="300px" py="16px">
         <form onSubmit={handleSubmit}>
           <Column>

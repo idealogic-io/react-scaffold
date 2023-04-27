@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+
 export class Token {
   constructor(
     public chainId: number,
@@ -6,4 +8,8 @@ export class Token {
     public symbol: string,
     public name: string,
   ) {}
+}
+
+export class TokenAmount {
+  constructor(public token: Token, public amount: BigNumber) {}
 }

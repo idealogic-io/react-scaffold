@@ -1,14 +1,14 @@
 import { Web3Provider } from "@ethersproject/providers";
+import BigNumber from "bignumber.js";
 
-import { Token } from "@pancakeswap/sdk";
-import { isGasEstimationError, isUserRejected, NATIVE_ADDRESS, TxError } from "utils/web3";
+import { isGasEstimationError, isTokenNative, isUserRejected, TxError } from "utils/web3";
 
-// account is not optional
+import { Token } from "types/token";
+
 export const getSigner = (library: Web3Provider, account: string) => {
   return library.getSigner(account).connectUnchecked();
 };
 
-// account is optional
 export const getProviderOrSigner = (library: Web3Provider, account?: string | null | undefined) => {
   return account ? getSigner(library, account) : library;
 };
@@ -21,21 +21,21 @@ export const isExceededBalance = ({
   value,
 }: {
   token: Token | undefined;
-  tokenBalance: number;
-  nativeBalance: number;
-  gasEstimation: number;
-  value: number;
+  tokenBalance: BigNumber;
+  nativeBalance: BigNumber;
+  gasEstimation: BigNumber;
+  value: BigNumber;
 }) => {
   if (!token) {
     return true;
   }
 
-  const isNative = token.address.toLowerCase() === NATIVE_ADDRESS;
+  const isNative = isTokenNative(token.address);
 
   if (isNative) {
-    return gasEstimation + value > nativeBalance;
+    return gasEstimation.plus(value).gt(nativeBalance);
   } else {
-    return tokenBalance < value || nativeBalance < gasEstimation;
+    return tokenBalance.lt(value) || nativeBalance.lt(gasEstimation);
   }
 };
 

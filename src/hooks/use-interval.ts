@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
-
+/**
+ * Creates a timed interval that runs a callback function at a specified time interval.
+ * @param callback
+ * @param delay
+ */
 export const useInterval = (callback: () => void, delay: null | number) => {
   const savedCallback = useRef(callback);
 

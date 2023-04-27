@@ -1,11 +1,10 @@
-// Types
-import { Token } from "@pancakeswap/sdk";
-
 // Configs
 import { chainIdMainnet, chainIdTestnet } from "configs";
 // Utils
 import { NATIVE_ADDRESS } from "utils/web3";
-import { sortObjectsKeysInAlphabeticOrder } from "utils/helpers";
+import { sortTokensObjInAlphabeticOrder } from "utils/helpers";
+
+import { Token } from "types/token";
 
 export const mainnetTokens = {
   ETH: new Token(chainIdMainnet.mainnet, NATIVE_ADDRESS, 18, "ETH", "Ether"),
@@ -93,13 +92,13 @@ export const fujiTokens = {
 };
 
 export const tokensList = {
-  [chainIdMainnet.mainnet]: sortObjectsKeysInAlphabeticOrder(mainnetTokens),
-  [chainIdMainnet.bsc]: sortObjectsKeysInAlphabeticOrder(bscTokens),
-  [chainIdMainnet.polygon]: sortObjectsKeysInAlphabeticOrder(polygonTokens),
-  [chainIdMainnet.avax]: sortObjectsKeysInAlphabeticOrder(avaxTokens),
+  [chainIdMainnet.mainnet]: sortTokensObjInAlphabeticOrder(mainnetTokens),
+  [chainIdMainnet.bsc]: sortTokensObjInAlphabeticOrder(bscTokens),
+  [chainIdMainnet.polygon]: sortTokensObjInAlphabeticOrder(polygonTokens),
+  [chainIdMainnet.avax]: sortTokensObjInAlphabeticOrder(avaxTokens),
 
-  [chainIdTestnet.goerli]: sortObjectsKeysInAlphabeticOrder(goerliTestnetTokens),
-  [chainIdTestnet.bscTest]: sortObjectsKeysInAlphabeticOrder(bscTestnetTokens),
-  [chainIdTestnet.polygonMumbai]: sortObjectsKeysInAlphabeticOrder(polygonMumbaiTokens),
-  [chainIdTestnet.fuji]: sortObjectsKeysInAlphabeticOrder(fujiTokens),
+  [chainIdTestnet.goerli]: sortTokensObjInAlphabeticOrder(goerliTestnetTokens),
+  [chainIdTestnet.bscTest]: sortTokensObjInAlphabeticOrder(bscTestnetTokens),
+  [chainIdTestnet.polygonMumbai]: sortTokensObjInAlphabeticOrder(polygonMumbaiTokens),
+  [chainIdTestnet.fuji]: sortTokensObjInAlphabeticOrder(fujiTokens),
 };

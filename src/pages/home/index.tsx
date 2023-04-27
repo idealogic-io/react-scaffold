@@ -1,177 +1,102 @@
 import React from "react";
-import { useWeb3React } from "@web3-react/core";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { JSBI, TokenAmount } from "@pancakeswap/sdk";
-import { formatUnits } from "@ethersproject/units";
 // Components
-import { Button, Heading, Text, Page, Column } from "components";
+import { Button, Text, Page, Column } from "components";
 import { SingleToken } from "./components";
 // Context
 import { useTranslation } from "context";
 // Hooks
-import { useWeb3Login, useProviders, useWeb3AutoConnect, useNativeBalance, useTokenBalances } from "hooks";
+import { useWeb3AutoConnect } from "hooks";
+import { useHandleData } from "./hooks";
 // Configs
-import { chainNames, getChainIds, LOCAL_STORAGE_KEYS, nativeCurrencies, tokensList } from "configs";
-import { ROUTES } from "navigation/routes";
+import { chainNames, tokensList } from "configs";
 // Utils
-import { connectorName, setupNetwork, Connector, NATIVE_ADDRESS } from "utils/web3";
-
+import { parseChainIdFromString } from "utils/web3";
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
-  const { chainId, account, active, library } = useWeb3React();
-  const { balance } = useNativeBalance();
-  const { providers } = useProviders();
+  const {
+    chainIdFromSearchParams,
+    chainId,
+    account,
+    active,
+    nativeBalance,
+    nativeCurrency,
+    providers,
+    supportedChains,
+    isUnsupportedChainId,
+    isDifferentNetwork,
+    logout,
+    onConnect,
+    changeChainHandler,
+  } = useHandleData();
 
-  const { login, logout } = useWeb3Login();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const networkId = searchParams.get("networkId");
-  const _networkId = networkId ? +networkId : undefined;
-
-  const supportedChains = getChainIds();
-  const nativeCurrency = nativeCurrencies[chainId!];
-
-  const isSupportedChain = supportedChains.includes(chainId!);
-
-  // const contract = useTokenContract(bscTokens.usdt.address);
-  // const initialBlock = useInitialBlock();
-  //  86_400(sec in a day) / 3(sec in one block) = 28_800 blocks in a day
-  // limit per one queryFilter = 5000
-  // iterations per day = 28_800 / 5000 = 5.76
-  // const perDayIterations = 5.76;
-  // let tEvents: TransferEvent[] = [];
-  // const limit = 100;
-  // const stop = 100 * perDayIterations * 3;
-
-  // let from = initialBlock - limit;
-  // let to = initialBlock;
-  // let step = 1;
-
-  // const getEvents = async () => {
-  //   console.log(tEvents, "tEvents");
-  //   console.log(step, "step");
-  //   console.log(from, "from");
-  //   console.log(to, "to");
-
-  //   // TODO
-  //   // Take the latest block number
-  //   // minus 5000 blocks
-  //   // find events
-  //   // if they are not 10
-  //   // minus 5000 blocks and find others
-  //   // return if blocknumber <= block of creation
-
-  //   const eventFilter = contract!.filters.Transfer("0xc903666f98dc922EAa250a5888BeFfF323368b92");
-  //   const events = await contract!.queryFilter(eventFilter, from, to);
-  //   console.log(events, "events");
-
-  //   tEvents = [...tEvents, ...events];
-  //   from -= limit;
-  //   to -= limit;
-  //   step += 1;
-
-  //   if (from >= initialBlock - stop) {
-  //     await getEvents();
-  //   } else {
-  //     console.timeEnd("Events");
-
-  //     return;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (initialBlock > 0) {
-  //     console.time("Events");
-  //     console.timeLog("Events");
-  //     getEvents();
-  //   }
-  // }, [initialBlock]);
-
-  useWeb3AutoConnect(_networkId);
-
-  const [balances, _] = useTokenBalances(account ?? undefined, Object.values(tokensList[chainId!] || []));
-
-  const onConnect = (walletConfig: Connector) => {
-    const { href, connectorId } = walletConfig;
-    // Open url in metamask app
-    if (!window.ethereum && href) {
-      window.open(href, "_blank", "noopener noreferrer");
-    } else {
-      login(connectorId as keyof typeof connectorName);
-    }
-  };
-
-  const changeChainHandler = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const {
-      target: { value: chainId },
-    } = event;
-    const connectorId = localStorage.getItem(LOCAL_STORAGE_KEYS.connector);
-
-    if (connectorId) {
-      const isSetup = await setupNetwork(t, library?.provider, +chainId);
-
-      if (isSetup) {
-        setSearchParams({ networkId: chainId });
-      }
-    }
-  };
-
-  const onSwapClickHandler = () => {
-    navigate(ROUTES.swap);
-  };
+  useWeb3AutoConnect(chainIdFromSearchParams);
 
   return (
     <Page>
-      <Heading>{t("Main Page")}</Heading>
       <Column>
-        {active && (
-          <Column py="16px">
-            <Text>You currently on:</Text>
-            <Text>{chainNames[chainId!] || "Unknown chain"}</Text>
-          </Column>
-        )}
+        {isUnsupportedChainId ? (
+          <Text textScale="body2" color="error400">
+            Network in a wallet is not supported
+          </Text>
+        ) : null}
+        {isDifferentNetwork ? (
+          <Text textScale="body2" color="error400">
+            The network selected in your external wallet does not match the network selected on the platform
+          </Text>
+        ) : null}
 
-        {active && (
+        {chainId && (
           <Column py="16px">
-            <Text>You address:</Text>
-            <Text>{account}</Text>
-          </Column>
-        )}
-
-        {active && (
-          <Column py="16px">
-            <Text>You balance is:</Text>
-            <Text>
-              {formatUnits(balance)} {nativeCurrency?.symbol}
+            <Text textScale="body2">You currently on:</Text>
+            <Text textScale="body2" $fontWeight="bold">
+              {chainNames[chainId] || "Unknown chain"}
             </Text>
           </Column>
         )}
 
-        {!active && (
-          <Column>
-            {providers.length ? (
-              providers.map(walletConfig => {
-                const { title, icon: Icon } = walletConfig;
-
-                return (
-                  <Button scale="md" key={title} startIcon={<Icon />} onClick={() => onConnect(walletConfig)} my="4px">
-                    {t("Connect %provider%", { provider: title })}
-                  </Button>
-                );
-              })
-            ) : (
-              <Text>Loading...</Text>
-            )}
+        {account && (
+          <Column py="16px">
+            <Text textScale="body2">You address:</Text>
+            <Text textScale="body2" $fontWeight="bold">
+              {account}
+            </Text>
           </Column>
         )}
 
-        {active && isSupportedChain ? (
-          <select name="chain" value={chainId} defaultValue={""} onChange={changeChainHandler}>
+        {active && (
+          <Column py="16px">
+            <Text textScale="body2">You native balance is:</Text>
+            <Text textScale="body2" $fontWeight="bold">
+              {nativeBalance.toFormat(8)} {nativeCurrency?.symbol}
+            </Text>
+          </Column>
+        )}
+
+        {active ? null : (
+          <Column>
+            {providers.map(walletConfig => {
+              const { title, icon: Icon } = walletConfig;
+
+              return (
+                <Button key={title} startIcon={<Icon />} onClick={() => onConnect(walletConfig)} my="4px">
+                  {t("Connect %provider%", { provider: title })}
+                </Button>
+              );
+            })}
+          </Column>
+        )}
+
+        {active ? (
+          <select
+            name="chain"
+            value={chainIdFromSearchParams || ""}
+            onChange={e => changeChainHandler(parseChainIdFromString(e.target.value))}
+          >
             <option disabled value={""}>
               -- select a chain --
             </option>
+
             {supportedChains.map(val => (
               <option key={val} value={val}>
                 {chainNames[val]}
@@ -180,25 +105,13 @@ const HomePage: React.FC = () => {
           </select>
         ) : null}
 
-        {isSupportedChain
-          ? Object.entries(tokensList[chainId!] || []).map(([key, token]) => {
-              // TODO not perfect solution need to refactor
-              const _balance =
-                token.address.toLowerCase() === NATIVE_ADDRESS
-                  ? new TokenAmount(token, JSBI.BigInt(balance.toString()))
-                  : balances[token.address];
-
-              return (
-                <SingleToken key={key} tokenAmount={_balance} nativeBalance={balance} nativeCurrency={nativeCurrency} />
-              );
+        {chainId
+          ? Object.values(tokensList[chainId] ?? {}).map(token => {
+              return <SingleToken key={token.address} token={token} nativeBalance={nativeBalance} />;
             })
           : null}
 
-        <Button scale="md" onClick={onSwapClickHandler} my="4px">
-          {t("Swap")}
-        </Button>
-
-        <Button scale="md" onClick={logout} my="4px">
+        <Button onClick={logout} my="4px">
           {t("Logout")}
         </Button>
       </Column>

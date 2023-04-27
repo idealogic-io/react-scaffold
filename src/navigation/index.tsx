@@ -5,7 +5,7 @@ import { RequireAuth, TokenHandler } from "./components";
 import { ROUTES, ROUTE_PARAMS } from "./routes";
 
 import { NotFoundPage } from "components";
-import { HomePage, LandingPage, LoginPage, SwapPage } from "pages";
+import { HomePage, LandingPage, LoginPage } from "pages";
 
 const Navigation: React.FC = () => {
   return (
@@ -26,15 +26,6 @@ const Navigation: React.FC = () => {
           element={
             <RequireAuth>
               <HomePage />
-            </RequireAuth>
-          }
-        />
-
-        <Route
-          path={ROUTES.swap}
-          element={
-            <RequireAuth>
-              <SwapPage />
             </RequireAuth>
           }
         />

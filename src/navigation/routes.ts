@@ -5,7 +5,6 @@ export const ROUTES = {
   app: "app",
   wallet: "wallet",
   deposit: "deposit",
-  swap: "swap",
 };
 
 export const ROUTE_PARAMS = {
@@ -13,4 +12,6 @@ export const ROUTE_PARAMS = {
   token: "token",
 };
 
-export const SEARCH_PARAMS = {};
+export const SEARCH_PARAMS = {
+  chainId: "chainId",
+};

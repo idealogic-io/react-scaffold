@@ -3,7 +3,9 @@ import { Zero } from "@ethersproject/constants";
 import useSWR from "swr";
 
 import { getSimpleRpcProvider } from "utils/web3/simple-rpc";
-
+/**
+ * @returns current gas price from a node
+ */
 export const useGasPrice = () => {
   const { chainId } = useWeb3React();
 

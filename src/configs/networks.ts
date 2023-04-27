@@ -1,5 +1,3 @@
-import { Currency } from "@pancakeswap/sdk";
-
 const chainIdMainnet = {
   mainnet: 1,
   bsc: 56,
@@ -59,7 +57,7 @@ const chainNames = {
   [chainIdTestnet.fuji]: "Avalanche Fuji Testnet",
 };
 
-const nativeCurrencies: { [key: number]: Currency } = {
+const nativeCurrencies = {
   // Main
   [chainIdMainnet.mainnet]: {
     name: "Ether",

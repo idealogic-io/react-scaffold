@@ -7,6 +7,7 @@ import { getChainIds, rpcUrls } from "configs/networks";
 import packages from "../../../package.json";
 
 const POLLING_INTERVAL = 12000;
+const CHAIN_ID = process.env.REACT_APP_CHAIN_ID as string;
 
 export const connectorName = {
   injectedConnector: "injectedConnector",
@@ -16,14 +17,14 @@ export const connectorName = {
 
 const supportedChainIds = getChainIds();
 
-export const injectedConnector = (_?: number) => new InjectedConnector({});
+export const injectedConnector = (_?: number) => new InjectedConnector({ supportedChainIds });
 
 const walletConnect = (_?: number) =>
   new WalletConnectConnector({
     rpc: {
       ...rpcUrls,
     },
-
+    supportedChainIds,
     qrcode: true,
   });
 
@@ -32,6 +33,7 @@ const walletLinkConnector = (chainId?: number) =>
     url: rpcUrls[getDefaultChainId(chainId)],
     appName: packages.name,
     appLogoUrl: `${process.env.REACT_APP_URL}/logo512.png`,
+    supportedChainIds,
   });
 
 export const connectorByName = {
@@ -39,9 +41,12 @@ export const connectorByName = {
   walletConnect,
   walletLinkConnector,
 };
-
-export function getDefaultChainId(networkId?: number) {
-  return networkId && supportedChainIds.includes(networkId) ? networkId : supportedChainIds[0];
+/**
+ * If incoming chain id is not supported returns chain id from env
+ * @param chainId
+ */
+export function getDefaultChainId(chainId?: number) {
+  return chainId && supportedChainIds.includes(chainId) ? chainId : +CHAIN_ID;
 }
 
 export const getLibrary = (provider: ExternalProvider | JsonRpcFetchFunc) => {

@@ -1,5 +1,7 @@
 import { TransactionDetails } from "store/transactions/reducer";
-
+/**
+ * Define do we need to check transaction
+ */
 export const shouldCheck = (
   currentBlock: number,
   tx: { addedTime: number; receipt?: any; lastCheckedBlockNumber?: number },
@@ -27,7 +29,9 @@ export const shouldCheck = (
   return true;
 };
 
-// we want the latest one to come first, so return negative if a is after b
+/**
+ * we want the latest one to come first, so return negative if a is after b
+ */
 export const newTransactionsFirst = (a: TransactionDetails, b: TransactionDetails) => {
   return b.addedTime - a.addedTime;
 };

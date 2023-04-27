@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 
 import { connectorByName } from "utils/web3";
-import { Connector } from "utils/web3";
+import { Connector } from "types";
 
 import { connectors } from "configs";
 
 import TrustWallet from "components/svg/icons/TrustWallet";
 import Metamask from "components/svg/icons/Metamask";
 import CoinBase from "components/svg/icons/CoinBase";
-
+/**
+ * @returns List of providers to connect through wallet
+ */
 const useProviders = () => {
   const [providers, setProviders] = useState<Connector[]>([]);
 

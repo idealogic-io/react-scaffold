@@ -6,7 +6,6 @@
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/experimental": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@pancakeswap/sdk": "^2.4.5",
     "@popperjs/core": "^2.11.7",
     "@reduxjs/toolkit": "^1.9.3",
     "@web3-react/core": "^6.1.9",

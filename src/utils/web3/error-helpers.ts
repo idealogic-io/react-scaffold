@@ -8,7 +8,9 @@ export type TxError = {
   error: string;
 };
 
-// -32000 is insufficient funds for gas * price + value
+/**
+ * -32000 is insufficient funds for gas * price + value
+ */
 export const isGasEstimationError = (error: TxError | Error | string) => {
   if ((error as TxError)?.data?.code === -32000) {
     return true;
@@ -20,7 +22,9 @@ export const isGasEstimationError = (error: TxError | Error | string) => {
     return false;
   }
 };
-
+/**
+ * Checks if error is about rejected transaction
+ */
 export const isUserRejected = (err: ErrorData) => {
   return typeof err === "object" && "code" in err && (err.code === 4001 || err.code === "ACTION_REJECTED");
 };

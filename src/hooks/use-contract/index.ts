@@ -1,22 +1,29 @@
 import { Contract } from "@ethersproject/contracts";
-import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 
-import { getContract, getProviderOrSigner } from "utils/web3";
+import { getProviderOrSigner } from "utils/web3";
+import { useActiveWeb3React } from "hooks";
+import { contractsAddresses } from "configs";
+import { getContract } from "./helpers";
+
+import { Erc20, Multicall } from "configs/abi/types";
 
 import ERC20_ABI from "configs/abi/erc20.json";
 import MULTICALL_ABI from "configs/abi/multicall.json";
 
-import { Erc20, Multicall } from "configs/abi/types";
-import { contractsAddresses } from "configs";
-
-// returns null on errors
-function useContract<T extends Contract = Contract>(
+/**
+ * Is used to instantiate a contract instance and provide it to a component for interacting with a smart contract
+ * @returns null or contract
+ */
+const useContract = <T extends Contract = Contract>(
   address: string | undefined,
   ABI: any,
   withSignerIfPossible = true,
-): T | null {
-  const { library, account, chainId } = useWeb3React();
+): T | null => {
+  // Even if we don't connect to wallet we can still connect to StaticRpcProvider
+  // Which will be called with REACT_APP_CHAIN_ID. For that purpose we need useActiveWeb3React hook.
+  const { library, account, chainId } = useActiveWeb3React();
+
   const signer = useMemo(
     () => (withSignerIfPossible ? getProviderOrSigner(library, account) : null),
     [withSignerIfPossible, library, account],
@@ -28,7 +35,10 @@ function useContract<T extends Contract = Contract>(
   );
 
   return useMemo(() => {
-    if (!canReturnContract || !chainId) return null;
+    if (!canReturnContract) {
+      return null;
+    }
+
     try {
       return getContract(address!, ABI, signer, chainId);
     } catch (error) {
@@ -36,13 +46,13 @@ function useContract<T extends Contract = Contract>(
       return null;
     }
   }, [address, ABI, signer, canReturnContract, chainId]) as T;
-}
+};
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible);
 }
-
-export function useMulticallContract(chainId: number | undefined) {
-  const address = chainId && contractsAddresses.multicall[chainId] ? contractsAddresses.multicall[chainId] : undefined;
-  return useContract<Multicall>(address, MULTICALL_ABI, false);
+// If u need to listen to events on default chain id without wallet
+// You need to replace in useMulticallUpdater useWeb3React to useActiveWeb3React
+export function useMulticallContract(chainId?: number) {
+  return useContract<Multicall>(chainId ? contractsAddresses.multicall[chainId] : undefined, MULTICALL_ABI, false);
 }
