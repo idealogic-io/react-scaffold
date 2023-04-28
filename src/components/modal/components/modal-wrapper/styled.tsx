@@ -22,7 +22,6 @@ export const StyledModalContainer = styled(motion.div)`
     margin: 24px 32px;
   }
   background-color: ${({ theme }) => theme.colors.monochrome0};
-  box-shadow: ${({ theme }) => theme.shadows.modal};
   border-radius: 16px;
   cursor: initial;
 `;

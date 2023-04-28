@@ -19,6 +19,7 @@ const Svg = styled.svg<SvgProps>`
   align-self: center;
   fill: ${({ theme, color }) => color && theme.colors[color]};
   flex-shrink: 0;
+  transition: all 0.2s linear;
   ${({ spin }) => spin && spinStyle}
 
   ${space}

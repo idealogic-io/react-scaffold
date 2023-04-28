@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // Components
 import { Box, Button, Input, Page, InputGroup, Column, Heading } from "components";
-import { AddIcon } from "components/svg";
+import { RotateIcon, EyeOpenIcon, EyeClosedIcon } from "components/svg";
 // Store
 import { useAppDispatch, useAppSelector } from "store/store";
 import { loginUser } from "store/auth/actions";
@@ -50,7 +50,15 @@ const LoginPage: React.FC = () => {
             </InputGroup>
 
             <InputGroup
-              endIcon={<AddIcon width="18px" cursor="pointer" onClick={togglePasswordVisibleHandler} />}
+              endIcon={
+                <RotateIcon
+                  variant="rotateX"
+                  isToggled={isPassword}
+                  firstIcon={<EyeOpenIcon />}
+                  secondIcon={<EyeClosedIcon />}
+                  onClick={togglePasswordVisibleHandler}
+                />
+              }
               label={t("Password")}
               error={errors.password}
               isTouched={touched.password}

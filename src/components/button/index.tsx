@@ -16,21 +16,27 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
   const internalProps = external ? getExternalLinkProps() : {};
 
   return (
-    <StyledButton {...internalProps} {...rest} type={props.type || "button"} disabled={isDisabled}>
+    <StyledButton
+      {...internalProps}
+      {...rest}
+      type={props.type || "button"}
+      disabled={isDisabled}
+      $isLoading={isLoading}
+    >
       {isLoading ? (
         <SpinnerIcon />
       ) : (
         <>
           {React.isValidElement(startIcon) &&
             React.cloneElement(startIcon, {
-              mr: "0.5rem",
+              mr: "0.375rem",
             })}
 
           {children}
 
           {React.isValidElement(endIcon) &&
             React.cloneElement(endIcon, {
-              ml: "0.5rem",
+              ml: "0.375rem",
             })}
         </>
       )}

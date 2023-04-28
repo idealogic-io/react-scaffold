@@ -1,66 +1,97 @@
 import { css, DefaultTheme } from "styled-components";
-import { Colors } from "theme/types";
-import { scales, Variant } from "./types";
 
-export const variantStyles = (
-  theme: DefaultTheme,
-  variant: Variant = "primary",
-  color: keyof Colors | undefined,
-  hoverColor: keyof Colors | undefined,
-) => {
+import { ButtonProps, scales } from "./types";
+import { Svg } from "components/svg";
+
+export interface ThemedProps extends ButtonProps {
+  theme: DefaultTheme;
+}
+
+export const variantStyles = ({ theme, color, hoverColor, variant, isLoading }: ThemedProps) => {
+  const bgColorPrimary = color ? theme.colors[color] : theme.colors.accent400;
+  const bgColorPrimaryHover = hoverColor
+    ? theme.colors[hoverColor]
+    : color
+    ? theme.colors[color]
+    : theme.colors.accent500;
+  const textColorPrimary = theme.isDark ? theme.colors.monochrome900 : theme.colors.monochrome0;
+
+  const bgColorSecondary = color ? theme.colors[color] : theme.colors.monochrome900;
+  const bgColorSecondaryHover = hoverColor
+    ? theme.colors[hoverColor]
+    : color
+    ? theme.colors[color]
+    : theme.colors.accent500;
+
   return {
     primary: css`
-      background-color: ${color ? theme.colors[color] : theme.colors.accent400};
+      background-color: ${bgColorPrimary};
+      border: 1px solid ${bgColorPrimary};
+      color: ${textColorPrimary};
 
       &:not([disabled]):hover {
-        background-color: ${hoverColor
-          ? theme.colors[hoverColor]
-          : color
-          ? theme.colors[color]
-          : theme.colors.accent500};
+        background-color: ${bgColorPrimaryHover};
+        border: 1px solid ${bgColorPrimaryHover};
+      }
+
+      ${Svg} {
+        fill: ${textColorPrimary};
       }
 
       &:disabled {
-        opacity: 0.33;
+        background-color: ${!isLoading && theme.colors.monochrome400};
+        border: 1px solid ${!isLoading && theme.colors.monochrome400};
         cursor: not-allowed;
       }
     `,
 
     outline: css`
       background-color: ${theme.colors.transparent};
-      border: 1px solid ${color ? theme.colors[color] : theme.colors.monochrome900};
-      color: ${color ? theme.colors[color] : theme.colors.monochrome900};
+      border: 1px solid ${bgColorSecondary};
+      color: ${bgColorSecondary};
 
       &:not([disabled]):hover {
-        background-color: ${hoverColor
-          ? theme.colors[hoverColor]
-          : color
-          ? theme.colors[color]
-          : theme.colors.accent500};
-        border: 1px solid
-          ${hoverColor ? theme.colors[hoverColor] : color ? theme.colors[color] : theme.colors.accent500};
-        color: ${theme.colors.monochrome0};
+        border: 1px solid ${bgColorSecondaryHover};
+        color: ${bgColorSecondaryHover};
+        ${Svg} {
+          fill: ${bgColorSecondaryHover};
+        }
+      }
+
+      ${Svg} {
+        fill: ${bgColorSecondary};
       }
 
       &:disabled {
-        opacity: 0.33;
+        color: ${!isLoading && theme.colors.monochrome400};
+        border: 1px solid ${!isLoading && theme.colors.monochrome400};
         cursor: not-allowed;
+
+        ${Svg} {
+          fill: ${!isLoading && theme.colors.monochrome400};
+        }
       }
     `,
-  }[variant];
+  }[variant!];
 };
 
 export const scaleVariants = {
   [scales.LG]: {
-    padding: "18px 32px",
+    padding: "16px 24px",
     minWidth: 120,
+    fontSize: 18,
+    lineHeight: "24px",
   },
   [scales.MD]: {
-    padding: "14px 28px",
+    padding: "9px 24px",
     minWidth: 100,
+    fontSize: 16,
+    lineHeight: "22px",
   },
   [scales.SM]: {
-    padding: "6px 16px",
-    minWidth: 53,
+    padding: "8px 24px",
+    minWidth: 80,
+    fontSize: 12,
+    lineHeight: "16px",
   },
 };

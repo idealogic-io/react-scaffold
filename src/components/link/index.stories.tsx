@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "components";
-import { AddIcon } from "components/svg";
+import { CopyIcon } from "components/svg";
 
 export default {
   title: "Components/Links",
@@ -21,7 +21,7 @@ export const Links: React.FC = () => {
 
       <Link href="/">
         With icon
-        <AddIcon />
+        <CopyIcon />
       </Link>
     </>
   );
