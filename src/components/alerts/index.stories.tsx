@@ -17,7 +17,7 @@ export default {
 
 export const Alerts: React.FC = () => {
   const successCall = () => {
-    toast.success(<AlertTextWithDescription text="Hello" />, { ...toastOptionsSuccess });
+    toast.success(<AlertTextWithDescription text="Hello" />, toastOptionsSuccess);
   };
 
   const errorCall = () => {

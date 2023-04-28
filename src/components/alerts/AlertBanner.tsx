@@ -2,9 +2,9 @@ import React from "react";
 import { AnimatePresence } from "framer-motion";
 
 import AlertTextWithDescription from "./AlertTextWithDescription";
-import { StyledAlertBanner, StylesCloseIcon } from "./styled";
+import { StyledAlertBanner } from "./styled";
 import { Box, Flex } from "components";
-import { CloseIcon } from "components/svg";
+import { CloseIconWithHover } from "components/svg";
 
 import { getIcon } from "./theme";
 import { appearanceAnimationMap, appearanceAnimationVariants } from "theme";
@@ -21,7 +21,7 @@ const AlertBanner: React.FC<AlertBannerProps> = ({ children, text, description, 
           key="alertBanner"
           {...appearanceAnimationMap}
           variants={appearanceAnimationVariants}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           variant={variant}
         >
           <Box mr="10px">
@@ -34,11 +34,7 @@ const AlertBanner: React.FC<AlertBannerProps> = ({ children, text, description, 
             </AlertTextWithDescription>
           </Flex>
 
-          {onCloseClick && (
-            <StylesCloseIcon onClick={onCloseClick}>
-              <CloseIcon height="20px" />
-            </StylesCloseIcon>
-          )}
+          {onCloseClick && <CloseIconWithHover onClick={onCloseClick} />}
         </StyledAlertBanner>
       )}
     </AnimatePresence>

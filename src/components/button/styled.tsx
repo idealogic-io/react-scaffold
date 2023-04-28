@@ -16,7 +16,7 @@ const StyledButton = styled.button<ButtonProps>`
   font-family: inherit;
   justify-content: center;
   outline: 0;
-  transition: all 0.2s linear;
+  transition: all 0.3s ease;
   width: fit-content;
   border: 0;
 

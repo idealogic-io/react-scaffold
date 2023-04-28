@@ -9,4 +9,4 @@ export { default as CopyIcon } from "./icons/Copy";
 export { default as EyeOpenIcon } from "./icons/EyeOpen";
 export { default as EyeClosedIcon } from "./icons/EyeClosed";
 
-export { RotateIcon } from "./components";
+export { RotateIcon, CloseIconWithHover } from "./components";
