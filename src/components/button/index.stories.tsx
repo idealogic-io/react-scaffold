@@ -38,7 +38,7 @@ export const Buttons: React.FC = () => {
         {Object.values(variants).map(variant => {
           return (
             <Row alignItems="center" key={variant} mb="32px">
-              {Object.values(scales).map((scale, i) => {
+              {Object.values(scales).map(scale => {
                 return (
                   <Button key={scale} variant={variant} scale={scale} m="8px" isLoading>
                     {`${variant} ${scale.toUpperCase()}`}
