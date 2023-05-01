@@ -29,14 +29,14 @@ const Button = <E extends React.ElementType = "button">(props: ButtonProps<E>): 
         <>
           {React.isValidElement(startIcon) &&
             React.cloneElement(startIcon, {
-              mr: "0.375rem",
+              mr: "0.5rem",
             })}
 
           {children}
 
           {React.isValidElement(endIcon) &&
             React.cloneElement(endIcon, {
-              ml: "0.375rem",
+              ml: "0.5rem",
             })}
         </>
       )}

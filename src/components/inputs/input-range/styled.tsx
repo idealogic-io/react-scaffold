@@ -41,12 +41,12 @@ export const StyledRangeInput = styled.input<StyledInputProps>`
     position: relative;
     height: ${mainDimension};
     width: ${mainDimension};
-    background: ${({ theme }) => theme.colors.transparent};
+    background: ${getColor};
     border: 2px solid ${getColor};
-    border-radius: ${mainDimension};
+    border-radius: ${({ theme }) => theme.radii.circle};
     top: 50%;
     transform: translateY(-50%);
-    transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.3s ease;
     box-shadow: ${({ theme, afterThumbWidth, disabled }) =>
       !disabled ? makeGreyLineAfterThumb(theme.colors.monochrome300 as keyof Colors, afterThumbWidth) : "none"};
   }

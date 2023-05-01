@@ -26,7 +26,7 @@ export const CustomCheckbox = styled.div<CheckProps>`
   border: 1px solid ${({ theme, disabled }) => (disabled ? theme.colors.monochrome400 : theme.colors.accent400)};
   background-color: ${({ theme, checked, disabled }) =>
     disabled ? theme.colors.monochrome300 : checked ? theme.colors.accent400 : "transparent"};
-  border-radius: 6px;
+  border-radius: ${({ theme }) => theme.radii.semiMedium};
   display: flex;
   align-items: center;
   justify-content: center;
