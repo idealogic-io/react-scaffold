@@ -9,7 +9,6 @@ export default {
 export const InputRange: React.FC = () => {
   const [value1, setValue1] = useState(20);
   const [value2, setValue2] = useState(50);
-  const [value3, _] = useState(10);
 
   return (
     <>
@@ -27,8 +26,8 @@ export const InputRange: React.FC = () => {
 
       <Box mt="50px">
         <Text>Disabled</Text>
-        <Text textAlign="center">{value3}</Text>
-        <StyledInputRange value={value3} disabled />
+        <Text textAlign="center">Disabled</Text>
+        <StyledInputRange value={50} disabled />
       </Box>
     </>
   );
