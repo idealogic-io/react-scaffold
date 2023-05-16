@@ -92,7 +92,7 @@ html, body, div, span, applet, object, iframe,
   ::-webkit-scrollbar-thumb {
     background-image: ${({ theme }) =>
       `linear-gradient(to bottom, ${theme.colors.accent100}, ${theme.colors.monochrome500})`};
-    border-radius: ${({ theme }) => theme.radii.medium};;
+    border-radius: ${({ theme }) => theme.radii.medium};
   }
 
   body {

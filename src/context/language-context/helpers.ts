@@ -1,4 +1,3 @@
-import memoize from "lodash/memoize";
 import { EN, LOCAL_STORAGE_KEYS, REGEX } from "configs";
 
 export const fetchLocale = async (locale: string) => {
@@ -18,6 +17,6 @@ export const getLanguageCodeFromLS = () => {
   return localStorage.getItem(LOCAL_STORAGE_KEYS.language) ?? EN.locale;
 };
 
-export const translatedTextIncludesVariable = memoize(translatedText => {
+export const translatedTextIncludesVariable = (translatedText: string) => {
   return !!translatedText?.match(REGEX.includesVariableRegex);
-});
+};
