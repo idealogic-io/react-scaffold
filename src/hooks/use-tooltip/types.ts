@@ -16,7 +16,7 @@ export interface TooltipOptions {
   tooltipPadding?: Padding;
   tooltipOffset?: [number, number];
   isEllipsis?: boolean;
-  customStyles?: { tooltip?: {}; arrow?: {} };
+  customStyles?: { tooltip?: object; arrow?: object };
 }
 
 export type useSubscriptionEventsHandlersProps = {

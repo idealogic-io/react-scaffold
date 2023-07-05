@@ -8,7 +8,7 @@ export type ErrorInErrorsArrayFromBE = {
 export type ErrorResult = {
   message: string;
   isError: boolean;
-  code?: number;
+  code?: number | string;
 
   errors?: ErrorInErrorsArrayFromBE[];
 };

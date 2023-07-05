@@ -5,11 +5,10 @@ interface Opts {
   fallback: React.ReactNode;
 }
 
-type Unpromisify<T> = T extends Promise<infer P> ? P : never;
-
-export const lazyLoad = <T extends Promise<any>, U extends React.ComponentType<any>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const lazyLoad = <T extends Promise<{ default: U }>, U extends React.ComponentType<any>>(
   importFunc: () => T,
-  selectorFunc?: (s: Unpromisify<T>) => U,
+  selectorFunc?: (s: { default: U }) => U,
   opts: Opts = { fallback: <Loader /> },
 ) => {
   let lazyFactory: () => Promise<{ default: U }> = importFunc;

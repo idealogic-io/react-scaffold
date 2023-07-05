@@ -11,7 +11,7 @@ const isBetween = (value: number, floor: number, ceil: number) => value >= floor
  * @param ids array of ids of the blocks
  * @param offset - extra value for the offset
  */
-const useScrollSpy = (ids: string[], offset: number = 0) => {
+const useScrollSpy = (ids: string[], offset = 0) => {
   const [activeId, setActiveId] = useState("");
 
   useLayoutEffect(() => {

@@ -64,12 +64,12 @@ export const isErrorResult = (result: unknown): result is ErrorResult => {
   );
 };
 
-const replaceWithNewErrorMessages = (error: any) => {
-  if (error.code === "ERR_NETWORK") {
+const replaceWithNewErrorMessages = (error: unknown) => {
+  if ((error as { code: string })?.code === "ERR_NETWORK") {
     return `${translate("Server is not responding.")} ${translate("Check the internet connection and try again.")}`;
-  } else if (error.code === "ECONNABORTED") {
+  } else if ((error as { code: string })?.code === "ECONNABORTED") {
     return `${translate("Your request exceeded the time limit for processing.")} ${translate(
       "Check the internet connection and try again.",
     )}`;
-  } else return error.message;
+  } else return (error as { message: string }).message;
 };

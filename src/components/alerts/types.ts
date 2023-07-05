@@ -8,7 +8,7 @@ export const variants = {
   WARNING: "warning",
 } as const;
 
-export type Variants = typeof variants[keyof typeof variants];
+export type Variants = (typeof variants)[keyof typeof variants];
 
 export interface ThemedAlert {
   variant?: AlertBannerProps["variant"];
