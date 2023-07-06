@@ -128,6 +128,7 @@ export const fetchChunk = async (
       },
     );
   } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const error = err as any;
     if (
       error.code === -32000 ||

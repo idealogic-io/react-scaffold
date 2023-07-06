@@ -17,7 +17,7 @@ const useForm = <Values>(config: FormikConfig<Values & FormikValues>) => {
     ...formik,
     fieldProps(field: keyof Values): FieldProps<Values> {
       return {
-        ...formik.getFieldProps(field),
+        ...formik.getFieldProps(field as string),
         onChange: (e: ChangeEvent<HTMLInputElement>) => {
           return formik.setFieldValue(field as string, e.target.value);
         },

@@ -1,4 +1,5 @@
 import { ElementType } from "react";
+import { DefaultTheme } from "styled-components";
 import { PolymorphicComponentProps } from "types";
 
 export interface InputRangeProps {
@@ -6,9 +7,8 @@ export interface InputRangeProps {
   onFinishDrag?: (arg: number) => void;
 }
 
-export type StyledRangeInputProps = {
-  afterThumbWidth: number;
-};
-
 export type InputProps<P extends ElementType = "input"> = PolymorphicComponentProps<P, InputRangeProps>;
-export type StyledInputProps<P extends ElementType = "input"> = PolymorphicComponentProps<P, StyledRangeInputProps>;
+
+export interface ThemedProps extends InputProps {
+  theme: DefaultTheme;
+}

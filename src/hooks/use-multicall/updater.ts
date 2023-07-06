@@ -89,7 +89,7 @@ export const useMulticallUpdater = () => {
               }),
             );
           })
-          .catch((error: any) => {
+          .catch(error => {
             if (error instanceof CancelledError) {
               console.debug("Cancelled fetch for blockNumber", currentBlock);
               return;

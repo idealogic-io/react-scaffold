@@ -2,7 +2,7 @@ interface Window {
   ethereum?: {
     isMetaMask?: true;
     isTrust?: true;
-    providers?: any[];
-    request?: (...args: any[]) => Promise<void>;
+    providers?: unknown[];
+    request?: (...args: unknown[]) => Promise<void>;
   };
 }

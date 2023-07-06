@@ -4,7 +4,7 @@ import { TransactionDetails } from "store/transactions/reducer";
  */
 export const shouldCheck = (
   currentBlock: number,
-  tx: { addedTime: number; receipt?: any; lastCheckedBlockNumber?: number },
+  tx: { addedTime: number; receipt?: unknown; lastCheckedBlockNumber?: number },
 ) => {
   if (tx.receipt) {
     return false;

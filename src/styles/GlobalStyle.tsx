@@ -38,10 +38,6 @@ html, body, div, span, applet, object, iframe,
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
-  body {
-    line-height: 1;
-    font-size: 16px;
-  }
   ol,
   ul {
     list-style: disc;
@@ -94,32 +90,11 @@ html, body, div, span, applet, object, iframe,
     width: 8px;
   }
   ::-webkit-scrollbar-thumb {
-    background-image: linear-gradient(180deg, #D0368A 0%, #708AD4 99%);
-    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
-    border-radius: 100px;
+    background-image: ${({ theme }) =>
+      `linear-gradient(to bottom, ${theme.colors.accent100}, ${theme.colors.monochrome500})`};
+    border-radius: ${({ theme }) => theme.radii.medium};
   }
 
-
-  /* Slider */ 
-  input[type=range] {
-    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-    width: 100%; /* Specific width is required for Firefox. */
-    background: transparent; /* Otherwise white in Chrome */
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-  }
-  input[type=range]:focus {
-    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
-  }
-  input[type=range]::-ms-track {
-    width: 100%;
-    cursor: pointer;
-    /* Hides the slider so custom styles can be added */
-    background: transparent; 
-    border-color: transparent;
-    color: transparent;
-  }
   body {
     line-height: 1;
     font-size: 16px;

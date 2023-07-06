@@ -1,59 +1,51 @@
-import styled, { DefaultTheme } from "styled-components";
-// Types
-import { Colors } from "theme/types";
-import { StyledInputProps } from "./types";
+import styled, { css } from "styled-components";
 
-const mainDimension = "24px";
+import { InputProps, ThemedProps } from "./types";
 
-const getColor = ({ theme, disabled }: { theme: DefaultTheme; disabled?: boolean }) => {
-  return disabled ? `${theme.colors.monochrome300}` : `${theme.colors.accent400}`;
-};
+const getBackgroundGradientColor = ({ theme, disabled, value }: ThemedProps) => css`
+  background: ${`linear-gradient(to right, ${
+    disabled ? theme.colors.monochrome300 : theme.colors.accent400
+  } ${value}%, ${disabled ? theme.colors.monochrome100 : theme.colors.accent200} ${value}%)`};
+`;
 
-const makeGreyLineAfterThumb = (color: keyof Colors, width: number) => {
-  let i = 10;
-  let shadow = `${i}px 0 0 -20px ${color}`;
-
-  for (; i < width; i++) {
-    shadow = `${shadow}, ${i}px 0 0 -10.8px ${color}`;
+const getThumbStyles = ({ theme, disabled }: ThemedProps) => css`
+  -webkit-appearance: none;
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  background-color: ${disabled ? theme.colors.monochrome300 : theme.colors.accent400};
+  border-radius: ${theme.radii.circle};
+  border: none;
+  transition: 0.3s ease;
+  &:hover {
+    box-shadow: ${!disabled && `0 0 0 12px ${theme.colors.accent400}15`};
   }
+  &:focus {
+    box-shadow: ${!disabled && `0 0 0 12px ${theme.colors.accent400}30`};
+  }
+  &:active {
+    box-shadow: ${!disabled && `0 0 0 12px ${theme.colors.accent400}30`};
+  }
+`;
 
-  return shadow;
-};
-
-export const StyledRangeInput = styled.input<StyledInputProps>`
-  overflow: hidden;
-  display: block;
+export const StyledRangeInput = styled.input<InputProps>`
+  -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  margin: 0;
-  height: ${mainDimension};
+  outline: none;
+  border-radius: 2px;
+  height: 2px;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
-  // before thumb
-  &::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 2px;
-    background: ${getColor};
-  }
+  ${getBackgroundGradientColor};
 
-  // thumb + after
-  &::-webkit-slider-thumb {
-    position: relative;
-    height: ${mainDimension};
-    width: ${mainDimension};
-    background: ${({ theme }) => theme.colors.transparent};
-    border: 2px solid ${getColor};
-    border-radius: ${mainDimension};
-    top: 50%;
-    transform: translateY(-50%);
-    transition: background-color 0.1s ease-in-out;
-    box-shadow: ${({ theme, afterThumbWidth, disabled }) =>
-      !disabled ? makeGreyLineAfterThumb(theme.colors.monochrome300 as keyof Colors, afterThumbWidth) : "none"};
+  ::-webkit-slider-thumb {
+    ${getThumbStyles};
   }
-
-  &:not([disabled]):active {
-    &::-webkit-slider-thumb {
-      background-color: ${getColor};
-    }
+  ::-moz-range-thumb {
+    ${getThumbStyles};
+  }
+  ::-ms-thumb {
+    ${getThumbStyles};
   }
 `;

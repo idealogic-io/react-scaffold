@@ -13,7 +13,7 @@ import { getContractKey, serializesContractKey } from "./helpers";
  * const { data, error, mutate } = useSWRContract(key)
  */
 export function useSWRContract<
-  Error = any,
+  Error,
   T extends Contract = Contract,
   N extends ContractMethodName<T> = ContractMethodName<T>,
   Data = Awaited<ReturnType<T["callStatic"][N]>>,

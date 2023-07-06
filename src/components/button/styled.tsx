@@ -7,7 +7,6 @@ import { ButtonProps } from "./types";
 const StyledButton = styled.button<ButtonProps>`
   border-radius: ${({ theme }) => theme.radii.semiMedium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  color: ${({ theme }) => (theme.isDark ? theme.colors.monochrome900 : theme.colors.monochrome0)};
   font-family: ${({ theme }) => theme.fonts.mv};
 
   position: relative;
@@ -16,10 +15,8 @@ const StyledButton = styled.button<ButtonProps>`
   display: inline-flex;
   font-family: inherit;
   justify-content: center;
-  line-height: 1.375;
   outline: 0;
-  font-size: 14px;
-  transition: all 0.2s linear;
+  transition: all 0.3s ease;
   width: fit-content;
   border: 0;
 
@@ -28,7 +25,7 @@ const StyledButton = styled.button<ButtonProps>`
     variants: scaleVariants,
   })};
 
-  ${({ theme, variant, color, hoverColor }) => variantStyles(theme, variant, color, hoverColor)};
+  ${variantStyles};
 
   ${space}
   ${typography}

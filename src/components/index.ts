@@ -21,3 +21,4 @@ export {
   toastOptionsSuccess,
   toastOptionsWarning,
 } from "./alerts";
+export { default as Checkbox } from "./checkbox";

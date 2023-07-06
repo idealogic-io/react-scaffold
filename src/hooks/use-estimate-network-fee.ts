@@ -13,7 +13,7 @@ import { useGasPrice, useNativeCurrency, useTokenContract } from "hooks";
  * @param inputs contract method arguments
  * @returns Gas price multiplied by a gas limit
  */
-export const useEstimateNetworkFee = (address: string | undefined, methodName: string, inputs: any[]) => {
+export const useEstimateNetworkFee = (address: string | undefined, methodName: string, inputs: unknown[]) => {
   const { chainId } = useWeb3React();
   const { gasPrice } = useGasPrice();
   const contract = useTokenContract(address);

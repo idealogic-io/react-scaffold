@@ -26,7 +26,7 @@ const shake = keyframes`
 `;
 
 const shakeAnimation = css`
-  animation: ${shake} 0.4s linear;
+  animation: ${shake} 0.3s ease;
 `;
 
 export const StyledInputContainer = styled(Flex)`
@@ -59,6 +59,6 @@ export const StyledNumericInput = styled(Flex)<StyledNumericInputProps>`
         ? theme.colors.monochrome500
         : theme.colors.transparent};
   background-color: ${({ theme, isError }) => (isError ? theme.colors.error100 : theme.colors.monochrome100)};
-  transition: 0.3s all linear;
+  transition: 0.3s all ease;
   ${({ isError }) => isError && shakeAnimation}
 `;

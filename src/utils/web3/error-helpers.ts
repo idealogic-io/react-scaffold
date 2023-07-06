@@ -11,7 +11,7 @@ export type TxError = {
 /**
  * Check for insufficient funds for gas * price + value
  */
-export const isGasEstimationError = (error: TxError | Error | string) => {
+export const isGasEstimationError = (error: TxError | Error | string | unknown) => {
   if ((error as Error).message.includes("insufficient funds")) {
     return true;
   } else {

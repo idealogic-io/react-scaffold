@@ -97,7 +97,7 @@ export const useApproveCallback = (
         approval: { tokenAddress: token.address, spender },
         type: "approve",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(`Approval failed: `, error);
       toast.error(t("Approval failed: %message%", { message: getErrorMessage(error) }));
     }

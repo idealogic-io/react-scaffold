@@ -28,7 +28,7 @@ const LanguageContext = createContext<ContextApi | null>(null);
 
 const LanguageContextProvider: React.FC<LanguageContextProviderProps> = ({ fallback, children }) => {
   const [state, setState] = useState(() => {
-    let codeFromStorage = getLanguageCodeFromLS();
+    const codeFromStorage = getLanguageCodeFromLS();
 
     return {
       ...initialState,

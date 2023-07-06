@@ -5,5 +5,5 @@ export default {
 };
 
 export const ErrorBoundaryFallback: React.FC = () => {
-  return <StyledErrorBoundaryFallback error={new Error("Error")} resetError={() => {}} />;
+  return <StyledErrorBoundaryFallback error={new Error("Error")} resetError={() => null} />;
 };

@@ -1,4 +1,4 @@
-import { Contract } from "@ethersproject/contracts";
+import { Contract, ContractInterface } from "@ethersproject/contracts";
 import { useMemo } from "react";
 
 import { getProviderOrSigner } from "utils/web3";
@@ -17,7 +17,7 @@ import MULTICALL_ABI from "configs/abi/multicall.json";
  */
 const useContract = <T extends Contract = Contract>(
   address: string | undefined,
-  ABI: any,
+  ABI: ContractInterface,
   withSignerIfPossible = true,
 ): T | null => {
   // Even if we don't connect to wallet we can still connect to StaticRpcProvider

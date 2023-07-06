@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useState } from "react";
 // Styling
 import { StyledRangeInput } from "./styled";
 // Types
@@ -12,18 +12,8 @@ export const InputRange: React.FC<InputProps> = ({
   disabled,
   onValueChanged,
   onFinishDrag,
-  ...props
 }) => {
   const [internalValue, setInternalValue] = useState(value);
-  const [width, setWidth] = useState(0);
-
-  const ref = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (ref.current?.clientWidth) {
-      setWidth(ref.current.clientWidth);
-    }
-  }, [ref.current?.clientWidth]);
 
   const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setInternalValue(parseFloat(value));
@@ -39,17 +29,14 @@ export const InputRange: React.FC<InputProps> = ({
 
   return (
     <StyledRangeInput
-      {...props}
       type="range"
       name={name}
       value={internalValue}
       min={min}
       max={max}
-      afterThumbWidth={width}
       onChange={handleChange}
       onMouseUp={handleMouseUp}
       disabled={disabled}
-      ref={ref}
     />
   );
 };

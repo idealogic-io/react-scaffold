@@ -39,7 +39,7 @@ export const isExceededBalance = ({
   }
 };
 
-export const getErrorMessage = (error: Error | TxError | string) => {
+export const getErrorMessage = (error: Error | TxError | string | unknown) => {
   let message = "Sorry, can't perform a transaction";
 
   if (isUserRejected(error as Error & { code: number })) {

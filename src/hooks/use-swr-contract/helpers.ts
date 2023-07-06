@@ -2,7 +2,7 @@ import { Contract } from "@ethersproject/contracts";
 import { FormatTypes } from "@ethersproject/abi";
 import { ContractMethodName, UseSWRContractKey, UseSWRContractSerializeKeys } from "./types";
 
-export const getContractKey = <T extends Contract = Contract, N extends ContractMethodName<T> = any>(
+export const getContractKey = <T extends Contract = Contract, N extends ContractMethodName<T> = string>(
   key?: UseSWRContractKey<T, N> | null,
 ) => {
   if (Array.isArray(key)) {

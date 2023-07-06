@@ -40,7 +40,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
         summary: `Transfer to ${truncateHash(to)}`,
         type: "send",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(`Send failed: `, error, address, to, value);
       toast.error(t("Send failed: %message%", { message: getErrorMessage(error) }));
     }
