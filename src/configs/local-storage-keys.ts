@@ -5,7 +5,7 @@ const LOCAL_STORAGE_KEYS = {
   token: `${packages.name}_token`,
   refreshToken: `${packages.name}_refreshToken`,
   language: `${packages.name}_language`,
-  connector: `${packages.name}_connector`,
+  connection: `${packages.name}_connection`,
 };
 
 export default LOCAL_STORAGE_KEYS;

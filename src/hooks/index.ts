@@ -1,8 +1,5 @@
 export { default as useMatchBreakpoints } from "./use-match-breakpoints/use-match-breakpoints";
 export { default as useForm } from "./use-form";
-export { useWeb3Login, clearUserState } from "./use-web3-login";
-export { default as useWeb3AutoConnect } from "./use-web3-auto-connect";
-export { default as useProviders } from "./use-providers";
 export { default as useTooltip } from "./use-tooltip";
 export { usePollBlockNumber, useCurrentBlock, useInitialBlock } from "./use-poll-block-number";
 export { useDebounce } from "./use-debounce";
@@ -29,6 +26,4 @@ export { default as useCopyContent } from "./use-copy-content";
 export { useInterval } from "./use-interval";
 export { useIsMounted } from "./use-is-mounted";
 export { useTimer } from "./use-timer";
-export { useActiveWeb3React } from "./use-active-web3-react";
 export { useSWRContract } from "./use-swr-contract";
-export { useAccountEventListener } from "./use-account-event-listener";

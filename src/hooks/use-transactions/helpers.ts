@@ -1,4 +1,4 @@
-import { TransactionDetails } from "store/transactions/reducer";
+import { TransactionDetails } from "store/transactions";
 /**
  * Define do we need to check transaction
  */

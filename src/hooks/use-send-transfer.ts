@@ -16,7 +16,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   const addTransaction = useTransactionAdder();
 
   const { t } = useTranslation();
-  const { library, chainId } = useWeb3React();
+  const { provider, chainId } = useWeb3React();
   const contract = useTokenContract(address);
 
   const sendToken = async (value: BigNumber) => {
@@ -24,7 +24,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
     const sendHandler = isNative ? sendNativeToken : sendERC20Token;
 
     try {
-      if (!library) {
+      if (!provider) {
         throw new Error("Cannot get signer");
       }
       if (!chainId) {
@@ -47,7 +47,7 @@ export const useSendTransfer = ({ address, to }: UseSendTransferArgs) => {
   };
 
   const sendNativeToken = async (value: BigNumber) => {
-    const signer = (library as Web3Provider).getSigner();
+    const signer = provider!.getSigner();
 
     return signer.sendTransaction({
       to,

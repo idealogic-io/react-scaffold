@@ -12,7 +12,8 @@ import {
 } from "store/multicall/action";
 import { useAppDispatch, useAppSelector } from "store/store";
 
-import { useDebounce, useMulticallContract, useCurrentBlock } from "hooks";
+import { useDebounce, useMulticallContract } from "hooks";
+import { useCurrentBlock } from "configs/connectors";
 
 export const useMulticallUpdater = () => {
   const dispatch = useAppDispatch();

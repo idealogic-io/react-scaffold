@@ -4,6 +4,7 @@ import store from "store/store";
 import { refreshToken } from "store/auth/actions";
 import { resetAuth } from "store/auth";
 import { hideModal } from "store/modal";
+import { resetWeb3WalletState } from "store/web3-wallet";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
 
@@ -11,7 +12,6 @@ import { LoginUserResponse } from "store/auth/types";
 import { ErrorResult } from "./types";
 
 import { ENDPOINTS_AUTH } from "./endpoints";
-import { clearUserState } from "hooks";
 
 let isRefreshing = false;
 let refreshSubscribers: ((arg: string) => void)[] = [];
@@ -23,7 +23,7 @@ export function resetStore() {
   store.dispatch(resetAuth());
   store.dispatch(hideModal());
 
-  clearUserState();
+  store.dispatch(resetWeb3WalletState());
 }
 
 export function getInstance(baseURL = process.env.REACT_APP_API_URL) {

@@ -12,7 +12,8 @@ import { shouldCheck } from "./helpers";
 import { useCurrentBlock } from "hooks";
 
 export const useTransactionsUpdater = () => {
-  const { library, chainId } = useWeb3React();
+  // TODO check library gere
+  const { provider, chainId } = useWeb3React();
   const { t } = useTranslation();
 
   const currentBlock = useCurrentBlock();
@@ -22,12 +23,12 @@ export const useTransactionsUpdater = () => {
   const transactions = useMemo(() => (chainId ? state[chainId] ?? {} : {}), [chainId, state]);
 
   useEffect(() => {
-    if (!chainId || !library || !currentBlock) return;
+    if (!chainId || !provider || !currentBlock) return;
 
     Object.entries(transactions)
       .filter(([hash, _]) => shouldCheck(currentBlock, transactions[hash]))
       .forEach(([hash, value]) => {
-        (library as Web3Provider)
+        provider
           .getTransactionReceipt(hash)
           .then(receipt => {
             if (receipt) {
@@ -60,7 +61,7 @@ export const useTransactionsUpdater = () => {
             console.error(`failed to check transaction hash: ${hash}`, error);
           });
       });
-  }, [chainId, library, transactions, currentBlock, dispatch, toast, t]);
+  }, [chainId, provider, transactions, currentBlock, dispatch, toast, t]);
 
   return null;
 };

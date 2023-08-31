@@ -3,6 +3,7 @@ const REGEX = {
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
   numericInputRegex: /^[0-9]*[.,]?[0-9]*$/,
   onlyNumbers: /^[0-9]*$/,
+  zerosAfterDot: /\.?0+$/,
 };
 
 export default REGEX;

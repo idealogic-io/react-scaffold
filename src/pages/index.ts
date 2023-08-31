@@ -9,8 +9,3 @@ export const LandingPage = lazyLoad(
   () => import("./landing"),
   module => module.default,
 );
-
-export const HomePage = lazyLoad(
-  () => import("./home"),
-  module => module.default,
-);

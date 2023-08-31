@@ -5,7 +5,8 @@ import { RequireAuth, TokenHandler } from "./components";
 import { ROUTES, ROUTE_PARAMS } from "./routes";
 
 import { NotFoundPage } from "components";
-import { HomePage, LandingPage, LoginPage } from "pages";
+import { LandingPage, LoginPage } from "pages";
+import Web3Page from "pages/web3";
 
 const Navigation: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const Navigation: React.FC = () => {
           index
           element={
             <RequireAuth>
-              <HomePage />
+              <Web3Page />
             </RequireAuth>
           }
         />
