@@ -3,7 +3,7 @@ import { Animation } from "./types";
 
 const waves = keyframes`
     from {
-        left: -150px;
+        left: -9.375rem;
     }
     to   {
         left: 100%;
@@ -36,9 +36,9 @@ export const variantStyles = (animation: Animation = "pulse") => {
         position: absolute;
         background-image: linear-gradient(90deg, transparent, rgba(243, 243, 243, 0.5), transparent);
         top: 0;
-        left: -150px;
+        left: -9.375rem;
         height: 100%;
-        width: 150px;
+        width: 9.375rem;
         animation: ${waves} 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       }
     `,

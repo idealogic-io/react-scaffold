@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { space, typography } from "styled-system";
 import { InputProps, scales, ThemedProps, BorderProps } from "./types";
 
@@ -15,7 +15,7 @@ const getHeight = ({ scale }: ThemedProps) => {
 
 const getBorderStyles = ({ error, isTouched, borderColor, theme }: BorderProps) => {
   if (error && isTouched) {
-    return `
+    return css`
        border: 1px solid ${theme.colors.error400};
        &:focus {
          border: 1px solid ${theme.colors.error400} !important;
@@ -25,7 +25,7 @@ const getBorderStyles = ({ error, isTouched, borderColor, theme }: BorderProps) 
       }
     `;
   } else if (borderColor) {
-    return `
+    return css`
         border: 1px solid ${theme.colors[borderColor]};
         &:focus {
         border: 1px solid ${borderColor} !important;
@@ -35,7 +35,7 @@ const getBorderStyles = ({ error, isTouched, borderColor, theme }: BorderProps) 
         }`;
   }
 
-  return `
+  return css`
     border: 1px solid ${theme.colors.monochrome300};
   `;
 };

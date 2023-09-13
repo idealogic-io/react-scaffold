@@ -22,7 +22,7 @@ const DARK = "dark";
 
 const ThemeContext = createContext<ContextType | null>(null);
 
-const ThemeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+const ThemeContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     const themeFromStorage = getThemeValueFromLS();
 
