@@ -1,5 +1,6 @@
 import { TranslateFunction } from "context/language-context/types";
 import { ROUTES } from "navigation/routes";
+import { removeTrailingSlashIfExists } from "utils/remove-trailing-slash-if-exist";
 
 const URL = process.env.REACT_APP_URL;
 
@@ -12,7 +13,14 @@ export const getDefaultMeta = (t: TranslateFunction) => {
 };
 
 export const getCustomMeta = (path: string, t: TranslateFunction) => {
-  switch (path) {
+  let basePath = removeTrailingSlashIfExists(path);
+  const matchingRoute = findMatchingRoute(basePath);
+
+  if (basePath && !matchingRoute) {
+    basePath = "/404";
+  }
+
+  switch (basePath) {
     case ROUTES.login: {
       return {
         ...getDefaultMeta(t),
@@ -25,9 +33,23 @@ export const getCustomMeta = (path: string, t: TranslateFunction) => {
         title: t("Home"),
       };
     }
+    case "/404": {
+      return {
+        ...getDefaultMeta(t),
+        title: t("404"),
+      };
+    }
     default:
       return {
         ...getDefaultMeta(t),
       };
+  }
+};
+
+const findMatchingRoute = (basePath: string) => {
+  for (const route in ROUTES) {
+    if (basePath === `/${ROUTES[route as keyof typeof ROUTES]}`) {
+      return route;
+    }
   }
 };

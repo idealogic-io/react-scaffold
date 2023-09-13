@@ -1,18 +1,28 @@
 import React from "react";
-
+import { Link as RouterLink } from "react-router-dom";
+// Styling
 import { StyledLink } from "./styled";
+// Helpers
 import { getExternalLinkProps } from "components/button";
-
+// Types
 import { LinkProps } from "./types";
 
-const Link: React.FC<LinkProps> = ({ external, ...props }) => {
+const Link: React.FC<LinkProps> = ({ external, href, ...props }) => {
   const internalProps = external ? getExternalLinkProps() : {};
+  const ariaLabel = props.children && typeof props.children === "string" ? props.children : href || "link";
 
-  return <StyledLink $fontWeight="bold" as="a" {...internalProps} {...props} />;
+  if (external) {
+    return <StyledLink as="a" href={href} {...internalProps} {...props} aria-label={ariaLabel} />;
+  } else {
+    return (
+      <RouterLink to={href || ".."} replace aria-label={ariaLabel}>
+        <StyledLink as="span" {...internalProps} {...props} />
+      </RouterLink>
+    );
+  }
 };
 
 Link.defaultProps = {
-  color: "monochrome900",
   underline: false,
 };
 

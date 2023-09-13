@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button, Box, Row } from "components";
 import { variants, scales } from "./types";
-import { CopyIcon } from "components/svg";
+import { InfoIcon } from "components/svg";
 
 export default {
   title: "Components/Buttons",
@@ -22,8 +22,8 @@ export const Buttons: React.FC = () => {
                     variant={variant}
                     scale={scale}
                     m="8px"
-                    startIcon={i === 1 && <CopyIcon />}
-                    endIcon={i === 2 && <CopyIcon />}
+                    startIcon={i === 1 && <InfoIcon />}
+                    endIcon={i === 2 && <InfoIcon />}
                   >
                     {`${variant} ${scale.toUpperCase()}`}
                   </Button>
@@ -61,8 +61,8 @@ export const Buttons: React.FC = () => {
                     variant={variant}
                     scale={scale}
                     m="8px"
-                    startIcon={i === 1 && <CopyIcon />}
-                    endIcon={i === 2 && <CopyIcon />}
+                    startIcon={i === 1 && <InfoIcon />}
+                    endIcon={i === 2 && <InfoIcon />}
                     disabled
                   >
                     Disabled

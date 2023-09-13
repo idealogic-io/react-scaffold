@@ -1,7 +1,6 @@
 import React from "react";
 import { InputGroup as StyledInputGroup, Input } from "components";
-
-import { CopyIcon } from "components/svg";
+import { InfoIcon } from "components/svg";
 
 export default {
   title: "Components/Inputs/InputGroup",
@@ -14,15 +13,15 @@ export const InputGroup: React.FC = () => {
         <Input />
       </StyledInputGroup>
 
-      <StyledInputGroup label="With Icons" startIcon={<CopyIcon />} endIcon={<CopyIcon />}>
+      <StyledInputGroup label="With Icons" startIcon={<InfoIcon />} endIcon={<InfoIcon />}>
         <Input />
       </StyledInputGroup>
 
-      <StyledInputGroup label="Label" startIcon={<CopyIcon />} endIcon={<CopyIcon />}>
+      <StyledInputGroup label="Label" startIcon={<InfoIcon />} endIcon={<InfoIcon />}>
         <Input value="Disabled" disabled />
       </StyledInputGroup>
 
-      <StyledInputGroup label="Label" error="Error" isTouched startIcon={<CopyIcon />} endIcon={<CopyIcon />}>
+      <StyledInputGroup label="Label" error="Error" isTouched startIcon={<InfoIcon />} endIcon={<InfoIcon />}>
         <Input value="With Error" />
       </StyledInputGroup>
     </>
