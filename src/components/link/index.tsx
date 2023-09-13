@@ -12,14 +12,12 @@ const Link: React.FC<LinkProps> = ({ external, href, ...props }) => {
   const ariaLabel = props.children && typeof props.children === "string" ? props.children : href || "link";
 
   if (external) {
-    return <StyledLink as="a" href={href} {...internalProps} {...props} />;
+    return <StyledLink as="a" href={href} {...internalProps} {...props} aria-label={ariaLabel} />;
   } else {
     return (
-      <>
-        <RouterLink to={href || ".."} replace aria-label={ariaLabel}>
-          <StyledLink as="span" {...internalProps} {...props} />
-        </RouterLink>
-      </>
+      <RouterLink to={href || ".."} replace aria-label={ariaLabel}>
+        <StyledLink as="span" {...internalProps} {...props} />
+      </RouterLink>
     );
   }
 };

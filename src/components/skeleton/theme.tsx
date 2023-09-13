@@ -2,12 +2,12 @@ import { css, keyframes } from "styled-components";
 import { Animation } from "./types";
 
 const waves = keyframes`
-    from {
-        left: -9.375rem;
-    }
-    to   {
-        left: 100%;
-    }
+  from {
+    left: -9.375rem;
+  }
+  to {
+    left: 100%;
+  }
 `;
 
 const pulse = keyframes`
