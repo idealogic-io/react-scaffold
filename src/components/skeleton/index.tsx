@@ -22,7 +22,6 @@ const StyledSkelton = styled.div<SkeletonProps>`
   ${({ animation }) => variantStyles(animation)};
 
   ${layout}
-
   ${space}
 `;
 

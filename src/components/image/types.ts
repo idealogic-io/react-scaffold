@@ -5,10 +5,7 @@ export type ImageDimensions = {
   height: string;
   skeletonHeight?: string;
   skeletonWidth?: string;
-  isHideSkeleton?: boolean;
-  isWrapperAbsolute?: boolean;
   variant?: SkeletonProps["variant"];
-  setExternalLoading?: (isExternalLoading: boolean) => void;
 };
 
 export interface ImageProps extends ImageDimensions {

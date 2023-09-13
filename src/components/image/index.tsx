@@ -16,17 +16,14 @@ const Image: React.FC<ImageProps> = ({
   animation,
   skeletonHeight,
   skeletonWidth,
-  isHideSkeleton,
-  isWrapperAbsolute,
-  setExternalLoading,
   ...props
 }) => {
   const [isLoading, setLoading] = useState(true);
   const altDescription = getFileNameFromSrc(src);
 
   return (
-    <Box {...props} width={width} height={height} position={isLoading && isWrapperAbsolute ? "absolute" : "initial"}>
-      {isLoading && !isHideSkeleton && (
+    <Box {...props} width={width} height={height}>
+      {isLoading && (
         <Skeleton
           variant={variant}
           animation={animation}
@@ -36,14 +33,11 @@ const Image: React.FC<ImageProps> = ({
       )}
       <StyledImage
         style={{ display: !isLoading ? "block" : "none" }}
-        width="inherit"
-        height="inherit"
         src={src}
         variant={variant}
         alt={alt || altDescription}
         onLoad={() => {
           setLoading(false);
-          setExternalLoading?.(false);
         }}
       />
     </Box>
