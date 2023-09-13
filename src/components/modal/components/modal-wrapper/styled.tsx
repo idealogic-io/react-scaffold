@@ -9,9 +9,6 @@ export const StyledModalWrapper = styled(motion.div)`
   bottom: 0;
   right: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  place-items: center;
   overflow: auto;
   justify-content: center;
   align-items: center;
