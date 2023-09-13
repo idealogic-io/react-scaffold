@@ -42,7 +42,7 @@ export const StyledInput = styled(Input)`
   right: 0;
   top: 0;
   bottom: 0;
-  opacity: 0;
+  opacity: 0.02;
 `;
 
 export const StyledNumericInput = styled(Flex)<StyledNumericInputProps>`

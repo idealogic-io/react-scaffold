@@ -1,4 +1,4 @@
-import { Image, Box, Row } from "components";
+import { Image, Flex, Column } from "components";
 
 export default {
   title: "Assets/Images",
@@ -9,16 +9,16 @@ const context = require.context("../../../public/images/", true, /.webp$/);
 
 export const Images = () => {
   return (
-    <Row>
+    <Column>
       {context.keys().map((el, i) => {
         const img = el.replace("./", "");
 
         return (
-          <Box key={i} m="8px">
-            <Image src={`/images/${img}`} width="100px" height="100px" />
-          </Box>
+          <Flex key={i} m="8px" justifyContent="center" width="100%">
+            <Image src={`/images/${img}`} width="31rem" height="auto" skeletonHeight="34rem" />
+          </Flex>
         );
       })}
-    </Row>
+    </Column>
   );
 };

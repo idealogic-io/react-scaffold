@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "components";
-import { CopyIcon } from "components/svg";
+import { Column, Link } from "components";
 
 export default {
   title: "Components/Links",
@@ -8,21 +7,16 @@ export default {
 
 export const Links: React.FC = () => {
   return (
-    <>
+    <Column>
       <Link href="/">Default</Link>
 
-      <Link href="/" color="accent500">
+      <Link href="/" color="error200">
         Custom color
       </Link>
 
       <Link external href="/">
         External
       </Link>
-
-      <Link href="/">
-        With icon
-        <CopyIcon />
-      </Link>
-    </>
+    </Column>
   );
 };

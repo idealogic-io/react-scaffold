@@ -1,16 +1,14 @@
-import { AxiosResponse } from "axios";
+import { AxiosResponse, isAxiosError } from "axios";
 import { toast } from "react-toastify";
 
-import { getInstance, isAxiosError } from "./axios";
+import { getInstance } from "./axios";
 import { ErrorResult } from "./types";
 import { toastOptionsError } from "components";
 import { parseErrorFromBE } from "utils/helpers";
-import { LOCAL_STORAGE_KEYS } from "configs";
-import { t } from "context/language-context";
+
+import { replaceWithNewErrorMessages } from "./utils";
 
 const axiosInstance = getInstance();
-const locale = localStorage.getItem(LOCAL_STORAGE_KEYS.language);
-const translate = t(locale);
 
 export const makeApiRequest = async <Response>({ isShowError = true, ...config }) => {
   try {
@@ -53,23 +51,4 @@ export const makeApiRequest = async <Response>({ isShowError = true, ...config }
 
     return errorObj;
   }
-};
-
-export const isErrorResult = (result: unknown): result is ErrorResult => {
-  return (
-    typeof result === "object" &&
-    result !== null &&
-    "isError" in result &&
-    (result as Record<string, unknown>).isError === true
-  );
-};
-
-const replaceWithNewErrorMessages = (error: unknown) => {
-  if ((error as { code: string })?.code === "ERR_NETWORK") {
-    return `${translate("Server is not responding.")} ${translate("Check the internet connection and try again.")}`;
-  } else if ((error as { code: string })?.code === "ECONNABORTED") {
-    return `${translate("Your request exceeded the time limit for processing.")} ${translate(
-      "Check the internet connection and try again.",
-    )}`;
-  } else return (error as { message: string }).message;
 };

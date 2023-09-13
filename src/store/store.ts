@@ -7,13 +7,14 @@ import rootReducer from "./rootReducer";
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
+  middleware: getDefaultMiddleware => {
+    const middleware = getDefaultMiddleware({
       serializableCheck: false,
-    }).concat([
-      //TODO comment next line in prod
-      createLogger(),
-    ]),
+    });
+
+    return process.env.NODE_ENV === "development" ? middleware.concat(createLogger()) : middleware;
+  },
+  devTools: process.env.NODE_ENV === "development",
 });
 
 setupListeners(store.dispatch);

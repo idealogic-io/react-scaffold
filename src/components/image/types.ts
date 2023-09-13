@@ -3,6 +3,8 @@ import { SkeletonProps } from "components/skeleton/types";
 export type ImageDimensions = {
   width: string;
   height: string;
+  skeletonHeight?: string;
+  skeletonWidth?: string;
   variant?: SkeletonProps["variant"];
 };
 

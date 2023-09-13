@@ -8,7 +8,7 @@ export const StyledModalWrapper = styled(motion.div)`
   left: 0;
   bottom: 0;
   right: 0;
-  display: -webkit-box;
+  display: grid;
   overflow: auto;
   justify-content: center;
   align-items: center;

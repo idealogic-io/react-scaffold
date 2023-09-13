@@ -1,19 +1,23 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { space, typography, layout, opacity, flexbox } from "styled-system";
 import { TextProps, ThemedProps } from "./types";
 import { style } from "./theme";
 
 export const getEllipsis = ({ ellipsis }: ThemedProps) => {
   if (ellipsis) {
-    return `white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;`;
+    return css`
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    `;
   }
 };
 
 export const wordBreak = ({ wordBreak }: ThemedProps) => {
   if (wordBreak) {
-    return `word-break: ${wordBreak};`;
+    return css`
+      word-break: ${wordBreak};
+    `;
   }
 };
 

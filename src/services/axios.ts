@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import store from "store/store";
 import { refreshToken } from "store/auth/actions";
@@ -8,7 +8,7 @@ import { hideModal } from "store/modal";
 import { LOCAL_STORAGE_KEYS } from "configs";
 
 import { LoginUserResponse } from "store/auth/types";
-import { ErrorResult } from "./types";
+import { isErrorResult } from "./utils";
 
 import { ENDPOINTS_AUTH } from "./endpoints";
 import { clearUserState } from "hooks";
@@ -63,7 +63,7 @@ export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
             isRefreshing = true;
 
             store.dispatch(refreshToken({ refreshToken: _refreshToken })).then(response => {
-              if ((response.payload as ErrorResult).isError) {
+              if (isErrorResult(response.payload)) {
                 isRefreshing = false;
                 refreshSubscribers = [];
                 resetStore();
@@ -104,8 +104,4 @@ export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
   );
 
   return instance;
-}
-
-export function isAxiosError(e: unknown): e is AxiosError {
-  return axios.isAxiosError(e);
 }

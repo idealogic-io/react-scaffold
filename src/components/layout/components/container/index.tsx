@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { border, layout, position, space } from "styled-system";
 
 import { useThemeContext } from "context";
@@ -8,7 +8,7 @@ import { BoxProps, BoxThemedProps } from "../types";
 
 export const getEllipsis = ({ ellipsis }: BoxThemedProps) => {
   if (ellipsis) {
-    return `white-space: nowrap;
+    return css`white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;`;
   }
