@@ -1,46 +1,56 @@
+import { css } from "styled-components";
 import { scales } from "./types";
 
-export const style = {
+export const fontSizes = {
   [scales.h1]: {
-    fontSizeLaptop: "32px",
-    fontSizeTablet: "28px",
-    fontSizeMobileS: "24px",
-
-    lineHeight: 1.25,
+    mobile: "24px",
+    tablet: "28px",
+    laptop: "32px",
   },
   [scales.h2]: {
-    fontSizeLaptop: "28px",
-    fontSizeTablet: "24px",
-    fontSizeMobileS: "22px",
-
-    lineHeight: 1.28,
+    mobile: "22px",
+    tablet: "24px",
+    laptop: "28px",
   },
   [scales.h3]: {
-    fontSizeLaptop: "24px",
-    fontSizeTablet: "20px",
-    fontSizeMobileS: "18px",
-
-    lineHeight: 1.25,
+    mobile: "18px",
+    tablet: "20px",
+    laptop: "24px",
   },
   [scales.h4]: {
-    fontSizeLaptop: "20px",
-    fontSizeTablet: "16px",
-    fontSizeMobileS: "14px",
-
-    lineHeight: 1.2,
+    mobile: "14px",
+    tablet: "16px",
+    laptop: "20px",
   },
   [scales.h5]: {
-    fontSizeLaptop: "16px",
-    fontSizeTablet: "14px",
-    fontSizeMobileS: "12px",
-
-    lineHeight: 1.375,
+    mobile: "12px",
+    tablet: "14px",
+    laptop: "16px",
   },
   [scales.h6]: {
-    fontSizeLaptop: "14px",
-    fontSizeTablet: "12px",
-    fontSizeMobileS: "10px",
-
-    lineHeight: 1.42,
+    mobile: "10px",
+    tablet: "12px",
+    laptop: "14px",
   },
+};
+
+export const styles = {
+  [scales.h1]: css`
+    line-height: 1.28;
+  `,
+  [scales.h2]: css`
+    line-height: 1.25;
+  `,
+  [scales.h3]: css`
+    line-height: 1.25;
+  `,
+  [scales.h4]: css`
+    line-height: 1.2;
+  `,
+  [scales.h5]: css`
+    line-height: 1.375;
+  `,
+  [scales.h6]: css`
+    line-height: 1.42;
+  `,
 };
