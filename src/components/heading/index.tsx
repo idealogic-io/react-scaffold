@@ -1,20 +1,19 @@
 import styled from "styled-components";
 import { Text } from "components";
 
-import { style } from "./theme";
+import { fontSizes, styles } from "./theme";
 import { scales, HeadingProps } from "./types";
 
 const Heading = styled(Text)<HeadingProps>`
-  line-height: ${({ scale }) => scale && style[scale].lineHeight};
+  ${({ scale }) => scale && styles[scale]};
 
-  ${({ theme }) => theme.mediaQueries.mobileS} {
-    font-size: ${({ scale }) => scale && style[scale].fontSizeMobileS};
-  }
+  font-size: ${({ scale }) => scale && fontSizes[scale].mobile};
+
   ${({ theme }) => theme.mediaQueries.tablet} {
-    font-size: ${({ scale }) => scale && style[scale].fontSizeTablet};
+    font-size: ${({ scale }) => scale && fontSizes[scale].tablet};
   }
   ${({ theme }) => theme.mediaQueries.laptop} {
-    font-size: ${({ scale }) => scale && style[scale].fontSizeLaptop};
+    font-size: ${({ scale }) => scale && fontSizes[scale].laptop};
   }
 `;
 

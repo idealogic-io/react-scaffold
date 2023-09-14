@@ -1,29 +1,40 @@
+import { css } from "styled-components";
 import { scales } from "./types";
 
-export const style = {
+export const fontSizes = {
   [scales.body1]: {
-    fontSizeLaptop: "24px",
-    fontSizeTablet: "20px",
-    fontSizeMobileS: "18px",
+    mobile: "18px",
+    tablet: "20px",
+    laptop: "24px",
   },
   [scales.body2]: {
-    fontSizeLaptop: "20px",
-    fontSizeTablet: "18px",
-    fontSizeMobileS: "16px",
+    mobile: "16px",
+    tablet: "18px",
+    laptop: "20px",
   },
   [scales.body3]: {
-    fontSizeLaptop: "16px",
-    fontSizeTablet: "14px",
-    fontSizeMobileS: "12px",
+    mobile: "12px",
+    tablet: "14px",
+    laptop: "16px",
   },
   [scales.caption1]: {
-    fontSizeLaptop: "14px",
-    fontSizeTablet: "14px",
-    fontSizeMobileS: "14px",
+    mobile: "14px",
+    tablet: "14px",
+    laptop: "14px",
   },
   [scales.caption2]: {
-    fontSizeLaptop: "12px",
-    fontSizeTablet: "12px",
-    fontSizeMobileS: "12px",
+    mobile: "12px",
+    tablet: "12px",
+    laptop: "12px",
   },
+};
+
+export const styles = {
+  [scales.body1]: css`
+    line-height: 1.7;
+  `,
+  [scales.body2]: css``,
+  [scales.body3]: css``,
+  [scales.caption1]: css``,
+  [scales.caption2]: css``,
 };
