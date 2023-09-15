@@ -1,4 +1,4 @@
-import { LayoutProps, SpaceProps } from "styled-system";
+import { BoxProps } from "components/layout/components/types";
 
 export const animation = {
   WAVES: "waves",
@@ -10,10 +10,10 @@ export const variant = {
   CIRCLE: "circle",
 } as const;
 
-export type Animation = typeof animation[keyof typeof animation];
-export type Variant = typeof variant[keyof typeof variant];
+export type Animation = (typeof animation)[keyof typeof animation];
+export type Variant = (typeof variant)[keyof typeof variant];
 
-export interface SkeletonProps extends SpaceProps, LayoutProps {
+export interface SkeletonProps extends BoxProps {
   animation?: Animation;
   variant?: Variant;
 }
