@@ -1,28 +1,24 @@
 import styled from "styled-components";
-import { layout, space } from "styled-system";
+
+import { Box } from "components";
 import { variantStyles } from "./theme";
 
 import { animation, SkeletonProps, variant as VARIANT } from "./types";
 
-const StyledSkelton = styled.div<SkeletonProps>`
-  display: block;
+const StyledSkelton = styled(Box)<SkeletonProps>`
   background-color: ${({ theme }) => theme.colors.monochrome300};
   border-radius: ${({ variant, theme }) => (variant === VARIANT.CIRCLE ? theme.radii.circle : theme.radii.small)};
-  ${({ theme }) => theme.mediaQueries.mobileS} {
-    min-height: 14px;
-  }
+
+  min-height: 14px;
+
   ${({ theme }) => theme.mediaQueries.tablet} {
     min-height: 18px;
   }
   ${({ theme }) => theme.mediaQueries.laptop} {
     min-height: 20px;
   }
-  height: 100%;
 
   ${({ animation }) => variantStyles(animation)};
-
-  ${layout}
-  ${space}
 `;
 
 StyledSkelton.defaultProps = {

@@ -1,16 +1,13 @@
+import { BoxProps } from "components/layout/components/types";
 import { SkeletonProps } from "components/skeleton/types";
 
 export type ImageDimensions = {
-  width: string;
-  height: string;
-  skeletonHeight?: string;
-  skeletonWidth?: string;
   variant?: SkeletonProps["variant"];
 };
 
-export interface ImageProps extends ImageDimensions {
+export interface ImageProps extends ImageDimensions, BoxProps {
   src: string;
   alt?: string;
-  variant?: SkeletonProps["variant"];
   animation?: SkeletonProps["animation"];
+  aspectRatio: number;
 }

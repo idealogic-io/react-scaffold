@@ -1,36 +1,19 @@
 import React, { useState } from "react";
 // Components + styling
-import { Skeleton, Box } from "components";
+import { ResponsiveBox, Skeleton } from "components";
 import { StyledImage } from "./styled";
 // Utils
 import { getFileNameFromSrc } from "utils";
 // Types
 import { ImageProps } from "./types";
 
-const Image: React.FC<ImageProps> = ({
-  src,
-  width,
-  height,
-  alt,
-  variant,
-  animation,
-  skeletonHeight,
-  skeletonWidth,
-  ...props
-}) => {
+const Image: React.FC<ImageProps> = ({ src, width, alt, variant, animation, aspectRatio, ...props }) => {
   const [isLoading, setLoading] = useState(true);
   const altDescription = getFileNameFromSrc(src);
 
   return (
-    <Box {...props} width={width} height={height}>
-      {isLoading && (
-        <Skeleton
-          variant={variant}
-          animation={animation}
-          width={skeletonWidth ?? width}
-          height={skeletonHeight ?? height}
-        />
-      )}
+    <ResponsiveBox width={width} aspectRatio={aspectRatio} {...props}>
+      {isLoading && <Skeleton variant={variant} animation={animation} width="100%" height="100%" />}
       <StyledImage
         style={{ display: !isLoading ? "block" : "none" }}
         src={src}
@@ -40,7 +23,7 @@ const Image: React.FC<ImageProps> = ({
           setLoading(false);
         }}
       />
-    </Box>
+    </ResponsiveBox>
   );
 };
 
