@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 
 import store from "store/store";
 import { refreshToken } from "store/auth/actions";
@@ -44,54 +44,56 @@ export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
   instance.interceptors.response.use(
     success => success,
     error => {
-      const {
-        config,
-        response: { status },
-      } = error;
+      if (isAxiosError(error) && error.response && error.config) {
+        const {
+          config,
+          response: { status },
+        } = error;
 
-      if (status === 401) {
-        const nowTimeStamp = new Date().getTime();
+        if (status === 401) {
+          const nowTimeStamp = new Date().getTime();
 
-        if (tokenUpdateTimestamp === 0 || nowTimeStamp - tokenUpdateTimestamp > timeout) {
-          const _refreshToken = store.getState().auth.refreshToken || "";
+          if (tokenUpdateTimestamp === 0 || nowTimeStamp - tokenUpdateTimestamp > timeout) {
+            const _refreshToken = store.getState().auth.refreshToken || "";
 
-          if (!isRefreshing) {
-            isRefreshing = true;
+            if (!isRefreshing) {
+              isRefreshing = true;
 
-            store.dispatch(refreshToken({ refreshToken: _refreshToken })).then(response => {
-              if (isErrorResult(response.payload)) {
-                isRefreshing = false;
-                refreshSubscribers = [];
-                resetStore();
-              } else {
-                const { accessToken } = response.payload as LoginUserResponse;
-                tokenUpdateTimestamp = new Date().getTime();
+              store.dispatch(refreshToken({ refreshToken: _refreshToken })).then(response => {
+                if (isErrorResult(response.payload)) {
+                  isRefreshing = false;
+                  refreshSubscribers = [];
+                  resetStore();
+                } else {
+                  const { accessToken } = response.payload as LoginUserResponse;
+                  tokenUpdateTimestamp = new Date().getTime();
 
-                refreshSubscribers.forEach(cb => {
-                  cb(accessToken);
-                });
-                refreshSubscribers = [];
-                isRefreshing = false;
-              }
-            });
-          }
-
-          if (config.url !== ENDPOINTS_AUTH.refreshToken) {
-            return new Promise(resolve => {
-              refreshSubscribers.push((newToken: string) => {
-                config.headers.Authorization = `Authorization ${newToken}`;
-
-                resolve(axios(config));
+                  refreshSubscribers.forEach(cb => {
+                    cb(accessToken);
+                  });
+                  refreshSubscribers = [];
+                  isRefreshing = false;
+                }
               });
+            }
+
+            if (config.url !== ENDPOINTS_AUTH.refreshToken) {
+              return new Promise(resolve => {
+                refreshSubscribers.push((newToken: string) => {
+                  config.headers.Authorization = `Authorization ${newToken}`;
+
+                  resolve(axios(config));
+                });
+              });
+            }
+          } else {
+            return new Promise(resolve => {
+              const token = localStorage.getItem(LOCAL_STORAGE_KEYS.token);
+              config.headers.Authorization = `Authorization ${token}`;
+
+              resolve(axios(config));
             });
           }
-        } else {
-          return new Promise(resolve => {
-            const token = localStorage.getItem(LOCAL_STORAGE_KEYS.token);
-            config.headers.Authorization = `Authorization ${token}`;
-
-            resolve(axios(config));
-          });
         }
       }
 
