@@ -12,5 +12,8 @@
   "Logout": "Logout",
   "Password": "Password",
   "Email": "Email",
-  "Go to home page": "Go to home page"
+  "Go to home page": "Go to home page",
+  "Please select...": "Please select...",
+  "Cancel": "Cancel",
+  "Apply": "Apply"
 }

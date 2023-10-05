@@ -22,3 +22,5 @@ export {
   toastOptionsWarning,
 } from "./alerts";
 export { default as Checkbox } from "./checkbox";
+export { Switcher } from "./switcher";
+export { SingleSelect, MultipleSelect } from "./selects";

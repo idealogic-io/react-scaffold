@@ -28,10 +28,11 @@ export const mediaQueries = {
 } as const;
 
 export const shadows = {
-  card: "0px 0px 30px rgba(202, 199, 226, 0.5);",
+  card: "0px 0px 30px rgba(202, 199, 226, 0.5)",
   tooltip: "0px 40px 64px -12px rgba(0, 0, 0, 0.02), 0px 32px 48px -8px rgba(0, 0, 0, 0.08)",
-  list: "0px 2px 2px rgba(202, 199, 226, 0.5);",
-  switcher: "0px 1px 1px rgba(170, 168, 183, 0.5);",
+  list: "0px 2px 2px rgba(202, 199, 226, 0.5)",
+  switcher: "0px 1px 1px rgba(170, 168, 183, 0.5)",
+  dropdown: "0px 0px 30px rgba(202, 199, 226, 0.5)",
 } as const;
 
 export const radii = {
