@@ -26,25 +26,26 @@ import { ActivationStatus } from "store/web3-wallet/types";
 
 const Web3Page: React.FC = () => {
   const { t } = useTranslation();
-  const connections = getConnections();
   const { chainId, account, connector, isActive } = useWeb3React();
   const { deactivate, connectionStatus } = useActivationState();
   const { parsedChainId } = useQueryChainId();
-  const connection = getConnection(connector);
   const { list: currencyList, isLoading: currencyListLoading } = useCurrencyListByChainId(chainId);
   const currencyAmount = useCurrencyBalances(account, currencyList);
+
+  const connections = getConnections();
+  const connection = getConnection(connector);
 
   const isUnsupportedNetwork = chainId && !isSupportedChain(chainId);
   // We almost always connected to network connection
   const isDifferentNetwork = chainId && !(connector instanceof Network) && chainId !== parsedChainId;
 
-  useEagerConnect();
-  useSyncNetworkConnection();
-  useSyncChains();
-
   const nativeAmount = useNativeCurrencyBalances([account])?.[account ?? ""];
   const nativeCurrency = nativeAmount?.currency;
   const nativeBalance = nativeAmount?.amount?.toFormatExtended(8) ?? "0";
+
+  useEagerConnect();
+  useSyncNetworkConnection();
+  useSyncChains();
 
   return (
     <Page>
@@ -113,7 +114,7 @@ const Web3Page: React.FC = () => {
                 key={currency.name + "_" + index}
                 currency={currency}
                 currencyAmount={currencyAmount[index]}
-                account={account}
+                chainId={chainId}
               />
             );
           })

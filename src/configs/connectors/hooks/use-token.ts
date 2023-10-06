@@ -1,10 +1,13 @@
 import { useWeb3React } from "@web3-react/core";
 
 import { tokensList } from "configs";
-import { Token } from "types/token";
 
 import { nativeOnChain } from "../native-tokens";
 import { MAINNET_CHAIN_IDS } from "../chains";
+
+import { ChainId } from "../types";
+import { Token } from "types/token";
+
 /**
  * Returns hardcoded token from configs
  * @param key one of the key from tokensList[chainId]
@@ -18,9 +21,7 @@ export const useToken = (key: string): Token | undefined => {
 /**
  * Returns native currency by chain id
  */
-export const useNativeCurrency = () => {
-  const { chainId } = useWeb3React();
-
+export const useNativeCurrency = (chainId: ChainId | null | undefined) => {
   return chainId
     ? nativeOnChain(chainId)
     : // display mainnet when not connected

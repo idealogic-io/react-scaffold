@@ -41,6 +41,7 @@ export {
   useFetchTokensMap,
   useTokensByChainId,
   useCurrencyListByChainId,
+  useSendTransfer,
 } from "./hooks";
 export {
   networkConnection,

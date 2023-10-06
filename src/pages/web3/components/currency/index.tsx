@@ -2,43 +2,44 @@ import React, { useMemo, useState } from "react";
 import BigNumber from "bignumber.js";
 import { parseUnits } from "@ethersproject/units";
 
-import { Button, Column, Flex, InputGroup, InputNumeric, Text } from "components";
+import { Button, Column, Flex, InputGroup, InputNumeric, Skeleton, Text } from "components";
+
+import {
+  maxAmountToSpend,
+  useNativeCurrency,
+  useEstimateTxFee,
+  useTokenContract,
+  useSendTransfer,
+} from "configs/connectors";
 
 import { CurrencyProps } from "./types";
-import { maxAmountToSpend, useNativeCurrency, useEstimateTxFee, useTokenContract } from "configs/connectors";
 
 const to = "0x0FCfB928AC2164Df4f61C5e140bb3D13115A1e22";
 
-export const Currency: React.FC<CurrencyProps> = ({ currency, currencyAmount, account }) => {
+export const Currency: React.FC<CurrencyProps> = ({ currency, currencyAmount, chainId }) => {
   const [input, setInput] = useState("");
   const inputBigNumber = BigNumber(input || "0");
   const token = currency.wrapped;
   const tokenContract = useTokenContract(token.address);
-  const nativeCurrency = useNativeCurrency();
+  const nativeCurrency = useNativeCurrency(chainId);
+  const value = parseUnits(input || "0", currency.decimals);
 
   const maxInputAmount = useMemo(() => maxAmountToSpend(currencyAmount), [currencyAmount]);
 
-  const tx = {
-    from: account,
-    to,
-    value: parseUnits(input || "0", currency.decimals),
-  };
+  const {
+    gasEstimation,
+    error,
+    isValidating: gasEstimationLoading,
+  } = useEstimateTxFee(tokenContract, "transfer", [to, value]);
 
-  // const { gasEstimation, error, isValidating: gasEstimationLoading } = useEstimateTxFee(tx);
-  // console.log({ gasEstimation: gasEstimation.toFixed(18), error, gasEstimationLoading, currency });
+  const { sendToken } = useSendTransfer({ contract: tokenContract, to });
 
-  // useEstimateNetworkFee(tokenContract, "transfer")
-
-  //   const { sendToken } = useSendTransfer({ address: token.address, to });
   // This is the test approve state only shows how to use it
   //   const [approvalState, approveCallback] = useApproveCallback(
   //     token,
   //     +debouncedValue > 0 ? debouncedValue : undefined,
   //     chainId ? contractsAddresses.multicall[chainId] : undefined,
   //   );
-
-  // console.log(gasEstimation, "gasEstimation");
-  // console.log(!!gasEstimationError, "gasEstimationError", currency.symbol);
 
   const showMaxButton = maxInputAmount && maxInputAmount.amount.gt(0) && !inputBigNumber.eq(maxInputAmount.amount);
   const isExceededBalance = inputBigNumber.gt(currencyAmount?.amount ?? BigNumber("0"));
@@ -47,12 +48,12 @@ export const Currency: React.FC<CurrencyProps> = ({ currency, currencyAmount, ac
     setInput(maxInputAmount?.amount.toString() ?? "");
   };
 
-  //   const onSendClick = () => {
-  //     sendToken(parseUnits(formatValueToBNString(input), token.decimals));
-  //   };
+  const onSendClick = () => {
+    sendToken(value, token.isNative);
+  };
 
   return (
-    <Column alignItems="center">
+    <Column alignItems="center" my="12px">
       <Text textScale="body3">{currency.name}</Text>
       <Text textScale="body3">{currency.symbol}</Text>
       <Text textScale="body3">Decimals: {currency.decimals}</Text>
@@ -79,26 +80,28 @@ export const Currency: React.FC<CurrencyProps> = ({ currency, currencyAmount, ac
       {/* <Text textScale="body3">Approval state is:</Text>
         <Text textScale="body3">{ApprovalState[approvalState]}</Text> */}
 
-      {/* <Button
-          onClick={onSendClick}
-          disabled={!input || gasEstimationError || isExceeded || approvalState !== ApprovalState["APPROVED"]}
-          isLoading={gasEstimationLoading}
-          my="8px"
-        >
-          Send
-        </Button> */}
+      <Button
+        onClick={onSendClick}
+        // disabled={!input || isExceededBalance || approvalState !== ApprovalState["APPROVED"]}
+        disabled={!input || isExceededBalance}
+        isLoading={gasEstimationLoading}
+        my="8px"
+      >
+        Send
+      </Button>
 
       {/* <Button onClick={approveCallback} disabled={approvalState === ApprovalState["APPROVED"] || !input} my="8px">
           Approve
         </Button> */}
-
-      {/* {gasEstimationLoading ? (
-        <Skeleton ml="8px" width="50%" height="14px" />
-      ) : (
-        <Text textScale="body3">
-          Network Fee: {gasEstimation.toFormat(8)} {nativeCurrency?.symbol}
-        </Text>
-      )} */}
+      <Flex width="50%" justifyContent="flex-start">
+        {gasEstimationLoading ? (
+          <Skeleton ml="8px" width="50%" height="14px" />
+        ) : (
+          <Text textScale="body3" textAlign="left">
+            Network Fee: {gasEstimation.toFormatExtended(18)} {nativeCurrency.symbol}
+          </Text>
+        )}
+      </Flex>
     </Column>
   );
 };

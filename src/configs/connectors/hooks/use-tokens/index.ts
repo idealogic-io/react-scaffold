@@ -29,7 +29,7 @@ export const useTokensByChainId = (chainId?: ChainId): { tokens: TokenMap; isLoa
 
 export const useCurrencyListByChainId = (chainId?: ChainId) => {
   const { tokens, isLoading } = useTokensByChainId(chainId);
-  const native = useNativeCurrency();
+  const native = useNativeCurrency(chainId);
   const wrapped = native.wrapped;
 
   const tokensList = Object.values(tokens);
