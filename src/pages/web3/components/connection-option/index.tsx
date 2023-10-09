@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "components";
 
-import { Connection, useActivationState, useQueryChainId } from "configs/connectors";
+import { Connection, useActivationState, useQueryChainId } from "configs/web3";
 import { useTranslation } from "context";
 
 import { ActivationStatus } from "store/web3-wallet/types";

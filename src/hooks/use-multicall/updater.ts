@@ -13,7 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "store/store";
 
 import { useDebounce } from "hooks";
-import { useCurrentBlock, useMulticallContract } from "configs/connectors";
+import { useCurrentBlock, useMulticallContract } from "configs/web3";
 
 export const useMulticallUpdater = () => {
   const dispatch = useAppDispatch();

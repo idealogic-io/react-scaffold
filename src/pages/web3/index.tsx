@@ -20,7 +20,7 @@ import {
   useNativeCurrencyBalances,
   useCurrencyListByChainId,
   useCurrencyBalances,
-} from "configs/connectors";
+} from "configs/web3";
 
 import { ActivationStatus } from "store/web3-wallet/types";
 

@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { LOCAL_STORAGE_KEYS } from "configs";
 
 import { IDLE_ACTIVATION_STATE, Web3WalletState } from "./types";
-import { ConnectionType } from "configs/connectors/types";
+import { ConnectionType } from "configs/web3/types";
 
 const getConnectionFromLS = () => {
   const connectionInLS = localStorage.getItem(LOCAL_STORAGE_KEYS.connection);

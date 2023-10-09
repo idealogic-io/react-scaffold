@@ -2,7 +2,7 @@ import { AddressZero } from "@ethersproject/constants";
 import { Contract } from "@ethersproject/contracts";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-import { isAddress } from "configs/connectors";
+import { isAddress } from "configs/web3";
 
 // account is optional
 

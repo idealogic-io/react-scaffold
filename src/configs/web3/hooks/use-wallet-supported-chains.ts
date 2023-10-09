@@ -2,7 +2,7 @@ import { SessionTypes } from "@walletconnect/types";
 import { useWeb3React } from "@web3-react/core";
 import { WalletConnect } from "@web3-react/walletconnect-v2";
 
-import { getConnection, ChainId, ConnectionType, SUPPORTED_CHAINS, CHAIN_IDS_TESTNET } from "configs/connectors";
+import { getConnection, ChainId, ConnectionType, SUPPORTED_CHAINS, CHAIN_IDS_TESTNET } from "configs/web3";
 
 const getChainIdFromFormattedString = (item: string) => {
   const splitItem = item.startsWith("eip155:") ? item.split(":") : [];

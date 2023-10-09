@@ -9,7 +9,7 @@ import {
   isUserReject,
   isSupportedChain,
   isRequestPending,
-} from "configs/connectors";
+} from "configs/web3";
 
 import { toastOptionsError } from "components";
 

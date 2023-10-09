@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "store/store";
 
 import { ToastDescriptionWithTx } from "components";
 import { shouldCheck } from "./helpers";
-import { useCurrentBlock } from "configs/connectors";
+import { useCurrentBlock } from "configs/web3";
 
 export const useTransactionsUpdater = () => {
   const { provider, chainId } = useWeb3React();

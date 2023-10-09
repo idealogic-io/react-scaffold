@@ -2,7 +2,7 @@ import { Connector } from "@web3-react/types";
 import { useEffect } from "react";
 
 import { useAppSelector } from "store/store";
-import { getConnection, networkConnection } from "configs/connectors";
+import { getConnection, networkConnection } from "configs/web3";
 
 export const useEagerConnect = () => {
   const { connectionType } = useAppSelector(state => state.web3Wallet);

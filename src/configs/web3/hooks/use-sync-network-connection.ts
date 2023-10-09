@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
-import { isSupportedChain, networkConnection } from "configs/connectors";
+import { isSupportedChain, networkConnection } from "configs/web3";
 
 export const useSyncNetworkConnection = () => {
   const { chainId, connector } = useWeb3React();

@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { Button, Text } from "components";
 
-import { CHAINS } from "configs/connectors";
+import { CHAINS } from "configs/web3";
 import { ChainOptionProps } from "./types";
 
 export const ChainOption: React.FC<ChainOptionProps> = ({ disabled, targetChain, isPending, onSelectChain }) => {

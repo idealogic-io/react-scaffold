@@ -2,9 +2,9 @@ import useSWR, { useSWRConfig } from "swr";
 import useSWRImmutable from "swr/immutable";
 
 import { TokenAddressMap, TokenMap, fetchAllTokens, tokensToChainMap } from "./utils";
-import { useNativeCurrency } from "configs/connectors";
+import { useNativeCurrency } from "configs/web3";
 
-import { ChainId } from "configs/connectors/types";
+import { ChainId } from "configs/web3/types";
 
 export const useFetchTokensMap = () => {
   const { mutate } = useSWRConfig();

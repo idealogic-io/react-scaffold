@@ -9,7 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
 import { LanguageContextProvider, ThemeContextProvider, useThemeContext, SocketContextProvider } from "context";
-import { useBlockNumber, useFetchTokensMap, useOrderedConnections } from "configs/connectors";
+import { useBlockNumber, useFetchTokensMap, useOrderedConnections } from "configs/web3";
 // Store
 import store from "store/store";
 // Components

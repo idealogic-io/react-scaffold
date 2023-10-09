@@ -1,9 +1,9 @@
-import { Currency, CurrencyAmount, Token, nativeOnChain } from "configs/connectors";
+import { Currency, CurrencyAmount, Token, nativeOnChain } from "configs/web3";
 import { useWeb3React } from "@web3-react/core";
 import { Interface } from "@ethersproject/abi";
 import { useMemo } from "react";
 
-import { useMulticallContract, isAddress } from "configs/connectors";
+import { useMulticallContract, isAddress } from "configs/web3";
 import { useMultipleContractSingleData, useSingleContractMultipleData } from "hooks";
 import { ERC20_ABI } from "configs/abi";
 

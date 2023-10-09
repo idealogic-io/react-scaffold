@@ -11,7 +11,7 @@ import {
   Connection,
   useSwitchChain,
   MAINNET_CHAIN_IDS,
-} from "configs/connectors";
+} from "configs/web3";
 
 import { useAppDispatch, useAppSelector } from "store/store";
 import { updateConnectionStatus, updateConnectionType } from "store/web3-wallet";

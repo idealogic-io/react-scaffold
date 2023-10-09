@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Button, Heading, Text, Link } from "components";
 
-import { useActivationState, useQueryChainId } from "configs/connectors";
+import { useActivationState, useQueryChainId } from "configs/web3";
 
 import { ActivationStatus } from "store/web3-wallet/types";
 

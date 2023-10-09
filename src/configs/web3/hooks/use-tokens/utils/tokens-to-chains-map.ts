@@ -1,4 +1,4 @@
-import { TokenList, Token } from "configs/connectors";
+import { TokenList, Token } from "configs/web3";
 
 export type TokenMap = { [tokenAddress: string]: Token };
 

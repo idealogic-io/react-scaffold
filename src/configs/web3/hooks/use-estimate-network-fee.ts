@@ -6,7 +6,7 @@ import { TransactionRequest } from "@ethersproject/abstract-provider";
 import useSWR from "swr";
 import BigNumber from "bignumber.js";
 
-import { useGasPrice, useNativeCurrency } from "configs/connectors";
+import { useGasPrice, useNativeCurrency } from "configs/web3";
 import { ContractMethodName, ContractMethodParams } from "hooks/use-swr-contract/types";
 
 /**

@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useRef } from "react";
 
-import { useQueryChainId, useSelectChain, isSupportedChain } from "configs/connectors";
+import { useQueryChainId, useSelectChain, isSupportedChain } from "configs/web3";
 
 export const useSyncChains = () => {
   const { chainId, isActive, account } = useWeb3React();

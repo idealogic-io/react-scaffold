@@ -1,4 +1,4 @@
-import { Connection, ConnectionType, WalletError } from "configs/connectors";
+import { Connection, ConnectionType, WalletError } from "configs/web3";
 
 export type Web3WalletState = {
   connectionType: ConnectionType | undefined;

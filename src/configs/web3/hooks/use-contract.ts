@@ -2,9 +2,9 @@ import { Contract, ContractInterface } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 
-import { getContract } from "configs/connectors";
+import { getContract } from "configs/web3";
 import { ERC20_ABI, MULTICALL_ABI, Erc20, Multicall } from "configs/abi";
-import contractsAddresses from "configs/contracts-addresses";
+import contractsAddresses from "configs/web3/contracts-addresses";
 
 export const useContract = <T extends Contract = Contract>(
   addressOrAddressMap: string | { [chainId: number]: string } | undefined,

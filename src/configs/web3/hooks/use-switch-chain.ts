@@ -2,7 +2,7 @@ import { Connector } from "@web3-react/types";
 import { WalletConnect } from "@web3-react/walletconnect-v2";
 import { Network } from "@web3-react/network";
 
-import { addChainParameters, isSupportedChain, ChainId } from "configs/connectors";
+import { addChainParameters, isSupportedChain, ChainId } from "configs/web3";
 
 export const useSwitchChain = () => {
   /**

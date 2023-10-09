@@ -1,5 +1,5 @@
-import { ChainId } from "configs/connectors";
-import { BLOCK_EXPLORER_URLS } from "configs/connectors/chains";
+import { ChainId } from "configs/web3";
+import { BLOCK_EXPLORER_URLS } from "configs/web3/chains";
 
 export const getScanLink = (
   data: string | number,

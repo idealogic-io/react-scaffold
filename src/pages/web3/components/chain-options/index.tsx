@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Column } from "components";
 import { ChainOption } from "../chain-option";
 
-import { ChainId, useActivationState, useSelectChain, useSupportedChains } from "configs/connectors";
+import { ChainId, useActivationState, useSelectChain, useSupportedChains } from "configs/web3";
 
 import { ActivationStatus } from "store/web3-wallet/types";
 

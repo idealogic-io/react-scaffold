@@ -1,4 +1,4 @@
-import { ChainId } from "configs/connectors";
+import { ChainId } from "configs/web3";
 
 export type ChainOptionProps = {
   disabled?: boolean;

@@ -1,4 +1,4 @@
-import { MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from "./connectors";
+import { MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from ".";
 
 const contractsAddresses = {
   multicall: {

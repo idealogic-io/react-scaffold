@@ -8,7 +8,7 @@ import { Connector } from "@web3-react/types";
 import CoinBaseIcon from "components/svg/icons/CoinBase";
 import WalletConnectIcon from "components/svg/icons/WalletConnect";
 
-import { Connection, RPC_PROVIDERS, MAINNET_CHAIN_IDS, RPC_URLS } from "./";
+import { Connection, RPC_PROVIDERS, MAINNET_CHAIN_IDS, RPC_URLS } from ".";
 import {
   getInjection,
   getIsCoinbaseWalletBrowser,
@@ -20,6 +20,8 @@ import {
 import { isMobile } from "utils/helpers";
 
 import { ConnectionType } from "./types";
+
+const URL = process.env.REACT_APP_URL;
 
 const onError = (error: Error) => {
   console.error("web3-react error:", error);
@@ -49,7 +51,7 @@ export const injectedConnection: Connection = {
   // If on non-injected, non-mobile browser, prompt user to install Metamask
   overrideActivate: () => {
     if (getShouldAdvertiseMetaMask()) {
-      window.open("https://metamask.io/", "inst_metamask");
+      window.open(`https://metamask.app.link/dapp/${URL?.replace("https://", "")}/`, "inst_metamask");
       return true;
     }
     return false;
@@ -63,7 +65,7 @@ const [coinbaseWallet, coinbaseWalletHooks] = initializeConnector<CoinbaseWallet
       options: {
         url: RPC_URLS[MAINNET_CHAIN_IDS.MAINNET],
         appName: "Scaffold",
-        appLogoUrl: "/images/logo192.png",
+        appLogoUrl: `${URL}/logo192.png`,
         reloadOnDisconnect: false,
       },
       onError,
@@ -80,7 +82,7 @@ export const coinbaseWalletConnection: Connection = {
   // If on a mobile browser that isn't the coinbase wallet browser, deeplink to the coinbase wallet app
   overrideActivate: () => {
     if (isMobile && !getIsInjectedMobileBrowser()) {
-      window.open("https://go.cb-w.com/mtUDhEZPy1", "cbwallet");
+      window.open(`https://go.cb-w.com/dapp?cb_url=${URL}`, "cbwallet");
       return true;
     }
     return false;

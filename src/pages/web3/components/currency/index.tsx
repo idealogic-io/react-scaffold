@@ -14,7 +14,7 @@ import {
   useApproveCallback,
   ApprovalState,
   CurrencyAmount,
-} from "configs/connectors";
+} from "configs/web3";
 
 import { CurrencyProps } from "./types";
 
