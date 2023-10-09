@@ -42,6 +42,10 @@ export {
   useTokensByChainId,
   useCurrencyListByChainId,
   useSendTransfer,
+  useEstimateTransferFee,
+  useTokenAllowance,
+  useApproveCallback,
+  ApprovalState,
 } from "./hooks";
 export {
   networkConnection,
@@ -64,6 +68,8 @@ export {
   maxAmountToSpend,
 } from "./utils";
 export { nativeOnChain } from "./native-tokens";
+export { ZERO } from "./constants";
+
 export { BaseCurrency, Token, NativeCurrency, CurrencyAmount } from "./entities";
 export type { Currency } from "./entities";
 export type { ChainId, Connection } from "./types";

@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
 import { toast } from "react-toastify";
 
 import { useTranslation } from "context";
@@ -9,10 +8,9 @@ import { useAppDispatch, useAppSelector } from "store/store";
 
 import { ToastDescriptionWithTx } from "components";
 import { shouldCheck } from "./helpers";
-import { useCurrentBlock } from "hooks";
+import { useCurrentBlock } from "configs/connectors";
 
 export const useTransactionsUpdater = () => {
-  // TODO check library gere
   const { provider, chainId } = useWeb3React();
   const { t } = useTranslation();
 

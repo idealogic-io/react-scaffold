@@ -35,6 +35,7 @@ export const useBlockNumber = () => {
       const onBlock = (block: number) => onBlockChange(chainId, block);
 
       provider.on("block", onBlock);
+
       return () => {
         stale = true;
         provider.removeListener("block", onBlock);

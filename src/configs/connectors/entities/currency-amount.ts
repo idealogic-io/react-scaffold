@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { BigNumber as EthersBigNumber } from "ethers";
-import { formatUnits } from "@ethersproject/units";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 
 import { Currency } from "./currency";
 
@@ -14,5 +14,9 @@ export class CurrencyAmount<T extends Currency> {
       console.error("Can't format value:", currency.symbol, amount.toString());
       this.amount = BigNumber(0);
     }
+  }
+
+  toEthersBigNumber(): EthersBigNumber {
+    return parseUnits(this.amount.toString(), this.currency.decimals);
   }
 }

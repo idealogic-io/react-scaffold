@@ -66,3 +66,44 @@ export const useEstimateTxFeeNative = (tx: TransactionRequest) => {
 
   return { gasEstimation: BigNumber(formatUnits(data, nativeCurrency?.decimals)), isValidating, error };
 };
+
+export const useEstimateTransferFee = <T extends Contract = Contract>(
+  contract: T,
+  isNative: boolean,
+  to: TransactionRequest["to"],
+  value: TransactionRequest["value"],
+) => {
+  const { chainId, provider } = useWeb3React();
+  const { gasPrice } = useGasPrice();
+  const nativeCurrency = useNativeCurrency(chainId);
+
+  const getEstimateTxFeeNative = async () => {
+    return await provider!.estimateGas({ to, value });
+  };
+
+  const getEstimateTxFee = async () => {
+    return await contract.estimateGas.transfer(to, value);
+  };
+
+  const {
+    data = Zero,
+    isValidating,
+    error,
+  } = useSWR(
+    contract && chainId && to && value && provider && gasPrice
+      ? `${chainId}/${gasPrice.toString()}/estimateTransferFee/${to}/${value}/${contract.address}/${isNative}`
+      : null,
+    async () => {
+      let gasEstimate = Zero;
+      if (isNative) {
+        gasEstimate = await getEstimateTxFeeNative();
+      } else {
+        gasEstimate = await getEstimateTxFee();
+      }
+
+      return gasPrice.mul(gasEstimate);
+    },
+  );
+
+  return { gasEstimation: BigNumber(formatUnits(data, nativeCurrency?.decimals)), isValidating, error };
+};

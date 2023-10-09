@@ -5,8 +5,7 @@ import { RequireAuth, TokenHandler } from "./components";
 import { ROUTES, ROUTE_PARAMS } from "./routes";
 
 import { NotFoundPage } from "components";
-import { LandingPage, LoginPage } from "pages";
-import Web3Page from "pages/web3";
+import { LandingPage, LoginPage, Web3Page } from "pages";
 
 const Navigation: React.FC = () => {
   return (

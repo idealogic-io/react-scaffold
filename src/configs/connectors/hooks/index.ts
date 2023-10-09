@@ -18,8 +18,11 @@ export {
   useCurrencyBalances,
   useCurrencyBalance,
 } from "./use-currency-balances";
-export { useEstimateTxFee } from "./use-estimate-network-fee";
+export { useEstimateTxFee, useEstimateTransferFee, useEstimateTxFeeNative } from "./use-estimate-network-fee";
 export { useGasPrice } from "./use-gas-price";
 export { useFetchTokensMap, useTokensByChainId, useCurrencyListByChainId } from "./use-tokens";
 export { useSendTransfer } from "./use-send-transfer";
+export { useTokenAllowance } from "./use-token-allowance";
+export { useApproveCallback } from "./use-approve-callback";
 export type { TokenInfo, TokenList } from "./use-tokens/types";
+export { ApprovalState } from "./use-approve-callback";
