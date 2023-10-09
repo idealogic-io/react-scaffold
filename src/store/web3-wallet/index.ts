@@ -1,11 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { LOCAL_STORAGE_KEYS } from "configs";
-import { ConnectionType } from "configs/connectors";
 
 import { IDLE_ACTIVATION_STATE, Web3WalletState } from "./types";
+import { ConnectionType } from "configs/connectors/types";
 
 const getConnectionFromLS = () => {
   const connectionInLS = localStorage.getItem(LOCAL_STORAGE_KEYS.connection);
+
   const connection =
     connectionInLS && connectionInLS in ConnectionType
       ? ConnectionType[connectionInLS as keyof typeof ConnectionType]

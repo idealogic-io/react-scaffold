@@ -95,6 +95,7 @@ const useCancelActivation = () => {
 
 export const useActivationState = () => {
   const { connectionStatus, connectionType } = useAppSelector(state => state.web3Wallet);
+
   const { cancelActivation } = useCancelActivation();
   const { activate, deactivate } = useWeb3Login();
 

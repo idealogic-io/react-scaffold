@@ -36,7 +36,6 @@ export {
   useCurrencyBalance,
   useEstimateTxFee,
   useGasPrice,
-  useToken,
   useNativeCurrency,
   useFetchTokensMap,
   useTokensByChainId,

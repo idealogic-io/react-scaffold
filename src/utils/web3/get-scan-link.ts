@@ -1,25 +1,26 @@
-import { blockExplorersUrls } from "configs";
+import { ChainId } from "configs/connectors";
+import { BLOCK_EXPLORER_URLS } from "configs/connectors/chains";
 
 export const getScanLink = (
   data: string | number,
   type: "transaction" | "token" | "address" | "block" | "countdown",
-  chainId: number,
+  chainId: ChainId,
 ) => {
   switch (type) {
     case "transaction": {
-      return `${blockExplorersUrls[chainId]}/tx/${data}`;
+      return `${BLOCK_EXPLORER_URLS[chainId]}/tx/${data}`;
     }
     case "token": {
-      return `${blockExplorersUrls[chainId]}/token/${data}`;
+      return `${BLOCK_EXPLORER_URLS[chainId]}/token/${data}`;
     }
     case "block": {
-      return `${blockExplorersUrls[chainId]}/block/${data}`;
+      return `${BLOCK_EXPLORER_URLS[chainId]}/block/${data}`;
     }
     case "countdown": {
-      return `${blockExplorersUrls[chainId]}/block/countdown/${data}`;
+      return `${BLOCK_EXPLORER_URLS[chainId]}/block/countdown/${data}`;
     }
     default: {
-      return `${blockExplorersUrls[chainId]}/address/${data}`;
+      return `${BLOCK_EXPLORER_URLS[chainId]}/address/${data}`;
     }
   }
 };

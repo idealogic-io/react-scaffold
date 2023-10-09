@@ -12,8 +12,8 @@ import {
 } from "store/multicall/action";
 import { useAppDispatch, useAppSelector } from "store/store";
 
-import { useDebounce, useMulticallContract } from "hooks";
-import { useCurrentBlock } from "configs/connectors";
+import { useDebounce } from "hooks";
+import { useCurrentBlock, useMulticallContract } from "configs/connectors";
 
 export const useMulticallUpdater = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ export const useMulticallUpdater = () => {
   const debouncedListeners = useDebounce(state.callListeners, 100);
   const currentBlock = useCurrentBlock();
   const { chainId } = useWeb3React();
-  const multicallContract = useMulticallContract(chainId);
+  const multicallContract = useMulticallContract();
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>();
 
   const listeningKeys: { [callKey: string]: number } = useMemo(() => {

@@ -3,14 +3,3 @@ export { getCustomMeta } from "./meta";
 export { EN, languages, languageList } from "./languages";
 export { default as REGEX } from "./regex";
 export { default as contractsAddresses } from "./contracts-addresses";
-export {
-  chainIdMainnet,
-  chainIdTestnet,
-  rpcUrls,
-  blockExplorersUrls,
-  chainNames,
-  nativeCurrencies,
-  networks,
-  getChainIds,
-} from "./networks";
-export { tokensList } from "./tokens-list";

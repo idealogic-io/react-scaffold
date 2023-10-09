@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { PropsWithChildren, Suspense } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
@@ -29,13 +29,13 @@ const ThemedApp: React.FC = () => {
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
             <Provider store={store}>
-              <SocketContextProvider>
-                <Modal />
-
-                <Navigation />
-                <StyledToastContainer />
-                <Updaters />
-              </SocketContextProvider>
+              <Web3Provider>
+                <SocketContextProvider>
+                  <Modal />
+                  <Navigation />
+                  <StyledToastContainer />
+                </SocketContextProvider>
+              </Web3Provider>
             </Provider>
           </LanguageContextProvider>
         </ErrorBoundary>
@@ -52,18 +52,25 @@ const Updaters: React.FC = () => {
   return null;
 };
 
-const connections = useOrderedConnections();
-const connectors: [Connector, Web3ReactHooks][] = connections.map(({ connector, hooks }) => [connector, hooks]);
+const Web3Provider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+  const connections = useOrderedConnections();
+  const connectors: [Connector, Web3ReactHooks][] = connections.map(({ connector, hooks }) => [connector, hooks]);
+
+  return (
+    <Web3ReactProvider connectors={connectors}>
+      <Updaters />
+      {children}
+    </Web3ReactProvider>
+  );
+};
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <HelmetProvider>
-        <Web3ReactProvider connectors={connectors}>
-          <ThemeContextProvider>
-            <ThemedApp />
-          </ThemeContextProvider>
-        </Web3ReactProvider>
+        <ThemeContextProvider>
+          <ThemedApp />
+        </ThemeContextProvider>
       </HelmetProvider>
     </BrowserRouter>
   );

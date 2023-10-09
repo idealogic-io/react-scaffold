@@ -8,7 +8,7 @@ export { useSwitchChain } from "./use-switch-chain";
 export { useWalletSupportedChains, useSupportedChains } from "./use-wallet-supported-chains";
 export { useSyncNetworkConnection } from "./use-sync-network-connection";
 export { useContract, useTokenContract, useMulticallContract } from "./use-contract";
-export { useToken, useNativeCurrency } from "./use-token";
+export { useNativeCurrency } from "./use-token";
 export { useBlockNumber, useCurrentBlock, useInitialBlock } from "./use-block-number";
 export {
   useNativeCurrencyBalances,
