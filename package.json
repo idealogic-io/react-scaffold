@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.7.2",
     "@ethersproject/experimental": "^5.7.0",
     "@popperjs/core": "^2.11.7",
     "@reduxjs/toolkit": "^1.9.3",

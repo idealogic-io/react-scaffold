@@ -1,12 +1,12 @@
 import { AddressZero } from "@ethersproject/constants";
-import { Contract } from "@ethersproject/contracts";
+import { Contract, ContractInterface } from "@ethersproject/contracts";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
 import { isAddress } from "configs/web3";
 
 // account is optional
 
-export function getContract(address: string, ABI: any, provider: JsonRpcProvider, account?: string) {
+export function getContract(address: string, ABI: ContractInterface, provider: JsonRpcProvider, account?: string) {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
