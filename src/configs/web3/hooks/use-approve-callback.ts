@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 import { useTranslation } from "context";
 import { Currency, CurrencyAmount, Token } from "../entities";
 import { useTokenAllowance } from "./use-token-allowance";
-import { useHasPendingApproval, useTransactionAdder } from "hooks";
+import { useHasPendingApproval, useTransactionAdder } from "./";
 import { useTokenContract } from "./use-contract";
-import { getErrorMessage } from "utils/web3";
+import { WalletError, getErrorMessage } from "../utils";
 
 export enum ApprovalState {
   UNKNOWN,
@@ -114,7 +114,7 @@ const useApproval = (
         type: "approve",
       });
     } catch (error) {
-      toast.error(t("Approval failed: %message%", { message: getErrorMessage(error) }));
+      toast.error(t("Approval failed: %message%", { message: getErrorMessage(error as WalletError) }));
       console.error("Approval failed: ", error);
     }
   };

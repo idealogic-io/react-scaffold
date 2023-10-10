@@ -4,7 +4,7 @@ import { Interface } from "@ethersproject/abi";
 import { useMemo } from "react";
 
 import { useMulticallContract, isAddress } from "configs/web3";
-import { useMultipleContractSingleData, useSingleContractMultipleData } from "hooks";
+import { useMultipleContractSingleData, useSingleContractMultipleData } from "configs/web3";
 import { ERC20_ABI } from "configs/abi";
 
 /**

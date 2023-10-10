@@ -3,14 +3,12 @@ import React from "react";
 import { Button } from "components";
 
 import { Connection, useActivationState, useQueryChainId } from "configs/web3";
-import { useTranslation } from "context";
 
 import { ActivationStatus } from "store/web3-wallet/types";
 
 export const ConnectionOption: React.FC<{ connection: Connection }> = ({ connection }) => {
   const { parsedChainId } = useQueryChainId();
   const { activate, connectionStatus } = useActivationState();
-  const { t } = useTranslation();
 
   const { getName, getIcon } = connection;
   const Icon = getIcon?.();
@@ -30,7 +28,7 @@ export const ConnectionOption: React.FC<{ connection: Connection }> = ({ connect
       disabled={isSomeOptionPending}
       isLoading={isCurrentOptionPending}
     >
-      {t("Connect %provider%", { provider: getName() })}
+      {getName()}
     </Button>
   );
 };

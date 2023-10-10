@@ -57,3 +57,24 @@ export const isUserReject = (error: unknown & WalletError) => {
 export const isRequestPending = (error: unknown & WalletError) => {
   return error.code === -32002;
 };
+
+export const isGasEstimationError = (error: unknown & WalletError) => {
+  const reason = getReason(error);
+
+  return reason?.match(/insufficient funds/);
+};
+
+export const getErrorMessage = (error: unknown & WalletError) => {
+  let message = "Sorry, can't perform a transaction";
+  const reason = getReason(error);
+
+  if (isUserReject(error)) {
+    message = "User rejected the request";
+  } else if (isGasEstimationError(error)) {
+    message = "Insufficient funds";
+  } else if (reason) {
+    message = reason;
+  }
+
+  return message;
+};

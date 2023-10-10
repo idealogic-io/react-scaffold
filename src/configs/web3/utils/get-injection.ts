@@ -1,6 +1,6 @@
 import { TrustWalletIcon, LedgerIcon, MetamaskIcon, Web3Icon } from "components/svg";
 
-import { isMobile } from "utils/helpers";
+import { isMobile } from "utils";
 
 /**
  * Checks the window object for the presence of a known injectors and returns the most relevant injector name and icon.

@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { Call, ListenerOptions } from "hooks/use-multicall/types";
+import { Call, ListenerOptions } from "configs/web3/hooks/use-multicall/types";
 
 export const addMulticallListeners = createAction<{ chainId: number; calls: Call[]; options?: ListenerOptions }>(
   "multicall/addMulticallListeners",

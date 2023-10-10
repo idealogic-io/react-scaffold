@@ -10,6 +10,7 @@ import { useTranslation } from "context";
 // Hooks
 import { useForm } from "hooks";
 import { InitialValues, useValidationSchema } from "./hooks";
+import { LOCAL_STORAGE_KEYS } from "configs";
 
 const LoginPage: React.FC = () => {
   const { pending } = useAppSelector(state => state.auth);
@@ -31,6 +32,8 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (formValues: InitialValues) => {
     const { email, password } = formValues;
     dispatch(loginUser({ email: email.toLowerCase(), password }));
+    // escrypto now uses cookies for auth but our still needs token
+    localStorage.setItem(LOCAL_STORAGE_KEYS.token, "TOKEN");
   };
 
   const togglePasswordVisibleHandler = () => {

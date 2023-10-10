@@ -4,7 +4,8 @@ import { useWeb3React } from "@web3-react/core";
 import { useTranslation } from "context";
 import Text from "components/text";
 import InternalLink from "components/link";
-import { getScanLink, truncateHash } from "utils/web3";
+
+import { getScanLink, truncateHash } from "configs/web3";
 
 interface ToastDescriptionWithTxProps {
   description?: string;

@@ -2,7 +2,7 @@ import { BigNumber as EthersBigNumber } from "@ethersproject/bignumber";
 
 import { CurrencyAmount, Token } from "../entities";
 import { useTokenContract } from "./use-contract";
-import { useSingleCallResult } from "hooks";
+import { useSingleCallResult } from "configs/web3";
 
 /**
  * Allowance refers to a permission granted by the owner of a digital asset or smart contract to another address or entity to access or use a certain amount of that asset

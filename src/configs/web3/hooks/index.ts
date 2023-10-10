@@ -24,5 +24,16 @@ export { useFetchTokensMap, useTokensByChainId, useCurrencyListByChainId } from 
 export { useSendTransfer } from "./use-send-transfer";
 export { useTokenAllowance } from "./use-token-allowance";
 export { useApproveCallback } from "./use-approve-callback";
+export {
+  useTransactionAdder,
+  useAllTransactions,
+  useHasPendingApproval,
+  isTransactionRecent,
+  usePendingTransactions,
+} from "./use-transactions";
+export { useTransactionsUpdater } from "./use-transactions/updater";
+export { useSingleCallResult, useSingleContractMultipleData, useMultipleContractSingleData } from "./use-multicall";
+export { useMulticallUpdater } from "./use-multicall/updater";
+export { useSWRContract } from "./use-swr-contract";
 export type { TokenInfo, TokenList } from "./use-tokens/types";
 export { ApprovalState } from "./use-approve-callback";

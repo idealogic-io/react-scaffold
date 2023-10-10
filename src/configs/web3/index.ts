@@ -44,6 +44,16 @@ export {
   useEstimateTransferFee,
   useTokenAllowance,
   useApproveCallback,
+  useTransactionsUpdater,
+  useTransactionAdder,
+  useAllTransactions,
+  useHasPendingApproval,
+  isTransactionRecent,
+  usePendingTransactions,
+  useSingleCallResult,
+  useSingleContractMultipleData,
+  useMultipleContractSingleData,
+  useMulticallUpdater,
   ApprovalState,
 } from "./hooks";
 export {
@@ -65,6 +75,11 @@ export {
   getProviderOrSigner,
   isAddress,
   maxAmountToSpend,
+  isGasEstimationError,
+  getErrorMessage,
+  getScanLink,
+  truncateHash,
+  parseChainIdFromString,
 } from "./utils";
 export { nativeOnChain } from "./native-tokens";
 export { ZERO } from "./constants";

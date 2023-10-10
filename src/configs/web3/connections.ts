@@ -8,7 +8,7 @@ import { Connector } from "@web3-react/types";
 import CoinBaseIcon from "components/svg/icons/CoinBase";
 import WalletConnectIcon from "components/svg/icons/WalletConnect";
 
-import { Connection, RPC_PROVIDERS, MAINNET_CHAIN_IDS, RPC_URLS } from ".";
+import { Connection, RPC_PROVIDERS, MAINNET_CHAIN_IDS, RPC_URLS } from "./";
 import {
   getInjection,
   getIsCoinbaseWalletBrowser,
@@ -17,7 +17,7 @@ import {
   getIsMetaMaskWallet,
   getShouldAdvertiseMetaMask,
 } from "./utils";
-import { isMobile } from "utils/helpers";
+import { isMobile } from "utils";
 
 import { ConnectionType } from "./types";
 
@@ -48,10 +48,11 @@ export const injectedConnection: Connection = {
   type: ConnectionType.INJECTED,
   getIcon: () => getInjection().icon,
   shouldDisplay: () => getIsMetaMaskWallet() || getShouldAdvertiseMetaMask() || getIsGenericInjector(),
+
   // If on non-injected, non-mobile browser, prompt user to install Metamask
   overrideActivate: () => {
     if (getShouldAdvertiseMetaMask()) {
-      window.open(`https://metamask.app.link/dapp/${URL?.replace("https://", "")}/`, "inst_metamask");
+      window.open("https://metamask.io/", "inst_metamask");
       return true;
     }
     return false;

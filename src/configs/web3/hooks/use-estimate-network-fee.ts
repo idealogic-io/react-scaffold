@@ -7,7 +7,7 @@ import useSWR from "swr";
 import BigNumber from "bignumber.js";
 
 import { useGasPrice, useNativeCurrency } from "configs/web3";
-import { ContractMethodName, ContractMethodParams } from "hooks/use-swr-contract/types";
+import { ContractMethodName, ContractMethodParams } from "configs/web3/hooks/use-swr-contract/types";
 
 /**
  * Used to calculate how much the user will spend in native currency using the contract method.

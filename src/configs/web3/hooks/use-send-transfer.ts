@@ -4,9 +4,8 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 
 import { useTranslation } from "context";
-
-import { useTransactionAdder } from "hooks";
-import { getErrorMessage, truncateHash } from "utils/web3";
+import { useTransactionAdder } from "../hooks";
+import { WalletError, getErrorMessage, truncateHash } from "../utils";
 
 type UseSendTransferArgs = { contract: Contract; to: string };
 /**
@@ -40,7 +39,7 @@ export const useSendTransfer = ({ contract, to }: UseSendTransferArgs) => {
       });
     } catch (error) {
       console.error(`Send failed: `, error, to, value);
-      toast.error(t("Send failed: %message%", { message: getErrorMessage(error) }));
+      toast.error(t("Send failed: %message%", { message: getErrorMessage(error as WalletError) }));
     }
   };
 

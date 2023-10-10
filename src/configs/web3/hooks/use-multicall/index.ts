@@ -10,7 +10,7 @@ import { isValidMethodArgs, parseCallKey, toCallKey, toCallState } from "./helpe
 import { useAppSelector, useAppDispatch } from "store/store";
 import { addMulticallListeners, removeMulticallListeners } from "store/multicall/action";
 import { INVALID_RESULT } from "./constants";
-import { ContractMethodName } from "hooks/use-swr-contract/types";
+import { ContractMethodName } from "configs/web3/hooks/use-swr-contract/types";
 
 /**
  * The lowest level call for subscribing to contract data

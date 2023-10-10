@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { getInstance, isAxiosError } from "./axios";
 import { ErrorResult } from "./types";
 import { toastOptionsError } from "components";
-import { parseErrorFromBE } from "utils/helpers";
+import { parseErrorFromBE } from "utils";
 import { LOCAL_STORAGE_KEYS } from "configs";
 import { t } from "context/language-context";
 

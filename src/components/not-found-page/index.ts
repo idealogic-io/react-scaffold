@@ -1,4 +1,4 @@
-import { lazyLoad } from "utils/helpers/loadable";
+import { lazyLoad } from "utils/loadable";
 
 export const NotFoundPage = lazyLoad(
   () => import("./NotFoundPage"),
