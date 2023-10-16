@@ -1,15 +1,1 @@
-{
-  "Scaffold": "Эшафот",
-  "Project scaffold is in build progress": "Проект в процессе разработки",
-  "Login": "Вход",
-  "Home": "Дом",
-  "Not found Page": "Страница не найдена",
-  "Copied": "Скопировано",
-  "Fail to copy": "Не получилось скопировать",
-  "This field is required": "Это поле обязательно",
-  "Invalid email": "Неверный email",
-  "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character": "Должен содержать 8 символов ... ",
-  "Logout": "Выход",
-  "Password": "Пароль",
-  "Email": "Email"
-}
+{}

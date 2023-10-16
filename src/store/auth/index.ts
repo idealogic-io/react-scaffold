@@ -51,7 +51,7 @@ const authSlice = createSlice({
         state.pending = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        if (action.payload?.isError) {
+        if (action.payload) {
           state.error = action.payload;
           state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);
           state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
@@ -71,7 +71,7 @@ const authSlice = createSlice({
         state.pending = false;
       })
       .addCase(refreshToken.rejected, (state, action) => {
-        if (action.payload?.isError) {
+        if (action.payload) {
           state.error = action.payload;
           state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);
           state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);

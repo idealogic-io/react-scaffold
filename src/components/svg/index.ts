@@ -8,5 +8,6 @@ export { default as CloseIcon } from "./icons/Close";
 export { default as EyeOpenIcon } from "./icons/EyeOpen";
 export { default as EyeClosedIcon } from "./icons/EyeClosed";
 export { default as CheckIcon } from "./icons/Check";
+export { default as ArrowDownIcon } from "./icons/ArrowDown";
 
 export { RotateIcon, CloseIconWithHover } from "./components";

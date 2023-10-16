@@ -18,18 +18,18 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions) => {
     tooltipPadding = { left: 16, right: 16 },
     tooltipOffset = [0, 10],
     isEllipsis = false,
+    isInitiallyOpened = false,
     customStyles = {},
   } = options ?? {};
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [tooltipElement, setTooltipElement] = useState<HTMLElement | null>(null);
   const [arrowElement, setArrowElement] = useState<HTMLElement | null>(null);
-  const [insideElement, setInsideElement] = useState<HTMLElement | null>(null);
 
   const { visible, setVisible } = useSubscriptionEventsHandlers({
     targetElement,
     tooltipElement,
     trigger,
-    insideElement,
+    isInitiallyOpened,
   });
 
   const { styles, attributes } = usePopper(targetElement, tooltipElement, {
@@ -77,7 +77,6 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions) => {
     tooltip: AnimatedTooltip,
     tooltipVisible: visible,
     setVisible,
-    insideElementRef: setInsideElement,
   };
 };
 

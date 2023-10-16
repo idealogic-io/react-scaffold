@@ -16,12 +16,13 @@ export interface TooltipOptions {
   tooltipPadding?: Padding;
   tooltipOffset?: [number, number];
   isEllipsis?: boolean;
+  isInitiallyOpened?: boolean;
   customStyles?: { tooltip?: object; arrow?: object };
 }
 
 export type useSubscriptionEventsHandlersProps = {
   targetElement: HTMLElement | null;
   tooltipElement: HTMLElement | null;
-  insideElement: HTMLElement | null;
   trigger: TriggerType;
+  isInitiallyOpened?: boolean;
 };
