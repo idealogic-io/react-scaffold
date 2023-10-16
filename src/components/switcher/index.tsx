@@ -23,7 +23,7 @@ export const Switcher: React.FC<SwitcherProps> = ({
       </StyledSwitcher>
 
       {typeof label === "string" ? (
-        <Text mx="18px" {...labelProps}>
+        <Text textScale="body1" mx="18px" {...labelProps}>
           {label}
         </Text>
       ) : (

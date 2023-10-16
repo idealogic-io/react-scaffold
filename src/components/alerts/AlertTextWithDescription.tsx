@@ -6,9 +6,9 @@ import { Box, Text } from "components";
 const AlertTextWithDescription: React.FC<AlertTextWithDescriptionProps> = ({ text, description, children }) => {
   return (
     <Box>
-      <Text $fontWeight="bold">{text}</Text>
+      <Text $fontWeight="bold" textScale="body2">{text}</Text>
 
-      {description && <Text fontSize="12px">{description}</Text>}
+      {description && <Text textScale="body3">{description}</Text>}
 
       {React.isValidElement(children) && children}
     </Box>
