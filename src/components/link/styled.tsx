@@ -5,7 +5,7 @@ import Text from "components/text";
 import { LinkProps } from "./types";
 
 export const StyledLink = styled(Text)<LinkProps>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   width: fit-content;
   color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.accent500)};

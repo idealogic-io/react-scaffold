@@ -1,24 +1,29 @@
 import React, { useState } from "react";
-import { Box, Skeleton } from "components";
-import { ImageProps } from "./types";
+// Components + styling
+import { ResponsiveBox, Skeleton } from "components";
 import { StyledImage } from "./styled";
+// Utils
+import { getFileNameFromSrc } from "utils";
+// Types
+import { ImageProps } from "./types";
 
-const Image: React.FC<ImageProps> = ({ src, width, height, alt, variant, animation, ...props }) => {
+const Image: React.FC<ImageProps> = ({ src, width, alt, variant, animation, aspectRatio, ...props }) => {
   const [isLoading, setLoading] = useState(true);
+  const altDescription = getFileNameFromSrc(src);
 
   return (
-    <Box {...props}>
-      {isLoading && <Skeleton variant={variant} animation={animation} width={width} height={height} />}
+    <ResponsiveBox width={width} aspectRatio={aspectRatio} {...props}>
+      {isLoading && <Skeleton variant={variant} animation={animation} width="100%" height="100%" />}
       <StyledImage
         style={{ display: !isLoading ? "block" : "none" }}
-        width={width}
-        height={height}
         src={src}
         variant={variant}
-        alt={alt}
-        onLoad={() => setLoading(false)}
+        alt={alt || altDescription}
+        onLoad={() => {
+          setLoading(false);
+        }}
       />
-    </Box>
+    </ResponsiveBox>
   );
 };
 

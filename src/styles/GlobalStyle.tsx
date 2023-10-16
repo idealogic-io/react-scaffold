@@ -1,15 +1,24 @@
 import { createGlobalStyle } from "styled-components";
 
-import MerriWeatherRegularWoff from "assets/fonts/Merriweather-Regular.woff";
-import MerriWeatherRegularWoff2 from "assets/fonts/Merriweather-Regular.woff2";
+import MerriWeatherRegular from "assets/fonts/Merriweather-Regular.woff2";
+import MerriWeatherBold from "assets/fonts/Merriweather-Bold.woff2";
 
+// Add fonts via link in index.html would be better
+// If font could be added in index.html use that way
+// If font is custom use @font-face.
+// This is just an example of the custom font
 const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: "Merriweather";
-  src: local("Merriweather Regular"),
-  url(${MerriWeatherRegularWoff}) format("woff"),
-  url(${MerriWeatherRegularWoff2}) format("woff2");
+  src: url(${MerriWeatherRegular}) format("woff2");
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Merriweather";
+  src: url(${MerriWeatherBold}) format("woff2");
+  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
@@ -102,7 +111,7 @@ html, body, div, span, applet, object, iframe,
     min-width: 100vw;
     min-height: 100vh;
     margin: 0;
-    font-family: 'Merriweather';
+    font-family: ${({ theme }) => theme.fonts.merriweather};
     background-color: ${({ theme }) => theme.colors.monochrome0};
 
     img {

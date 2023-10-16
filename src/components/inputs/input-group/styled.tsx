@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { layout, space } from "styled-system";
 
 import { Box, Text } from "components";
@@ -39,10 +39,10 @@ export const InputIcon = styled.div<InputIconProps>`
 
   ${({ isEndIcon, scale }) =>
     isEndIcon
-      ? `
+      ? css`
       right: ${scale === inputScales.SM ? "8px" : "16px"};
     `
-      : `
+      : css`
       left: ${scale === inputScales.SM ? "8px" : "16px"};
     `}
 `;

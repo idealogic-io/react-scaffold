@@ -101,7 +101,7 @@ const [walletConnect, walletConnectHooks] = initializeConnector<WalletConnect>(
       options: {
         projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID as string,
         chains: [mainnet],
-        optionalChains,
+        optionalChains: [mainnet, ...optionalChains],
         showQrModal: true,
         rpcMap: RPC_URLS,
         optionalMethods: ["eth_signTypedData", "eth_signTypedData_v4", "eth_sign"],

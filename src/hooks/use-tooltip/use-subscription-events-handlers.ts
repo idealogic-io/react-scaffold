@@ -5,9 +5,9 @@ export const useSubscriptionEventsHandlers = ({
   targetElement,
   tooltipElement,
   trigger,
-  insideElement,
+  isInitiallyOpened,
 }: useSubscriptionEventsHandlersProps) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(isInitiallyOpened);
 
   const hideTooltip = (e: Event) => {
     e.stopPropagation();
@@ -22,7 +22,10 @@ export const useSubscriptionEventsHandlers = ({
   };
 
   const toggleTooltip = (e: Event) => {
-    if (insideElement?.contains(e.target as Node)) {
+    if (tooltipElement?.contains(e.target as Node) && targetElement?.contains(e.target as Node)) {
+      // Should be handled in component with useTooltip hook
+      // Ex.: const { targetRef, tooltip, setVisible } = useTooltip(...)
+      //      function onDropdownMenuClick() {setVisible(false);}
       return;
     }
 
@@ -62,7 +65,7 @@ export const useSubscriptionEventsHandlers = ({
     targetElement.addEventListener("click", toggleTooltip);
 
     return () => targetElement.removeEventListener("click", toggleTooltip);
-  }, [trigger, targetElement, insideElement, visible, toggleTooltip]);
+  }, [trigger, targetElement, visible, toggleTooltip]);
 
   // Handle click outside
   useEffect(() => {

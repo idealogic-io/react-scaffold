@@ -1,4 +1,5 @@
-import { Image, Box, Row } from "components";
+import { Image, Flex, Column } from "components";
+import BackgroundImage from "./BackgroundImage";
 
 export default {
   title: "Assets/Images",
@@ -9,16 +10,28 @@ const context = require.context("../../../public/images/", true, /.webp$/);
 
 export const Images = () => {
   return (
-    <Row>
+    <Column>
       {context.keys().map((el, i) => {
         const img = el.replace("./", "");
 
         return (
-          <Box key={i} m="8px">
-            <Image src={`/images/${img}`} width="100px" height="100px" />
-          </Box>
+          <Flex key={i} m="8px" justifyContent="center" width="100%">
+            <Image src={`/images/${img}`} width="503px" aspectRatio={0.87} />
+          </Flex>
         );
       })}
-    </Row>
+    </Column>
+  );
+};
+
+export const BackgroundImages = () => {
+  return (
+    <Flex m="8px" justifyContent="center" width="100%">
+      <BackgroundImage
+        src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmVhdXRpZnVsJTIwbGFuZHNjYXBlfGVufDB8fDB8fHww&w=1000&q=80"
+        width="1000px"
+        aspectRatio={1.55}
+      />
+    </Flex>
   );
 };

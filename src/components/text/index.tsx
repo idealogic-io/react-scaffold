@@ -1,38 +1,41 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { space, typography, layout, opacity, flexbox } from "styled-system";
 import { TextProps, ThemedProps } from "./types";
-import { style } from "./theme";
+import { fontSizes, styles } from "./theme";
 
 export const getEllipsis = ({ ellipsis }: ThemedProps) => {
   if (ellipsis) {
-    return `white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;`;
+    return css`
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    `;
   }
 };
 
 export const wordBreak = ({ wordBreak }: ThemedProps) => {
   if (wordBreak) {
-    return `word-break: ${wordBreak};`;
+    return css`
+      word-break: ${wordBreak};
+    `;
   }
 };
 
 export const Text = styled.p<TextProps>`
   color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
-  font-weight: ${({ theme, $fontWeight }) => ($fontWeight ? theme.fontWeight[$fontWeight] : theme.fontWeight.regular)};
+  font-weight: ${({ theme, $fontWeight }) => $fontWeight && theme.fontWeight[$fontWeight]};
   line-height: 1.375;
-  font-family: ${({ theme }) => theme.fonts.mv};
+  font-family: ${({ theme }) => theme.fonts.merriweather};
 
-  direction: ${({ direction }) => direction};
+  ${({ textScale }) => textScale && styles[textScale]};
 
-  ${({ theme }) => theme.mediaQueries.mobileS} {
-    font-size: ${({ textScale }) => textScale && style[textScale].fontSizeMobileS};
-  }
+  font-size: ${({ textScale }) => textScale && fontSizes[textScale].mobile};
+
   ${({ theme }) => theme.mediaQueries.tablet} {
-    font-size: ${({ textScale }) => textScale && style[textScale].fontSizeTablet};
+    font-size: ${({ textScale }) => textScale && fontSizes[textScale].tablet};
   }
   ${({ theme }) => theme.mediaQueries.laptop} {
-    font-size: ${({ textScale }) => textScale && style[textScale].fontSizeLaptop};
+    font-size: ${({ textScale }) => textScale && fontSizes[textScale].laptop};
   }
 
   ${wordBreak}
@@ -43,5 +46,7 @@ export const Text = styled.p<TextProps>`
   ${opacity}
   ${flexbox}
 `;
+
+Text.defaultProps = { textScale: "body1" };
 
 export default Text;

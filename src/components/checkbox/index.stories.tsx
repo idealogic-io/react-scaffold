@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox, Box, Heading } from "components";
-import { CopyIcon } from "components/svg";
+import { InfoIcon } from "components/svg";
 
 export default {
   title: "Components/Checkboxes",
@@ -39,7 +39,7 @@ export const Checkboxes: React.FC = () => {
       <Box>
         <Checkbox
           mb="32px"
-          icon={<CopyIcon color="monochrome0" />}
+          icon={<InfoIcon color="monochrome0" />}
           label="Custom Icon"
           checked={isChecked2}
           onChange={() => {
