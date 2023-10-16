@@ -7,7 +7,7 @@ import { ButtonProps } from "./types";
 const StyledButton = styled.button<ButtonProps>`
   border-radius: ${({ theme }) => theme.radii.semiMedium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  font-family: ${({ theme }) => theme.fonts.mv};
+  font-family: ${({ theme }) => theme.fonts.merriweather};
 
   position: relative;
   align-items: center;

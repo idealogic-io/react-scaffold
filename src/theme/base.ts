@@ -52,12 +52,11 @@ export const zIndices = {
 
 export const fontWeight = {
   bold: 900,
-  medium: 600,
   regular: 400,
 } as const;
 
 export const fonts = {
-  mv: "MerriWeather",
+  merriweather: "Merriweather, sans-serif",
 } as const;
 
 export default {

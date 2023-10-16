@@ -16,23 +16,24 @@ const getHeight = ({ scale }: ThemedProps) => {
 const getBorderStyles = ({ error, isTouched, borderColor, theme }: BorderProps) => {
   if (error && isTouched) {
     return css`
-       border: 1px solid ${theme.colors.error400};
-       &:focus {
-         border: 1px solid ${theme.colors.error400} !important;
-       }
-       &:hover {
+      border: 1px solid ${theme.colors.error400};
+      &:focus {
+        border: 1px solid ${theme.colors.error400} !important;
+      }
+      &:hover {
         border: 1px solid ${theme.colors.error400} !important;
       }
     `;
   } else if (borderColor) {
     return css`
-        border: 1px solid ${theme.colors[borderColor]};
-        &:focus {
+      border: 1px solid ${theme.colors[borderColor]};
+      &:focus {
         border: 1px solid ${borderColor} !important;
-        }
-        &:hover {
-          border: 1px solid ${borderColor} !important;
-        }`;
+      }
+      &:hover {
+        border: 1px solid ${borderColor} !important;
+      }
+    `;
   }
 
   return css`
@@ -44,7 +45,7 @@ export const Input = styled.input<InputProps>`
   background-color: transparent;
   border-radius: ${({ theme }) => theme.radii.semiMedium};
   color: ${({ theme }) => theme.colors.monochrome800};
-  font-family: ${({ theme }) => theme.fonts.mv};
+  font-family: ${({ theme }) => theme.fonts.merriweather};
   display: block;
   font-size: 14px;
   font-weight: 600;
