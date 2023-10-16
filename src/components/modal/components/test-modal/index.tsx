@@ -27,7 +27,7 @@ const TestModal: React.FC = () => {
       <Heading textAlign="center" scale="h5" as="h5">
         Header with custom prop {props?.title}
       </Heading>
-      <Text>This is a test modal</Text>
+      <Text textScale="body2">This is a test modal</Text>
     </StyledModalWrapper>
   );
 };
