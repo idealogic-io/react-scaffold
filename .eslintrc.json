@@ -58,7 +58,8 @@
           "{}": false
         }
       }
-    ]
+    ],
+    "no-unreachable": "error"
   },
   "settings": {
     "react": {
