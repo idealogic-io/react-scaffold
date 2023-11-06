@@ -1,3 +1,4 @@
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { ROUTES } from "navigation/routes";
 
 export type ModalState<T> = {
@@ -17,3 +18,5 @@ export type ShowModalProps<T> = {
 export enum ModalNames {
   testModal = "testModal",
 }
+
+export interface ModalProps<T> extends ActionCreatorWithPayload<ShowModalProps<T>, string> {}
