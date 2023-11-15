@@ -11,7 +11,7 @@ const initialState: ContextType = {
 };
 
 const langKey = LOCAL_STORAGE_KEYS.language;
-
+// TODO add type into MAP
 export const languageMap = new Map();
 
 // function to translate text not in components
@@ -39,6 +39,7 @@ const LanguageContextProvider: React.FC<LanguageContextProviderProps> = ({ fallb
   const { currentLanguage } = state;
 
   const fetchInitialLocales = async () => {
+    // TODO - recheck to remove double logic from line 35
     let codeFromStorage = getLanguageCodeFromLS();
 
     if (!(codeFromStorage in languages)) {
