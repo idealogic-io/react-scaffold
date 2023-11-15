@@ -18,7 +18,8 @@ export const getInjection = () => {
   }
 
   // Check for MetaMask last, as other injectors will also set this flag, i.e. Trust Wallet, Phantom Wallet
-  if (window.ethereum?.isMetaMask) return { name: "MetaMask", icon: MetamaskIcon };
+  if (window.ethereum?.isMetaMask && !window.ethereum?.isDeficonnectProvider)
+    return { name: "MetaMask", icon: MetamaskIcon };
 
   // Prompt metamask installation when there is no injection present or the only injection detected is coinbase (CB has separate entry point in UI)
   if (!window.ethereum || window.ethereum.isCoinbaseWallet) return { name: "Install MetaMask", icon: MetamaskIcon };
