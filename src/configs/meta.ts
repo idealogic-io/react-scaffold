@@ -13,12 +13,7 @@ export const getDefaultMeta = (t: TranslateFunction) => {
 };
 
 export const getCustomMeta = (path: string, t: TranslateFunction) => {
-  let basePath = removeTrailingSlashIfExists(path);
-  const matchingRoute = findMatchingRoute(basePath);
-
-  if (basePath && !matchingRoute) {
-    basePath = "/404";
-  }
+  const basePath = removeTrailingSlashIfExists(path);
 
   switch (basePath) {
     case ROUTES.login: {
@@ -33,23 +28,10 @@ export const getCustomMeta = (path: string, t: TranslateFunction) => {
         title: t("Home"),
       };
     }
-    case "/404": {
-      return {
-        ...getDefaultMeta(t),
-        title: t("404"),
-      };
-    }
+
     default:
       return {
         ...getDefaultMeta(t),
       };
-  }
-};
-
-const findMatchingRoute = (basePath: string) => {
-  for (const route in ROUTES) {
-    if (basePath === `/${ROUTES[route as keyof typeof ROUTES]}`) {
-      return route;
-    }
   }
 };
