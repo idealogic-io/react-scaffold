@@ -1,4 +1,5 @@
 import { Zero } from "@ethersproject/constants";
+import { BigNumber as EthersBigNumber } from "@ethersproject/bignumber";
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
@@ -32,7 +33,7 @@ export const useEstimateTxFee = <
     data = Zero,
     isValidating,
     error,
-  } = useSWR(
+  } = useSWR<EthersBigNumber>(
     contract && chainId && contract.address
       ? `${chainId}/gasEstimation/${methodName}/${inputs}/${contract.address}`
       : null,

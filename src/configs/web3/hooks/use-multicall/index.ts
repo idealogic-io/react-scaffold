@@ -1,7 +1,7 @@
 import { Contract } from "@ethersproject/contracts";
 import { Interface } from "@ethersproject/abi";
 import { useEffect, useMemo } from "react";
-import { useSWRConfig } from "swr";
+import { Cache, useSWRConfig } from "swr";
 import { useWeb3React } from "@web3-react/core";
 
 import { Call, CallResult, CallState, ListenerOptions, OptionalMethodInputs } from "./types";
@@ -105,7 +105,7 @@ export function useSingleCallResult<
   const { cache } = useSWRConfig();
 
   return useMemo(() => {
-    const currentBlockNumber = cache.get(`${chainId}/blockNumber`);
+    const currentBlockNumber = (cache as Cache<number>).get(`${chainId}/blockNumber`)?.data;
 
     return toCallState(result, contract?.interface, fragment, currentBlockNumber);
   }, [cache, result, contract?.interface, fragment]);
@@ -151,7 +151,7 @@ export function useMultipleContractSingleData(
   const { cache } = useSWRConfig();
 
   return useMemo(() => {
-    const currentBlockNumber = cache.get(`${chainId}/blockNumber`);
+    const currentBlockNumber = (cache as Cache<number>).get(`${chainId}/blockNumber`)?.data;
 
     return results.map(result => toCallState(result, contractInterface, fragment, currentBlockNumber));
   }, [fragment, results, contractInterface, cache]);
@@ -186,7 +186,7 @@ export function useSingleContractMultipleData(
   const { cache } = useSWRConfig();
 
   return useMemo(() => {
-    const currentBlockNumber = cache.get(`${chainId}/blockNumber`);
+    const currentBlockNumber = (cache as Cache<number>).get(`${chainId}/blockNumber`)?.data;
     return results.map(result => toCallState(result, contract?.interface, fragment, currentBlockNumber));
   }, [fragment, contract, results, cache]);
 }
