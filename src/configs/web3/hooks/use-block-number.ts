@@ -17,7 +17,8 @@ export const useBlockNumber = () => {
   const onBlockChange = (chainId: ChainId, blockNumber: number) => {
     mutate(`${chainId}/blockNumber`, blockNumber);
   };
-
+  // provider.on("block") calls few times in a short period like up to 100ms and returns а few block numbers at once
+  // this causes extra rendering hooks such as transactions Updater
   const debouncedOnBlock = debounce(onBlockChange, 100);
 
   useEffect(() => {
