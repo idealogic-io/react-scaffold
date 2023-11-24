@@ -2,6 +2,7 @@ import { useSWRConfig } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
+import debounce from "lodash/debounce";
 
 import { ChainId } from "../types";
 
@@ -16,6 +17,8 @@ export const useBlockNumber = () => {
   const onBlockChange = (chainId: ChainId, blockNumber: number) => {
     mutate(`${chainId}/blockNumber`, blockNumber);
   };
+
+  const debouncedOnBlock = debounce(onBlockChange, 100);
 
   useEffect(() => {
     let stale = false;
@@ -32,13 +35,12 @@ export const useBlockNumber = () => {
           console.error(`Failed to get block number for chainId ${chainId}`, error);
         });
 
-      const onBlock = (block: number) => onBlockChange(chainId, block);
-
+      const onBlock = (block: number) => debouncedOnBlock(chainId, block);
       provider.on("block", onBlock);
 
       return () => {
         stale = true;
-        provider.removeListener("block", onBlock);
+        provider.off("block", onBlock);
       };
     }
   }, [chainId, provider]);
