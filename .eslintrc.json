@@ -23,12 +23,10 @@
     "ecmaVersion": 13,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/prop-types": "off",
+    "no-unreachable": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -41,11 +39,7 @@
     "no-console": [
       "error",
       {
-        "allow": [
-          "warn",
-          "error",
-          "debug"
-        ]
+        "allow": ["warn", "error", "debug"]
       }
     ],
     "@typescript-eslint/no-non-null-assertion": "off",
@@ -58,8 +52,7 @@
           "{}": false
         }
       }
-    ],
-    "no-unreachable": "error"
+    ]
   },
   "settings": {
     "react": {
