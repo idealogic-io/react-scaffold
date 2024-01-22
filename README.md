@@ -1,6 +1,6 @@
 # Scaffold
 
-![alt text](https://idealogic.dev/logo192.png)
+![alt text](https://idealogic.dev/wp-content/uploads/2022/12/logo-final-2.svg)
 
 ## Description
 
