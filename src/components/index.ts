@@ -13,7 +13,6 @@ export { default as Link } from "./link";
 export { default as Skeleton } from "./skeleton";
 export { default as Image } from "./image";
 export { default as BackgroundImage } from "./image/BackgroundImage";
-export { default as ToastDescriptionWithTx } from "./toast-description-with-tx";
 export {
   AlertTextWithDescription,
   AlertBanner,

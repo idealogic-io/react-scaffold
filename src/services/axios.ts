@@ -4,7 +4,6 @@ import store from "store/store";
 import { refreshToken } from "store/auth/actions";
 import { resetAuth } from "store/auth";
 import { hideModal } from "store/modal";
-import { resetWeb3WalletState } from "store/web3-wallet";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
 
@@ -22,8 +21,6 @@ const timeout = 15_000;
 export function resetStore() {
   store.dispatch(resetAuth());
   store.dispatch(hideModal());
-
-  store.dispatch(resetWeb3WalletState());
 }
 
 export function getInstance(baseURL = process.env.REACT_APP_API_URL) {
