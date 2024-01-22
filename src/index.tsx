@@ -9,6 +9,7 @@ import "./polyfills";
 import "./configs/big-number";
 
 import "react-toastify/dist/ReactToastify.css";
+import "@rainbow-me/rainbowkit/styles.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(

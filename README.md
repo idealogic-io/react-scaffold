@@ -14,6 +14,12 @@ One downside of this approach is that it's quite challenging to customize the bl
 
 Node version >18.0.0
 
+## Documentation
+
+[Rainbow](https://www.rainbowkit.com/docs/introduction)
+[Wagmi](https://1.x.wagmi.sh/)
+[Viem](https://v1.viem.sh/)
+
 ## Scripts
 
 ### Notes for scripts

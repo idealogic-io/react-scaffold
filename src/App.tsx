@@ -6,7 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 // Styles
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
-import { LanguageContextProvider, ThemeContextProvider, useThemeContext, SocketContextProvider } from "context";
+import {
+  LanguageContextProvider,
+  ThemeContextProvider,
+  useThemeContext,
+  SocketContextProvider,
+  Web3Provider,
+} from "context";
 // Store
 import store from "store/store";
 // Components
@@ -24,11 +30,13 @@ const ThemedApp: React.FC = () => {
         <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
           <LanguageContextProvider fallback={<Loader />}>
             <Provider store={store}>
-              <SocketContextProvider>
-                <Modal />
-                <Navigation />
-                <StyledToastContainer />
-              </SocketContextProvider>
+              <Web3Provider>
+                <SocketContextProvider>
+                  <Modal />
+                  <Navigation />
+                  <StyledToastContainer />
+                </SocketContextProvider>
+              </Web3Provider>
             </Provider>
           </LanguageContextProvider>
         </ErrorBoundary>
