@@ -9,15 +9,9 @@ const ProjectDescription: React.FC = () => {
   return (
     <FlexGap>
       <FlexGap gap="16px" flexDirection="column">
-        <Text textAlign="justify" fontFamily="Share Tech Mono">
-          {t("article1")}
-        </Text>
-        <Text textAlign="justify" fontFamily="Share Tech Mono">
-          {t("article2")}
-        </Text>
-        <Text textAlign="justify" fontFamily="Share Tech Mono">
-          {t("article3")}
-        </Text>
+        <Text textAlign="justify">{t("article1")}</Text>
+        <Text textAlign="justify">{t("article2")}</Text>
+        <Text textAlign="justify">{t("article3")}</Text>
       </FlexGap>
     </FlexGap>
   );

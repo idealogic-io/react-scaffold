@@ -16,12 +16,6 @@ export const getCustomMeta = (path: string, t: TFunction) => {
   const basePath = removeTrailingSlashIfExists(path);
 
   switch (basePath) {
-    case ROUTES.login: {
-      return {
-        ...getDefaultMeta(t),
-        title: t("Login"),
-      };
-    }
     case ROUTES.home: {
       return {
         ...getDefaultMeta(t),
