@@ -57,6 +57,7 @@ export const fontWeight = {
 
 export const fonts = {
   merriweather: "Merriweather, sans-serif",
+  tech: "Share Tech Mono, monospace",
 } as const;
 
 export default {

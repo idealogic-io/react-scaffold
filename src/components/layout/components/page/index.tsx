@@ -11,9 +11,6 @@ export const PageMeta: React.FC = () => {
   const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
 
-  // eslint-disable-next-line
-  console.log("pathname", i18n);
-
   const { title, description, image } = getCustomMeta(pathname, t);
   const pageTitle = title ? `${title} | ${t("Scaffold")}` : t("Scaffold");
 
