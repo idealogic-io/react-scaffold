@@ -1,10 +1,10 @@
-import { TranslateFunction } from "context/language-context/types";
+import { TFunction } from "i18next";
 import { ROUTES } from "navigation/routes";
 import { removeTrailingSlashIfExists } from "utils/remove-trailing-slash-if-exist";
 
 const URL = process.env.REACT_APP_URL;
 
-export const getDefaultMeta = (t: TranslateFunction) => {
+export const getDefaultMeta = (t: TFunction) => {
   return {
     title: "",
     description: t("Project scaffold is in build progress"),
@@ -12,7 +12,7 @@ export const getDefaultMeta = (t: TranslateFunction) => {
   };
 };
 
-export const getCustomMeta = (path: string, t: TranslateFunction) => {
+export const getCustomMeta = (path: string, t: TFunction) => {
   const basePath = removeTrailingSlashIfExists(path);
 
   switch (basePath) {

@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 import { toastOptionsError, toastOptionsSuccess } from "components";
-import { useTranslation } from "context";
+import { useTranslation } from "react-i18next";
 /**
  * Helps to copy content into click board
  */

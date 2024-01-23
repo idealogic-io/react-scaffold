@@ -4,7 +4,7 @@ import { DropdownSelectWrapper } from "./styled";
 import { Flex, Text } from "components";
 import { ArrowDownIcon } from "components/svg";
 
-import { useTranslation } from "context";
+import { useTranslation } from "react-i18next";
 
 import { SelectProps } from "../types";
 

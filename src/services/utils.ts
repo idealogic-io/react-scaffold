@@ -1,9 +1,5 @@
-import { t } from "context/language-context";
+import { t } from "i18next";
 import { ErrorResult } from "./types";
-import { LOCAL_STORAGE_KEYS } from "configs";
-
-const locale = localStorage.getItem(LOCAL_STORAGE_KEYS.language);
-const translate = t(locale);
 
 export const isErrorResult = (result: unknown): result is ErrorResult => {
   return (
@@ -16,9 +12,9 @@ export const isErrorResult = (result: unknown): result is ErrorResult => {
 
 export const replaceWithNewErrorMessages = (error: unknown) => {
   if ((error as { code: string })?.code === "ERR_NETWORK") {
-    return `${translate("Server is not responding.")} ${translate("Check the internet connection and try again.")}`;
+    return `${t("Server is not responding.")} ${t("Check the internet connection and try again.")}`;
   } else if ((error as { code: string })?.code === "ECONNABORTED") {
-    return `${translate("Your request exceeded the time limit for processing.")} ${translate(
+    return `${t("Your request exceeded the time limit for processing.")} ${t(
       "Check the internet connection and try again.",
     )}`;
   } else return (error as { message: string }).message;

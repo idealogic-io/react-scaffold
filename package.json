@@ -8,14 +8,18 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
     "bignumber.js": "^9.1.2",
+    "buffer": "npm:buffer@6.0.3",
     "formik": "^2.4.4",
     "framer-motion": "^10.16.4",
     "http-proxy-middleware": "^2.0.6",
+    "i18next": "^23.7.18",
+    "i18next-browser-languagedetector": "^7.2.0",
     "lodash": "^4.17.21",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
+    "react-i18next": "^14.0.1",
     "react-popper": "^2.3.0",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.21.3",
@@ -32,8 +36,7 @@
     "viem": "1.21.4",
     "wagmi": "1.4.13",
     "web-vitals": "^2.1.4",
-    "yup": "^1.2.0",
-    "buffer": "npm:buffer@6.0.3"
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

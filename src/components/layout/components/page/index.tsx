@@ -4,12 +4,15 @@ import { useLocation } from "react-router-dom";
 
 import { getCustomMeta } from "configs";
 import { Container } from "../container";
-import { useTranslation } from "context";
+import { useTranslation } from "react-i18next";
 import { PageProps } from "../types";
 
 export const PageMeta: React.FC = () => {
   const { pathname } = useLocation();
-  const { t, currentLanguage } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // eslint-disable-next-line
+  console.log("pathname", i18n);
 
   const { title, description, image } = getCustomMeta(pathname, t);
   const pageTitle = title ? `${title} | ${t("Scaffold")}` : t("Scaffold");
@@ -19,7 +22,7 @@ export const PageMeta: React.FC = () => {
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta property="og:locale" content={currentLanguage.locale} />
+      <meta property="og:locale" content={i18n.language} />
 
       <title>{pageTitle}</title>
     </Helmet>

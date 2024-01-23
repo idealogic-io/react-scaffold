@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button, Column } from "components";
 import { ArrowDownIcon } from "components/svg";
@@ -7,7 +8,7 @@ import { StyledButtonsWrapper } from "./styled";
 
 import { useTooltip } from "hooks";
 
-import { useThemeContext, useTranslation } from "context";
+import { useThemeContext } from "context";
 import { getTooltipStyles } from "../theme";
 
 import { MultipleSelectProps, Option } from "../types";
