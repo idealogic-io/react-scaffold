@@ -13,5 +13,6 @@ export { default as LedgerIcon } from "./icons/Ledger";
 export { default as Web3Icon } from "./icons/Web3";
 export { default as MetamaskIcon } from "./icons/Metamask";
 export { default as TrustWalletIcon } from "./icons/TrustWallet";
+export { default as IdealogicIcon } from "./icons/Idealogic";
 
 export { RotateIcon, CloseIconWithHover } from "./components";

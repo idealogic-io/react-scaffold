@@ -25,7 +25,7 @@ export const Columns: React.FC = () => {
 
 export const Boxes: React.FC = () => {
   return (
-    <Box width="200px" height="200px" $backgroundColor="monochrome500" borderRadius="16px" padding="16px">
+    <Box width="200px" height="200px" borderRadius="16px" padding="16px">
       Box with custom props
     </Box>
   );
@@ -34,9 +34,7 @@ export const Boxes: React.FC = () => {
 export const Containers: React.FC = () => {
   return (
     <>
-      <Container $backgroundColor="monochrome500" height="100vh">
-        Container for page content
-      </Container>
+      <Container height="100vh">Container for page content</Container>
     </>
   );
 };

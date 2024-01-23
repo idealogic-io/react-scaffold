@@ -24,3 +24,7 @@ export {
 export { default as Checkbox } from "./checkbox";
 export { Switcher } from "./switcher";
 export { SingleSelect, MultipleSelect } from "./selects";
+export { DefaultOutlet } from "./outlets";
+export { default as Header } from "./header";
+export { default as Sidebar } from "./sidebar";
+export { default as ProjectDescription } from "./project-description";

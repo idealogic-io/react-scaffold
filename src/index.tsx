@@ -7,6 +7,7 @@ import App from "./App";
 
 import "./polyfills";
 import "./configs/big-number";
+import "./i18n";
 
 import "react-toastify/dist/ReactToastify.css";
 import "@rainbow-me/rainbowkit/styles.css";

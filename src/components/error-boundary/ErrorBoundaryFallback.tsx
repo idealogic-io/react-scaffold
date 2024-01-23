@@ -11,7 +11,7 @@ const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, re
 
   const onPressHandler = () => {
     resetError();
-    navigate(ROUTES.landing);
+    navigate(ROUTES.home);
   };
 
   return (
@@ -19,7 +19,9 @@ const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, re
       <Heading as="h1" scale="h1">
         Something went wrong!
       </Heading>
-      <Text mt="8px" textScale="body1">{error?.toString()}</Text>
+      <Text mt="8px" textScale="body1">
+        {error?.toString()}
+      </Text>
       <Heading mt="8px" as="h2" scale="h2">
         Please, go to home page
       </Heading>
