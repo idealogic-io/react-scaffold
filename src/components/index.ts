@@ -30,3 +30,4 @@ export { default as Sidebar } from "./sidebar";
 export { default as ProjectDescription } from "./project-description";
 export { default as WalletButton } from "./wallet-button";
 export { default as SignInButton } from "./sign-in-button";
+export { default as LanguageDropdown } from "./language-dropdown";

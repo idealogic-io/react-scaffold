@@ -1,7 +1,7 @@
 import React from "react";
 import { useAccount } from "wagmi";
 
-import { FlexGap, WalletButton, SignInButton } from "components";
+import { FlexGap, WalletButton, SignInButton, LanguageDropdown } from "components";
 
 import { StyledHeaderContainer, StyledHeaderInternalContainer } from "./styled";
 
@@ -14,6 +14,7 @@ const Header: React.FC = () => {
         <FlexGap height="100%" flexDirection="row-reverse" alignItems="center" gap="16px">
           {isConnected && <SignInButton />}
           <WalletButton />
+          <LanguageDropdown />
         </FlexGap>
       </StyledHeaderInternalContainer>
     </StyledHeaderContainer>
