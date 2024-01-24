@@ -15,7 +15,6 @@ import Navigation from "navigation";
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import debounce from "lodash/debounce";
 import { useSubscriptionEventsHandlersProps } from "./types";
 
 export const useSubscriptionEventsHandlers = ({
@@ -6,6 +7,7 @@ export const useSubscriptionEventsHandlers = ({
   tooltipElement,
   trigger,
   isInitiallyOpened,
+  hideTimeout,
 }: useSubscriptionEventsHandlersProps) => {
   const [visible, setVisible] = useState(isInitiallyOpened);
 
@@ -19,6 +21,7 @@ export const useSubscriptionEventsHandlers = ({
     e.stopPropagation();
     e.preventDefault();
     setVisible(true);
+    debouncedHide.cancel();
   };
 
   const toggleTooltip = (e: Event) => {
@@ -33,30 +36,34 @@ export const useSubscriptionEventsHandlers = ({
     setVisible(!visible);
   };
 
+  const debouncedHide = debounce(e => {
+    hideTooltip(e);
+  }, hideTimeout);
+
   // Trigger = hover
   useEffect(() => {
     if (targetElement === null || trigger !== "hover") return undefined;
 
     targetElement.addEventListener("mouseenter", showTooltip);
-    targetElement.addEventListener("mouseleave", hideTooltip);
+    targetElement.addEventListener("mouseleave", debouncedHide);
 
     return () => {
       targetElement.removeEventListener("mouseenter", showTooltip);
-      targetElement.removeEventListener("mouseleave", showTooltip);
+      targetElement.removeEventListener("mouseleave", debouncedHide);
     };
-  }, [trigger, targetElement, hideTooltip, showTooltip]);
+  }, [trigger, targetElement, debouncedHide, showTooltip]);
 
   // Keep tooltip open when cursor moves from the targetElement to the tooltip
   useEffect(() => {
     if (tooltipElement === null || trigger !== "hover") return undefined;
 
     tooltipElement.addEventListener("mouseenter", showTooltip);
-    tooltipElement.addEventListener("mouseleave", hideTooltip);
+    tooltipElement.addEventListener("mouseleave", debouncedHide);
     return () => {
       tooltipElement.removeEventListener("mouseenter", showTooltip);
-      tooltipElement.removeEventListener("mouseleave", hideTooltip);
+      tooltipElement.removeEventListener("mouseleave", debouncedHide);
     };
-  }, [trigger, tooltipElement, hideTooltip, showTooltip]);
+  }, [trigger, tooltipElement, debouncedHide, showTooltip]);
 
   // Trigger = click
   useEffect(() => {
@@ -93,12 +100,12 @@ export const useSubscriptionEventsHandlers = ({
     if (targetElement === null || trigger !== "focus") return undefined;
 
     targetElement.addEventListener("focus", showTooltip);
-    targetElement.addEventListener("blur", hideTooltip);
+    targetElement.addEventListener("blur", debouncedHide);
     return () => {
       targetElement.removeEventListener("focus", showTooltip);
-      targetElement.removeEventListener("blur", hideTooltip);
+      targetElement.removeEventListener("blur", debouncedHide);
     };
-  }, [trigger, targetElement, showTooltip, hideTooltip]);
+  }, [trigger, targetElement, showTooltip, debouncedHide]);
 
   return { visible, setVisible };
 };

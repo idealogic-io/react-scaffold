@@ -69,7 +69,13 @@ const MultipleSelect: React.FC<MultipleSelectProps> = ({
         />
 
         <StyledButtonsWrapper gap="14px">
-          <Button variant="outline" onClick={() => setVisible(false)}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setSelectedOptions(value);
+              setVisible(false);
+            }}
+          >
             {t("Cancel")}
           </Button>
 

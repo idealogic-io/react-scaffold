@@ -1,4 +1,5 @@
 import { Placement, Padding } from "@popperjs/core";
+import { CSSProperties } from "react";
 
 export interface TooltipRefs {
   targetRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
@@ -17,7 +18,8 @@ export interface TooltipOptions {
   tooltipOffset?: [number, number];
   isEllipsis?: boolean;
   isInitiallyOpened?: boolean;
-  customStyles?: { tooltip?: object; arrow?: object };
+  hideTimeout?: number;
+  customStyles?: { tooltip?: CSSProperties; arrow?: CSSProperties };
 }
 
 export type useSubscriptionEventsHandlersProps = {
@@ -25,4 +27,5 @@ export type useSubscriptionEventsHandlersProps = {
   tooltipElement: HTMLElement | null;
   trigger: TriggerType;
   isInitiallyOpened?: boolean;
+  hideTimeout: number;
 };
