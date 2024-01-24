@@ -24,7 +24,6 @@ import Navigation from "navigation";
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -53,6 +52,7 @@ const Updaters: React.FC = () => {
   useMulticallUpdater();
   useFetchTokensMap();
   useTransactionsUpdater();
+
   return null;
 };
 

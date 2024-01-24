@@ -22,7 +22,9 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
           <DropdownMenuItem
             key={index}
             disabled={value === option}
-            onClick={() => {
+            onClick={e => {
+              e.preventDefault();
+
               onClick(option);
             }}
           >
@@ -30,7 +32,15 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
               {title}
             </Text>
 
-            {isMultiple && values && <Checkbox ml="2px" checked={values.includes(option)} />}
+            {isMultiple && values && (
+              <Checkbox
+                ml="2px"
+                checked={values.includes(option)}
+                onChange={() => {
+                  onClick(option);
+                }}
+              />
+            )}
           </DropdownMenuItem>
         );
       })}

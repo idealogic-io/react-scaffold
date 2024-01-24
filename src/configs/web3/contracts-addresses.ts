@@ -1,4 +1,4 @@
-import { MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from ".";
+import { MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from "configs/web3";
 
 const contractsAddresses = {
   multicall: {
