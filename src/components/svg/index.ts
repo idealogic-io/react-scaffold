@@ -4,6 +4,7 @@ export { default as InfoIcon } from "./icons/Info";
 export { default as SuccessIcon } from "./icons/Success";
 export { default as ErrorIcon } from "./icons/Error";
 export { default as WarningIcon } from "./icons/Warning";
+export { default as WarningV2Icon } from "./icons/WarningV2";
 export { default as CloseIcon } from "./icons/Close";
 export { default as EyeOpenIcon } from "./icons/EyeOpen";
 export { default as EyeClosedIcon } from "./icons/EyeClosed";

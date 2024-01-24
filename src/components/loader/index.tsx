@@ -3,9 +3,11 @@ import React from "react";
 import { Flex } from "components";
 import { SpinnerIcon } from "components/svg";
 
-const Loader: React.FC = () => {
+import { LoaderProps } from "./types";
+
+const Loader: React.FC<LoaderProps> = props => {
   return (
-    <Flex justifyContent="center" alignItems="center" height="100vh">
+    <Flex justifyContent="center" alignItems="center" height="100vh" {...props}>
       <SpinnerIcon width="44px" />
     </Flex>
   );

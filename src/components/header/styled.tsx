@@ -9,6 +9,9 @@ export const StyledHeaderContainer = styled(Flex)`
 `;
 
 export const StyledHeaderInternalContainer = styled(Page)`
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  align-items: center;
   height: 60px;
   width: 100%;
   border-radius: ${({ theme }) => theme.radii.semiMedium};
