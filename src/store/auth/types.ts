@@ -17,6 +17,11 @@ export type LoginUserPayload = {
   password: string;
 };
 
+export type LoginUserWithWalletPayload = {
+  address: string;
+  hash: string;
+};
+
 export type RefreshTokenPayload = {
   refreshToken: string;
 };

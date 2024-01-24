@@ -29,3 +29,4 @@ export { default as Header } from "./header";
 export { default as Sidebar } from "./sidebar";
 export { default as ProjectDescription } from "./project-description";
 export { default as WalletButton } from "./wallet-button";
+export { default as SignInButton } from "./sign-in-button";

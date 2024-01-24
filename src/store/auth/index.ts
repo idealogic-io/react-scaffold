@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { LOCAL_STORAGE_KEYS } from "configs";
-import { loginUser, refreshToken } from "./actions";
+import { loginUser, refreshToken, loginUserWithWallet } from "./actions";
 import { AuthState } from "./types";
 
 const applyToken = (key: string, token: AuthState["token"]) => {
@@ -55,6 +55,35 @@ const authSlice = createSlice({
           state.error = action.payload;
           state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);
           state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
+          state.pending = false;
+        }
+      })
+      // Login user with wallet
+      .addCase(loginUserWithWallet.pending, state => {
+        state.pending = true;
+      })
+      .addCase(loginUserWithWallet.fulfilled, (state, action) => {
+        const { accessToken, refreshToken } = action.payload;
+
+        state.token = applyToken(LOCAL_STORAGE_KEYS.token, accessToken);
+        state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, refreshToken);
+        state.error = null;
+        state.pending = false;
+      })
+      .addCase(loginUserWithWallet.rejected, (state, action) => {
+        // For showing purposes there will not be error path
+        // But in real case you can use something like this one commented code
+        // if (action.payload) {
+        //   state.error = action.payload;
+        //   state.token = applyToken(LOCAL_STORAGE_KEYS.token, null);
+        //   state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, null);
+        //   state.pending = false;
+        // }
+
+        if (action.payload) {
+          state.token = applyToken(LOCAL_STORAGE_KEYS.token, "MY_SWEET_TOKEN");
+          state.refreshToken = applyToken(LOCAL_STORAGE_KEYS.refreshToken, "MY_SWEET_TOKEN_REFRESH");
+          state.error = null;
           state.pending = false;
         }
       })

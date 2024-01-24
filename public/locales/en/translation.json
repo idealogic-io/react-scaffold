@@ -13,5 +13,9 @@
   "WalletButton": {
     "connect": "Connect Wallet",
     "unsupported": "Unsupported Network"
+  },
+
+  "SignInButton": {
+    "signIn": "Sign In"
   }
 }

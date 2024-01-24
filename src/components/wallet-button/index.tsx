@@ -20,19 +20,15 @@ const WalletButton: React.FC = () => {
         return (
           <FlexGap flexDirection="row" gap="16px" alignItems="center">
             {!ready && (
-              <Button scale="md">
+              <Button>
                 <Loader width="16px" />
               </Button>
             )}
 
-            {ready && !connected && (
-              <Button scale="md" onClick={openConnectModal}>
-                {t("connect")}
-              </Button>
-            )}
+            {ready && !connected && <Button onClick={openConnectModal}>{t("connect")}</Button>}
 
             {ready && connected && (
-              <Button scale="md" onClick={openChainModal}>
+              <Button onClick={openChainModal}>
                 {chain.hasIcon && chain.iconUrl && !chain.unsupported ? (
                   <Image src={chain.iconUrl} aspectRatio={1} width="16px" />
                 ) : (
@@ -44,9 +40,7 @@ const WalletButton: React.FC = () => {
             {ready && connected && chain.unsupported && <Text textScale="body3">{t("unsupported")}</Text>}
 
             {ready && connected && !chain.unsupported && (
-              <Button scale="md" onClick={openAccountModal}>
-                {truncateHash(account.address, 4, 4)}
-              </Button>
+              <Button onClick={openAccountModal}>{truncateHash(account.address, 4, 4)}</Button>
             )}
           </FlexGap>
         );

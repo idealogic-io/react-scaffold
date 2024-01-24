@@ -7,3 +7,4 @@ export { default as useCopyContent } from "./use-copy-content";
 export { useInterval } from "./use-interval";
 export { useIsMounted } from "./use-is-mounted";
 export { useTimer } from "./use-timer";
+export { useLoginWithWallet } from "./use-login-with-wallet";
