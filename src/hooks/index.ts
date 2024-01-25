@@ -8,3 +8,4 @@ export { useInterval } from "./use-interval";
 export { useIsMounted } from "./use-is-mounted";
 export { useTimer } from "./use-timer";
 export { useLoginWithWallet } from "./use-login-with-wallet";
+export { useLogOutWithoutConnection } from "./use-logout-without-connection";

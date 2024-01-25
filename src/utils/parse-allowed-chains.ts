@@ -1,8 +1,7 @@
-import * as wagmiChains from "wagmi/chains";
 import { type Chain } from "wagmi";
 
-export const parseAllowedChains = (chainsIds: number[]) => {
-  const wagmiChainsValues = Object.values(wagmiChains);
+export const parseAllowedChains = (chainsIds: number[], chains: { [chainName: string]: Chain }) => {
+  const wagmiChainsValues = Object.values(chains);
 
   const allowedChains: Chain[] = [];
   chainsIds.forEach(id => {

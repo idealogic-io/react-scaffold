@@ -2,13 +2,21 @@ import React, { PropsWithChildren } from "react";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiConfig } from "wagmi";
 
-import { chains, wagmiConfig } from "configs";
+import { useLogOutWithoutConnection } from "hooks";
+
+import { chains } from "configs/chains";
+import { wagmiConfig } from "configs/connectors";
+
+const Web3Listeners: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+  useLogOutWithoutConnection();
+  return <>{children}</>;
+};
 
 const Web3Provider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains} initialChain={chains[0]}>
-        {children}
+        <Web3Listeners>{children}</Web3Listeners>
       </RainbowKitProvider>
     </WagmiConfig>
   );

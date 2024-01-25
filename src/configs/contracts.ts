@@ -1,4 +1,4 @@
-import { CHAINS_IDS } from "configs";
+import { CHAINS_IDS } from "configs/chains";
 
 import scaffoldTokenAbi from "./abi/scaffoldToken.json";
 import rewardTokenAbi from "./abi/rewardToken.json";

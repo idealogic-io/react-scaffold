@@ -1,7 +1,7 @@
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { createConfig } from "wagmi";
 
-import { chains, publicClient } from "configs";
+import { chains, publicClient } from "./chains";
 
 const { connectors } = getDefaultWallets({
   appName: "Scaffold",
