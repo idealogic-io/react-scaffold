@@ -3,6 +3,8 @@
   "Project scaffold is in build progress": "Project scaffold is in build progress",
   "Home": "Home",
   "Not found Page": "Not found Page",
+  "Landing": "Landing",
+  "Contracts Interactions": "Contracts Interactions",
 
   "ProjectDescription": {
     "article1": "This branch was forked from the basic web3 scaffold with the aim of creating a template for even faster creation and deployment of uncomplicated DApp applications. The project utilizes a set of libraries including Rainbow-kit, wagmi, and view, which \"out-of-the-box\" fully take over the management and handling of all issues related to connecting the application to the web3 network, reading and writing data in the web3 network, multicalls, and many other functions.",
@@ -17,5 +19,10 @@
 
   "SignInButton": {
     "signIn": "Sign In"
+  },
+
+  "ContractReadExample": {
+    "tokenBalance": "Your balance of {{tokenName}} token: <bold>{{balance}} {{tokenSymbol}}</bold>",
+    "article1": "In this section, we've covered the most basic point data retrieval from the blockchain and smart contracts using hooks provided by Wagmi. It's absolutely nothing complicated. All the details about working with the data reading hook from the smart contract are well documented in the Wagmi documentation (see the link on the landing page). It's worth paying attention to the \"watch\" parameter, which allows for real-time data updates as new blocks are added to the network. If real-time updating is not necessary, this parameter can be omitted for more optimal resource consumption. Also, it's important to note that all numeric data retrieved from the smart contract, which you plan to use in any calculations, is highly recommended to be wrapped in Bignumber.js for subsequent ease of use."
   }
 }

@@ -19,7 +19,14 @@ export const getCustomMeta = (path: string, t: TFunction) => {
     case ROUTES.home: {
       return {
         ...getDefaultMeta(t),
-        title: t("Home"),
+        title: t("Landing"),
+      };
+    }
+
+    case ROUTES.contractInteraction: {
+      return {
+        ...getDefaultMeta(t),
+        title: t("Contracts Interactions"),
       };
     }
 
