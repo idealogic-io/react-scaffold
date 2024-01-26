@@ -7,6 +7,10 @@ BigNumber.prototype.toFormatExtended = function (decimalPlaces: number, rounding
   return this.toFormat(decimalPlaces, roundingMode).replace(REGEX.zerosAfterDot, "");
 };
 
-BigNumber.prototype.decimalExponentFormat = function (power: BigNumber | string | number, increase: boolean = true) {
-  return increase ? this.multipliedBy(BigNumber(10).pow(power)) : this.dividedBy(BigNumber(10).pow(power));
+BigNumber.prototype.decimalExponentFormat = function (power: BigNumber | string | number) {
+  return this.dividedBy(BigNumber(10).pow(power));
+};
+
+BigNumber.prototype.decimalExponentParse = function (power: BigNumber | string | number) {
+  return this.multipliedBy(BigNumber(10).pow(power));
 };

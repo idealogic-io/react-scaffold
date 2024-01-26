@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { useContractWrite } from "hooks";
 import { FlexGap, Button, Link, Text } from "components";
@@ -16,7 +16,9 @@ const ContractWriteExample: React.FC = () => {
 
   return (
     <FlexGap flexDirection="column" gap="16px">
-      <Text textAlign="justify">{t("article1")}</Text>
+      <Text textAlign="justify">
+        <Trans t={t} i18nKey="article1" components={{ bold: <strong /> }} />
+      </Text>
       <FlexGap gap="16px">
         <Button onClick={write} isLoading={isWaiting} disabled={!isSuccess}>
           {t("mint")}

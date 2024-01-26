@@ -24,19 +24,19 @@ export const useInputHandlerWithMax = (
     if (regex.test(valueFromInput)) {
       if (valueFromInput.startsWith(".")) {
         setInputValue("0" + valueFromInput);
-        balanceCheck(convertToBN("0" + valueFromInput).decimalExponentFormat(decimals, true));
+        balanceCheck(convertToBN("0" + valueFromInput).decimalExponentParse(decimals));
       } else if (valueFromInput === "" || valueFromInput === " ") {
         setInputValue("");
         balanceCheck(convertToBN("0"));
       } else {
         setInputValue(valueFromInput);
-        balanceCheck(convertToBN(valueFromInput).decimalExponentFormat(decimals, true));
+        balanceCheck(convertToBN(valueFromInput).decimalExponentParse(decimals));
       }
     }
   };
 
   const maxHandler = () => {
-    setInputValue(balance.decimalExponentFormat(decimals, false).toFormatExtended(decimals));
+    setInputValue(balance.decimalExponentFormat(decimals).toFormatExtended(decimals));
     setValue(balance.toString());
   };
 

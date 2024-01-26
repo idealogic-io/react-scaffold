@@ -28,7 +28,7 @@ const ContractReadExample: React.FC = () => {
     <FlexGap flexDirection="column" gap="16px">
       <Text textAlign="justify">{t("article1")}</Text>
       <Column>
-        <Text display="flex" flexDirection="row">
+        <Text>
           <Trans
             t={t}
             i18nKey="tokenBalance"
@@ -37,10 +37,10 @@ const ContractReadExample: React.FC = () => {
               tokenSymbol: chain?.nativeCurrency.symbol ?? "",
               balance: BigNumber(nativeTokenBalance?.formatted ?? "0").toFormatExtended(4),
             }}
-            components={{ bold: <Text $fontWeight="bold" ml="8px" /> }}
+            components={{ bold: <strong /> }}
           />
         </Text>
-        <Text display="flex" flexDirection="row">
+        <Text>
           <Trans
             t={t}
             i18nKey="tokenBalance"
@@ -48,10 +48,10 @@ const ContractReadExample: React.FC = () => {
               tokenName: CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.name,
               tokenSymbol: CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.symbol,
               balance: BigNumber(scaffoldTokenBalance?.toString() ?? 0)
-                .decimalExponentFormat(CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.decimals ?? 0, false)
+                .decimalExponentFormat(CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.decimals ?? 0)
                 .toFormatExtended(4),
             }}
-            components={{ bold: <Text $fontWeight="bold" ml="8px" /> }}
+            components={{ bold: <strong /> }}
           />
         </Text>
       </Column>

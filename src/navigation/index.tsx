@@ -5,7 +5,7 @@ import { DefaultOutlet, NotFoundPage } from "components";
 import { RequireAuth } from "./components";
 import { ROUTES } from "./routes";
 
-import { LandingPage, ContractInteractionPage } from "pages";
+import { LandingPage, ContractInteractionPage, ContractInteractionLvl2Page } from "pages";
 
 const Navigation: React.FC = () => {
   return (
@@ -17,6 +17,14 @@ const Navigation: React.FC = () => {
           element={
             <RequireAuth>
               <ContractInteractionPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={ROUTES.contractInteractionLvl2}
+          element={
+            <RequireAuth>
+              <ContractInteractionLvl2Page />
             </RequireAuth>
           }
         />
