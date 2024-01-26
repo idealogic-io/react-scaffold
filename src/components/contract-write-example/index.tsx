@@ -44,7 +44,7 @@ const ContractWriteExample: React.FC = () => {
       writeAsync()
         .then(trxData => {
           setTrxHash(trxData.hash);
-          setTrxLink(chain?.rpcUrls[0] + "/tx/" + trxData.hash);
+          setTrxLink(chain?.blockExplorers?.default.url + "/tx/" + trxData.hash);
         })
         .catch(error => {
           setIsWaiting(false);
@@ -60,7 +60,11 @@ const ContractWriteExample: React.FC = () => {
         <Button onClick={mintHandler} isLoading={isWaiting} disabled={!isSuccess}>
           {t("mint")}
         </Button>
-        {trxLink && <Link href={trxLink} external></Link>}
+        {trxLink && (
+          <Link href={trxLink} external>
+            {t("scanner")}
+          </Link>
+        )}
       </FlexGap>
     </FlexGap>
   );
