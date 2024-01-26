@@ -65,3 +65,12 @@ export const useInputHandlerWithMax = (
 
   return { onInputChange, value, inputValue, shouldApprove, maxHandler, reset };
 };
+
+// Example usage with <input/>
+//
+// <input
+// inputMode="decimal"
+// pattern="^(?!\.)[0-9]*[.,]?[0-9]*$"
+// value={inputValue}
+// onChange={onInputChange}
+// />

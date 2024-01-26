@@ -48,7 +48,7 @@ const ContractReadExample: React.FC = () => {
               tokenName: CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.name,
               tokenSymbol: CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.symbol,
               balance: BigNumber(scaffoldTokenBalance?.toString() ?? 0)
-                .dividedBy(BigNumber(10).pow(CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.decimals ?? 0))
+                .decimalExponentFormat(CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.decimals ?? 0, false)
                 .toFormatExtended(4),
             }}
             components={{ bold: <Text $fontWeight="bold" ml="8px" /> }}
