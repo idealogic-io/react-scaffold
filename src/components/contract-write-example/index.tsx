@@ -11,7 +11,7 @@ const ContractWriteExample: React.FC = () => {
   const { t } = useTranslation("translation", { keyPrefix: "ContractWriteExample" });
   const { write, isWaiting, isSuccess, trxLink } = useContractWrite({
     ...CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.config,
-    functionName: "adminMint",
+    functionName: "mint",
   });
 
   return (

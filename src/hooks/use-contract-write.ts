@@ -23,6 +23,7 @@ export const useContractWrite = <
   const { config, isSuccess } = usePrepareContractWrite({
     ...data,
   });
+
   const preparedConfig = config as unknown as UseContractWriteConfig<TAbi, TFunctionName, TMode>;
 
   const { writeAsync } = useWagmiWrite(preparedConfig);
