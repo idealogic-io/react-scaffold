@@ -74,3 +74,5 @@ export const useInputHandlerWithMax = (
 // value={inputValue}
 // onChange={onInputChange}
 // />
+//
+// contractWriteFunc({args: [value]})

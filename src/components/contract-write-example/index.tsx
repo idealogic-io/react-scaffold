@@ -16,7 +16,7 @@ const ContractWriteExample: React.FC = () => {
 
   return (
     <FlexGap flexDirection="column" gap="16px">
-      <Text>{t("article1")}</Text>
+      <Text textAlign="justify">{t("article1")}</Text>
       <FlexGap gap="16px">
         <Button onClick={write} isLoading={isWaiting} disabled={!isSuccess}>
           {t("mint")}

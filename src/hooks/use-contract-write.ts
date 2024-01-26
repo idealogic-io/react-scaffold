@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNetwork, usePrepareContractWrite, useContractWrite as useWagmiWrite, useWaitForTransaction } from "wagmi";
 
 import type { UsePrepareContractWriteConfig, UseContractWriteConfig } from "wagmi";
 import type { WriteContractMode } from "@wagmi/core";
+import { type TransactionExecutionError } from "viem";
 import type { Abi } from "abitype";
 
 export const useContractWrite = <
@@ -24,24 +25,22 @@ export const useContractWrite = <
     ...data,
   });
 
-  const preparedConfig = config as unknown as UseContractWriteConfig<TAbi, TFunctionName, TMode>;
+  const { writeAsync } = useWagmiWrite(config as unknown as UseContractWriteConfig<TAbi, TFunctionName, TMode>);
 
-  const { writeAsync } = useWagmiWrite(preparedConfig);
-  const { isSuccess: trxSuccess, isError: trxError } = useWaitForTransaction({
+  useWaitForTransaction({
+    chainId: data.chainId,
     hash: trxHash,
+    onSuccess() {
+      toast.success("Transaction successful");
+      setIsWaiting(false);
+      setTrxHash(undefined);
+    },
+    onError(error) {
+      toast.error(error?.message ?? "Transaction error");
+      setIsWaiting(false);
+      setTrxHash(undefined);
+    },
   });
-
-  useEffect(() => {
-    if (trxSuccess) {
-      toast.success("Successfully minted 100 SCT");
-      setIsWaiting(false);
-    }
-
-    if (trxError) {
-      toast.error("Transaction error");
-      setIsWaiting(false);
-    }
-  }, [trxSuccess, trxError]);
 
   const writeHandler = () => {
     if (isSuccess && writeAsync) {
@@ -52,9 +51,9 @@ export const useContractWrite = <
           setTrxHash(trxData.hash);
           setTrxLink(chain?.blockExplorers?.default.url + "/tx/" + trxData.hash);
         })
-        .catch(error => {
+        .catch((error: TransactionExecutionError) => {
           setIsWaiting(false);
-          toast.error(error.message);
+          toast.error(error?.shortMessage ?? "Transaction error");
         });
     }
   };
