@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import { Header, Sidebar, Column } from "components";
+import { Header, Sidebar, Column, Box } from "components";
 
 import { StyledOutletContainer } from "./styled";
 
@@ -11,7 +11,9 @@ const DefaultOutlet: React.FC = () => {
       <Sidebar />
       <Column width="100%">
         <Header />
-        <Outlet />
+        <Box overflowY="scroll" marginTop="50px" marginBottom="50px">
+          <Outlet />
+        </Box>
       </Column>
     </StyledOutletContainer>
   );

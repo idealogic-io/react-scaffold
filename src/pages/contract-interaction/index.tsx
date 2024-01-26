@@ -1,14 +1,15 @@
 import React from "react";
 
-import { Page, FlexGap, ContractReadExample } from "components";
+import { Page, FlexGap, ContractReadExample, ContractWriteExample } from "components";
 
 import { ROUTES } from "navigation/routes";
 
 const ContractInteractionPage: React.FC = () => {
   return (
     <Page id={ROUTES.contractInteraction}>
-      <FlexGap flexDirection="column" gap="24px" marginTop="50px">
+      <FlexGap flexDirection="column" gap="24px">
         <ContractReadExample />
+        <ContractWriteExample />
       </FlexGap>
     </Page>
   );

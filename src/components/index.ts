@@ -32,3 +32,4 @@ export { default as WalletButton } from "./wallet-button";
 export { default as SignInButton } from "./sign-in-button";
 export { default as LanguageDropdown } from "./language-dropdown";
 export { default as ContractReadExample } from "./contract-read-example";
+export { default as ContractWriteExample } from "./contract-write-example";
