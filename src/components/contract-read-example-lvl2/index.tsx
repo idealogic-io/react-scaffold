@@ -10,19 +10,40 @@ import { CONTRACTS } from "configs/contracts";
 const ContractReadExampleLvl2: React.FC = () => {
   const { t } = useTranslation("translation", { keyPrefix: "ContractReadExample" });
 
-  // eslint-disable-next-line
   const { data } = useMulticall({
     multicallConfig: {
       chainId: CHAINS_IDS.BSC_TEST,
       contracts: [
         {
-          ...CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.config,
-          functionName: "balanceOf",
-          args: ["0xc3f4929ECC1bBd794aD46089B8C1e9777c11Ea4D"],
+          ...CONTRACTS[CHAINS_IDS.BSC_TEST].testData.config,
+          functionName: "getTestData",
+        },
+        {
+          ...CONTRACTS[CHAINS_IDS.BSC_TEST].testData.config,
+          functionName: "getTestArrayData",
+        },
+        {
+          ...CONTRACTS[CHAINS_IDS.BSC_TEST].testData.config,
+          functionName: "getTestAmountWithRequire",
         },
       ],
     },
   });
+
+  if (data) {
+    const firstData = data[2];
+    if (firstData) {
+      // eslint-disable-next-line
+      console.log(firstData);
+    }
+
+    const secondData = data[0];
+
+    if (secondData) {
+      // eslint-disable-next-line
+      console.log(secondData.testHash);
+    }
+  }
 
   return (
     <FlexGap flexDirection="column" gap="16px">

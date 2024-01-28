@@ -3,6 +3,7 @@ import { CHAINS_IDS } from "configs/chains";
 import { SCAFFOLD_ABI } from "./abi/scaffoldToken";
 import { REWARD_ABI } from "./abi/rewardToken";
 import { STAKING_ABI } from "./abi/staking";
+import { TEST_DATA_ABI } from "./abi/testData";
 
 export type Contract<TAbi extends readonly unknown[]> = {
   config: {
@@ -41,5 +42,12 @@ export const CONTRACTS = {
         abi: STAKING_ABI,
       },
     } as Contract<typeof STAKING_ABI>,
+    testData: {
+      config: {
+        address: "0x4c19aBC335C8d33fB49dF976E13FfD40a985EC7E",
+        chainId: CHAINS_IDS.BSC_TEST,
+        abi: TEST_DATA_ABI,
+      },
+    } as Contract<typeof TEST_DATA_ABI>,
   },
 } as const;

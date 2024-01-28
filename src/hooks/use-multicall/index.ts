@@ -1,8 +1,9 @@
+/* cSpell:disable */
 import useSWR from "swr";
 import { multicall } from "@wagmi/core";
 
 import type { ContractFunctionConfig } from "viem";
-import type { UseMulticallParams } from "./types";
+import type { UseMulticallParams, MulticallResults } from "./types";
 
 export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllowFailure extends boolean = true>({
   multicallConfig,
@@ -21,7 +22,29 @@ export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllow
   );
 
   const executeMulticall = async () => {
-    return await multicall(multicallConfig);
+    const fetchedData = await multicall({
+      ...multicallConfig,
+      allowFailure: true,
+    });
+
+    const resultArray = new Array(multicallConfig.contracts.length).fill(undefined);
+
+    if (
+      fetchedData &&
+      Array.isArray(fetchedData) &&
+      fetchedData.length > 0 &&
+      fetchedData.length === resultArray.length
+    ) {
+      fetchedData.forEach((result, index) => {
+        if (result && result.status === "success") {
+          resultArray[index] = result.result;
+        } else {
+          resultArray[index] = undefined;
+        }
+      });
+    }
+
+    return resultArray as MulticallResults<TContracts>;
   };
 
   return {
@@ -30,3 +53,5 @@ export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllow
     refresh: mutate,
   };
 };
+
+/* cSpell:enable */
