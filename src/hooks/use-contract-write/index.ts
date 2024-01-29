@@ -2,21 +2,19 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNetwork, usePrepareContractWrite, useContractWrite as useWagmiWrite, useWaitForTransaction } from "wagmi";
 
-import type { UseContractWriteConfig } from "wagmi";
-import type { WriteContractMode } from "@wagmi/core";
+import type { UseContractWriteConfig, UsePrepareContractWriteConfig } from "wagmi";
 import { type TransactionExecutionError } from "viem";
 import type { Abi } from "abitype";
-import type { UseContractWriteHookParams } from "./types";
+import type { UseContractWriteHookConfigs } from "./types";
 
 export const useContractWrite = <
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TChainId extends number,
-  TMode extends WriteContractMode = undefined,
->({
-  data,
-  configs,
-}: UseContractWriteHookParams<TAbi, TFunctionName, TChainId>) => {
+>(
+  data: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId>,
+  configs?: UseContractWriteHookConfigs,
+) => {
   const { updateCallback, successCallback, errorCallback } = configs ?? {};
 
   const [trxHash, setTrxHash] = useState<`0x${string}` | undefined>(undefined);
@@ -29,7 +27,7 @@ export const useContractWrite = <
     ...data,
   });
 
-  const { writeAsync } = useWagmiWrite(config as unknown as UseContractWriteConfig<TAbi, TFunctionName, TMode>);
+  const { writeAsync } = useWagmiWrite(config as UseContractWriteConfig<TAbi, TFunctionName, "prepared">);
 
   useWaitForTransaction({
     chainId: data.chainId,

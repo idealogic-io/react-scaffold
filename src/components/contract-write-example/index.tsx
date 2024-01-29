@@ -10,7 +10,8 @@ import { CONTRACTS } from "configs/contracts";
 const ContractWriteExample: React.FC = () => {
   const { t } = useTranslation("translation", { keyPrefix: "ContractWriteExample" });
   const { write, isWaiting, isSuccess, trxLink } = useContractWrite({
-    data: { ...CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.config, functionName: "mint" },
+    ...CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.config,
+    functionName: "mint",
   });
 
   return (

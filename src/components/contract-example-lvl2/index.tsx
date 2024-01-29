@@ -2,6 +2,7 @@ import React from "react";
 import BigNumber from "bignumber.js";
 import { useAccount } from "wagmi";
 import { useTranslation } from "react-i18next";
+// import { zeroAddress } from "viem";
 
 import { useMulticall, useInputHandlerWithMax, useContractWrite } from "hooks";
 import { FlexGap, Text, Button, InputNumeric } from "components";
@@ -13,9 +14,9 @@ const ContractExampleLvl2: React.FC = () => {
   const { t } = useTranslation("translation", { keyPrefix: "ContractExampleLvl2" });
   const { address } = useAccount();
 
-  const { data, refresh: refreshMulticall } = useMulticall({
-    multicallConfig: address
-      ? {
+  const multicallResult = address
+    ? useMulticall(
+        {
           chainId: CHAINS_IDS.BSC_TEST,
           contracts: [
             {
@@ -39,13 +40,14 @@ const ContractExampleLvl2: React.FC = () => {
               args: [address],
             },
           ],
-        }
-      : undefined,
-    configs: {
-      refreshInterval: 30_000,
-    },
-  });
+        },
+        {
+          refreshInterval: 30_000,
+        },
+      )
+    : undefined;
 
+  const { data, refresh: refreshMulticall } = multicallResult || {};
   const [balance, allowance, stakersData, reward] = data || [];
 
   const { onInputChange, value, inputValue, shouldApprove, maxHandler, reset } = useInputHandlerWithMax(
@@ -58,57 +60,57 @@ const ContractExampleLvl2: React.FC = () => {
     write: claim,
     isWaiting: isClaimWaiting,
     isSuccess: isClaimAvailable,
-  } = useContractWrite({
-    data: {
+  } = useContractWrite(
+    {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config,
       functionName: "claim",
     },
-    configs: { updateCallback: refreshMulticall },
-  });
+    { updateCallback: refreshMulticall },
+  );
 
   const {
     write: deposit,
     isWaiting: isDepositWaiting,
     isSuccess: isDepositAvailable,
-  } = useContractWrite({
-    data: {
+  } = useContractWrite(
+    {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config,
       functionName: "deposit",
       args: [BigInt(value ?? 0)],
     },
-    configs: {
+    {
       updateCallback: refreshMulticall,
       successCallback: reset,
     },
-  });
+  );
 
   const {
     write: approve,
     isWaiting: isApproveWaiting,
     isSuccess: isApproveAvailable,
-  } = useContractWrite({
-    data: {
+  } = useContractWrite(
+    {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.config,
       functionName: "approve",
       args: [CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config.address, BigInt(value ?? 0)],
     },
-    configs: { updateCallback: refreshMulticall },
-  });
+    { updateCallback: refreshMulticall },
+  );
 
   const {
     write: unstake,
     isWaiting: isUnstakeWaiting,
     isSuccess: isUnstakeAvailable,
-  } = useContractWrite({
-    data: {
+  } = useContractWrite(
+    {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config,
       functionName: "withdraw",
     },
-    configs: {
+    {
       updateCallback: refreshMulticall,
       successCallback: reset,
     },
-  });
+  );
 
   return (
     <FlexGap flexDirection="column" gap="16px">
@@ -151,11 +153,13 @@ const ContractExampleLvl2: React.FC = () => {
           {t("approve")}
         </Button>
       )}
+
       {!shouldApprove && (
         <Button onClick={deposit} isLoading={isDepositWaiting} disabled={!isDepositAvailable}>
           {t("stake")}
         </Button>
       )}
+
       <Button onClick={unstake} isLoading={isUnstakeWaiting} disabled={!isUnstakeAvailable}>
         {t("unstake", {
           amount: BigNumber(stakersData?.amount?.toString() ?? 0)
@@ -164,6 +168,7 @@ const ContractExampleLvl2: React.FC = () => {
           tokenName: CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.symbol,
         })}
       </Button>
+
       <Text textAlign="justify">{t("article1")}</Text>
     </FlexGap>
   );

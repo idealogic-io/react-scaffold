@@ -2,13 +2,14 @@
 import useSWR from "swr";
 import { multicall } from "@wagmi/core";
 
+import type { MulticallConfig } from "@wagmi/core";
 import type { ContractFunctionConfig } from "viem";
-import type { UseMulticallParams, MulticallResults } from "./types";
+import type { UseMulticallConfig, MulticallResults } from "./types";
 
-export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllowFailure extends boolean = true>({
-  multicallConfig,
-  configs,
-}: UseMulticallParams<TContracts, TAllowFailure>) => {
+export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllowFailure extends boolean = true>(
+  multicallConfig?: MulticallConfig<TContracts, TAllowFailure>,
+  configs?: UseMulticallConfig,
+) => {
   const { refreshInterval = 0, revalidateOnFocus = false } = configs ?? {};
 
   const { data, isLoading, isValidating, mutate } = useSWR(
