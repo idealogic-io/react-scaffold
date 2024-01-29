@@ -2,20 +2,23 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNetwork, usePrepareContractWrite, useContractWrite as useWagmiWrite, useWaitForTransaction } from "wagmi";
 
-import type { UsePrepareContractWriteConfig, UseContractWriteConfig } from "wagmi";
+import type { UseContractWriteConfig } from "wagmi";
 import type { WriteContractMode } from "@wagmi/core";
 import { type TransactionExecutionError } from "viem";
 import type { Abi } from "abitype";
+import type { UseContractWriteHookParams } from "./types";
 
 export const useContractWrite = <
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TChainId extends number,
   TMode extends WriteContractMode = undefined,
->(
-  data: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId>,
-  updateCallback?: () => void,
-) => {
+>({
+  data,
+  configs,
+}: UseContractWriteHookParams<TAbi, TFunctionName, TChainId>) => {
+  const { updateCallback, successCallback, errorCallback } = configs ?? {};
+
   const [trxHash, setTrxHash] = useState<`0x${string}` | undefined>(undefined);
   const [trxLink, setTrxLink] = useState<string | undefined>(undefined);
   const [isWaiting, setIsWaiting] = useState(false);
@@ -35,6 +38,9 @@ export const useContractWrite = <
       toast.success("Transaction successful");
       setIsWaiting(false);
       setTrxHash(undefined);
+      if (successCallback) {
+        successCallback();
+      }
       if (updateCallback) {
         updateCallback();
       }
@@ -43,6 +49,9 @@ export const useContractWrite = <
       toast.error(error?.message ?? "Transaction error");
       setIsWaiting(false);
       setTrxHash(undefined);
+      if (errorCallback) {
+        errorCallback();
+      }
       if (updateCallback) {
         updateCallback();
       }
@@ -60,6 +69,9 @@ export const useContractWrite = <
         })
         .catch((error: TransactionExecutionError) => {
           setIsWaiting(false);
+          if (errorCallback) {
+            errorCallback();
+          }
           if (updateCallback) {
             updateCallback();
           }

@@ -34,16 +34,13 @@ export const useInputHandlerWithMax = (
   };
 
   const maxHandler = () => {
+    allowanceCheck(balance);
     setInputValue(balance.decimalExponentFormat(decimals).toFormatExtended(decimals));
     setValue(balance.toString());
   };
 
   const allowanceCheck = (value: BigNumber) => {
-    // eslint-disable-next-line
-    console.log("allowance", value.toString(), allowance ? allowance.toString() : allowance);
     if (allowance) {
-      // eslint-disable-next-line
-      console.log("allowance check");
       setShouldApprove(value.isGreaterThan(allowance));
     } else {
       setShouldApprove(false);
@@ -51,10 +48,10 @@ export const useInputHandlerWithMax = (
   };
 
   const balanceCheck = (value: BigNumber) => {
-    allowanceCheck(value);
     if (value.isGreaterThan(balance)) {
       maxHandler();
     } else {
+      allowanceCheck(value);
       setValue(value.toString());
     }
   };

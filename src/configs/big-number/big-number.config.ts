@@ -7,7 +7,7 @@ BigNumber.config({
     // decimal separator
     decimalSeparator: ".",
     // grouping separator of the integer part
-    groupSeparator: ",",
+    groupSeparator: "",
     // primary grouping size of the integer part
     groupSize: 3,
     // secondary grouping size of the integer part

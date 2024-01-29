@@ -5,6 +5,7 @@
   "Not found Page": "Not found Page",
   "Landing": "Landing",
   "Contracts Interactions": "Contracts Interactions",
+  "Contracts Interactions lvl.2": "Contracts Interactions Lvl2",
 
   "ProjectDescription": {
     "article1": "This branch was forked from the basic web3 scaffold with the aim of creating a template for even faster creation and deployment of uncomplicated DApp applications. The project utilizes a set of libraries including Rainbow-kit, wagmi, and view, which \"out-of-the-box\" fully take over the management and handling of all issues related to connecting the application to the web3 network, reading and writing data in the web3 network, multicalls, and many other functions.",
@@ -41,6 +42,7 @@
     "approve": "Approve",
     "stake": "Stake",
     "stakeAmount": "Stake amount",
+    "unstake": "Unstake my {{amount}} {{tokenName}}",
     "article1": "In this section, an example of a more complex but more realistic scenario for reading and writing data in the blockchain is demonstrated. It showcases interaction with a staking smart contract, where a user can deposit funds and earn rewards over time. For data retrieval, a multicall was used, allowing the consolidation of all the required blockchain get-requests into a single request. It's important to note that these requests can target entirely different smart contracts, with the main condition being that they all reside on the same network. Otherwise, a separate multicall instance is required for each network. For writing data, the same hook as in the previous section was used, but this time, an additional hook for handling input data and a \"Max\" button was also utilized. Moreover, this hook helps to differentiate between two scenarios: when an approval is needed (see Allowance in ERC-20) and when it isn't."
   }
 }

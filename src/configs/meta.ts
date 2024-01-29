@@ -30,6 +30,13 @@ export const getCustomMeta = (path: string, t: TFunction) => {
       };
     }
 
+    case ROUTES.contractInteractionLvl2: {
+      return {
+        ...getDefaultMeta(t),
+        title: t("Contracts Interactions lvl.2"),
+      };
+    }
+
     default:
       return {
         ...getDefaultMeta(t),

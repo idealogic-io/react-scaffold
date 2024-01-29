@@ -58,42 +58,57 @@ const ContractExampleLvl2: React.FC = () => {
     write: claim,
     isWaiting: isClaimWaiting,
     isSuccess: isClaimAvailable,
-  } = useContractWrite(
-    {
+  } = useContractWrite({
+    data: {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config,
       functionName: "claim",
     },
-    refreshMulticall,
-  );
+    configs: { updateCallback: refreshMulticall },
+  });
 
   const {
     write: deposit,
     isWaiting: isDepositWaiting,
     isSuccess: isDepositAvailable,
-  } = useContractWrite(
-    {
+  } = useContractWrite({
+    data: {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config,
       functionName: "deposit",
       args: [BigInt(value ?? 0)],
     },
-    () => {
-      refreshMulticall();
-      reset();
+    configs: {
+      updateCallback: refreshMulticall,
+      successCallback: reset,
     },
-  );
+  });
 
   const {
     write: approve,
     isWaiting: isApproveWaiting,
     isSuccess: isApproveAvailable,
-  } = useContractWrite(
-    {
+  } = useContractWrite({
+    data: {
       ...CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.config,
       functionName: "approve",
       args: [CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config.address, BigInt(value ?? 0)],
     },
-    refreshMulticall,
-  );
+    configs: { updateCallback: refreshMulticall },
+  });
+
+  const {
+    write: unstake,
+    isWaiting: isUnstakeWaiting,
+    isSuccess: isUnstakeAvailable,
+  } = useContractWrite({
+    data: {
+      ...CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config,
+      functionName: "withdraw",
+    },
+    configs: {
+      updateCallback: refreshMulticall,
+      successCallback: reset,
+    },
+  });
 
   return (
     <FlexGap flexDirection="column" gap="16px">
@@ -141,6 +156,14 @@ const ContractExampleLvl2: React.FC = () => {
           {t("stake")}
         </Button>
       )}
+      <Button onClick={unstake} isLoading={isUnstakeWaiting} disabled={!isUnstakeAvailable}>
+        {t("unstake", {
+          amount: BigNumber(stakersData?.amount?.toString() ?? 0)
+            .decimalExponentFormat(CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.decimals ?? 18)
+            .toFormat(0),
+          tokenName: CONTRACTS[CHAINS_IDS.BSC_TEST].scaffoldToken.symbol,
+        })}
+      </Button>
       <Text textAlign="justify">{t("article1")}</Text>
     </FlexGap>
   );
