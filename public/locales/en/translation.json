@@ -10,7 +10,11 @@
   "ProjectDescription": {
     "article1": "This branch was forked from the basic web3 scaffold with the aim of creating a template for even faster creation and deployment of uncomplicated DApp applications. The project utilizes a set of libraries including Rainbow-kit, wagmi, and view, which \"out-of-the-box\" fully take over the management and handling of all issues related to connecting the application to the web3 network, reading and writing data in the web3 network, multicalls, and many other functions.",
     "article2": "One downside of this approach is that it's quite challenging to customize the blockchain interaction logic if the project requires any non-standard solutions in this regard, as all the \"under-the-hood\" logic is handled by the libraries. Therefore, for creating large and complex DApps that require equally complex and non-standard solutions, using this scaffold is not recommended due to customization difficulties.",
-    "article3": "This scaffold is perfectly suited for small DApps with straightforward logic and allows for significantly reducing the time-to-market and the development time."
+    "article3": "This scaffold is perfectly suited for small DApps with straightforward logic and allows for significantly reducing the time-to-market and the development time.",
+    "usefulLinks": "Useful documentation links:",
+    "recommendations": "Recommendations:",
+    "recomm1": "1. Most of the blockchain functionality examples are located on the BSC Testnet. Therefore, to explore their operations, it is necessary to switch to this network. When adapting the project for a production environment, it is required to specify the networks demanded by the project specification in CHAINS_IDS.",
+    "recomm2": "2. The login logic is designed to be superficial so that a backend is not required for a test launch of the scaffold in a demonstration version. If constructing a production login workflow through user signature in the wallet, it is crucial to control not only the presence of a token for authorized routes but also to ensure that the address in the user object from the backend matches their wallet address, to prevent unauthorized access. Similarly, wallet activity must be monitored. If the wallet is not active, it is recommended to log out the user, regardless of the presence of a live token. Drafts of this logic can be found in the useLogOutWithoutConnection() hook."
   },
 
   "WalletButton": {

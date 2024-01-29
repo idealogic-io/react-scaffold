@@ -41,8 +41,6 @@ export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllow
         fetchedData.forEach((result, index) => {
           if (result && result.status === "success") {
             resultArray[index] = result.result;
-          } else {
-            resultArray[index] = undefined;
           }
         });
       }
