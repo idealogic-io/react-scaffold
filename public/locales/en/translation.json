@@ -30,5 +30,17 @@
     "mint": "Mint 100 SCT",
     "scanner": "See your transaction in scanner",
     "article1": "In this section, we cover the simplest invocation of a transaction through a smart contract. Using Wagmi hooks, we handle the full transaction cycle in the most straightforward way. For instance, the <bold>usePrepareContractWrite()</bold> hook is responsible for preparing the transaction data and estimating the likelihood of its successful execution. If the transaction is likely to fail for some reason, the isSuccess parameter will become negative at this stage (this can be used as a marker to disable the button responsible for the call). If everything is fine at this stage, the <bold>useContractWrite()</bold> hook comes into play, which can take configurations from the previous hook. It provides numerous parameters, but in this example, we focus only on the invocation function, which comes in two types: synchronous and asynchronous. I prefer the asynchronous one, as it's more comfortable to handle the further part of the transaction's life cycle. After calling this function, in a successful flow, we will receive the hash of the new transaction. And this hash can be used in the third hook - <bold>useWaitForTransaction()</bold>. This hook waits for the final result of the transaction and returns the corresponding data. And only after this stage, we can say that the life cycle of the transaction is complete."
+  },
+
+  "ContractExampleLvl2": {
+    "staked": "You've staked: {{amount}} {{tokenName}}.",
+    "reward": "Your current available reward is: {{amount}} {{tokenName}}.",
+    "claim": "Claim reward!",
+    "tokenBalance": "You are available to stake: {{balance}} {{tokenSymbol}}.",
+    "max": "Max",
+    "approve": "Approve",
+    "stake": "Stake",
+    "stakeAmount": "Stake amount",
+    "article1": "In this section, an example of a more complex but more realistic scenario for reading and writing data in the blockchain is demonstrated. It showcases interaction with a staking smart contract, where a user can deposit funds and earn rewards over time. For data retrieval, a multicall was used, allowing the consolidation of all the required blockchain get-requests into a single request. It's important to note that these requests can target entirely different smart contracts, with the main condition being that they all reside on the same network. Otherwise, a separate multicall instance is required for each network. For writing data, the same hook as in the previous section was used, but this time, an additional hook for handling input data and a \"Max\" button was also utilized. Moreover, this hook helps to differentiate between two scenarios: when an approval is needed (see Allowance in ERC-20) and when it isn't."
   }
 }

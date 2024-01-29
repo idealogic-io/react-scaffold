@@ -34,6 +34,9 @@ export const CONTRACTS = {
         chainId: CHAINS_IDS.BSC_TEST,
         abi: REWARD_ABI,
       },
+      name: "Reward Token",
+      symbol: "RT",
+      decimals: 18,
     } as Contract<typeof REWARD_ABI>,
     staking: {
       config: {

@@ -16,11 +16,9 @@ export const useInputHandlerWithMax = (
   const convertToBN = (value: BigNumber | bigint | string) => new BigNumber(value.toString());
 
   const balance = convertToBN(balanceInput ?? "0");
-  const allowance = allowanceInput ? convertToBN(allowanceInput) : null;
+  const allowance = allowanceInput != null ? convertToBN(allowanceInput) : null;
 
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valueFromInput = event.target.value.replace(/,/g, ".");
-
+  const onInputChange = (valueFromInput: string) => {
     if (regex.test(valueFromInput)) {
       if (valueFromInput.startsWith(".")) {
         setInputValue("0" + valueFromInput);
@@ -41,7 +39,11 @@ export const useInputHandlerWithMax = (
   };
 
   const allowanceCheck = (value: BigNumber) => {
+    // eslint-disable-next-line
+    console.log("allowance", value.toString(), allowance ? allowance.toString() : allowance);
     if (allowance) {
+      // eslint-disable-next-line
+      console.log("allowance check");
       setShouldApprove(value.isGreaterThan(allowance));
     } else {
       setShouldApprove(false);
@@ -65,6 +67,13 @@ export const useInputHandlerWithMax = (
 
   return { onInputChange, value, inputValue, shouldApprove, maxHandler, reset };
 };
+
+// For default <input/> with event.target.value
+// const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//   const valueFromInput = event.target.value.replace(/,/g, ".");
+//   // ......
+//   // ......
+// }
 
 // Example usage with <input/>
 //

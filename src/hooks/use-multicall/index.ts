@@ -22,26 +22,32 @@ export const useMulticall = <TContracts extends ContractFunctionConfig[], TAllow
   );
 
   const executeMulticall = async () => {
-    const fetchedData = await multicall({
-      ...multicallConfig,
-      allowFailure: true,
-    });
+    if (!multicallConfig) return undefined;
 
     const resultArray = new Array(multicallConfig.contracts.length).fill(undefined);
 
-    if (
-      fetchedData &&
-      Array.isArray(fetchedData) &&
-      fetchedData.length > 0 &&
-      fetchedData.length === resultArray.length
-    ) {
-      fetchedData.forEach((result, index) => {
-        if (result && result.status === "success") {
-          resultArray[index] = result.result;
-        } else {
-          resultArray[index] = undefined;
-        }
+    try {
+      const fetchedData = await multicall({
+        ...multicallConfig,
+        allowFailure: true,
       });
+
+      if (
+        fetchedData &&
+        Array.isArray(fetchedData) &&
+        fetchedData.length > 0 &&
+        fetchedData.length === resultArray.length
+      ) {
+        fetchedData.forEach((result, index) => {
+          if (result && result.status === "success") {
+            resultArray[index] = result.result;
+          } else {
+            resultArray[index] = undefined;
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
 
     return resultArray as MulticallResults<TContracts>;

@@ -83,6 +83,37 @@ export const STAKING_ABI = [
     inputs: [
       {
         internalType: "address",
+        name: "staker",
+        type: "address",
+      },
+    ],
+    name: "getStakersData",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "timestamp",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Staking.StakeStruct",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "_depositToken",
         type: "address",
       },

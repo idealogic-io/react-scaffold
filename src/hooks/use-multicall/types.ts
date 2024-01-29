@@ -7,7 +7,7 @@ export type UseMulticallConfig = {
 };
 
 export type UseMulticallParams<TContracts extends ContractFunctionConfig[], TAllowFailure extends boolean = true> = {
-  multicallConfig: MulticallConfig<TContracts, TAllowFailure>;
+  multicallConfig: MulticallConfig<TContracts, TAllowFailure> | undefined;
   configs?: UseMulticallConfig;
 };
 

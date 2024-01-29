@@ -14,6 +14,7 @@ export const useContractWrite = <
   TMode extends WriteContractMode = undefined,
 >(
   data: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId>,
+  updateCallback?: () => void,
 ) => {
   const [trxHash, setTrxHash] = useState<`0x${string}` | undefined>(undefined);
   const [trxLink, setTrxLink] = useState<string | undefined>(undefined);
@@ -34,11 +35,17 @@ export const useContractWrite = <
       toast.success("Transaction successful");
       setIsWaiting(false);
       setTrxHash(undefined);
+      if (updateCallback) {
+        updateCallback();
+      }
     },
     onError(error) {
       toast.error(error?.message ?? "Transaction error");
       setIsWaiting(false);
       setTrxHash(undefined);
+      if (updateCallback) {
+        updateCallback();
+      }
     },
   });
 
@@ -53,6 +60,9 @@ export const useContractWrite = <
         })
         .catch((error: TransactionExecutionError) => {
           setIsWaiting(false);
+          if (updateCallback) {
+            updateCallback();
+          }
           toast.error(error?.shortMessage ?? "Transaction error");
         });
     }
