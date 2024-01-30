@@ -2,13 +2,14 @@ import React, { PropsWithChildren } from "react";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiConfig } from "wagmi";
 
-import { useLogOutWithoutConnection } from "hooks";
+import { useLogOutWithoutConnection, useGlobalTransactionsWaiter } from "hooks";
 
 import { chains } from "configs/chains";
 import { wagmiConfig } from "configs/connectors";
 
 const Web3Listeners: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   useLogOutWithoutConnection();
+  useGlobalTransactionsWaiter();
   return <>{children}</>;
 };
 

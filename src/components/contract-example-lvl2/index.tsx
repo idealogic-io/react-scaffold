@@ -2,7 +2,6 @@ import React from "react";
 import BigNumber from "bignumber.js";
 import { useAccount } from "wagmi";
 import { useTranslation } from "react-i18next";
-// import { zeroAddress } from "viem";
 
 import { useMulticall, useInputHandlerWithMax, useContractWrite } from "hooks";
 import { FlexGap, Text, Button, InputNumeric } from "components";
@@ -47,8 +46,8 @@ const ContractExampleLvl2: React.FC = () => {
       )
     : undefined;
 
-  const { data, refresh: refreshMulticall } = multicallResult || {};
-  const [balance, allowance, stakersData, reward] = data || [];
+  const { data, refresh: refreshMulticall } = multicallResult ?? {};
+  const [balance, allowance, stakersData, reward] = data ?? [];
 
   const { onInputChange, value, inputValue, shouldApprove, maxHandler, reset } = useInputHandlerWithMax(
     balance,
