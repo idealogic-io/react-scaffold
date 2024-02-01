@@ -93,7 +93,9 @@ const ContractExampleLvl2: React.FC = () => {
       functionName: "approve",
       args: [CONTRACTS[CHAINS_IDS.BSC_TEST].staking.config.address, BigInt(value ?? 0)],
     },
-    { updateCallback: refreshMulticall },
+    {
+      updateCallback: refreshMulticall,
+    },
   );
 
   const {

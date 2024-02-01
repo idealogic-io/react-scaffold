@@ -21,7 +21,7 @@ export const web3TransactionsSlice = createSlice({
       }
     },
     updateTransactions: (state, action: PayloadAction<{ updatedState: TransactionsState }>) => {
-      state = action.payload.updatedState;
+      return action.payload.updatedState;
     },
     resetTransactionsState: () => {
       return initialState;

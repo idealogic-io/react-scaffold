@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* cSpell:disable */
+import { useState, useEffect } from "react";
 import BigNumber from "bignumber.js";
 
 export const useInputHandlerWithMax = (
@@ -17,6 +18,10 @@ export const useInputHandlerWithMax = (
 
   const balance = convertToBN(balanceInput ?? "0");
   const allowance = allowanceInput != null ? convertToBN(allowanceInput) : null;
+
+  useEffect(() => {
+    allowanceCheck(convertToBN(value));
+  }, [allowanceInput]);
 
   const onInputChange = (valueFromInput: string) => {
     if (regex.test(valueFromInput)) {
@@ -64,6 +69,8 @@ export const useInputHandlerWithMax = (
 
   return { onInputChange, value, inputValue, shouldApprove, maxHandler, reset };
 };
+
+/* cSpell:enable */
 
 // For default <input/> with event.target.value
 // const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

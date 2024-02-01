@@ -1,10 +1,9 @@
 import type { AllowedChain } from "configs/chains";
 
 export interface TransactionConfigs {
-  chainId: number;
-  contractAddress: string;
-  methodName: string;
-  args?: unknown[];
+  chainId?: number;
+  contractAddress?: string;
+  methodName?: string;
 }
 
 export interface TransactionDetails {

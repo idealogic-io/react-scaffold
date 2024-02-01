@@ -1,25 +1,24 @@
 import useSWR from "swr";
 import { toast } from "react-toastify";
 import { getPublicClient } from "@wagmi/core";
+import { useTranslation } from "react-i18next";
+
 import { useAppDispatch, useAppSelector } from "store/store";
 import { updateTransactions } from "store/web3-transactions";
 
 import type { PublicClient } from "viem";
 import type { AllowedChain } from "configs/chains";
 import type { TransactionDetails, TransactionsState } from "store/web3-transactions/types";
-
-export type WaiterConfigs = {
-  refreshInterval?: number;
-  revalidateOnFocus?: boolean;
-};
+import type { WaiterConfigs } from "./types";
 
 export const useGlobalTransactionsWaiter = (configs?: WaiterConfigs) => {
   const { refreshInterval = 15_000, revalidateOnFocus = false } = configs ?? {};
   const transactionsState = useAppSelector(state => state.web3Transactions);
 
+  const { t } = useTranslation("translation", { keyPrefix: "Transactions" });
   const dispatch = useAppDispatch();
 
-  const { data, isLoading, isValidating, mutate } = useSWR(
+  const { isLoading, isValidating, mutate } = useSWR(
     transactionsState && Object.keys(transactionsState).length > 0 ? [transactionsState, "/checkTransactions"] : null,
     async () => {
       return checkTransactions();
@@ -64,9 +63,9 @@ export const useGlobalTransactionsWaiter = (configs?: WaiterConfigs) => {
       }
 
       if (receipt.status === "success") {
-        toast.success("Transaction success");
+        toast.success(t("trxConfirmed"));
       } else {
-        toast.error("Transaction failed");
+        toast.error(t("trxFailed"));
       }
     } catch (error) {
       updatedState[chainId] = {
@@ -77,7 +76,6 @@ export const useGlobalTransactionsWaiter = (configs?: WaiterConfigs) => {
   };
 
   return {
-    data,
     loading: isLoading || isValidating,
     refresh: mutate,
   };

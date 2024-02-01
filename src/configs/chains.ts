@@ -5,7 +5,6 @@ import * as wagmiChains from "wagmi/chains";
 import { parseAllowedChains } from "utils";
 
 export const CHAINS_IDS = {
-  MAINNET: wagmiChains.mainnet.id,
   BSC_TEST: wagmiChains.bscTestnet.id,
   POLYGON_TEST: wagmiChains.polygonMumbai.id,
 };
