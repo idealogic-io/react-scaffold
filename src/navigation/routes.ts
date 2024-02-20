@@ -1,5 +1,5 @@
 export const ROUTES = {
   home: "/",
-  contractInteraction: "contract-interaction",
+  contractInteractionLvl1: "contract-interaction-level-1",
   contractInteractionLvl2: "contract-interaction-level-2",
 };

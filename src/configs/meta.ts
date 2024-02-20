@@ -23,7 +23,7 @@ export const getCustomMeta = (path: string, t: TFunction) => {
       };
     }
 
-    case ROUTES.contractInteraction: {
+    case ROUTES.contractInteractionLvl1: {
       return {
         ...getDefaultMeta(t),
         title: t("Contracts Interactions"),

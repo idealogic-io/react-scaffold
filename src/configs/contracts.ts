@@ -53,4 +53,16 @@ export const CONTRACTS = {
       },
     } as Contract<typeof TEST_DATA_ABI>,
   },
+  [CHAINS_IDS.POLYGON_TEST]: {
+    scaffoldToken: {
+      config: {
+        address: "0x502A144bc651ddba336240Ec6939B28C3B1454fC",
+        chainId: CHAINS_IDS.POLYGON_TEST,
+        abi: SCAFFOLD_ABI,
+      },
+      name: "Scaffold Token",
+      symbol: "SCT",
+      decimals: 18,
+    } as Contract<typeof SCAFFOLD_ABI>,
+  },
 } as const;
