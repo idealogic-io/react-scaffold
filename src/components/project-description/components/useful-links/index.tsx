@@ -13,10 +13,10 @@ const UsefulLinks: React.FC = () => {
         <Link href="https://www.rainbowkit.com/docs/introduction" external>
           - RainbowKit
         </Link>
-        <Link href="https://1.x.wagmi.sh/react/getting-started" external>
+        <Link href="https://wagmi.sh/react/getting-started" external>
           - Wagmi
         </Link>
-        <Link href="https://v1.viem.sh/docs/getting-started.html" external>
+        <Link href="https://viem.sh/docs/getting-started" external>
           - Viem
         </Link>
         <Link href="https://abitype.dev/" external>

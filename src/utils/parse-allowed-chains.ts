@@ -1,4 +1,4 @@
-import { type Chain } from "wagmi";
+import type { Chain } from "@rainbow-me/rainbowkit";
 
 export const parseAllowedChains = (chainsIds: number[], chains: { [chainName: string]: Chain }) => {
   const wagmiChainsValues = Object.values(chains);
@@ -11,5 +11,5 @@ export const parseAllowedChains = (chainsIds: number[], chains: { [chainName: st
     }
   });
 
-  return allowedChains;
+  return allowedChains as [Chain, ...Chain[]];
 };

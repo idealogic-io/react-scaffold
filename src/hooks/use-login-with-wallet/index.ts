@@ -7,9 +7,7 @@ import { loginUserWithWallet } from "store/auth/actions";
 export const useLoginWithWallet = () => {
   const { pending: authPending } = useAppSelector(state => state.auth);
   const { address, isConnected } = useAccount();
-  const { isLoading: signPending, signMessageAsync } = useSignMessage({
-    message: `Scaffold Auth: ${address} ${new Date().getTime()}`,
-  });
+  const { signMessageAsync, isPending: signPending } = useSignMessage();
   const dispatch = useAppDispatch();
 
   const handleAuthWithWallet = async () => {
@@ -17,7 +15,7 @@ export const useLoginWithWallet = () => {
       if (!isConnected || !address) {
         throw new Error("Please connect your wallet.");
       }
-      const hash = await signMessageAsync();
+      const hash = await signMessageAsync({ message: `Scaffold Auth: ${address} ${new Date().getTime()}` });
 
       dispatch(loginUserWithWallet({ address: address.toLowerCase(), hash }));
     } catch (error) {

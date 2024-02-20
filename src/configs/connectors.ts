@@ -1,16 +1,9 @@
-import { getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { createConfig } from "wagmi";
+import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 
-import { chains, publicClient } from "./chains";
+import { chains } from "./chains";
 
-const { connectors } = getDefaultWallets({
+export const wagmiConfig = getDefaultConfig({
   appName: "Scaffold",
   projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID as string,
   chains,
-});
-
-export const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
 });

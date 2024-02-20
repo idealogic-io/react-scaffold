@@ -1,5 +1,3 @@
-import { publicProvider } from "wagmi/providers/public";
-import { configureChains } from "wagmi";
 import * as wagmiChains from "wagmi/chains";
 
 import { parseAllowedChains } from "utils";
@@ -7,11 +5,10 @@ import { parseAllowedChains } from "utils";
 export const CHAINS_IDS = {
   BSC_TEST: wagmiChains.bscTestnet.id,
   POLYGON_TEST: wagmiChains.polygonMumbai.id,
-};
+} as const;
+
 export const allowedChainsId = Object.values(CHAINS_IDS);
-export const { chains, publicClient } = configureChains(parseAllowedChains(allowedChainsId, wagmiChains), [
-  publicProvider(),
-]);
+export const chains = parseAllowedChains(allowedChainsId, wagmiChains);
 
 export type AllowedChain = (typeof allowedChainsId)[number];
 
