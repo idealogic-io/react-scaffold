@@ -20,3 +20,6 @@
 .env.production.local
 
 .env
+/.idea
+yarn.lock
+package-lock.json
