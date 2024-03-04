@@ -15,7 +15,7 @@ const Link: React.FC<LinkProps> = ({ external, href, ...props }) => {
     return <StyledLink as="a" href={href} {...internalProps} {...props} aria-label={ariaLabel} />;
   } else {
     return (
-      <RouterLink to={href || ".."} replace aria-label={ariaLabel}>
+      <RouterLink to={href || ".."} aria-label={ariaLabel}>
         <StyledLink as="span" {...internalProps} {...props} />
       </RouterLink>
     );
