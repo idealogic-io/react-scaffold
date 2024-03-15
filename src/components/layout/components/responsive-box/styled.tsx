@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Box } from "../container";
-import { Flex } from "../flex";
 
 export const ResponsiveBoxWrapper = styled(Box)<{ aspectRatio: number }>`
   position: relative;
@@ -12,7 +11,8 @@ export const ResponsiveBoxWrapper = styled(Box)<{ aspectRatio: number }>`
   }
 `;
 
-export const ContentWrapper = styled(Flex)`
+export const ContentWrapper = styled.div`
+  display: flex;
   position: absolute;
   top: 0;
   left: 0;

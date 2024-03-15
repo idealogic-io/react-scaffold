@@ -68,7 +68,7 @@ const MultipleSelect: React.FC<MultipleSelectProps> = ({
           {...dropdownWrapperProps}
         />
 
-        <StyledButtonsWrapper gap="14px">
+        <StyledButtonsWrapper>
           <Button
             variant="outline"
             onClick={() => {

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 // Components
 import { StyledInput } from "./styled";
-import { Box } from "components";
 import Cells from "./Cells";
 // Types
 import { InputProps } from "../input/types";
@@ -39,15 +38,15 @@ export const InputCode = <E extends React.ElementType = "input">({
   };
 
   return (
-    <Box>
-      <Box>
+    <div>
+      <div>
         <Cells
           cellCount={cellCount}
           value={value}
           isFocused={isFocused}
           isError={isError}
           width={cellWidth}
-          heigh={cellHeigh}
+          height={cellHeigh}
         />
 
         <StyledInput
@@ -60,7 +59,7 @@ export const InputCode = <E extends React.ElementType = "input">({
           onChange={event => onChangeText(event)}
           {...props}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

@@ -6,7 +6,7 @@ import { Cursor } from "./Cursor";
 // Types
 import { CellsProps } from "./types";
 
-const Cells: React.FC<CellsProps> = ({ cellCount, value, isFocused, isError, width = 44, heigh = 44 }) => {
+const Cells: React.FC<CellsProps> = ({ cellCount, value, isFocused, isError, width = 44, height = 44 }) => {
   return (
     <StyledInputContainer>
       {Array.from({ length: cellCount }).map((_, i) => {
@@ -21,7 +21,7 @@ const Cells: React.FC<CellsProps> = ({ cellCount, value, isFocused, isError, wid
             isFocusedValue={isFocusedValue}
             isError={isError}
             width={width}
-            heigh={heigh}
+            height={height}
           >
             {isFocusedValue || (isLastNFocus && !!textValue) ? (
               <Cursor delay={500} isLastNFocus={isLastNFocus} value={textValue} />

@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import { Button, Heading, Link, Page, Row } from "components";
+import { Button, Column, Heading, Link, Page } from "components";
 // Context
 import { useTranslation } from "context";
 // Store
@@ -18,13 +18,12 @@ const HomePage: React.FC = () => {
       <Heading as="h2" scale="h2">
         {t("Main Page")}
       </Heading>
-      <Row py="12px">
-        <Button onClick={logoutHandler}>{t("Logout")}</Button>
-      </Row>
-
-      <Row py="12px">
-        <Link href="/">{t("Link to Home page")}</Link>
-      </Row>
+      <Column>
+        <Button my="12px" onClick={logoutHandler}>
+          {t("Logout")}
+        </Button>
+      </Column>
+      <Link href="/">{t("Link to Home page")}</Link>
     </Page>
   );
 };

@@ -1,10 +1,10 @@
 import React, { cloneElement } from "react";
 
-import { InputError, InputIcon, StyledInputGroup } from "./styled";
+import { InputError, InputIcon, InputWrapper, StyledInputGroup } from "./styled";
+import { Text } from "components";
 
 import { InputGroupProps } from "./types";
 import { scales as inputScales } from "components/inputs/input/types";
-import { Box, Text } from "components";
 
 export const InputGroup: React.FC<InputGroupProps> = ({
   scale = inputScales.MD,
@@ -24,7 +24,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
       </Text>
     )}
 
-    <Box position="relative">
+    <InputWrapper>
       {startIcon && <InputIcon scale={scale}>{startIcon}</InputIcon>}
 
       {cloneElement(children, { scale, error, isTouched })}
@@ -34,7 +34,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           {endIcon}
         </InputIcon>
       )}
-    </Box>
+    </InputWrapper>
 
     {isShowError && <InputError textScale="caption2">{error && isTouched ? error : " "}</InputError>}
   </StyledInputGroup>

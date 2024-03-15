@@ -1,15 +1,9 @@
 import styled from "styled-components";
-import { flexbox, layout, space } from "styled-system";
 
-import { Box } from "../container";
+import { Flex } from "../flex";
 
 import { ColumnProps } from "../types";
 
-export const Column = styled(Box)<ColumnProps>`
-  display: flex;
+export const Column = styled(Flex)<ColumnProps>`
   flex-direction: column;
-  justify-content: flex-start;
-  ${flexbox}
-  ${space}
-  ${layout}
 `;

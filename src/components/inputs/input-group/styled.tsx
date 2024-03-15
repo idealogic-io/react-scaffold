@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { layout, space } from "styled-system";
 
 import { Box, Text } from "components";
 
@@ -26,8 +25,6 @@ export const StyledInputGroup = styled(Box)<StyledInputGroupProps>`
     padding-left: ${({ hasStartIcon, scale }) => getPadding(scale, hasStartIcon)};
     padding-right: ${({ hasEndIcon, scale }) => getPadding(scale, hasEndIcon)};
   }
-  ${layout}
-  ${space}
 `;
 
 export const InputIcon = styled.div<InputIconProps>`
@@ -40,15 +37,19 @@ export const InputIcon = styled.div<InputIconProps>`
   ${({ isEndIcon, scale }) =>
     isEndIcon
       ? css`
-      right: ${scale === inputScales.SM ? "8px" : "16px"};
-    `
+          right: ${scale === inputScales.SM ? "8px" : "16px"};
+        `
       : css`
-      left: ${scale === inputScales.SM ? "8px" : "16px"};
-    `}
+          left: ${scale === inputScales.SM ? "8px" : "16px"};
+        `}
 `;
 
 export const InputError = styled(Text)`
   margin-top: 4px;
   color: ${({ theme }) => theme.colors.error400};
   white-space: pre-wrap;
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
 `;

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import { Button, Heading, Page, Text, Column, Box, Row } from "components";
+import { Button, Heading, Page, Text, Column, Row } from "components";
 import { useThemeContext } from "context";
 
 export default {
   title: "Context/ThemeContext",
 };
 
-const StyledBox = styled(Box)`
+const StyledBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +31,7 @@ export const ThemeContext = () => {
 
         {Object.values(theme.fonts).map(fontFamily => {
           return (
-            <Box key={fontFamily}>
+            <div key={fontFamily}>
               {Object.values(theme.fontWeight).map(fontWeight => {
                 return (
                   <Text key={fontWeight} fontFamily={fontFamily} fontWeight={fontWeight}>
@@ -39,7 +39,7 @@ export const ThemeContext = () => {
                   </Text>
                 );
               })}
-            </Box>
+            </div>
           );
         })}
       </Column>

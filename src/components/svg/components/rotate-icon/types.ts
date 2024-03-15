@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { SvgProps } from "components/svg/types";
-import { BoxProps } from "components/layout/components/types";
 
 export const variants = {
   rotateX: "rotateX",
@@ -9,7 +8,7 @@ export const variants = {
 
 export type Variant = keyof typeof variants;
 
-export interface RotateIconProps extends BoxProps {
+export interface RotateIconProps {
   isToggled: boolean;
   firstIcon: ReactNode & SvgProps;
   secondIcon: ReactNode & SvgProps;

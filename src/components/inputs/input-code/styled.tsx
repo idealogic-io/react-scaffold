@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
 
-import { Flex } from "components";
 import { Input } from "../input";
 import { StyledNumericInputProps } from "./types";
 
@@ -29,9 +28,10 @@ const shakeAnimation = css`
   animation: ${shake} 0.3s ease;
 `;
 
-export const StyledInputContainer = styled(Flex)`
+export const StyledInputContainer = styled.div`
   justify-content: space-between;
   flex-direction: row;
+  display: flex;
 `;
 
 export const StyledInput = styled(Input)`
@@ -45,9 +45,10 @@ export const StyledInput = styled(Input)`
   opacity: 0.02;
 `;
 
-export const StyledNumericInput = styled(Flex)<StyledNumericInputProps>`
-  width: ${({ width }) => width + "px"};
-  height: ${({ heigh }) => heigh + "px"};
+export const StyledNumericInput = styled.div<StyledNumericInputProps>`
+  display: flex;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   align-items: center;
   justify-content: center;
   border-radius: ${({ theme }) => theme.radii.semiMedium};

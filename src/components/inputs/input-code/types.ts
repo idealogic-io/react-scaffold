@@ -6,7 +6,7 @@ export type CellsProps = {
   isFocused: boolean | undefined;
   isError: boolean;
   width?: number;
-  heigh?: number;
+  height?: number;
 };
 
 export type InputCodeProps = {
@@ -23,5 +23,5 @@ export type StyledNumericInputProps = {
   isFocusedValue: boolean | undefined;
   isError: boolean;
   width: number;
-  heigh: number;
+  height: number;
 };

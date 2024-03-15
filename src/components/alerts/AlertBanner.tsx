@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion";
 
 import AlertTextWithDescription from "./AlertTextWithDescription";
 import { StyledAlertBanner } from "./styled";
-import { Box, Flex } from "components";
+import { Flex } from "components";
 import { CloseIconWithHover } from "components/svg";
 
 import { getIcon } from "./theme";
@@ -24,9 +24,7 @@ const AlertBanner: React.FC<AlertBannerProps> = ({ children, text, description, 
           transition={{ duration: 0.3 }}
           variant={variant}
         >
-          <Box mr="10px">
-            <Icon />
-          </Box>
+          <Icon mr="10px" />
 
           <Flex flexGrow={1}>
             <AlertTextWithDescription text={text} description={description}>

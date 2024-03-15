@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Flex } from "components";
 
-export const StyledModalWrapper = styled(Flex)`
+export const StyledModalWrapper = styled.div`
+  display: flex;
   width: 286px;
   padding: 12px;
 

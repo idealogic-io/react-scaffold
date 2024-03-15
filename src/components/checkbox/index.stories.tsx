@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, Box, Heading } from "components";
+import { Checkbox, Heading } from "components";
 import { InfoIcon } from "components/svg";
 
 export default {
@@ -13,8 +13,8 @@ export const Checkboxes: React.FC = () => {
   const [isChecked3, setIsChecked3] = useState(false);
 
   return (
-    <Box>
-      <Box>
+    <div>
+      <div>
         <Checkbox
           mb="32px"
           label="Regular"
@@ -23,9 +23,9 @@ export const Checkboxes: React.FC = () => {
             setIsChecked(!isChecked);
           }}
         />
-      </Box>
+      </div>
 
-      <Box>
+      <div>
         <Checkbox
           mb="32px"
           disabled
@@ -35,8 +35,8 @@ export const Checkboxes: React.FC = () => {
             setIsChecked1(!isChecked1);
           }}
         />
-      </Box>
-      <Box>
+      </div>
+      <div>
         <Checkbox
           mb="32px"
           icon={<InfoIcon color="monochrome0" />}
@@ -46,9 +46,9 @@ export const Checkboxes: React.FC = () => {
             setIsChecked2(!isChecked2);
           }}
         />
-      </Box>
+      </div>
 
-      <Box>
+      <div>
         <Checkbox
           mb="32px"
           label={
@@ -61,7 +61,7 @@ export const Checkboxes: React.FC = () => {
             setIsChecked3(!isChecked3);
           }}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

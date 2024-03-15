@@ -1,7 +1,7 @@
 import React from "react";
 
 import { DropdownSelectWrapper } from "./styled";
-import { Flex, Text } from "components";
+import { RowBetween, Text } from "components";
 import { ArrowDownIcon } from "components/svg";
 
 import { useTranslation } from "context";
@@ -23,7 +23,7 @@ export const Select: React.FC<SelectProps> = ({
 
   return (
     <DropdownSelectWrapper ref={targetRef} {...wrapperProps}>
-      <Flex width="100%" justifyContent="space-between">
+      <RowBetween>
         {!title ? (
           <Text textScale="body2" {...placeholderProps} ellipsis>
             {t(placeholder)}
@@ -36,10 +36,8 @@ export const Select: React.FC<SelectProps> = ({
           React.isValidElement(title) && title
         )}
 
-        <Flex>
-          <Icon width="12px" {...iconProps} />
-        </Flex>
-      </Flex>
+        <Icon width="12px" {...iconProps} />
+      </RowBetween>
 
       {tooltip}
     </DropdownSelectWrapper>
