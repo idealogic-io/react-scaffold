@@ -5,7 +5,7 @@ import { useAppSelector } from "store/store";
 import { getConnection, networkConnection } from "configs/web3";
 
 export const useEagerConnect = () => {
-  const { connectionType } = useAppSelector(state => state.web3Wallet);
+  const connectionType = useAppSelector(state => state.web3Wallet.connectionType);
 
   const selectedConnection = connectionType && getConnection(connectionType);
 

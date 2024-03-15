@@ -79,7 +79,7 @@ export const useWeb3Login = () => {
 };
 
 const useCancelActivation = () => {
-  const { connectionStatus } = useAppSelector(state => state.web3Wallet);
+  const connectionStatus = useAppSelector(state => state.web3Wallet.connectionStatus);
   const dispatch = useAppDispatch();
 
   const cancelActivation = () => {
@@ -94,7 +94,8 @@ const useCancelActivation = () => {
 };
 
 export const useActivationState = () => {
-  const { connectionStatus, connectionType } = useAppSelector(state => state.web3Wallet);
+  const connectionType = useAppSelector(state => state.web3Wallet.connectionType);
+  const connectionStatus = useAppSelector(state => state.web3Wallet.connectionStatus);
 
   const { cancelActivation } = useCancelActivation();
   const { activate, deactivate } = useWeb3Login();
