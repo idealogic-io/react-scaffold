@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Row, Box, Text } from "components";
+import { Row, Text } from "components";
 import { useTooltip } from "hooks";
 
 export default {
   title: "Hooks/UseTooltips",
 };
 
-const StyledBox = styled(Box)`
+const StyledBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

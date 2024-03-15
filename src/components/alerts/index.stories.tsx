@@ -81,9 +81,9 @@ export const AlertBanners: React.FC = () => {
 
   return (
     <Column>
-      <Box>
+      <div>
         <AlertBanner text="This is a success alert" />
-      </Box>
+      </div>
 
       <Box my="8px" width="75%">
         <AlertBanner text="This is an error alert" description="This is a description" variant="error" />

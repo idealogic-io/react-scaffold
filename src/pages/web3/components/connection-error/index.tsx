@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, Heading, Text, Link } from "components";
+import { Button, Heading, Text, Link } from "components";
 
 import { useActivationState, useQueryChainId } from "configs/web3";
 
@@ -19,7 +19,7 @@ export const ConnectionError: React.FC = () => {
   };
 
   return (
-    <Box>
+    <div>
       <Heading as="h2" scale="h2" mb="8px">
         Error connecting
       </Heading>
@@ -31,6 +31,6 @@ export const ConnectionError: React.FC = () => {
       <Button onClick={retry}>Try Again</Button>
 
       <Link onClick={cancelActivation}>Back to wallet selection</Link>
-    </Box>
+    </div>
   );
 };

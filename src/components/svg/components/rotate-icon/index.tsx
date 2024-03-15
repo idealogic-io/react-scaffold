@@ -1,15 +1,12 @@
 import React from "react";
 import { StyledRotate } from "./styled";
-import { Box } from "components";
 
 import { RotateIconProps } from "./types";
 
-export const RotateIcon: React.FC<RotateIconProps> = ({ isToggled, firstIcon, secondIcon, ...props }) => {
+export const RotateIcon: React.FC<RotateIconProps> = ({ isToggled, firstIcon, secondIcon, variant }) => {
   return (
-    <Box cursor="pointer">
-      <StyledRotate {...props} isToggled={isToggled}>
-        {isToggled ? firstIcon : secondIcon}
-      </StyledRotate>
-    </Box>
+    <StyledRotate variant={variant} isToggled={isToggled}>
+      {isToggled ? firstIcon : secondIcon}
+    </StyledRotate>
   );
 };

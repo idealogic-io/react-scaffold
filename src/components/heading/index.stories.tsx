@@ -1,4 +1,4 @@
-import { Box, Heading } from "components";
+import { Heading } from "components";
 import { scales } from "./types";
 
 export default {
@@ -10,12 +10,12 @@ export const Headings: React.FC = () => {
     <>
       {Object.values(scales).map(scale => {
         return (
-          <Box key={scale}>
+          <div key={scale}>
             <Heading scale={scale} as={scale}>
               {scale}
             </Heading>
             <hr />
-          </Box>
+          </div>
         );
       })}
     </>

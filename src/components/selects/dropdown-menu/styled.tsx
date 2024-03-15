@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components";
 
-import { Box, Flex } from "components";
+import { Box } from "components";
 
-export const DropdownMenuItem = styled(Flex)<{ disabled: boolean }>`
+export const DropdownMenuItem = styled.div<{ disabled: boolean }>`
   padding: 8px;
   justify-content: space-between;
+  display: flex;
 
   :hover {
     background-color: ${({ theme }) => theme.colors.monochrome100};

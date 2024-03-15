@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import styled, { css } from "styled-components";
-import { border, layout, position, space, borderRadius } from "styled-system";
+import { border, layout, position, space } from "styled-system";
 
 import { useThemeContext } from "context";
 
@@ -23,7 +23,6 @@ export const Box = styled.div<BoxProps>`
 
   ${getEllipsis}
   ${border}
-  ${borderRadius}
   ${layout}
   ${position}
   ${space}

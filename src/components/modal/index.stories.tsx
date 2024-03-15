@@ -1,7 +1,7 @@
 import { useAppDispatch } from "store/store";
 import { showModal } from "store/modal";
 
-import { Button, Box } from "components";
+import { Button } from "components";
 
 import { TestModalProps } from "./components/test-modal/types";
 import { ModalProps } from "store/modal/types";
@@ -21,8 +21,8 @@ export const Modals: React.FC = () => {
   };
 
   return (
-    <Box id={rootId}>
+    <div id={rootId}>
       <Button onClick={() => onShowModal()}>Show test modal</Button>
-    </Box>
+    </div>
   );
 };

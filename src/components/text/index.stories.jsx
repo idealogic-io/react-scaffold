@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box } from "components";
+import { Text } from "components";
 import { scales } from "./types";
 
 export default {
@@ -11,10 +11,10 @@ export const Texts = () => {
     <>
       {Object.values(scales).map(scale => {
         return (
-          <Box key={scale}>
+          <div key={scale}>
             <Text textScale={scale}>{scale}</Text>
             <hr />
-          </Box>
+          </div>
         );
       })}
 

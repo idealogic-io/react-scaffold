@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { border } from "styled-system";
 
-import { Box } from "components/layout";
+import { Box } from "components";
 
 export const DropdownSelectWrapper = styled(Box)`
   cursor: pointer;
@@ -11,6 +10,4 @@ export const DropdownSelectWrapper = styled(Box)`
   padding: 8px;
   min-height: 45px;
   display: flex;
-
-  ${border}
 `;

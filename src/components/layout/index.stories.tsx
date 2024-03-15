@@ -43,7 +43,7 @@ export const Containers: React.FC = () => {
 
 export const Flexes: React.FC = () => {
   return (
-    <Box>
+    <>
       <>
         <Text textAlign="center">Flex justify center</Text>
         <Flex flex={1} justifyContent="center">
@@ -60,7 +60,7 @@ export const Flexes: React.FC = () => {
           ))}
         </FlexGap>
       </>
-    </Box>
+    </>
   );
 };
 

@@ -1,21 +1,13 @@
 import styled from "styled-components";
-import { layout, space, flexbox } from "styled-system";
-
-import { Box } from "../container";
+import { Flex } from "../flex";
 
 import { RowProps } from "../types";
 
-export const Row = styled(Box)<RowProps>`
+export const Row = styled(Flex)<RowProps>`
   width: 100%;
-  display: flex;
   flex-wrap: wrap;
-  border: ${({ border }) => border};
-  border-radius: ${({ borderRadius }) => borderRadius};
-  ${space}
-  ${layout}
-  ${flexbox}
 `;
 
-export const RowBetween = styled(Row)`
+export const RowBetween = styled(Row)<RowProps>`
   justify-content: space-between;
 `;
