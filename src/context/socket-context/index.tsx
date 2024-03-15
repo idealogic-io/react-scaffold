@@ -19,7 +19,7 @@ const socket = io(`${process.env.REACT_APP_SOCKET_URL}` as string, {
 });
 
 const SocketContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const { token } = useAppSelector(state => state.auth);
+  const token = useAppSelector(state => state.auth.token);
 
   const { onSocketErrorHandler } = useSocketEventHandlers();
 

@@ -12,7 +12,7 @@ import { useForm } from "hooks";
 import { InitialValues, useValidationSchema } from "./hooks";
 
 const LoginPage: React.FC = () => {
-  const { pending } = useAppSelector(state => state.auth);
+  const pending = useAppSelector(state => state.auth.pending);
 
   const [isPassword, setIsPassword] = useState(true);
 

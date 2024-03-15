@@ -9,7 +9,10 @@ import { components } from "./constants";
 import { useHideOverflow } from "./hooks";
 
 const Modal: React.FC = () => {
-  const { modalName, rootId, clickOutsideHandler } = useAppSelector(state => state.modal);
+  const modalName = useAppSelector(state => state.modal.modalName);
+  const rootId = useAppSelector(state => state.modal.rootId);
+  const clickOutsideHandler = useAppSelector(state => state.modal.clickOutsideHandler);
+
   const [isPresent, safeToRemove] = usePresence();
 
   useEffect(() => {
