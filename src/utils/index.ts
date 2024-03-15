@@ -1,6 +1,12 @@
+export { addLangHrefLink } from "./add-hreflang-tags";
 export { checkIsEllipsis } from "./check-is-ellipsis";
 export { parseErrorFromBE } from "./error-parser";
 export { getTimePeriods } from "./get-time-periods";
 export { lazyLoad } from "./loadable";
 export { getFileNameFromSrc } from "./get-file-name-from-src";
-export { removeTrailingSlashIfExists } from "./remove-trailing-slash-if-exist";
+export {
+  removeLangParamFromPathname,
+  removeTrailingSlashIfExists,
+  cutLocaleFromRoute,
+  getLocaleFromRoute,
+} from "./pathname-helpers";

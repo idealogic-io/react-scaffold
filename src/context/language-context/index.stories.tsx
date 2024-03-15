@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useTranslation } from "context";
 import { Button, Heading, Page, Text, Box, Row } from "components";
-import { EN, RU } from "configs/languages";
+import { EN, UA } from "configs/languages";
 import { fetchLocale } from "./helpers";
 
 export default {
@@ -25,7 +25,7 @@ export const LanguageContext: React.FC = () => {
   };
 
   const changeLanguageHandler = () => {
-    const newLanguage = currentLanguage.code === "en" ? RU : EN;
+    const newLanguage = currentLanguage.code === "en" ? UA : EN;
 
     changeLanguage(newLanguage);
   };

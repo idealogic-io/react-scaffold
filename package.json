@@ -36,7 +36,8 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "sitemap": "node ./sitemap-generator.mjs"
   },
   "browserslist": {
     "production": [
