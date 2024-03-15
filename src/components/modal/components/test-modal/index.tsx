@@ -7,12 +7,10 @@ import CloseModalWrapper from "../close-modal-wrapper";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { hideModal } from "store/modal";
 
-import { ModalState } from "store/modal/types";
-
 import { TestModalProps } from "./types";
 
 const TestModal: React.FC = () => {
-  const { props } = useAppSelector(state => state.modal as unknown as ModalState<TestModalProps>);
+  const { title } = useAppSelector(state => state.modal.props as unknown as TestModalProps);
 
   const dispatch = useAppDispatch();
 
@@ -25,7 +23,7 @@ const TestModal: React.FC = () => {
       <CloseModalWrapper closeModalHandler={closeModalHandler} />
 
       <Heading textAlign="center" scale="h5" as="h5">
-        Header with custom prop {props?.title}
+        Header with custom prop {title}
       </Heading>
       <Text textScale="body2">This is a test modal</Text>
     </StyledModalWrapper>

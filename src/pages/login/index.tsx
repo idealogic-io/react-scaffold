@@ -13,7 +13,7 @@ import { InitialValues, useValidationSchema } from "./hooks";
 import { LOCAL_STORAGE_KEYS } from "configs";
 
 const LoginPage: React.FC = () => {
-  const { pending } = useAppSelector(state => state.auth);
+  const pending = useAppSelector(state => state.auth.pending);
 
   const [isPassword, setIsPassword] = useState(true);
 

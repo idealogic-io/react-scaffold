@@ -5,7 +5,7 @@ import { useAppSelector } from "store/store";
 import { ROUTES } from "navigation/routes";
 
 const RequireAuth: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const { token } = useAppSelector(state => state.auth);
+  const token = useAppSelector(state => state.auth.token);
 
   if (!token) {
     return <Navigate to={`/${ROUTES.login}`} replace />;
