@@ -50,7 +50,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
-    "typechain": "typechain --target ethers-v5 --out-dir './src/configs/abi/types' './src/configs/abi/*.json'"
+    "typechain": "typechain --target ethers-v5 --out-dir './src/configs/abi/types' './src/configs/abi/*.json'",
+    "sitemap": "node ./sitemap-generator.mjs"
   },
   "browserslist": {
     "production": [

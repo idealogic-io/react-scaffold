@@ -18,8 +18,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
-
 .env
 /.idea
 yarn.lock
 package-lock.json
+public/sitemap.xml

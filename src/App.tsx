@@ -16,6 +16,8 @@ import {
   useTransactionsUpdater,
   useMulticallUpdater,
 } from "configs/web3";
+// Hooks
+import { useUpdateHrefLangTags } from "hooks";
 // Store
 import store from "store/store";
 // Components
@@ -37,6 +39,7 @@ const ThemedApp: React.FC = () => {
                   <Modal />
                   <Navigation />
                   <StyledToastContainer />
+                  <Updaters />
                 </SocketContextProvider>
               </Web3Provider>
             </Provider>
@@ -52,6 +55,7 @@ const Updaters: React.FC = () => {
   useMulticallUpdater();
   useFetchTokensMap();
   useTransactionsUpdater();
+  useUpdateHrefLangTags();
 
   return null;
 };

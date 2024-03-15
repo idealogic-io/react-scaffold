@@ -20,6 +20,7 @@ export const PageMeta: React.FC = () => {
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content={currentLanguage.locale} />
+      <link href={`${process.env.REACT_APP_URL}${pathname}`} rel="canonical" />
 
       <title>{pageTitle}</title>
     </Helmet>
