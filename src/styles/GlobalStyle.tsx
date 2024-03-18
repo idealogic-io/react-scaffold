@@ -1,28 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-import MerriWeatherRegular from "assets/fonts/Merriweather-Regular.woff2";
-import MerriWeatherBold from "assets/fonts/Merriweather-Bold.woff2";
-
-// Add fonts via link in index.html would be better
-// If font could be added in index.html use that way
-// If font is custom use @font-face.
-// This is just an example of the custom font
 const GlobalStyle = createGlobalStyle`
-@font-face {
-  font-family: "Merriweather";
-  src: url(${MerriWeatherRegular}) format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Merriweather";
-  src: url(${MerriWeatherBold}) format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
