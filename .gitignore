@@ -24,3 +24,7 @@ yarn.lock
 package-lock.json
 
 public/sitemap.xml
+
+package-lock.json
+yarn.lock
+/build
