@@ -9,6 +9,7 @@ export const getDefaultMeta = (t: TranslateFunction) => {
     title: "",
     description: t("Project scaffold is in build progress"),
     image: `${URL}/logo512.png`,
+    keywords: "crypto, token, nft",
   };
 };
 

@@ -16,8 +16,6 @@ import {
   useTransactionsUpdater,
   useMulticallUpdater,
 } from "configs/web3";
-// Hooks
-import { useUpdateHrefLangTags } from "hooks";
 // Store
 import store from "store/store";
 // Components
@@ -55,7 +53,6 @@ const Updaters: React.FC = () => {
   useMulticallUpdater();
   useFetchTokensMap();
   useTransactionsUpdater();
-  useUpdateHrefLangTags();
 
   return null;
 };
