@@ -1,4 +1,3 @@
-export { addLangHrefLink } from "./add-hreflang-tags";
 export { checkIsEllipsis } from "./check-is-ellipsis";
 export { parseErrorFromBE } from "./error-parser";
 export { getTimePeriods } from "./get-time-periods";

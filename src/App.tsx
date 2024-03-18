@@ -7,8 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
 import { LanguageContextProvider, ThemeContextProvider, useThemeContext, SocketContextProvider } from "context";
-// Hooks
-import { useUpdateHrefLangTags } from "hooks";
 // Store
 import store from "store/store";
 // Components
@@ -29,7 +27,6 @@ const ThemedApp: React.FC = () => {
                 <Modal />
                 <Navigation />
                 <StyledToastContainer />
-                <Updaters />
               </SocketContextProvider>
             </Provider>
           </LanguageContextProvider>
@@ -37,11 +34,6 @@ const ThemedApp: React.FC = () => {
       </Suspense>
     </ThemeProvider>
   );
-};
-
-const Updaters: React.FC = () => {
-  useUpdateHrefLangTags();
-  return null;
 };
 
 const App: React.FC = () => {
