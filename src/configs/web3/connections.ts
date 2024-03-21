@@ -64,7 +64,7 @@ const [coinbaseWallet, coinbaseWalletHooks] = initializeConnector<CoinbaseWallet
     new CoinbaseWallet({
       actions,
       options: {
-        url: RPC_URLS[MAINNET_CHAIN_IDS.MAINNET],
+        url: RPC_URLS[MAINNET_CHAIN_IDS.MAINNET][0],
         appName: "Scaffold",
         appLogoUrl: `${URL}/logo192.png`,
         reloadOnDisconnect: false,
@@ -90,6 +90,16 @@ export const coinbaseWalletConnection: Connection = {
   },
 };
 
+// Avoid testing for the best URL by only passing a single URL per chain.
+// Otherwise, WC will not initialize until all URLs have been tested
+const RPC_URLS_WITHOUT_FALLBACKS = Object.entries(RPC_URLS).reduce(
+  (map, [chainId, urls]) => ({
+    ...map,
+    [chainId]: urls[0],
+  }),
+  {},
+);
+
 const [mainnet, ...optionalChains] = Object.values(MAINNET_CHAIN_IDS);
 
 const [walletConnect, walletConnectHooks] = initializeConnector<WalletConnect>(
@@ -103,7 +113,7 @@ const [walletConnect, walletConnectHooks] = initializeConnector<WalletConnect>(
         chains: [mainnet],
         optionalChains: [mainnet, ...optionalChains],
         showQrModal: true,
-        rpcMap: RPC_URLS,
+        rpcMap: RPC_URLS_WITHOUT_FALLBACKS,
         optionalMethods: ["eth_signTypedData", "eth_signTypedData_v4", "eth_sign"],
         qrModalOptions: {
           desktopWallets: undefined,
