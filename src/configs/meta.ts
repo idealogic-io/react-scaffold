@@ -6,10 +6,10 @@ const URL = process.env.REACT_APP_URL;
 
 export const getDefaultMeta = (t: TranslateFunction) => {
   return {
-    title: "",
-    description: t("Project scaffold is in build progress"),
+    title: t("New Scaffold"),
+    description: t("This description should rewrite description from index.html"),
     image: `${URL}/logo512.png`,
-    keywords: "crypto, token, nft",
+    keywords: "new, keys, rewritten",
   };
 };
 
