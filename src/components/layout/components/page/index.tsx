@@ -14,7 +14,6 @@ export const PageMeta: React.FC = () => {
   const { t, currentLanguage } = useTranslation();
 
   const { title, description, image, keywords } = getCustomMeta(pathname, t);
-  const pageTitle = title ? `${title} | ${t("Scaffold")}` : t("Scaffold");
   const correctPath = cutLocaleFromRoute(pathname);
 
   return (
@@ -22,11 +21,11 @@ export const PageMeta: React.FC = () => {
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
 
-      <meta property="twitter:title" content={pageTitle} />
+      <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
 
-      <meta property="og:title" content={pageTitle} />
+      <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content={currentLanguage.locale} />
@@ -40,12 +39,12 @@ export const PageMeta: React.FC = () => {
 
       {languageList.map(({ locale }) => {
         const languageCode = locale === EN.locale ? "" : `/${locale}`;
-        const href = `${process.env.REACT_APP_URL}${languageCode}${correctPath}`;
+        const href = `${process.env.REACT_APP_URL}${languageCode}${removeTrailingSlashIfExists(correctPath)}`;
 
         return <link key={locale} rel="alternate" href={href} hrefLang={locale} />;
       })}
 
-      <title>{pageTitle}</title>
+      <title>{title}</title>
     </Helmet>
   );
 };
