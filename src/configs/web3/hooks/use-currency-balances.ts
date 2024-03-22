@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 import { useMulticallContract, isAddress } from "configs/web3";
 import { useMultipleContractSingleData, useSingleContractMultipleData } from "configs/web3";
-import { ERC20_ABI } from "configs/abi";
+import { ERC20_ABI } from "configs/web3/abi";
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.

@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 
 import { getContract } from "configs/web3";
-import { ERC20_ABI, MULTICALL_ABI, Erc20, Multicall } from "configs/abi";
+import { ERC20_ABI, MULTICALL_ABI, Erc20, Multicall } from "configs/web3/abi";
 import contractsAddresses from "configs/web3/contracts-addresses";
 
 export const useContract = <T extends Contract = Contract>(
