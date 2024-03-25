@@ -26,7 +26,7 @@ class MaticNativeCurrency extends NativeCurrency {
     if (!isMatic(chainId)) {
       throw new Error("Not matic");
     }
-    super(chainId, 18, "MATIC", "Polygon Matic");
+    super(chainId, 18, "MATIC", "Polygon Matic", "/images/chain_images/polygon_chain.webp", "matic-network");
   }
 }
 
@@ -52,7 +52,7 @@ class BscNativeCurrency extends NativeCurrency {
     if (!isBsc(chainId)) {
       throw new Error("Not bnb");
     }
-    super(chainId, 18, "BNB", "BNB");
+    super(chainId, 18, "BNB", "BNB", "/images/chain_images/bnb_chain.webp", "binancecoin");
   }
 }
 
@@ -78,7 +78,7 @@ class AvaxNativeCurrency extends NativeCurrency {
     if (!isAvalanche(chainId)) {
       throw new Error("Not avalanche");
     }
-    super(chainId, 18, "AVAX", "AVAX");
+    super(chainId, 18, "AVAX", "AVAX", "/images/chain_images/avalanche_chain.webp", "avalanche-2");
   }
 }
 

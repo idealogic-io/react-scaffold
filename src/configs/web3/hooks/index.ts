@@ -21,6 +21,7 @@ export {
 export { useEstimateTxFee, useEstimateTransferFee, useEstimateTxFeeNative } from "./use-estimate-network-fee";
 export { useGasPrice } from "./use-gas-price";
 export { useFetchTokensMap, useTokensByChainId, useCurrencyListByChainId } from "./use-tokens";
+export { tokensToChainMap } from "./use-tokens/utils";
 export { useSendTransfer } from "./use-send-transfer";
 export { useTokenAllowance } from "./use-token-allowance";
 export { useApproveCallback } from "./use-approve-callback";
@@ -35,5 +36,5 @@ export { useTransactionsUpdater } from "./use-transactions/updater";
 export { useSingleCallResult, useSingleContractMultipleData, useMultipleContractSingleData } from "./use-multicall";
 export { useMulticallUpdater } from "./use-multicall/updater";
 export { useSWRContract } from "./use-swr-contract";
-export type { TokenInfo, TokenList } from "./use-tokens/types";
+export type { TokenInfo, TokenList, TokenAddressMap, TokenMap } from "./use-tokens/types";
 export { ApprovalState } from "./use-approve-callback";

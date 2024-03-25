@@ -9,6 +9,9 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WMATIC",
     "Wrapped MATIC",
+    undefined,
+    "/images/chain_images/polygon_chain.webp",
+    "matic-network",
   ),
   [TESTNET_CHAIN_IDS.POLYGON_MUMBAI]: new Token(
     TESTNET_CHAIN_IDS.POLYGON_MUMBAI,
@@ -16,6 +19,9 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WMATIC",
     "Wrapped MATIC",
+    undefined,
+    "/images/chain_images/polygon_chain.webp",
+    "matic-network",
   ),
   [MAINNET_CHAIN_IDS.BSC]: new Token(
     MAINNET_CHAIN_IDS.BSC,
@@ -23,6 +29,9 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WBNB",
     "Wrapped BNB",
+    undefined,
+    "/images/chain_images/bnb_chain.webp",
+    "binancecoin",
   ),
   [TESTNET_CHAIN_IDS.BSC_TEST]: new Token(
     TESTNET_CHAIN_IDS.BSC_TEST,
@@ -30,6 +39,9 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WBNB",
     "Wrapped BNB",
+    undefined,
+    "/images/chain_images/bnb_chain.webp",
+    "binancecoin",
   ),
   [MAINNET_CHAIN_IDS.AVAX]: new Token(
     MAINNET_CHAIN_IDS.AVAX,
@@ -37,6 +49,9 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WAVAX",
     "Wrapped AVAX",
+    undefined,
+    "/images/chain_images/avalanche_chain.webp",
+    "avalanche-2",
   ),
   [TESTNET_CHAIN_IDS.FUJI]: new Token(
     TESTNET_CHAIN_IDS.FUJI,
@@ -44,6 +59,9 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WAVAX",
     "Wrapped AVAX",
+    undefined,
+    "/images/chain_images/avalanche_chain.webp",
+    "avalanche-2",
   ),
   [TESTNET_CHAIN_IDS.SEPOLIA]: new Token(
     TESTNET_CHAIN_IDS.SEPOLIA,
@@ -51,5 +69,8 @@ export const WRAPPED_NATIVE_CURRENCY = {
     18,
     "WETH",
     "Wrapped Ether",
+    undefined,
+    "/images/chain_images/ethereum_chain.webp",
+    "ethereum",
   ),
 };

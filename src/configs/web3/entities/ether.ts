@@ -9,7 +9,7 @@ import { WETH9 } from "./weth9";
  */
 export class Ether extends NativeCurrency {
   protected constructor(chainId: number) {
-    super(chainId, 18, "ETH", "Ether");
+    super(chainId, 18, "ETH", "Ether", "/images/chain_images/ethereum_chain.webp", "ethereum");
   }
 
   public get wrapped(): Token {

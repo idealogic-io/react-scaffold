@@ -2,6 +2,9 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const API_PATH = "/api";
+const TOKENS_PATH = "/assets/main/*.json";
+
+const apiPathRegex = `^${API_PATH}`;
 
 const onProxyRes = (proxyRes, req) => {
   const {
@@ -14,11 +17,18 @@ const onProxyRes = (proxyRes, req) => {
 };
 
 module.exports = app => {
-  const filesRegex = `^${API_PATH}`;
   app.use(
     createProxyMiddleware(API_PATH, {
       target: process.env.REACT_APP_API_PROXY_URL,
-      pathRewrite: { [filesRegex]: "" },
+      pathRewrite: { [apiPathRegex]: "" },
+      changeOrigin: true,
+      onProxyRes,
+    }),
+  );
+
+  app.use(
+    createProxyMiddleware(TOKENS_PATH, {
+      target: process.env.REACT_APP_TOKENS_PROXY_URL,
       changeOrigin: true,
       onProxyRes,
     }),

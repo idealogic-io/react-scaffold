@@ -16,7 +16,7 @@ export const Images = () => {
 
         return (
           <Flex key={i} m="8px" justifyContent="center" width="100%">
-            <Image src={`/images/${img}`} width="503px" aspectRatio={0.87} />
+            <Image src={`/images/${img}`} width="72px" aspectRatio={1} />
           </Flex>
         );
       })}

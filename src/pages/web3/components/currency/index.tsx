@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import BigNumber from "bignumber.js";
 import { parseUnits } from "@ethersproject/units";
 
-import { Button, Column, Flex, InputGroup, InputNumeric, Skeleton, Text } from "components";
+import { Button, Column, Flex, Image, InputGroup, InputNumeric, Skeleton, Text } from "components";
 
 import {
   maxAmountToSpend,
@@ -61,6 +61,7 @@ export const Currency: React.FC<CurrencyProps> = ({ currency, currencyAmount, ch
 
   return (
     <Column alignItems="center" my="12px">
+      <Image src={currency.logoURI ?? ""} aspectRatio={1} width="32px" variant="circle" />
       <Text textScale="body3">{currency.name}</Text>
       <Text textScale="body3">{currency.symbol}</Text>
       <Text textScale="body3">Decimals: {currency.decimals}</Text>

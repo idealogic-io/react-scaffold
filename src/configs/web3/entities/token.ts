@@ -23,6 +23,9 @@ export class Token extends BaseCurrency {
    * @param symbol {@link BaseCurrency#symbol}
    * @param name {@link BaseCurrency#name}
    * @param bypassChecksum If true it only checks for length === 42, startsWith 0x and contains only hex characters
+   * @param logoURI  {@link BaseCurrency#logoURI}
+   * @param coingeckoId  {@link BaseCurrency#coingeckoId}
+   *
    */
   public constructor(
     chainId: number,
@@ -31,8 +34,10 @@ export class Token extends BaseCurrency {
     symbol?: string,
     name?: string,
     bypassChecksum?: boolean,
+    logoURI?: string,
+    coingeckoId?: string,
   ) {
-    super(chainId, decimals, symbol, name);
+    super(chainId, decimals, symbol, name, logoURI, coingeckoId);
     if (bypassChecksum) {
       this.address = checkValidAddress(address);
     } else {

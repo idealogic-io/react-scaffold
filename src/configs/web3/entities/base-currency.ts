@@ -31,6 +31,14 @@ export abstract class BaseCurrency {
    * The name of the currency, i.e. a descriptive textual non-unique identifier
    */
   public readonly name?: string;
+  /**
+   * The logo URI of the currency
+   */
+  public readonly logoURI?: string;
+  /**
+   * The id to get fiat rates from
+   */
+  public readonly coingeckoId?: string;
 
   /**
    * Constructs an instance of the base class `BaseCurrency`.
@@ -38,8 +46,17 @@ export abstract class BaseCurrency {
    * @param decimals decimals of the currency
    * @param symbol symbol of the currency
    * @param name of the currency
+   * @param logoURI image of the currency
+   * @param coingeckoId The id to get rates from
    */
-  protected constructor(chainId: number, decimals: number, symbol?: string, name?: string) {
+  protected constructor(
+    chainId: number,
+    decimals: number,
+    symbol?: string,
+    name?: string,
+    logoURI?: string,
+    coingeckoId?: string,
+  ) {
     invariant(Number.isSafeInteger(chainId), "CHAIN_ID");
     invariant(decimals >= 0 && decimals < 255 && Number.isInteger(decimals), "DECIMALS");
 
@@ -47,6 +64,8 @@ export abstract class BaseCurrency {
     this.decimals = decimals;
     this.symbol = symbol;
     this.name = name;
+    this.logoURI = logoURI;
+    this.coingeckoId = coingeckoId;
   }
 
   /**

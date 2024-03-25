@@ -1,3 +1,5 @@
+import { Token } from "configs/web3/entities";
+
 export interface TokenInfo {
   readonly chainId: number;
   readonly address: string;
@@ -6,10 +8,11 @@ export interface TokenInfo {
   readonly symbol: string;
   readonly logoURI?: string;
   readonly tags?: string[];
+  readonly coingeckoId?: string;
 }
 
-export interface TokenList {
-  readonly name: string;
-  readonly version: string;
-  readonly tokens: TokenInfo[];
-}
+export type TokenList = TokenInfo[];
+
+export type TokenMap = { [tokenAddress: string]: Token };
+
+export type TokenAddressMap = { [chainId: number]: TokenMap };

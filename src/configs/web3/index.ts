@@ -54,6 +54,7 @@ export {
   useSingleContractMultipleData,
   useMultipleContractSingleData,
   useMulticallUpdater,
+  tokensToChainMap,
   ApprovalState,
 } from "./hooks";
 export {
@@ -83,10 +84,11 @@ export {
 } from "./utils";
 export { nativeOnChain } from "./native-tokens";
 export { ZERO } from "./constants";
+export { BASE_TOKENS_LIST_URL, URL_ID_BY_CHAIN_ID, TOKENS_URLS, getTokenListUrlByChain } from "./tokens-list";
 
 export { BaseCurrency, Token, NativeCurrency, CurrencyAmount } from "./entities";
 export type { Currency } from "./entities";
 export type { ChainId, Connection } from "./types";
 export { ConnectionType } from "./types";
 export type { UserRejectedRequestError, WalletError } from "./utils";
-export type { TokenInfo, TokenList } from "./hooks";
+export type { TokenInfo, TokenList, TokenAddressMap, TokenMap } from "./hooks";

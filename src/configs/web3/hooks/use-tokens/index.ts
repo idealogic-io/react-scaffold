@@ -1,40 +1,41 @@
-import useSWR, { useSWRConfig } from "swr";
-import useSWRImmutable from "swr/immutable";
+import useSWR from "swr";
+import { useMemo } from "react";
 
-import { TokenAddressMap, TokenMap, fetchAllTokens, tokensToChainMap } from "./utils";
-import { useNativeCurrency } from "configs/web3";
-
+import { MAINNET_CHAIN_IDS, TOKENS_URLS, Token, TokenMap, nativeOnChain } from "configs/web3";
 import { ChainId } from "configs/web3/types";
+import { useAppDispatch, useAppSelector } from "store/store";
+import { getTokensListByChain } from "store/tokens/actions";
 
 export const useFetchTokensMap = () => {
-  const { mutate } = useSWRConfig();
+  const dispatch = useAppDispatch();
 
-  const { isValidating } = useSWR("getTokensList", async () => {
-    const tokens = await fetchAllTokens();
-
-    const mapOfTokens = tokensToChainMap(tokens);
-
-    mutate("tokensMap", mapOfTokens);
+  useSWR("getTokenList", () => dispatch(getTokensListByChain({ urls: TOKENS_URLS, additionalTokens: [] })), {
+    revalidateOnFocus: false,
   });
-
-  mutate("tokensMapLoading", isValidating);
 };
 
-export const useTokensByChainId = (chainId?: ChainId): { tokens: TokenMap; isLoading: boolean } => {
-  const { data = {} } = useSWRImmutable<TokenAddressMap>("tokensMap");
-  const { data: isLoading } = useSWRImmutable("tokensMapLoading");
+export const useTokensByChainId = (chainId: ChainId | undefined): { tokens: TokenMap; isLoading: boolean } => {
+  const tokensList = useAppSelector(state => state.tokens.tokensList);
+  const pending = useAppSelector(state => state.tokens.pending);
 
-  return { tokens: chainId && chainId in data ? data[chainId] : {}, isLoading };
+  return useMemo(() => {
+    const tokens = tokensList && chainId && chainId in tokensList ? tokensList[chainId] : {};
+
+    return { tokens, isLoading: pending };
+  }, [tokensList, pending, chainId]);
 };
 
-export const useCurrencyListByChainId = (chainId?: ChainId) => {
+export const useCurrencyListByChainId = (chainId: ChainId | undefined) => {
   const { tokens, isLoading } = useTokensByChainId(chainId);
-  const native = useNativeCurrency(chainId);
-  const wrapped = native.wrapped;
 
-  const tokensList = Object.values(tokens);
+  return useMemo(() => {
+    const native = nativeOnChain(chainId || MAINNET_CHAIN_IDS.MAINNET);
+    // const wrapped = native.wrapped;
+    // TODO wrapped tokens already coming from tokens.json
+    // In next iteration u should uncomment next lines and add wrapped in list array
+    const tokensList: Token[] = Object.values(tokens);
+    // const filteredTokensList = tokensList.filter(token => !token.equals(wrapped) && !token.isNative);
 
-  const filteredTokensList = tokensList.filter(token => !token.equals(wrapped) && !token.isNative);
-
-  return { list: [native, wrapped, ...filteredTokensList], isLoading };
+    return { list: [native, ...tokensList], isLoading };
+  }, [tokens, isLoading]);
 };
