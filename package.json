@@ -51,7 +51,8 @@
     "build-storybook": "storybook build",
     "prepare": "husky install",
     "typechain": "typechain --target ethers-v5 --out-dir './src/configs/web3/abi/types' './src/configs/web3/abi/*.json'",
-    "sitemap": "node ./sitemap-generator.mjs"
+    "sitemap": "node ./sitemap-generator.mjs",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "browserslist": {
     "production": [
@@ -83,6 +84,7 @@
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "react-app-rewired": "^2.2.1",
+    "source-map-explorer": "^2.5.3",
     "storybook": "^7.4.1",
     "typechain": "^8.3.2",
     "webpack": "^5.88.2"
