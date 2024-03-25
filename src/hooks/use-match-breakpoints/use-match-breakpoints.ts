@@ -1,12 +1,10 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { breakpointMap } from "theme/base";
 import { MediaQueries } from "theme/types";
 
 type State = {
   [key: string]: boolean;
 };
-
-const useIsomorphicEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 const mediaQueries: MediaQueries = (() => {
   let prevMinWidth = 0;
@@ -65,7 +63,7 @@ const getState = () => {
 const useMatchBreakpoints = () => {
   const [state, setState] = useState<State>(() => getState());
 
-  useIsomorphicEffect(() => {
+  useEffect(() => {
     // Create listeners for each media query returning a function to unsubscribe
     const handlers = (Object.keys(mediaQueries) as Array<keyof MediaQueries>).map(size => {
       let mql: MediaQueryList;
