@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, Suspense } from "react";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "styled-components";
+import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { Web3ReactHooks, Web3ReactProvider } from "@web3-react/core";
 import { Connector } from "@web3-react/types";
@@ -21,6 +21,8 @@ import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
 
+import { shouldForwardProp } from "utils";
+
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
@@ -28,20 +30,22 @@ const ThemedApp: React.FC = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
 
-      <Suspense fallback={<Loader />}>
-        <LanguageContextProvider fallback={<Loader />}>
-          <Provider store={store}>
-            <Web3Provider>
-              <SocketContextProvider>
-                <Modal />
-                <StyledToastContainer />
-                <Outlet />
-                <Updaters />
-              </SocketContextProvider>
-            </Web3Provider>
-          </Provider>
-        </LanguageContextProvider>
-      </Suspense>
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Suspense fallback={<Loader />}>
+          <LanguageContextProvider fallback={<Loader />}>
+            <Provider store={store}>
+              <Web3Provider>
+                <SocketContextProvider>
+                  <Modal />
+                  <StyledToastContainer />
+                  <Outlet />
+                  <Updaters />
+                </SocketContextProvider>
+              </Web3Provider>
+            </Provider>
+          </LanguageContextProvider>
+        </Suspense>
+      </StyleSheetManager>
     </ThemeProvider>
   );
 };

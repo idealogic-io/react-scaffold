@@ -2,12 +2,13 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "styled-components";
+import { StyleSheetManager, ThemeProvider } from "styled-components";
 
 import { GlobalStyle, StyledToastContainer } from "../src/styles";
 import { LanguageContextProvider, ThemeContextProvider, useThemeContext } from "../src/context";
 import { Loader, Modal } from "../src/components";
 import store from "../src/store/store";
+import { shouldForwardProp } from "../src/utils";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,14 +17,16 @@ const ThemedApp = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <LanguageContextProvider fallback={<Loader />}>
-        <Provider store={store}>
-          <GlobalStyle />
-          <Modal />
-          <StyledToastContainer />
-          {children}
-        </Provider>
-      </LanguageContextProvider>
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <LanguageContextProvider fallback={<Loader />}>
+          <Provider store={store}>
+            <GlobalStyle />
+            <Modal />
+            <StyledToastContainer />
+            {children}
+          </Provider>
+        </LanguageContextProvider>
+      </StyleSheetManager>
     </ThemeProvider>
   );
 };
