@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "styled-components";
+import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { Outlet, ScrollRestoration } from "react-router-dom";
 // Styles
@@ -12,6 +12,8 @@ import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
 
+import { shouldForwardProp } from "utils";
+
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
 
@@ -19,17 +21,19 @@ const ThemedApp: React.FC = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
 
-      <Suspense fallback={<Loader />}>
-        <LanguageContextProvider fallback={<Loader />}>
-          <Provider store={store}>
-            <SocketContextProvider>
-              <Modal />
-              <StyledToastContainer />
-              <Outlet />
-            </SocketContextProvider>
-          </Provider>
-        </LanguageContextProvider>
-      </Suspense>
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Suspense fallback={<Loader />}>
+          <LanguageContextProvider fallback={<Loader />}>
+            <Provider store={store}>
+              <SocketContextProvider>
+                <Modal />
+                <StyledToastContainer />
+                <Outlet />
+              </SocketContextProvider>
+            </Provider>
+          </LanguageContextProvider>
+        </Suspense>
+      </StyleSheetManager>
     </ThemeProvider>
   );
 };

@@ -18,11 +18,11 @@ export const InputGroup: React.FC = () => {
       </StyledInputGroup>
 
       <StyledInputGroup label="Label" startIcon={<InfoIcon />} endIcon={<InfoIcon />}>
-        <Input value="Disabled" disabled />
+        <Input defaultValue="Disabled" disabled />
       </StyledInputGroup>
 
       <StyledInputGroup label="Label" error="Error" isTouched startIcon={<InfoIcon />} endIcon={<InfoIcon />}>
-        <Input value="With Error" />
+        <Input defaultValue="With Error" />
       </StyledInputGroup>
     </>
   );

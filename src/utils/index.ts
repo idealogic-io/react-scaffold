@@ -9,3 +9,4 @@ export {
   cutLocaleFromRoute,
   getLocaleFromRoute,
 } from "./pathname-helpers";
+export { shouldForwardProp } from "./styled-components-helpers";
