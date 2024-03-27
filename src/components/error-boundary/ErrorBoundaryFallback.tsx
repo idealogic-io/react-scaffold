@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ROUTES } from "navigation/routes";
+import { ROUTES } from "router/routes";
 
-import { Flex, Heading, Text, Button } from "components";
+import "./styles.css";
 
 import { ErrorBoundaryFallbackProps } from "./types";
 
@@ -11,23 +11,22 @@ const ErrorBoundaryFallback: React.FC<ErrorBoundaryFallbackProps> = ({ error, re
   const navigate = useNavigate();
 
   const onPressHandler = () => {
-    resetError();
-    navigate(ROUTES.landing);
+    resetError?.();
+    navigate(ROUTES.root);
   };
 
   return (
-    <Flex justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-      <Heading as="h1" scale="h1">
-        Something went wrong!
-      </Heading>
-      <Text mt="8px" textScale="body1">{error?.toString()}</Text>
-      <Heading mt="8px" as="h2" scale="h2">
-        Please, go to home page
-      </Heading>
-      <Button mt="8px" scale="lg" onClick={onPressHandler}>
+    <div className="error-container">
+      <h1 className="error-container__title">Something went wrong!</h1>
+
+      {error && <p className="error-container__message">{error?.toString()}</p>}
+
+      <h2 className="error-container__sub-title">Please, go to home page</h2>
+
+      <button className="error-container__button" onClick={onPressHandler}>
         Go to home page
-      </Button>
-    </Flex>
+      </button>
+    </div>
   );
 };
 

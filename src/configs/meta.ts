@@ -1,5 +1,5 @@
 import { TranslateFunction } from "context/language-context/types";
-import { ROUTES } from "navigation/routes";
+import { ROUTES } from "router/routes";
 import { removeTrailingSlashIfExists } from "utils/pathname-helpers";
 
 const URL = process.env.REACT_APP_URL;

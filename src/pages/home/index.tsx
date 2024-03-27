@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import { Button, Column, Heading, Link, Page } from "components";
+import { Button, Column, Heading, Page } from "components";
 // Context
 import { useTranslation } from "context";
 // Store
@@ -23,7 +23,6 @@ const HomePage: React.FC = () => {
           {t("Logout")}
         </Button>
       </Column>
-      <Link href="/">{t("Link to Home page")}</Link>
     </Page>
   );
 };

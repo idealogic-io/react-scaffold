@@ -9,7 +9,7 @@ import prettier from "prettier";
 const DOMAIN = "https://idealogic.dev";
 
 const ROUTES = {
-  landing: "/",
+  root: "/",
   home: "home",
   login: "login",
 };
