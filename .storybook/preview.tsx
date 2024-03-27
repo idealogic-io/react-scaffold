@@ -30,15 +30,28 @@ const ThemedApp = ({ children }) => {
 
 const globalDecorator = (StoryFn: React.FC) => {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <ThemeContextProvider>
-          <ThemedApp>
-            <StoryFn />
-          </ThemedApp>
-        </ThemeContextProvider>
-      </BrowserRouter>
-    </HelmetProvider>
+    <>
+      <HelmetProvider>
+        <BrowserRouter>
+          <ThemeContextProvider>
+            <ThemedApp>
+              <StoryFn />
+            </ThemedApp>
+          </ThemeContextProvider>
+        </BrowserRouter>
+      </HelmetProvider>
+
+      <link
+        rel="preload"
+        href="/fonts/Merriweather-Regular.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+      <link rel="preload" href="/fonts/Merriweather-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+
+      <link href="/css/fonts.css" rel="stylesheet" />
+    </>
   );
 };
 

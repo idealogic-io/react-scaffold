@@ -1,5 +1,5 @@
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { ROUTES } from "navigation/routes";
+import { ROUTES } from "router/routes";
 
 export type ModalState<T> = {
   modalName: null | keyof typeof ModalNames;

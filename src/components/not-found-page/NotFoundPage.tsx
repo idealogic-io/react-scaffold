@@ -5,7 +5,7 @@ import { StyledNotFoundPage } from "./styled";
 
 import { Heading, Button } from "components";
 
-import { ROUTES } from "navigation/routes";
+import { ROUTES } from "router/routes";
 import { useTranslation } from "context";
 
 const NotFoundPage: React.FC = () => {

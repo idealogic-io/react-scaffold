@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-import { SEARCH_PARAMS } from "navigation/routes";
+import { SEARCH_PARAMS } from "router/routes";
 import { ChainId, MAINNET_CHAIN_IDS, parseChainIdFromString } from "configs/web3";
 
 export const useQueryChainId = () => {

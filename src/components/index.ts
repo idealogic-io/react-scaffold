@@ -25,3 +25,5 @@ export {
 export { default as Checkbox } from "./checkbox";
 export { Switcher } from "./switcher";
 export { SingleSelect, MultipleSelect } from "./selects";
+export { default as Header } from "./header";
+export { MainOutlet, AuthOutlet } from "./outlets";

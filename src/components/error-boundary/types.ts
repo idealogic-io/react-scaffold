@@ -9,6 +9,6 @@ export interface ErrorBoundaryState {
 }
 
 export type ErrorBoundaryFallbackProps = {
-  error: ErrorBoundaryState["error"];
-  resetError: () => void;
+  error?: ErrorBoundaryState["error"];
+  resetError?: () => void;
 };

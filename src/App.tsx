@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { Web3ReactHooks, Web3ReactProvider } from "@web3-react/core";
 import { Connector } from "@web3-react/types";
-import { BrowserRouter } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 // Styles
 import { GlobalStyle, StyledToastContainer } from "styles";
 // Context
@@ -20,29 +20,27 @@ import {
 import store from "store/store";
 // Components
 import { ErrorBoundary, Loader, Modal, ErrorBoundaryFallback } from "components";
-import Navigation from "navigation";
 
 const ThemedApp: React.FC = () => {
   const { theme } = useThemeContext();
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
 
       <Suspense fallback={<Loader />}>
-        <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
-          <LanguageContextProvider fallback={<Loader />}>
-            <Provider store={store}>
-              <Web3Provider>
-                <SocketContextProvider>
-                  <Modal />
-                  <Navigation />
-                  <StyledToastContainer />
-                  <Updaters />
-                </SocketContextProvider>
-              </Web3Provider>
-            </Provider>
-          </LanguageContextProvider>
-        </ErrorBoundary>
+        <LanguageContextProvider fallback={<Loader />}>
+          <Provider store={store}>
+            <Web3Provider>
+              <SocketContextProvider>
+                <Modal />
+                <StyledToastContainer />
+                <Outlet />
+                <Updaters />
+              </SocketContextProvider>
+            </Web3Provider>
+          </Provider>
+        </LanguageContextProvider>
       </Suspense>
     </ThemeProvider>
   );
@@ -71,13 +69,15 @@ const Web3Provider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <ErrorBoundary fallbackComponent={ErrorBoundaryFallback}>
       <HelmetProvider>
         <ThemeContextProvider>
           <ThemedApp />
         </ThemeContextProvider>
       </HelmetProvider>
-    </BrowserRouter>
+
+      <ScrollRestoration />
+    </ErrorBoundary>
   );
 };
 
