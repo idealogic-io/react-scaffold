@@ -29,7 +29,7 @@ export const Currency: React.FC<CurrencyProps> = ({ currency, currencyAmount, ch
   const tokenContract = useTokenContract(token.address);
   const nativeCurrency = useNativeCurrency(chainId);
 
-  const value = parseUnits(input || "0", currency.decimals);
+  const value = parseUnits(inputBigNumber.toFixed(18), currency.decimals);
   const maxInputAmount = useMemo(() => maxAmountToSpend(currencyAmount), [currencyAmount]);
 
   const showMaxButton = maxInputAmount && maxInputAmount.amount.gt(0) && !inputBigNumber.eq(maxInputAmount.amount);
