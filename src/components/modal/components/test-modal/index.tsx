@@ -22,7 +22,7 @@ const TestModal: React.FC = () => {
     <StyledModalWrapper>
       <CloseModalWrapper closeModalHandler={closeModalHandler} />
 
-      <Heading textAlign="center" scale="h5" as="h5">
+      <Heading textAlign="center" scale="h4" as="h4">
         Header with custom prop {title}
       </Heading>
       <Text textScale="body2">This is a test modal</Text>

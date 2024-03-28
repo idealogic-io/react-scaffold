@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 // Components
 import { StyledInput } from "./styled";
-import Cells from "./Cells";
+import Cells from "./cells";
 // Types
 import { InputProps } from "../input/types";
 import { InputCodeProps } from "./types";
@@ -17,7 +17,7 @@ export const InputCode = <E extends React.ElementType = "input">({
   isError,
   autoFocus = true,
   onUserInput,
-  cellHeigh,
+  cellHeight,
   cellWidth,
   ...props
 }: InputProps<E> & InputCodeProps): JSX.Element => {
@@ -45,8 +45,8 @@ export const InputCode = <E extends React.ElementType = "input">({
           value={value}
           isFocused={isFocused}
           isError={isError}
-          width={cellWidth}
-          height={cellHeigh}
+          cellWidth={cellWidth}
+          cellHeight={cellHeight}
         />
 
         <StyledInput

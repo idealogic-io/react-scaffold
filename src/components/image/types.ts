@@ -1,3 +1,5 @@
+import { ResponsiveValue } from "styled-system";
+
 import { BoxProps } from "components/layout/components/types";
 import { SkeletonProps } from "components/skeleton/types";
 
@@ -9,5 +11,5 @@ export interface ImageProps extends ImageDimensions, BoxProps {
   src: string;
   alt?: string;
   animation?: SkeletonProps["animation"];
-  aspectRatio: number;
+  aspectRatio: ResponsiveValue<number>;
 }

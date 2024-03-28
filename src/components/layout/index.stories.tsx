@@ -46,15 +46,28 @@ export const Flexes: React.FC = () => {
     <>
       <>
         <Text textAlign="center">Flex justify center</Text>
-        <Flex flex={1} justifyContent="center">
+        <Flex justifyItems={{ _: "center", mobile: "end" }} flex={1} justifyContent="center">
           <Square />
         </Flex>
       </>
 
       <>
-        <Text textAlign="center">Flex Gap</Text>
+        <Text textAlign="center">Flex Gap Row+Column</Text>
 
-        <FlexGap rowGap="20px" columnGap="10px" flexWrap="wrap" justifyContent="center">
+        <FlexGap
+          rowGap={{ _: "6px", tablet: "24px" }}
+          columnGap={{ _: "10px", tablet: "12px" }}
+          flexWrap="wrap"
+          justifyContent="center"
+        >
+          {Array.from({ length: 20 }).map((_, i) => (
+            <Square m="0px !important" key={i} />
+          ))}
+        </FlexGap>
+
+        <Text textAlign="center">Flex Gap Gap</Text>
+
+        <FlexGap gap={{ _: "2px", tablet: "24px" }} my="12px" flexWrap="wrap" justifyContent="center">
           {Array.from({ length: 20 }).map((_, i) => (
             <Square m="0px !important" key={i} />
           ))}

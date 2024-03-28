@@ -43,6 +43,14 @@ export const Texts = () => {
 
       <Text direction="rtl">Direction rtl</Text>
       <hr />
+
+      <Text textScale={{ _: "caption1", tablet: "body1" }} as="span">
+        Responsive Text Scale
+      </Text>
+      <hr />
+
+      <Text $fontWeight={{ _: "regular", tablet: "bold" }}>Responsive fontWeight</Text>
+      <hr />
     </>
   );
 };

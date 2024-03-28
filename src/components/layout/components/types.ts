@@ -1,7 +1,8 @@
 import { HTMLAttributes, PropsWithChildren } from "react";
 import { DefaultTheme } from "styled-components";
+import { CSS } from "styled-components/dist/types";
 
-import { BorderProps, FlexboxProps, LayoutProps, PositionProps, SpaceProps } from "styled-system";
+import { BorderProps, FlexboxProps, LayoutProps, PositionProps, ResponsiveValue, SpaceProps } from "styled-system";
 import { Colors } from "theme/types";
 
 export interface ColumnProps extends FlexProps {}
@@ -25,9 +26,12 @@ export interface PageProps extends PropsWithChildren<BoxProps> {
   image?: string;
 }
 
-export interface FlexGapProps extends FlexProps {
-  gap?: string;
-  rowGap?: string;
-  columnGap?: string;
-}
+export interface FlexGapProps extends FlexProps, GapProps {}
+
+export type GapProps = {
+  gap?: ResponsiveValue<CSS.Property.Gap>;
+  rowGap?: ResponsiveValue<CSS.Property.RowGap>;
+  columnGap?: ResponsiveValue<CSS.Property.ColumnGap>;
+};
+
 export interface RowProps extends FlexProps {}

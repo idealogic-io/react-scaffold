@@ -34,6 +34,8 @@ export const InputCode: React.FC = () => {
           cellCount={MIN_LENGTH}
           onUserInput={onUserInput}
           value={value}
+          cellWidth={{ _: "44px", tablet: "56px" }}
+          cellHeight={{ _: "44px", tablet: "56px" }}
           onFocus={() => setIsTouched(false)}
           onBlur={() => setIsTouched(true)}
           isFocused={isTouched === false}
