@@ -1,12 +1,12 @@
 import React from "react";
 // Components
 import { Text } from "components";
-import { StyledNumericInput, StyledInputContainer } from "./styled";
-import { Cursor } from "./Cursor";
+import { StyledNumericInput, StyledInputContainer } from "../styled";
+import { Cursor } from "../cursor";
 // Types
-import { CellsProps } from "./types";
+import { CellsProps } from "../types";
 
-const Cells: React.FC<CellsProps> = ({ cellCount, value, isFocused, isError, width = 44, height = 44 }) => {
+const Cells: React.FC<CellsProps> = ({ cellCount, value, isFocused, isError, cellWidth = 44, cellHeight = 44 }) => {
   return (
     <StyledInputContainer>
       {Array.from({ length: cellCount }).map((_, i) => {
@@ -20,8 +20,8 @@ const Cells: React.FC<CellsProps> = ({ cellCount, value, isFocused, isError, wid
             value={textValue}
             isFocusedValue={isFocusedValue}
             isError={isError}
-            width={width}
-            height={height}
+            width={cellWidth}
+            height={cellHeight}
           >
             {isFocusedValue || (isLastNFocus && !!textValue) ? (
               <Cursor delay={500} isLastNFocus={isLastNFocus} value={textValue} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Text } from "components";
 
-import { CursorProps } from "./types";
+import { CursorProps } from "../types";
 
 export const DEFAULT_BLINKING_SPEED = 300;
 export const DEFAULT_CURSOR_SYMBOL = "|";

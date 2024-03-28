@@ -1,13 +1,16 @@
 import styled from "styled-components";
-import { Box } from "../container";
 
-export const ResponsiveBoxWrapper = styled(Box)<{ aspectRatio: number }>`
+import { Box } from "../container";
+import { ResponsiveBoxProps } from "./types";
+import { aspectRatio } from "./theme";
+
+export const ResponsiveBoxWrapper = styled(Box)<ResponsiveBoxProps>`
   position: relative;
 
   &::before {
     content: "";
     display: block;
-    padding-top: ${({ aspectRatio }) => (1 / aspectRatio) * 100}%; /* Calculate padding based on aspect ratio */
+    ${aspectRatio}
   }
 `;
 

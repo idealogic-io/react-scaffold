@@ -1,27 +1,24 @@
+import { LayoutProps } from "styled-system";
+
 export type CursorProps = { cursorSymbol?: string; delay?: number; isLastNFocus: boolean | undefined; value: string };
 
-export type CellsProps = {
-  cellCount: number;
+export interface CellsProps extends Omit<InputCodeProps, "onUserInput"> {
   value: string;
-  isFocused: boolean | undefined;
-  isError: boolean;
-  width?: number;
-  height?: number;
-};
+}
 
-export type InputCodeProps = {
+export interface InputCodeProps {
   onUserInput: (value: string) => void;
-  cellCount?: number;
+  cellCount: number;
   isFocused: boolean | undefined;
   isError: boolean;
-  cellWidth?: number;
-  cellHeigh?: number;
-};
+  cellWidth?: LayoutProps["width"];
+  cellHeight?: LayoutProps["height"];
+}
 
 export type StyledNumericInputProps = {
   value: string;
   isFocusedValue: boolean | undefined;
   isError: boolean;
-  width: number;
-  height: number;
+  width: CellsProps["cellWidth"];
+  height: CellsProps["cellHeight"];
 };

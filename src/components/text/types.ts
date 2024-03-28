@@ -1,5 +1,5 @@
 import { DefaultTheme } from "styled-components";
-import { LayoutProps, SpaceProps, TypographyProps, OpacityProps, FlexboxProps } from "styled-system";
+import { LayoutProps, SpaceProps, TypographyProps, OpacityProps, FlexboxProps, ResponsiveValue } from "styled-system";
 
 import { Colors, FontWeight } from "theme/types";
 
@@ -20,9 +20,9 @@ export type Scales = (typeof scales)[keyof typeof scales];
 export interface TextProps extends SpaceProps, TypographyProps, LayoutProps, OpacityProps, FlexboxProps {
   color?: keyof Colors;
   ellipsis?: boolean;
-  $fontWeight?: keyof FontWeight;
+  $fontWeight?: ResponsiveValue<keyof FontWeight>;
   textTransform?: "uppercase" | "lowercase" | "capitalize";
-  textScale?: Scales;
+  textScale?: ResponsiveValue<Scales>;
   direction?: "ltr" | "rtl";
   wordBreak?: React.CSSProperties["wordBreak"];
 }

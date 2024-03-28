@@ -3,6 +3,7 @@ import { flexbox } from "styled-system";
 
 import { Box } from "../container";
 import { FlexGapProps, FlexProps } from "../types";
+import { gap } from "./theme";
 
 export const Flex = styled(Box)<FlexProps>`
   display: flex;
@@ -10,7 +11,5 @@ export const Flex = styled(Box)<FlexProps>`
 `;
 
 export const FlexGap = styled(Flex)<FlexGapProps>`
-  gap: ${({ gap }) => gap};
-  row-gap: ${({ rowGap }) => rowGap};
-  column-gap: ${({ columnGap }) => columnGap};
+  ${gap}
 `;

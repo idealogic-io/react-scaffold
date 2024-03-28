@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import { LayoutProps, layout } from "styled-system";
 
 import { Input } from "../input";
 import { StyledNumericInputProps } from "./types";
@@ -32,6 +33,8 @@ export const StyledInputContainer = styled.div`
   justify-content: space-between;
   flex-direction: row;
   display: flex;
+  column-gap: 12px;
+  width: fit-content;
 `;
 
 export const StyledInput = styled(Input)`
@@ -45,10 +48,8 @@ export const StyledInput = styled(Input)`
   opacity: 0.02;
 `;
 
-export const StyledNumericInput = styled.div<StyledNumericInputProps>`
+export const StyledNumericInput = styled.div<StyledNumericInputProps & LayoutProps>`
   display: flex;
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
   align-items: center;
   justify-content: center;
   border-radius: ${({ theme }) => theme.radii.semiMedium};
@@ -57,9 +58,11 @@ export const StyledNumericInput = styled.div<StyledNumericInputProps>`
       isError
         ? theme.colors.error400
         : !!value || isFocusedValue
-        ? theme.colors.monochrome500
-        : theme.colors.transparent};
+          ? theme.colors.monochrome500
+          : theme.colors.transparent};
   background-color: ${({ theme, isError }) => (isError ? theme.colors.error100 : theme.colors.monochrome100)};
   transition: 0.3s all ease;
   ${({ isError }) => isError && shakeAnimation}
+
+  ${layout}
 `;

@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
 import { space, typography, layout, opacity, flexbox } from "styled-system";
-import { TextProps, ThemedProps } from "./types";
-import { fontSizes, styles } from "./theme";
+import { fontWeights, styles } from "./theme";
+import { getStylesFromResponsiveValue } from "utils";
+
+import { Scales, TextProps, ThemedProps } from "./types";
 
 export const getEllipsis = ({ ellipsis }: ThemedProps) => {
   if (ellipsis) {
@@ -23,20 +25,12 @@ export const wordBreak = ({ wordBreak }: ThemedProps) => {
 
 export const Text = styled.p<TextProps>`
   color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.monochrome900)};
-  font-weight: ${({ theme, $fontWeight }) => $fontWeight && theme.fontWeight[$fontWeight]};
   line-height: 1.375;
   font-family: ${({ theme }) => theme.fonts.merriweather};
 
-  ${({ textScale }) => textScale && styles[textScale]};
+  ${fontWeights}
 
-  font-size: ${({ textScale }) => textScale && fontSizes[textScale].mobile};
-
-  ${({ theme }) => theme.mediaQueries.tablet} {
-    font-size: ${({ textScale }) => textScale && fontSizes[textScale].tablet};
-  }
-  ${({ theme }) => theme.mediaQueries.laptop} {
-    font-size: ${({ textScale }) => textScale && fontSizes[textScale].laptop};
-  }
+  ${({ textScale }) => textScale && getStylesFromResponsiveValue<Scales>(textScale, styles)}
 
   ${wordBreak}
   ${getEllipsis}

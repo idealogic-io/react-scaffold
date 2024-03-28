@@ -18,6 +18,10 @@ export const Headings: React.FC = () => {
           </div>
         );
       })}
+
+      <Heading scale={{ _: "h4", tablet: "h2" }} as="h4">
+        Responsive Heading Scale
+      </Heading>
     </>
   );
 };

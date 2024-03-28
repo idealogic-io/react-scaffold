@@ -1,40 +1,41 @@
 import { css } from "styled-components";
-import { scales } from "./types";
+import { system, Config } from "styled-system";
 
-export const fontSizes = {
-  [scales.body1]: {
-    mobile: "18px",
-    tablet: "20px",
-    laptop: "24px",
-  },
-  [scales.body2]: {
-    mobile: "16px",
-    tablet: "18px",
-    laptop: "20px",
-  },
-  [scales.body3]: {
-    mobile: "12px",
-    tablet: "14px",
-    laptop: "16px",
-  },
-  [scales.caption1]: {
-    mobile: "14px",
-    tablet: "14px",
-    laptop: "14px",
-  },
-  [scales.caption2]: {
-    mobile: "12px",
-    tablet: "12px",
-    laptop: "12px",
-  },
-};
+import { scales } from "./types";
+import { fontWeight } from "theme/base";
+import { FontWeight } from "theme/types";
 
 export const styles = {
   [scales.body1]: css`
+    font-size: 24px;
     line-height: 1.7;
   `,
-  [scales.body2]: css``,
-  [scales.body3]: css``,
-  [scales.caption1]: css``,
-  [scales.caption2]: css``,
+  [scales.body2]: css`
+    font-size: 20px;
+    line-height: 1.6;
+  `,
+  [scales.body3]: css`
+    font-size: 18px;
+    line-height: 1.5;
+  `,
+  [scales.caption1]: css`
+    font-size: 16px;
+    line-height: 1.4;
+  `,
+  [scales.caption2]: css`
+    font-size: 14px;
+    line-height: 1.3;
+  `,
 };
+
+const config: Config = {
+  $fontWeight: {
+    property: "fontWeight",
+    transform: (value: keyof FontWeight) => {
+      console.warn(fontWeight[value]);
+      return fontWeight[value];
+    },
+  },
+};
+
+export const fontWeights = system(config);
