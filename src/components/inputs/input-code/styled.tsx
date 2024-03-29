@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { LayoutProps, layout } from "styled-system";
+import { layout } from "styled-system";
 
 import { Input } from "../input";
 import { StyledNumericInputProps } from "./types";
@@ -48,7 +48,7 @@ export const StyledInput = styled(Input)`
   opacity: 0.02;
 `;
 
-export const StyledNumericInput = styled.div<StyledNumericInputProps & LayoutProps>`
+export const StyledNumericInput = styled.div<StyledNumericInputProps>`
   display: flex;
   align-items: center;
   justify-content: center;
