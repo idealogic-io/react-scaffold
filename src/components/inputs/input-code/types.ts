@@ -15,10 +15,8 @@ export interface InputCodeProps {
   cellHeight?: LayoutProps["height"];
 }
 
-export type StyledNumericInputProps = {
+export interface StyledNumericInputProps extends LayoutProps {
   value: string;
   isFocusedValue: boolean | undefined;
   isError: boolean;
-  width: CellsProps["cellWidth"];
-  height: CellsProps["cellHeight"];
-};
+}

@@ -38,8 +38,8 @@ export const InputCode: React.FC = () => {
           cellHeight={{ _: "44px", tablet: "56px" }}
           onFocus={() => setIsTouched(false)}
           onBlur={() => setIsTouched(true)}
-          isFocused={isTouched === false}
-          isError={!!error && !!isTouched}
+          isFocused={!isTouched}
+          isError={!!error && isTouched}
         />
       </InputGroup>
 
