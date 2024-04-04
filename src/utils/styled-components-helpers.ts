@@ -36,7 +36,7 @@ export const getStylesFromResponsiveValue = <T extends string>(
     for (const key in rawStyles) {
       const typedKey = key as BreakPointsKeys | "_";
       const breakpoint = typedKey in breakpointMap ? breakpointMap[typedKey as BreakPointsKeys] : undefined;
-      const value = rawStyles[key];
+      const value = rawStyles[key] as T;
 
       const newStyle = value && value in objForStyles && objForStyles[value];
 
