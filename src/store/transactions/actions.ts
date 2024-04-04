@@ -25,4 +25,4 @@ export const checkedTransaction = createAction<{
   blockNumber: number;
 }>("transactions/checkedTransaction");
 
-export const resetTransactionsState = createAction<{ chainId: number }>("transactions/resetTransactionsState");
+export const resetTransactionsState = createAction("transactions/resetTransactionsState");

@@ -32,7 +32,6 @@ const config: Config = {
   $fontWeight: {
     property: "fontWeight",
     transform: (value: keyof FontWeight) => {
-      console.warn(fontWeight[value]);
       return fontWeight[value];
     },
   },

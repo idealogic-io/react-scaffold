@@ -6,6 +6,7 @@ import {
   errorFetchingMulticallResults,
   fetchingMulticallResults,
   updateMulticallResults,
+  resetMultiCallState,
 } from "./action";
 
 export interface MulticallState {
@@ -108,5 +109,8 @@ export default createReducer(initialState, builder =>
           blockNumber,
         };
       });
+    })
+    .addCase(resetMultiCallState, () => {
+      return initialState;
     }),
 );

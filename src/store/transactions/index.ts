@@ -65,9 +65,7 @@ export default createReducer(initialState, builder =>
       tx.receipt = receipt;
       tx.confirmedTime = now();
     })
-    .addCase(resetTransactionsState, (transactions, { payload: { chainId } }) => {
-      if (transactions[chainId]) {
-        transactions[chainId] = {};
-      }
+    .addCase(resetTransactionsState, () => {
+      return initialState;
     }),
 );

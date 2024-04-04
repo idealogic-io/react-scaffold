@@ -22,3 +22,5 @@ export const updateMulticallResults = createAction<{
     [callKey: string]: string | null;
   };
 }>("multicall/updateMulticallResults");
+
+export const resetMultiCallState = createAction("multicall/resetMultiCallState");
