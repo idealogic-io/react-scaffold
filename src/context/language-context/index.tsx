@@ -50,7 +50,7 @@ const LanguageContextProvider: React.FC<LanguageContextProviderProps> = ({ fallb
 
     if (initialLocale) {
       languageMap.set(codeFromStorage, { ...initialLocale });
-      localStorage?.setItem(langKey, codeFromStorage);
+      localStorage.setItem(langKey, codeFromStorage);
     }
 
     setState(prevState => ({
@@ -77,7 +77,7 @@ const LanguageContextProvider: React.FC<LanguageContextProviderProps> = ({ fallb
         languageMap.set(language.locale, { ...enLocale, ...locale });
       }
 
-      localStorage?.setItem(langKey, language.locale);
+      localStorage.setItem(langKey, language.locale);
 
       setState(prevState => ({
         ...prevState,
@@ -85,7 +85,7 @@ const LanguageContextProvider: React.FC<LanguageContextProviderProps> = ({ fallb
         currentLanguage: language,
       }));
     } else {
-      localStorage?.setItem(langKey, language.locale);
+      localStorage.setItem(langKey, language.locale);
       setState(prevState => ({
         ...prevState,
         isFetching: false,
