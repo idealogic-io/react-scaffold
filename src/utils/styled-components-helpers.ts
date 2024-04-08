@@ -51,5 +51,5 @@ export const getStylesFromResponsiveValue = <T extends string>(
     }
   }
 
-  return cssString;
+  return cssString.replace(/,/g, "");
 };
