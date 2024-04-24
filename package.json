@@ -31,6 +31,7 @@
     "build": "react-app-rewired build",
     "build-dev": "chmod +x ./scripts/build-dev.sh && ./scripts/build-dev.sh",
     "build-prod": "chmod +x ./scripts/build-prod.sh && ./scripts/build-prod.sh",
+    "convert-images": "chmod +x ./scripts/convert-images.sh && ./scripts/convert-images.sh",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "lint": "eslint -c .eslintrc.json --ext .js,.jsx,.ts,.tsx .",
