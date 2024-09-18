@@ -90,3 +90,22 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+## Services We Provide
+
+- **[Custom Software Development](https://idealogic.io/services/custom-software-development/)**: Tailored software solutions designed to meet the unique needs of your business, ensuring scalability and adaptability.
+- **[Blockchain Development](https://idealogic.io/services/blockchain/)**: Build secure and transparent blockchain solutions, from DeFi platforms to smart contract development.
+- **[AI & Machine Learning Solutions](https://idealogic.io/services/ai-ml/)**: Harness the power of AI and ML to enhance your customer experience and improve decision-making.
+- **[Mobile App Development](https://idealogic.io/services/mobile-development/)**: Cross-platform and native mobile app development for both iOS and Android.
+- **[Cloud Solutions](https://idealogic.io/services/cloud/)**: Scalable cloud computing services that help businesses stay agile and competitive.
+- **[DevOps](https://idealogic.io/services/devops/)**: Implementation of continuous integration and delivery pipelines to boost development efficiency.
+- **[Web Development](https://idealogic.io/services/web-development/)**: From simple websites to complex web applications using React, Angular, and more.
+- **[Fintech Solutions](https://idealogic.io/industries/fintech/)**: Innovative financial technology solutions that drive security, compliance, and growth.
+- **[Aviation Software](https://idealogic.io/industries/aviation/)**: Advanced solutions tailored to the aviation industry, including regulatory compliance and AI-enhanced data management.
+- **[UI/UX Design](https://idealogic.io/services/ui-ux-design/)**: Creating intuitive, engaging, and visually appealing user interfaces for better customer experiences.
+- **[Maintenance and Support](https://idealogic.io/services/maintenance-support/)**: Ongoing software maintenance to ensure your solutions remain efficient and up-to-date.
+- **[Legacy Software Transformation](https://idealogic.io/services/legacy-software/)**: Modernizing outdated systems to enhance performance and integrate with new technologies.
+
+At Idealogic, we are committed to delivering **innovative** and **scalable solutions** that empower your business for long-term success.
+
+Visit our [website](https://idealogic.io) to learn more!
